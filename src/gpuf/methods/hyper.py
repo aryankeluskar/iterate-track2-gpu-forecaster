@@ -19,6 +19,9 @@ params
   centre  "sim" or "last" (q50 = last value, q10/q90 kept on either side)
   w       weight of hyper in a log-quantile blend with base where it applies
   base    [name, params]
+  mode    "sim" (offer panel simulation above) or "med" (cheaper equivalent: block-bootstrap the series' own daily
+          median log changes over the trailing `W` days, blocks of `L`, recency half-life `hl`; the panel is only
+          used to decide support)
 """
 from __future__ import annotations
 
@@ -61,7 +64,7 @@ def _prep():
 
 @register("hyper")
 def make(W=21, L=1, hl=0.0, n_paths=500, seed=0, list="zero", gate_days=14,
-         sim_cls=("hyperscaler_spot", "neocloud_spot", "neocloud_rate_card"), centre="sim", w=1.0, base=None):
+         sim_cls=("hyperscaler_spot", "neocloud_spot", "neocloud_rate_card"), centre="sim", w=1.0, base=None, mode="sim"):
     base_spec = base or DEFAULT_BASE
     base_f = get(base_spec[0], **base_spec[1])
     st = {}
@@ -104,6 +107,11 @@ def make(W=21, L=1, hl=0.0, n_paths=500, seed=0, list="zero", gate_days=14,
             return base_f(sid, days, vals, origin_day, horizons, ctx)
         if cls not in sim_cls and cls != "hyperscaler_list":
             return base_f(sid, days, vals, origin_day, horizons, ctx)
+        if mode == "med":
+            res = med_boot(sid, days, vals, origin_day, horizons)
+            if res is None:
+                return base_f(sid, days, vals, origin_day, horizons, ctx)
+            return finish(res, sid, days, vals, origin_day, horizons, ctx, last)
         o_rows = P.offers(sid, origin_day)
         if len(o_rows) == 0:
             return base_f(sid, days, vals, origin_day, horizons, ctx)
@@ -122,9 +130,29 @@ def make(W=21, L=1, hl=0.0, n_paths=500, seed=0, list="zero", gate_days=14,
         for h in horizons:
             meds = np.median(px[None, :] * np.exp(C[:, :, h + gap - 1]), axis=1)
             q10, q50, q90 = (float(x) * scale for x in np.quantile(meds, [0.1, 0.5, 0.9]))
-            if centre == "last":
-                q10, q50, q90 = min(q10, last), last, max(q90, last)
             res[h] = (q10, q50, q90)
+        return finish(res, sid, days, vals, origin_day, horizons, ctx, last)
+
+    def med_boot(sid, days, vals, origin_day, horizons):
+        sel = days > origin_day - W
+        d, v = days[sel], vals[sel]
+        ok = np.diff(d) == 1
+        r = np.log(v[1:] / v[:-1])[ok]
+        if len(r) < 5:
+            return None
+        rd = d[1:][ok]
+        nd, N, H = len(r), n_paths, max(horizons)
+        rng = np.random.default_rng(zlib.crc32(f"med|{sid}|{origin_day}".encode()) + int(seed))
+        rw = 0.5 ** ((origin_day - rd) / hl) if hl else np.ones(nd)
+        starts = rng.choice(nd, size=(N, -(-H // L)), p=rw / rw.sum())
+        pi = ((starts[:, :, None] + np.arange(L)[None, None, :]) % nd).reshape(N, -1)[:, :H]
+        C = np.cumsum(r[pi], axis=1)
+        last = float(vals[-1])
+        return {h: tuple(float(x) for x in last * np.exp(np.quantile(C[:, h - 1], [0.1, 0.5, 0.9]))) for h in horizons}
+
+    def finish(res, sid, days, vals, origin_day, horizons, ctx, last):
+        if centre == "last":
+            res = {h: (min(q[0], last), last, max(q[2], last)) for h, q in res.items()}
         if w < 1.0:
             b = base_f(sid, days, vals, origin_day, horizons, ctx)
             res = {h: tuple(float(np.exp(w * np.log(res[h][i]) + (1 - w) * np.log(b[h][i]))) for i in range(3))

@@ -32,7 +32,9 @@ echo "== 3. pretrained members (chronos, fm2) for origin $ORIGIN, rental_all, ea
 rm -f "$ROOT"/runs/final/*_"$ORIGIN"_rental_all.parquet
 "$PY" -B -m gpuf.final_build --origin "$ORIGIN" --universe rental_all
 echo "== 4. final blend for every posted rental series, validated with the starter scorer in frozen-cutoff mode"
-[ "$PARAMS" != '{}' ] || PARAMS="{\"cap\": \"$ORIGIN\", \"tag\": \"$ORIGIN\", \"universe\": \"rental_all\"}"
+# membership and gate fixed on dev by EVAL_PROTOCOL.md Amendment 3 (experiments/final/results/dev.txt): all seven
+# members kept; activity gate [14, 1] on non-headline series only
+[ "$PARAMS" != '{}' ] || PARAMS="{\"members\": [\"mix\", \"gbm\", \"chronos\", \"analog\", \"prov\", \"fm2\", \"fragility\"], \"gate\": [14, 1], \"gate_scope\": \"nonhead\", \"cap\": \"$ORIGIN\", \"tag\": \"$ORIGIN\", \"universe\": \"rental_all\"}"
 mkdir -p "$ROOT/submissions"
 ALL="$ROOT/submissions/forecast_final_all.csv"; HEAD="$ROOT/submissions/forecast_final_headline.csv"
 "$PY" -B -m gpuf.submit --method final --params "$PARAMS" --universe rental_all --out "$ALL" --headline-out "$HEAD" \
