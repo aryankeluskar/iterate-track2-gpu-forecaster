@@ -1,0 +1,8 @@
+# GPU rental price levels and trends (2022 to 2026)
+
+- Silicon Data H100 Rental Price Index (ticker SDH100RT, USD per GPU-hour, daily): product page lists 2.53 (no capture date). Silicon Data May to July 2026 post (blog, read): H100 2.57 on May 4, 2.73 end of May, 2.79 on June 5 (series high), 2.59 late-June low, 2.75 on July 27; H200 2.70 on May 4, 2.68 on May 9 (low), 3.10 on July 18 (high). H200 premium over H100 averaged 5.8 percent in May, 0.4 percent on June 14, 12.1 percent in July, peak 16.2 percent on July 16. Daily changes of H100 and H200 series are essentially uncorrelated; the author says the series is too young for causal claims.
+- Secondary (search snippet, not verified at source): neo-cloud H100 index 2.00 on Dec 9 2025 to 2.20 on Jan 6 2026; a FourWeekMBA blog quotes 2.88 on Oct 24 2026. SemiAnalysis one-year H100 contract index low 1.70 in Oct 2025 to 2.35 in Mar 2026; a16z H100 RT index 2.41 by late Feb 2026.
+- Epoch AI, "Trends in GPU Price-Performance" (June 27 2022; 470 GPUs 2006 to 2021): FLOP/s per dollar doubles every 2.46 years (95 percent CI 2.24 to 2.72); ML GPUs 2.07 (1.54 to 3.13); top GPUs 2.95 (2.54 to 3.52); FP16 only 2.30 (1.69 to 3.62). Snippet of Epoch AI-and-compute page (updated Feb 2026, not opened): AI chip performance per dollar doubles every 2.2 years.
+
+Relevance to us: 2026 H100 rental prices rose from about 2.00 to about 2.5 to 2.9 USD per hour while hardware price-performance trends down over years; the 2 to 3 year argument has to separate level shifts driven by demand (inference) from the slow hardware trend.
+Links: silicondata.com/blog/h200-vs-h100-rental-prices-may-july-2026 ; epoch.ai/blog/trends-in-gpu-price-performance

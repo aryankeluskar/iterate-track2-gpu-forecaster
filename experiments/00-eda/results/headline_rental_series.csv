@@ -1,0 +1,38 @@
+series_id,source_id,instrument_class,model,last_value,last_date_to_as_of,n_days,median_n_providers,n_distinct_values_90d,stale_days
+afhubbard.hyperscaler_spot.A100_40GB.spot.median,afhubbard,hyperscaler_spot,A100 40GB,1.9891,2026-11-06,234,3.0,7,0
+afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median,afhubbard,hyperscaler_spot,A100 SXM 80GB,1.8818,2026-11-06,234,3.0,17,0
+afhubbard.hyperscaler_spot.T4.spot.median,afhubbard,hyperscaler_spot,T4,0.3047,2026-11-06,234,3.0,46,0
+afhubbard.hyperscaler_spot.V100.spot.median,afhubbard,hyperscaler_spot,V100,1.475,2026-11-06,234,3.0,11,0
+fastgpu_daily.hyperscaler_spot.A100_80GB.spot.median,fastgpu_daily,hyperscaler_spot,A100 80GB,1.757,2026-11-06,60,3.0,32,0
+fastgpu_daily.hyperscaler_spot.T4.spot.median,fastgpu_daily,hyperscaler_spot,T4,0.089,2026-11-06,60,3.0,13,0
+fastgpu_daily.neocloud_rate_card.A100_40GB.on_demand.median,fastgpu_daily,neocloud_rate_card,A100 40GB,1.8155,2026-11-06,60,4.0,33,0
+fastgpu_daily.neocloud_rate_card.A100_80GB.on_demand.median,fastgpu_daily,neocloud_rate_card,A100 80GB,2.293,2026-11-06,60,13.0,20,0
+fastgpu_daily.neocloud_rate_card.B200.on_demand.median,fastgpu_daily,neocloud_rate_card,B200,6.3,2026-11-06,60,11.0,28,0
+fastgpu_daily.neocloud_rate_card.B300.on_demand.median,fastgpu_daily,neocloud_rate_card,B300,8.49,2026-11-06,60,8.0,19,0
+fastgpu_daily.neocloud_rate_card.H100_PCIe_80GB.on_demand.median,fastgpu_daily,neocloud_rate_card,H100 PCIe 80GB,2.79,2026-11-06,60,3.0,5,0
+fastgpu_daily.neocloud_rate_card.H100_SXM_80GB.on_demand.median,fastgpu_daily,neocloud_rate_card,H100 SXM 80GB,3.949,2026-11-06,60,17.0,6,0
+fastgpu_daily.neocloud_rate_card.H200.on_demand.median,fastgpu_daily,neocloud_rate_card,H200,4.54,2026-11-06,60,13.0,11,0
+fastgpu_daily.neocloud_rate_card.L40S.on_demand.median,fastgpu_daily,neocloud_rate_card,L40S,1.7355,2026-11-06,60,9.0,19,0
+fastgpu_daily.neocloud_rate_card.RTX_6000_Ada.on_demand.median,fastgpu_daily,neocloud_rate_card,RTX 6000 Ada,1.528,2026-11-06,60,3.0,43,0
+fastgpu_daily.neocloud_rate_card.RTX_A6000.on_demand.median,fastgpu_daily,neocloud_rate_card,RTX A6000,0.5,2026-11-06,60,5.0,15,0
+fastgpu_daily.neocloud_rate_card.RTX_PRO_6000.on_demand.median,fastgpu_daily,neocloud_rate_card,RTX PRO 6000,2.1615,2026-11-06,60,9.0,26,0
+fastgpu_daily.neocloud_spot.A100_80GB.spot.median,fastgpu_daily,neocloud_spot,A100 80GB,1.147,2026-11-06,60,3.0,7,0
+fastgpu_daily.neocloud_spot.B200.spot.median,fastgpu_daily,neocloud_spot,B200,4.177,2026-11-06,60,4.0,23,0
+fastgpu_daily.neocloud_spot.B300.spot.median,fastgpu_daily,neocloud_spot,B300,4.735,2026-11-06,60,4.0,17,0
+fastgpu_daily.neocloud_spot.H100_SXM_80GB.spot.median,fastgpu_daily,neocloud_spot,H100 SXM 80GB,2.285,2026-11-06,60,5.0,6,0
+fastgpu_daily.neocloud_spot.H200.spot.median,fastgpu_daily,neocloud_spot,H200,2.8,2026-11-06,60,4.0,18,0
+fastgpu_daily.neocloud_spot.L40S.spot.median,fastgpu_daily,neocloud_spot,L40S,0.97,2026-11-06,60,3.0,27,0
+fastgpu_daily.neocloud_spot.RTX_PRO_6000.spot.median,fastgpu_daily,neocloud_spot,RTX PRO 6000,1.4145,2026-11-06,60,4.0,20,0
+gpurentalprices.marketplace_ask.H100_80GB.spot.median,gpurentalprices,marketplace_ask,H100 80GB,1.875,2026-11-06,89,3.0,54,0
+gpurentalprices.neocloud_rate_card.A100_40GB.on_demand.median,gpurentalprices,neocloud_rate_card,A100 40GB,1.99,2026-11-06,89,3.0,9,0
+gpurentalprices.neocloud_rate_card.A100_SXM_80GB.on_demand.median,gpurentalprices,neocloud_rate_card,A100 SXM 80GB,1.95,2026-11-06,89,5.0,37,0
+gpurentalprices.neocloud_rate_card.B200.on_demand.median,gpurentalprices,neocloud_rate_card,B200,7.89,2026-11-06,89,7.0,19,0
+gpurentalprices.neocloud_rate_card.B300.on_demand.median,gpurentalprices,neocloud_rate_card,B300,9.745,2026-11-06,89,6.0,50,0
+gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median,gpurentalprices,neocloud_rate_card,H100 80GB,3.885,2026-11-06,89,12.0,43,0
+gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median,gpurentalprices,neocloud_rate_card,H100 SXM 80GB,3.5539,2026-11-06,89,6.0,34,0
+gpurentalprices.neocloud_rate_card.H200.on_demand.median,gpurentalprices,neocloud_rate_card,H200,4.59,2026-11-06,89,10.0,11,0
+gpurentalprices.neocloud_rate_card.L4.on_demand.median,gpurentalprices,neocloud_rate_card,L4,0.8839,2026-11-06,89,3.0,57,0
+gpurentalprices.neocloud_rate_card.L40S.on_demand.median,gpurentalprices,neocloud_rate_card,L40S,1.6099,2026-11-06,89,9.0,20,0
+gpurentalprices.neocloud_rate_card.RTX_6000_Ada.on_demand.median,gpurentalprices,neocloud_rate_card,RTX 6000 Ada,1.2515,2026-11-06,89,3.0,42,0
+gpurentalprices.neocloud_rate_card.RTX_A6000.on_demand.median,gpurentalprices,neocloud_rate_card,RTX A6000,0.711,2026-11-06,89,5.0,27,0
+gpurentalprices.neocloud_rate_card.RTX_PRO_6000.on_demand.median,gpurentalprices,neocloud_rate_card,RTX PRO 6000,2.3,2026-11-06,89,7.0,20,0

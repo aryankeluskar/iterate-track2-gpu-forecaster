@@ -33,3 +33,15 @@ Differences against drift are reported with a 90% interval from a block bootstra
 ## Reference check
 
 The harness must reproduce the starter's drift result exactly before anything else is trusted: pooled skill 0.183267 on 15 weekly origins from 2026-07-15 to 2026-10-24, headline tier of the catalog as of 2026-10-24, horizons 1, 3 and 7 (4,209 cells scored).
+
+## Amendment 1 (14 November 2026, about 10:45 PT)
+
+Made before any forecasting method was scored on validation or test, and before any method other than the starter baselines was scored anywhere. Reason: the data profile showed the original splits cannot see the series Sunday scores. The headline rental universe as of 2026-11-06 has 37 series. Twenty come from the fastgpu collector, which starts on 2026-09-08. Thirteen come from gpurentalprices, which starts on 2026-08-04. Only four (afhubbard spot) exist before August. The original dev period (May to August) held zero cells for 20 of the 37 series, and the original test period left too little room.
+
+The Universe, Metric, Baseline, Leakage and Reference sections stand. The Origins section is replaced by:
+
+- Dev: every day from 2026-08-18 to 2026-10-06 (targets up to 2026-10-13). Free to look at.
+- Validation: every day from 2026-10-13 to 2026-10-30 (18 origins, targets up to 2026-11-06). The gate for accepting a method change. Every query is counted and logged, and the acceptance rule spends a fixed error budget across queries.
+- Test: the organisers' Sunday scoring (origin 2026-11-06, targets 7, 9 and 13 November). The pack is too short to hold out a third period, so no internal test set exists. This is stated in the findings.
+
+Secondary check for any accepted change: it must not lower pooled skill on the all-tier rental universe on validation, and its result on the four long-history afhubbard series over the old dev period (May to August) is reported as a robustness check.
