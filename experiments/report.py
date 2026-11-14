@@ -23,15 +23,42 @@ TARGETS = [(0.169, "reference model (mix)", "#57606a"), (0.219, "hindsight: know
            (0.262, "hindsight: knowing whether and which way it moves", "#1a7f37")]
 MILESTONES = [("1042", "round 1: nine methods"), ("1118", "failure analysis"), ("1140", "round 2: offer panel"),
               ("1147", "round 3: breadth swarm"), ("1153", "round 4: providers")]
-ax_top = 0.285
-fig, ax = plt.subplots(figsize=(9.5, 4.4))
-best, xs, ys, bx, by, lab = -9, [], [], [], [], []
+
+
+def has_key(p, k):
+    """True if params (nested dicts and lists) set key k to a truthy value anywhere."""
+    if isinstance(p, dict):
+        return bool(p.get(k)) or any(has_key(v, k) for v in p.values())
+    if isinstance(p, list):
+        return any(has_key(v, k) for v in p)
+    return False
+
+
+def in_sample(r):
+    """Runs that are kept out of the "best so far" line: the Exa calendar switch inside prov (`cal`).
+    Its gain comes from two events whose collector lag was read off those same events, it is zero in the first
+    half of dev, it cannot be checked on validation, and it is off in the submitted forecaster (ledger H27)."""
+    return has_key(r["params"], "cal")
+
+
+fig, ax = plt.subplots(figsize=(9.5, 4.8))
+best, xs, ys, bx, by, lab, ex = -9, [], [], [], [], [], []
 for i, r in enumerate(dev):
+    if in_sample(r):
+        ex.append((i, r["pooled_skill"]))
+        continue
     xs.append(i); ys.append(r["pooled_skill"])
     if r["pooled_skill"] > best:
         best = r["pooled_skill"]; bx.append(i); by.append(best); lab.append(r["method"])
+ax_top = max(0.285, max([y for _, y in ex] + ys) + 0.035)
 ax.scatter(xs, ys, s=9, color="#9aa5b1", label="each scored run")
-ax.step(bx + [len(dev)], by + [by[-1]], where="post", color="#1f6feb", lw=2, label="best so far")
+ax.step(bx + [len(dev)], by + [by[-1]], where="post", color="#1f6feb", lw=2, label=f"best so far (ends at {by[-1]:.4f})")
+if ex:
+    ax.scatter([x for x, _ in ex], [y for _, y in ex], s=46, facecolors="none", edgecolors="#bc4c00", linewidths=1.6, zorder=5,
+               label="in-sample run, not counted and not in the submission")
+    for x, y in ex:
+        ax.annotate(f"calendar switch on ({y:.4f}): in-sample,\nnot in the submission", (x, y), textcoords="offset points",
+                    xytext=(-9, -3), fontsize=7.5, color="#bc4c00", ha="right", va="center")
 for x, y, l in zip(bx, by, lab):
     ax.annotate(l, (x, y), textcoords="offset points", xytext=(3, 5), fontsize=7)
 drift = next(r["pooled_skill"] for r in dev if r["method"] == "drift")
@@ -49,7 +76,8 @@ for i, names in marks.items():
     ax.text(i - 0.2, 0.03, "\n".join(names), color="#8250df", fontsize=7, rotation=90, va="bottom", ha="left", linespacing=1.1)
 ax.set_xlim(-3, len(dev) + 8)
 ax.set_xlabel("scored run on the development period (in order)"); ax.set_ylabel("pooled skill against last value")
-ax.set_ylim(0.0, ax_top); ax.legend(frameon=False, fontsize=8, loc="lower center")
+ax.set_ylim(0.0, ax_top); ax.legend(frameon=False, fontsize=8, loc="upper center", bbox_to_anchor=(0.5, -0.13), ncol=3)
+BEST_END, N_EX = by[-1], len(ex)
 traj = png(fig)
 
 counts = {}
@@ -69,6 +97,12 @@ h1{{font-size:22px}}h2{{font-size:17px;margin-top:28px}}img{{max-width:100%}}.k{
 ({', '.join(f'{v} {k.replace("_", " ")}' for k, v in sorted(counts.items()))}).</p>
 {extra}
 <h2>Skill on the development period, run by run</h2><img src="{traj}">
+<p class="k">The blue line is the best pooled skill so far among runs on the development period that use only what the
+submitted forecaster uses; it ends at {BEST_END:.4f}. {N_EX} run is drawn as a hollow orange marker and left out of the line:
+the provider simulator with the Exa repricing calendar switched on. Its gain comes from two announced repricings
+(Nebius on 1 October, Jarvislabs on 5 October) whose one-day collector lag was read off those same two events, it is exactly
+zero in the first half of the period, it cannot be checked on validation, and the switch is off in the submission
+(ledger H27). Every point on this chart is a development-period score; scores on unseen dates are in the ledger.</p>
 <h2>Hypothesis ledger</h2><table><tr><th>id</th><th>status</th><th>claim</th><th>result</th></tr>{trs}</table>"""
 out = ROOT / "to_human/progress.html"; out.parent.mkdir(exist_ok=True); out.write_text(page)
 print(out, len(page))

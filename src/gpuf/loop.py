@@ -169,7 +169,8 @@ def usable(entries, origin_day: int, min_conf: str = "B") -> list[dict]:
 # ----------------------------------------------------------------------------- Exa (every Exa call of the loop goes here)
 class Budget:
     def __init__(self, cap: float):
-        self.cap, self.spent, self.hits, self.new, self.skipped_budget, self.skipped_offline, self.errors = cap, 0.0, 0, 0, 0, 0, 0
+        self.cap, self.spent, self.errors = cap, 0.0, 0
+        self.hits, self.new, self.skipped_budget, self.skipped_offline = ({"search": 0, "contents": 0} for _ in range(4))
 
     def report(self) -> dict:
         return {"cache_hits": self.hits, "new_calls": self.new, "skipped_over_budget": self.skipped_budget,
@@ -188,17 +189,17 @@ def _exa(endpoint: str, body: dict, budget: Budget, lookup=("cal", "loop"), tag:
     for t in lookup:
         p = scout.CACHE / f"{t}_{endpoint}_{h}.json"
         if p.exists():
-            budget.hits += 1
+            budget.hits[endpoint] += 1
             return json.loads(p.read_text())
     if offline():
-        budget.skipped_offline += 1
+        budget.skipped_offline[endpoint] += 1
         return None
     if budget.spent + EST[endpoint] > budget.cap + 1e-9:
-        budget.skipped_budget += 1
+        budget.skipped_budget[endpoint] += 1
         return None
     rec = scout.exa_call(endpoint, body, tag=tag)
-    budget.new += 1
-    budget.spent += float(rec.get("cost") or (0 if rec.get("error") else EST[endpoint]))
+    budget.new[endpoint] += 1
+    budget.spent += float(rec["cost"] if rec.get("cost") is not None else 0 if rec.get("error") else EST[endpoint])
     budget.errors += bool(rec.get("error"))
     return rec
 

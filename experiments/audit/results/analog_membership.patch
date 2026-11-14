@@ -1,0 +1,21 @@
+Proposed patch (NOT applied). src/gpuf/methods/analog.py lines 121-126, AnalogTable.__init__.
+Problem: a series is dropped from the whole table when it has < 2 rows or any non-positive value over the
+table's full span (cap). At a validation origin, a series with one row on or before the origin enters the
+standardisation sums (AnalogTable.sd) only if it has more rows after the origin, so forecasts depend on the
+existence of post-origin rows. Verified fix: experiments/audit/analog_fix.py (deletion and wild tests
+bit-identical after the patch; shipped vs patched at the 18 validation origins differ by at most 2.1e-5 in log).
+
+--- a/src/gpuf/methods/analog.py
++++ b/src/gpuf/methods/analog.py
+@@ -120,10 +120,12 @@ class AnalogTable:
+         for sid, g in df.groupby("series_id", sort=True):
+             g = g.sort_values("day")
++            g = g[g["value"] > 0]  # drop bad rows one by one; never the whole series on a later row
++            if len(g) == 0:
++                continue
+             days = g["day"].to_numpy(np.int64)
+             vals = g["value"].to_numpy(np.float64)
+-            if len(days) < 2 or not (vals > 0).all():
+-                continue
+             npv = np.nan_to_num(g["n_providers"].to_numpy(np.float64), nan=1.0)
+             F = _series_features(days, vals, npv)
