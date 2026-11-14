@@ -119,10 +119,11 @@ class AnalogTable:
         rows = []
         for sid, g in df.groupby("series_id", sort=True):
             g = g.sort_values("day")
+            g = g[g["value"] > 0]  # drop bad rows one by one; never the whole series on a later row
+            if len(g) == 0:
+                continue
             days = g["day"].to_numpy(np.int64)
             vals = g["value"].to_numpy(np.float64)
-            if len(days) < 2 or not (vals > 0).all():
-                continue
             npv = np.nan_to_num(g["n_providers"].to_numpy(np.float64), nan=1.0)
             F = _series_features(days, vals, npv)
             outs = {h: _outcomes(days, vals, h) for h in self.horizons}
@@ -237,7 +238,7 @@ def make(pool="cc", k=100, kern="tricube", hl=0.0, centre="median", scale=1.0, r
         tab[0] = T
         last = float(vals[-1])
         row = T.series.get(sid)
-        if row is None:
+        if row is None or len(vals) < 2:  # a series with one row at the origin gets the flat last value, as before the audit fix
             return {h: (last, last, last) for h in horizons}
         sd_, sv_, SF = row
         pos = int(np.searchsorted(sd_, days[-1], side="right")) - 1

@@ -102,7 +102,7 @@ def can_forecast(name, sid, days, vals, origin_day, analog_table=None) -> bool:
         return n >= MIN_PRETRAINED and bool((vals > 0).all())
     if name == "analog":
         row = analog_table.series.get(sid)
-        if row is None:
+        if row is None or n < 2:  # one row at the origin: analog has no state to match on (decided from rows up to the origin only)
             return False
         d, v, _ = row
         p = int(np.searchsorted(d, days[-1], side="right")) - 1
