@@ -380,7 +380,8 @@ def step_autopsy(a) -> dict:
                       "timestamp": "2026-10-13T23:59:59Z", "label": f"Failure mode: {cause} ({slug})", "content": txt,
                       "metadata": {"agent": "autopsy", "kind": "failure_mode", "cause": cause, "system": slug, "source": "gpuf.loop autopsy"}})
     text = [f"{'cause':<20}{'cells':>6}{'LV share':>10}{'loss/LV':>9}{'residual':>10}"]
-    text += [f"{r['cause']:<20}{r['cells']:>6}{r['share_of_lv_loss']:>10.3f}{(r['loss_over_lv'] or 0):>9.3f}{r['residual_share']:>10.3f}" for r in rows]
+    text += [f"{r['cause']:<20}{r['cells']:>6}{r['share_of_lv_loss']:>10.3f}" + (f"{r['loss_over_lv']:>9.3f}" if r["loss_over_lv"] is not None else f"{'-':>9}")
+             + f"{r['residual_share']:>10.3f}" for r in rows]
     text.append(f"{'total':<20}{len(b):>6}{1.0:>10.3f}{TL / LV:>9.3f}{1.0:>10.3f}")
     return {"system": slug, "spec": spec, "n_cells": int(len(b)), "dev_skill": round(_skill(b), 4),
             "dev_skill_first_half": round(_skill(b[b.origin_day <= DEV_CUT]), 4), "dev_skill_second_half": round(_skill(b[b.origin_day > DEV_CUT]), 4),
@@ -399,9 +400,11 @@ GPU = re.compile(r"(gpu|h100|h200|b200|b300|a100|l40s|rtx|mi300|mi325|mi355|a10|
 GPU_TOK = re.compile(r"(H100|H200|B200|B300|A100\s*(?:SXM\s*)?(?:80|40)\s*GB|A100|L40S|RTX\s*PRO\s*6000|RTX\s*5090|RTX\s*4090|MI300X)", re.I)
 NUM = r"\$\s?(\d{1,3}(?:\.\d{1,3})?)"
 UNIT = r"(?:\s*(?:per\s+GPU[- ]hour|/\s*GPU[- ]h(?:ou)?r|/hr|/hour|an hour|per hour))?"
-PAIRS = [(re.compile(NUM + UNIT + r"\s*(?:->|→|to|now,)\s*" + NUM, re.I), False),
-         (re.compile(NUM + UNIT + r"\s*\|\s*" + NUM, re.I), False),
+PAIRS = [(re.compile(NUM + UNIT + r"\s*(?:->|→|to)\s*" + NUM, re.I), False),
          (re.compile(NUM + UNIT + r"[^$]{0,30}?instead of\s*" + NUM, re.I), True)]
+# evergreen pricing guides ("X GPU Pricing 2026", "Per-Hour Cost") are rewritten in place: treated like trackers, never extracted
+EVERGREEN = re.compile(r"(pricing\s*\(?20\d\d\)?|per[- ]hour cost|pricing (guide|explained|breakdown)|how much does|cost of renting|price list)", re.I)
+SENT = re.compile(r"(?<=[.!?])\s+|\n+")
 
 
 def _parse_date(s: str, year: int = 2026) -> dt.date | None:
@@ -423,6 +426,34 @@ def _gpu_panel(tok: str) -> list[str]:
     if t.startswith("A100"):
         return ["A100 40GB"] if "40" in t else ["A100 SXM 80GB", "A100 80GB"]
     return {"H100": ["H100 SXM 80GB", "H100 80GB"], "RTX PRO 6000": ["RTX PRO 6000"]}.get(t, [t])
+
+
+def extract_announcement(text: str, published: dt.date) -> tuple[dt.date | None, list[dict], str]:
+    """The calendar's rule for one passage (a sentence and the next): effective-date language, a change verb and an
+    old -> new hourly price next to a GPU name all in the same passage. Returns (effective date, changes, quote)."""
+    s = [x for x in SENT.split(text) if x.strip()]
+    for i in range(len(s)):
+        ctx = " ".join(s[i:i + 2])
+        m = EFF.search(ctx)
+        if not (m and (CHG.search(ctx) or "instead of" in ctx)):
+            continue
+        eff = _parse_date(m.group(4), published.year)
+        ch = extract_changes(ctx)
+        if eff and ch and -120 <= (eff - published).days <= 90:
+            return eff, ch, ctx.strip()[:400]
+    return None, [], ""
+
+
+def subject_provider(passage: str, P: dict) -> str | None:
+    """The panel provider named first in the passage (whose change it reports): slug or display name, word-bounded;
+    a single-word display name must be capitalised (Together, Modal, Lambda are also common words)."""
+    best = None
+    for slug, (name, _) in P.items():
+        for pat, fl in ((rf"\b{re.escape(slug)}\b", re.I), (rf"\b{re.escape(name.split(' (')[0])}\b", 0 if " " not in name else re.I)):
+            m = re.search(pat, passage, fl)
+            if m and (best is None or m.start() < best[0]):
+                best = (m.start(), slug)
+    return best[1] if best else None
 
 
 def extract_changes(text: str) -> list[dict]:
@@ -514,29 +545,34 @@ def step_scout(a) -> dict:
     for k in sorted(kept.values(), key=lambda k: k["published"]):
         if not k["eff"] or k["url"] in known_urls:
             continue
-        text = f"{k['title']} | {k['highlight']}"
-        changes = extract_changes(text)
-        if not changes and n_contents < 10:  # highlights carried no price pair: Exa's stored copy, never a live fetch of a tracker
+        if EVERGREEN.search(k["title"]):
+            rejected.append({"url": k["url"], "provider": k["provider"], "published": k["published"], "why": "evergreen pricing guide (edited in place)"})
+            continue
+        pub = dt.date.fromisoformat(k["published"])
+        text = f"{k['title']}. {k['highlight']}"
+        eff, changes, quote = extract_announcement(text, pub)
+        if not changes and n_contents < 10:  # highlights carried no dated price pair: Exa's stored copy, never a live tracker page
             n_contents += 1
             r = _exa("contents", {"urls": [k["url"]], "text": {"maxCharacters": 8000}}, budget)
             res = ((r or {}).get("response") or {}).get("results", [])
             if res and res[0].get("text"):
-                text = f"{k['title']} | {res[0]['text']}"
-                changes = extract_changes(text)
-        m = EFF.search(text)
-        eff = _parse_date(m.group(4)) if m else None
-        pub = dt.date.fromisoformat(k["published"])
-        later = sorted({d for d in (_parse_date(x.group(0)) for x in DATE_RX.finditer(text)) if d and d > pub and d != eff})
+                text = f"{k['title']}. {res[0]['text']}"
+                eff, changes, quote = extract_announcement(text, pub)
+        later = sorted({d for d in (_parse_date(x.group(0), pub.year) for x in DATE_RX.finditer(text)) if d and d > pub and d != eff})
         known = max([pub] + later)   # the calendar's timing rule: the later of Exa's date and any later date in the text
-        why = ("no effective date parsed" if eff is None else "no old -> new price next to a GPU name" if not changes else
+        subj = subject_provider(quote, PV.P) if changes else None
+        if subj and subj != k["provider"]:   # the passage reports another provider's change (e.g. a Spheron post about Nebius)
+            k = {**k, "provider": subj, "own_domain": any(d in k["url"] for d in PV.P[subj][1])}
+        why = ("no passage with effective date, change verb and old -> new price" if not changes else
+               "passage names no panel provider" if not subj else
                f"text carries a date after {a.as_of} ({known}): edited after the as-of date" if known > as_of else
-               "already in calendar" if (k["provider"], str(eff)) in have else None)
+               "already in calendar" if any(p == k["provider"] and abs(_day(d) - eff.toordinal()) <= 2 for p, d in have) else None)
         if why:
             rejected.append({"url": k["url"], "provider": k["provider"], "published": k["published"], "why": why})
             continue
-        conf = "A" if k["own_domain"] else "C" if pub > eff else "B"
+        conf = "C" if known > eff else "A" if k["own_domain"] else "B"   # calendar_lib: A primary, B secondary, C reported after
         e = {"provider": k["provider"], "effective_date": str(eff), "effective_utc": f"{eff}T00:00Z", "published": str(known), "url": k["url"],
-             "title": k["title"], "quote": k["highlight"][:400], "quote_states_effective_date": True,
+             "title": k["title"], "quote": quote, "quote_states_effective_date": True,
              "source_type": "auto-extracted by gpuf.loop scout from Exa search highlights", "also": [], "changes": changes, "confidence": conf,
              "edited_after_published": bool(later), "edit_note": f"later dates in text: {[str(x) for x in later]}" if later else "",
              "announced_before_effective": known < eff, "lead_days": (eff - known).days, "usable_from": str(known), "auto": True,
@@ -552,7 +588,7 @@ def step_scout(a) -> dict:
     ev = []
     for k in sorted(kept.values(), key=lambda k: k["published"]):
         sid = "scout-" + hashlib.sha256(k["url"].encode()).hexdigest()[:8]
-        if not k["eff"] or sid in mem_ids or len(ev) >= a.max_evidence:
+        if not k["eff"] or EVERGREEN.search(k["title"]) or sid in mem_ids or len(ev) >= a.max_evidence:
             continue
         dom = re.sub(r"^https?://(www\.)?", "", k["url"]).split("/")[0]
         txt = (f"Web evidence from {dom}, published {k['published']} (written by scout via gpuf.loop)\nURL: {k['url']}\nTitle: {k['title']}\n"

@@ -1,0 +1,154 @@
+{
+ "drift": {
+  "logged": 0.0886,
+  "fast_pooled_skill": 0.08864891883240733,
+  "official_pooled_skill": 0.08864891883240733,
+  "official_report_headline": {
+   "status": "scored",
+   "skill_baseline": "last_value",
+   "skill_definition": {
+    "cell": "mean over q10, q50, q90 of the pinball loss against the truth at origin + horizon",
+    "pooled": "1 - (mean cell loss / mean baseline cell loss) over every scored cell (equal cell weights; the track text's definition; scale-dependent, so high-priced volatile series weigh more)",
+    "mean_of_series": "mean over series of (1 - series loss / series baseline loss); series whose baseline loss is exactly 0 are excluded; unbounded below when a series barely moved",
+    "median_of_series": "median of the per-series skills",
+    "geomean": "1 - exp(mean over series of log(series loss / series baseline loss)), ratio floored at 0.001; scale-free and symmetric in over- and under-performance",
+    "primary": "pooled"
+   }
+  },
+  "official_cell_status": {
+   "scored": 4278
+  },
+  "official_status": "scored",
+  "returncode": 0,
+  "n_cells_fast": 4278,
+  "n_cells_official": 4278,
+  "n_matched": 4278,
+  "max_abs_cell_loss_diff": 0.0,
+  "max_abs_cell_baseline_diff": 0.0,
+  "agree_6dp": true,
+  "fast_counts": {
+   "scored": 4278,
+   "missing_truth": 1052,
+   "missing_baseline": 220,
+   "filled_from_baseline": 0,
+   "quantiles_clipped": 0
+  },
+  "official_counts": null,
+  "hand_pooled_skill": 0.08864891883240733,
+  "zero_width_rows_scored": 2722
+ },
+ "mix": {
+  "logged": 0.1691,
+  "fast_pooled_skill": 0.16910940958983667,
+  "official_pooled_skill": 0.16910940958983667,
+  "official_report_headline": {
+   "status": "scored",
+   "skill_baseline": "last_value",
+   "skill_definition": {
+    "cell": "mean over q10, q50, q90 of the pinball loss against the truth at origin + horizon",
+    "pooled": "1 - (mean cell loss / mean baseline cell loss) over every scored cell (equal cell weights; the track text's definition; scale-dependent, so high-priced volatile series weigh more)",
+    "mean_of_series": "mean over series of (1 - series loss / series baseline loss); series whose baseline loss is exactly 0 are excluded; unbounded below when a series barely moved",
+    "median_of_series": "median of the per-series skills",
+    "geomean": "1 - exp(mean over series of log(series loss / series baseline loss)), ratio floored at 0.001; scale-free and symmetric in over- and under-performance",
+    "primary": "pooled"
+   }
+  },
+  "official_cell_status": {
+   "scored": 4278
+  },
+  "official_status": "scored",
+  "returncode": 0,
+  "n_cells_fast": 4278,
+  "n_cells_official": 4278,
+  "n_matched": 4278,
+  "max_abs_cell_loss_diff": 0.0,
+  "max_abs_cell_baseline_diff": 0.0,
+  "agree_6dp": true,
+  "fast_counts": {
+   "scored": 4278,
+   "missing_truth": 1052,
+   "missing_baseline": 220,
+   "filled_from_baseline": 0,
+   "quantiles_clipped": 0
+  },
+  "official_counts": null,
+  "hand_pooled_skill": 0.16910940958983667,
+  "zero_width_rows_scored": 1855
+ },
+ "mix+analog": {
+  "logged": 0.1999,
+  "fast_pooled_skill": 0.19985744996654387,
+  "official_pooled_skill": 0.19985744996654387,
+  "official_report_headline": {
+   "status": "scored",
+   "skill_baseline": "last_value",
+   "skill_definition": {
+    "cell": "mean over q10, q50, q90 of the pinball loss against the truth at origin + horizon",
+    "pooled": "1 - (mean cell loss / mean baseline cell loss) over every scored cell (equal cell weights; the track text's definition; scale-dependent, so high-priced volatile series weigh more)",
+    "mean_of_series": "mean over series of (1 - series loss / series baseline loss); series whose baseline loss is exactly 0 are excluded; unbounded below when a series barely moved",
+    "median_of_series": "median of the per-series skills",
+    "geomean": "1 - exp(mean over series of log(series loss / series baseline loss)), ratio floored at 0.001; scale-free and symmetric in over- and under-performance",
+    "primary": "pooled"
+   }
+  },
+  "official_cell_status": {
+   "scored": 4278
+  },
+  "official_status": "scored",
+  "returncode": 0,
+  "n_cells_fast": 4278,
+  "n_cells_official": 4278,
+  "n_matched": 4278,
+  "max_abs_cell_loss_diff": 0.0,
+  "max_abs_cell_baseline_diff": 0.0,
+  "agree_6dp": true,
+  "fast_counts": {
+   "scored": 4278,
+   "missing_truth": 1052,
+   "missing_baseline": 220,
+   "filled_from_baseline": 0,
+   "quantiles_clipped": 0
+  },
+  "official_counts": null,
+  "hand_pooled_skill": 0.19985744996654387,
+  "zero_width_rows_scored": 1641
+ },
+ "zero_width_last": {
+  "logged": 0.0,
+  "fast_pooled_skill": 0.0,
+  "official_pooled_skill": 0.0,
+  "official_report_headline": {
+   "status": "scored",
+   "skill_baseline": "last_value",
+   "skill_definition": {
+    "cell": "mean over q10, q50, q90 of the pinball loss against the truth at origin + horizon",
+    "pooled": "1 - (mean cell loss / mean baseline cell loss) over every scored cell (equal cell weights; the track text's definition; scale-dependent, so high-priced volatile series weigh more)",
+    "mean_of_series": "mean over series of (1 - series loss / series baseline loss); series whose baseline loss is exactly 0 are excluded; unbounded below when a series barely moved",
+    "median_of_series": "median of the per-series skills",
+    "geomean": "1 - exp(mean over series of log(series loss / series baseline loss)), ratio floored at 0.001; scale-free and symmetric in over- and under-performance",
+    "primary": "pooled"
+   }
+  },
+  "official_cell_status": {
+   "scored": 4278
+  },
+  "official_status": "scored",
+  "returncode": 0,
+  "n_cells_fast": 4278,
+  "n_cells_official": 4278,
+  "n_matched": 4278,
+  "max_abs_cell_loss_diff": 0.0,
+  "max_abs_cell_baseline_diff": 0.0,
+  "agree_6dp": true,
+  "fast_counts": {
+   "scored": 4278,
+   "missing_truth": 1052,
+   "missing_baseline": 220,
+   "filled_from_baseline": 0,
+   "quantiles_clipped": 0
+  },
+  "official_counts": null,
+  "hand_pooled_skill": 0.0,
+  "zero_width_rows_scored": 4278
+ }
+}
