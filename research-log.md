@@ -135,3 +135,7 @@ Query 5 (declared now, before running): ens of mix + gbm + chronos_last, equal w
   - blend of mix + fm2 + analog + prov: 0.2131, +0.044 [+0.029,+0.076]; halves +0.049 and +0.043, both intervals above zero.
 - Declared, query 7 on validation headline: ens of mix and prov {"L":1,"W":21,"gate":"dyn"}, against mix.
 - Declared, query 8 on validation headline: ens of mix and fm2_live {"ctx_len":16,"lo":0.15} (the model run live on the validation origins; same forecasts as the cached-grid method on dev), against mix.
+- Results (data_out/val_gate.jsonl), validation headline, 1,816 cells, mix 0.1121, drift 0.0845:
+  - Query 7, mix + prov: 0.1845, +0.0724 [+0.0589,+0.0868], one-sided DM p<0.001. h=1 +0.005, h=3 +0.017, h=7 +0.051; fastgpu +0.047, gpurentalprices +0.026.
+  - Query 8, mix + fm2: 0.1698, +0.0577 [+0.0391,+0.0795], p<0.001. h=1 -0.005, h=3 +0.011, h=7 +0.052; fastgpu +0.052, gpurentalprices +0.007.
+  - With query 6 (p=0.031) all three pass Benjamini-Hochberg at 10%. Kept so far: analog, prov, fm2. Budget used: 3 of 8.

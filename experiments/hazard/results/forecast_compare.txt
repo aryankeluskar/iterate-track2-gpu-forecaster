@@ -1,0 +1,97 @@
+drift 0.0886  mix 0.1691
+
+== lr2: skill 0.1081 cov 0.743 | blend50 with mix 0.1640
+   vs drift: d=+0.0195 ci90=[-0.0258,+0.0430] | vs mix: d=-0.0610 ci90=[-0.0969,-0.0403] | blend vs mix: d=-0.0051 ci90=[-0.0224,+0.0170]
+   blend w_hazard=0.25: 0.1761
+   blend w_hazard=0.75: 0.1411
+  loss share of last-value total by outcome bucket:
+          drift     mix     lr2   blend
+bucket                                 
+0 none   0.0162  0.0281  0.0380  0.0321
+1 <1%    0.0569  0.0529  0.0956  0.0705
+2 1-5%   0.2884  0.2481  0.2559  0.2373
+3 up>5%  0.4145  0.3679  0.3864  0.3770
+4 dn>5%  0.1353  0.1338  0.1159  0.1192
+  gain over mix by source_id (share of total base loss): {'afhubbard': 0.0012, 'fastgpu_daily': -0.0428, 'gpurentalprices': -0.0194}
+  gain over mix by horizon_days (share of total base loss): {1: -0.006, 3: -0.0138, 7: -0.0412}
+  by predicted P(no change): loss / base-loss total, hazard vs mix vs mix with all three quantiles = last
+                    n  obs_p0  hazard     mix  mix_collapsed    w_hz   w_mix
+pbin                                                                        
+(-0.001, 0.5]  1287.0  0.1647  0.4763  0.4179         0.5469  0.1333  0.0889
+(0.5, 0.7]      565.0  0.3611  0.1642  0.1603         0.1897  0.0552  0.0370
+(0.7, 0.8]      455.0  0.5231  0.0896  0.0883         0.0990  0.0230  0.0247
+(0.8, 0.9]      614.0  0.6857  0.0897  0.0914         0.0923  0.0041  0.0102
+(0.9, 1.0]     1117.0  0.8371  0.0642  0.0649         0.0642  0.0000  0.0011
+  quantile parts, hazard minus mix (share of T): {'q10': 0.03, 'q50': 0.0075, 'q90': 0.0235}
+
+== lrP: skill 0.1117 cov 0.753 | blend50 with mix 0.1593
+   vs drift: d=+0.0231 ci90=[-0.0155,+0.0455] | vs mix: d=-0.0574 ci90=[-0.0934,-0.0308] | blend vs mix: d=-0.0098 ci90=[-0.0296,+0.0103]
+   blend w_hazard=0.25: 0.1710
+   blend w_hazard=0.75: 0.1387
+  loss share of last-value total by outcome bucket:
+          drift     mix     lrP   blend
+bucket                                 
+0 none   0.0162  0.0281  0.0375  0.0328
+1 <1%    0.0569  0.0529  0.0873  0.0673
+2 1-5%   0.2884  0.2481  0.2600  0.2442
+3 up>5%  0.4145  0.3679  0.3936  0.3807
+4 dn>5%  0.1353  0.1338  0.1099  0.1157
+  gain over mix by source_id (share of total base loss): {'afhubbard': -0.0015, 'fastgpu_daily': -0.0401, 'gpurentalprices': -0.0158}
+  gain over mix by horizon_days (share of total base loss): {1: -0.0077, 3: -0.0163, 7: -0.0333}
+  by predicted P(no change): loss / base-loss total, hazard vs mix vs mix with all three quantiles = last
+                    n  obs_p0  hazard     mix  mix_collapsed    w_hz   w_mix
+pbin                                                                        
+(-0.001, 0.5]  1287.0  0.1647  0.4651  0.4179         0.5469  0.1459  0.0889
+(0.5, 0.7]      565.0  0.3611  0.1694  0.1603         0.1897  0.0631  0.0370
+(0.7, 0.8]      455.0  0.5231  0.0894  0.0883         0.0990  0.0198  0.0247
+(0.8, 0.9]      614.0  0.6857  0.0923  0.0914         0.0923  0.0002  0.0102
+(0.9, 1.0]     1117.0  0.8371  0.0642  0.0649         0.0642  0.0000  0.0011
+  quantile parts, hazard minus mix (share of T): {'q10': 0.0433, 'q50': 0.0054, 'q90': 0.0088}
+
+== lrA: skill 0.0479 cov 0.822 | blend50 with mix 0.1499
+   vs drift: d=-0.0408 ci90=[-0.1662,+0.0201] | vs mix: d=-0.1212 ci90=[-0.2395,-0.0637] | blend vs mix: d=-0.0192 ci90=[-0.0680,+0.0023]
+   blend w_hazard=0.25: 0.1821
+   blend w_hazard=0.75: 0.1016
+  loss share of last-value total by outcome bucket:
+          drift     mix     lrA   blend
+bucket                                 
+0 none   0.0162  0.0281  0.1099  0.0693
+1 <1%    0.0569  0.0529  0.1009  0.0730
+2 1-5%   0.2884  0.2481  0.2628  0.2314
+3 up>5%  0.4145  0.3679  0.3844  0.3758
+4 dn>5%  0.1353  0.1338  0.0941  0.1006
+  gain over mix by source_id (share of total base loss): {'afhubbard': 0.0022, 'fastgpu_daily': -0.0871, 'gpurentalprices': -0.0363}
+  gain over mix by horizon_days (share of total base loss): {1: -0.0105, 3: -0.0228, 7: -0.0879}
+  by predicted P(no change): loss / base-loss total, hazard vs mix vs mix with all three quantiles = last
+                    n  obs_p0  hazard     mix  mix_collapsed    w_hz   w_mix
+pbin                                                                        
+(-0.001, 0.5]  2418.0  0.3466  0.7831  0.6638         0.8242  0.1472  0.0539
+(0.5, 0.7]      530.0  0.5547  0.0866  0.0842         0.0941  0.0455  0.0258
+(0.7, 0.8]      278.0  0.6655  0.0367  0.0357         0.0361  0.0145  0.0194
+(0.8, 0.9]      299.0  0.7625  0.0247  0.0259         0.0246  0.0005  0.0138
+(0.9, 1.0]      513.0  0.9064  0.0131  0.0133         0.0131  0.0000  0.0013
+  quantile parts, hazard minus mix (share of T): {'q10': 0.0895, 'q50': 0.0029, 'q90': 0.0289}
+
+== gbA: skill -0.0090 cov 0.845 | blend50 with mix 0.1227
+   vs drift: d=-0.0976 ci90=[-0.3056,-0.0098] | vs mix: d=-0.1781 ci90=[-0.3656,-0.0958] | blend vs mix: d=-0.0464 ci90=[-0.1132,-0.0179]
+   blend w_hazard=0.25: 0.1709
+   blend w_hazard=0.75: 0.0600
+  loss share of last-value total by outcome bucket:
+          drift     mix     gbA   blend
+bucket                                 
+0 none   0.0162  0.0281  0.1547  0.0915
+1 <1%    0.0569  0.0529  0.1040  0.0736
+2 1-5%   0.2884  0.2481  0.2650  0.2308
+3 up>5%  0.4145  0.3679  0.3880  0.3770
+4 dn>5%  0.1353  0.1338  0.0973  0.1043
+  gain over mix by source_id (share of total base loss): {'afhubbard': 0.0018, 'fastgpu_daily': -0.138, 'gpurentalprices': -0.0419}
+  gain over mix by horizon_days (share of total base loss): {1: -0.0269, 3: -0.0416, 7: -0.1096}
+  by predicted P(no change): loss / base-loss total, hazard vs mix vs mix with all three quantiles = last
+                    n  obs_p0  hazard     mix  mix_collapsed    w_hz   w_mix
+pbin                                                                        
+(-0.001, 0.5]  3112.0  0.4428  0.8329  0.6570         0.8167  0.1384  0.0446
+(0.5, 0.7]      441.0  0.5896  0.0829  0.0802         0.0894  0.0397  0.0196
+(0.7, 0.8]      187.0  0.7005  0.0349  0.0359         0.0357  0.0138  0.0198
+(0.8, 0.9]      128.0  0.7422  0.0210  0.0212         0.0210  0.0003  0.0146
+(0.9, 1.0]      170.0  0.8588  0.0293  0.0285         0.0293  0.0000  0.0065
+  quantile parts, hazard minus mix (share of T): {'q10': 0.1106, 'q50': 0.0046, 'q90': 0.0629}
