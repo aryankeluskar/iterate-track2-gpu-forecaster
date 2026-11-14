@@ -1,0 +1,12 @@
+mix   conf_all         first half  base skill 0.1720 tail skill 0.1664 d -0.0056 | no-change cells cost -0.0118  moving cells +0.0063
+mix   conf_all         second half base skill 0.1685 tail skill 0.1980 d +0.0295 | no-change cells cost -0.0041  moving cells +0.0336
+mix   conf_all_ew_pw1  first half  base skill 0.1720 tail skill 0.1719 d -0.0001 | no-change cells cost -0.0083  moving cells +0.0081
+mix   conf_all_ew_pw1  second half base skill 0.1685 tail skill 0.1993 d +0.0308 | no-change cells cost -0.0074  moving cells +0.0381
+mix   aci_slow         first half  base skill 0.1720 tail skill 0.1650 d -0.0070 | no-change cells cost -0.0116  moving cells +0.0046
+mix   aci_slow         second half base skill 0.1685 tail skill 0.1990 d +0.0305 | no-change cells cost -0.0118  moving cells +0.0423
+ens3  conf_all         first half  base skill 0.1553 tail skill 0.1471 d -0.0082 | no-change cells cost -0.0106  moving cells +0.0025
+ens3  conf_all         second half base skill 0.1952 tail skill 0.2070 d +0.0118 | no-change cells cost -0.0027  moving cells +0.0145
+ens3  conf_all_ew_pw1  first half  base skill 0.1553 tail skill 0.1522 d -0.0030 | no-change cells cost -0.0044  moving cells +0.0014
+ens3  conf_all_ew_pw1  second half base skill 0.1952 tail skill 0.2066 d +0.0114 | no-change cells cost -0.0055  moving cells +0.0170
+ens3  aci_slow         first half  base skill 0.1553 tail skill 0.1510 d -0.0043 | no-change cells cost -0.0044  moving cells +0.0000
+ens3  aci_slow         second half base skill 0.1952 tail skill 0.2016 d +0.0064 | no-change cells cost -0.0084  moving cells +0.0148

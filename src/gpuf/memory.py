@@ -4,7 +4,7 @@ Every write and every recall is appended to data_out/memory_journal.jsonl (reque
 PAST_OFFLINE=1: nothing touches the network. Writes go to the journal only; recall replays the most recent journalled
 answer for the same query, identity and as-of date, or, if none exists, answers from the journalled writes (audience
 and date rules applied) and journals that answer so the next call replays it.
-Live writes and live recalls also need PAST_ALLOW_WRITES=1 (the owner has not yet approved sending data); `usage` is a
+Live writes and live recalls also need PAST_ALLOW_WRITES=1 (the owner approved the plan on 2026-11-14); `usage` is a
 read-only GET and needs only the key. The key is read from PAST_API_KEY or PAST_DEV_API_KEY (environment, then .env,
 then ../.env), is sent only in the Authorization header, and is scrubbed from every error text and journal line.
 Docs: literature/pastdev-api.md.
@@ -120,7 +120,7 @@ def _http(method: str, path: str, body=None) -> dict:
 
 def _live_guard() -> None:
     if os.environ.get("PAST_ALLOW_WRITES") != "1" and not _dry:
-        raise PastError("live past.dev writes and recalls are disabled: set PAST_ALLOW_WRITES=1 after the owner approves experiments/memory/plan.md, or use PAST_OFFLINE=1")
+        raise PastError("live past.dev writes and recalls are disabled: set PAST_ALLOW_WRITES=1 for live calls (owner-approved, see experiments/memory/README_memory.md), or use PAST_OFFLINE=1 to replay from the journal")
 
 
 def _write(op: str, method: str, path: str, body, agent: str | None) -> dict:
@@ -236,7 +236,7 @@ def _local_answer(body: dict) -> dict:
     scored.sort(key=lambda x: (-x[0], x[1]))
     res = [{"id": "local-" + it["id"], "rank": n + 1, "occurredAt": it["timestamp"], "content": it["content"],
             "artifact": {"id": "local-" + it["id"], "kind": "source", "occurredAt": it["timestamp"]},
-            "sources": [{"sourceId": it["id"], "occurredAt": it["timestamp"], "label": it.get("label"), "excerpts": []}]}
+            "sources": [{"sourceId": it["id"], "occurredAt": it["timestamp"], "label": it.get("label"), "excerpts": [], "metadata": it.get("metadata")}]}
            for n, (s, _, it) in enumerate(scored[: body.get("limit", 100)])]
     return {"asOf": hi, "results": res, "offline": "local-from-journal"}
 
@@ -301,14 +301,189 @@ def ledger_item(e: dict) -> dict:
                                                              "status": e["status"], "ledger_agent": e.get("agent")}, "content": txt}
 
 
+def _dedupe(resp: dict, top: int, excerpt_chars: int = 500) -> list[dict]:
+    """Ranked results to one row per source data point: id, author, date, label, kind of the best hit, excerpt."""
+    rows: dict[str, dict] = {}
+    for r in resp.get("results", []):
+        derived = r["artifact"]["kind"] != "source"
+        for s in r.get("sources", []):
+            sid = s["sourceId"]
+            row = rows.get(sid)
+            if row is None:
+                if len(rows) >= top and top > 0:
+                    continue
+                md = s.get("metadata") or {}
+                row = rows[sid] = {"rank": r["rank"], "source_id": sid, "author": md.get("agent"), "occurred_at": s.get("occurredAt"),
+                                   "label": s.get("label"), "kind": r["artifact"]["kind"], "metadata": md, "excerpt": None, "text": None}
+            if not derived and row["text"] is None:
+                row["text"] = r["content"]
+            if row["excerpt"] is None:
+                row["excerpt"] = (r["content"] if derived else (s.get("excerpts") or [r["content"]])[0])[:excerpt_chars]
+    return list(rows.values())
+
+
+def _recall_rows(query, identity, top, as_of=None, agent=None):
+    resp = recall(query, identity, agent=agent or identity, as_of=as_of, limit=min(200, max(20, top * 6)))
+    return resp, _dedupe(resp, top)
+
+
+def _clean(row: dict) -> dict:
+    return {k: v for k, v in row.items() if k not in ("text", "metadata")}
+
+
+def reach(identity: str, agent: str | None = None) -> list[str]:
+    """Audience slugs `identity` can read (GET /identities/{id}; offline: last journalled answer, else the journalled audiences)."""
+    if offline():
+        for r in reversed(_read_journal()):
+            if r["op"] == "reach" and r["request"]["identity"] == identity:
+                return r["response"]["audiences"]
+        out = {"project"}
+        for r in _read_journal():
+            q = r["request"]
+            if r["op"] == "put_audience" and q["body"].get("kind") == "fixed" and identity in q["body"].get("identities", []):
+                out.add(q["path"].rsplit("/", 1)[1])
+        return sorted(out)
+    _live_guard()
+    resp = _http("GET", f"/api/v1/identities/{identity}")
+    _journal("reach", _agent(agent or identity), {"identity": identity}, {"audiences": resp.get("audiences", [])})
+    return resp.get("audiences", [])
+
+
+def remember(identity: str, audience: str, id: str, timestamp: str, label: str, text: str, timeout: float = 600.0) -> dict:
+    """Write one data point authored by `identity` and wait until it is completed."""
+    t0 = time.time()
+    r = ingest([{"id": id, "audience": audience, "identity": identity, "timestamp": timestamp, "label": label, "content": text,
+                 "metadata": {"agent": identity}}], agent=identity)
+    w = wait(r["ingestionId"], timeout)
+    return {"id": id, "audience": audience, "author": identity, "timestamp": timestamp, "ingestion_id": r["ingestionId"],
+            "unchanged": bool((r.get("items") or [{}])[0].get("unchanged")), "status": w.get("status"), "offline": offline(),
+            "seconds": round(time.time() - t0, 1)}
+
+
+def _ledger_path() -> pathlib.Path:
+    return pathlib.Path(os.environ.get("PAST_LEDGER") or ROOT / "data_out" / "ledger.jsonl")
+
+
+def sync_ledger(dry: bool = False) -> dict:
+    """Send every ledger entry that is new or changed since the last sync, as `experimenter`. State: <journal dir>/memory_ledger_state[_offline].json."""
+    state_p = journal_path().parent / ("memory_ledger_state_offline.json" if offline() else "memory_ledger_state.json")
+    state = json.loads(state_p.read_text()) if state_p.exists() else {}
+    items = [ledger_item(json.loads(x)) for x in _ledger_path().read_text().splitlines() if x.strip()]
+    digest = lambda it: hashlib.sha256(json.dumps(it, sort_keys=True).encode()).hexdigest()
+    todo = [it for it in items if state.get(it["id"]) != digest(it)]
+    res = {"ledger_entries": len(items), "to_send": [i["id"] for i in todo], "sent": 0, "dry_run": dry, "offline": offline()}
+    if todo and not dry:
+        t0 = time.time()
+        r = ingest(todo, agent="experimenter")
+        w = wait(r["ingestionId"])
+        state.update({it["id"]: digest(it) for it in todo})
+        state_p.write_text(json.dumps(state, indent=1, sort_keys=True))
+        res.update(sent=len(todo), ingestion_id=r["ingestionId"], status=w.get("status"), seconds=round(time.time() - t0, 1))
+    return res
+
+
+BRIEF_SECTIONS = (
+    ("refuted", "Refuted or not significant hypotheses (do not re-test blindly)", "gpuf-experiments", {"experiment"},
+     "Hypotheses already tested and refuted or not significant, on: {t}"),
+    ("failures", "Failure modes and dated failure cases of the median forecast", "gpuf-failures", {"event", "failure_mode", "case"},
+     "Failure modes and dated failure cases of the median forecast on: {t}"),
+    ("evidence", "Dated web evidence", "gpuf-evidence", {"web_evidence"}, "Dated web evidence about: {t}"),
+)
+_KEEP = ("Claim:", "Result:", "Quoted sentence:", "URL:", "Cause:", "Median:", "definition:", "share_of_blend_loss:", "share_of_last_value_loss:", "Explains:", "Prediction:")
+
+
+def _summary(row: dict) -> str:
+    if row.get("text"):
+        lines = row["text"].splitlines()
+        md = row.get("metadata") or {}
+        head = (row.get("label") or lines[0]) + (f" ({md['status']})" if md.get("status") else "")
+        keep = [l for l in lines[1:] if l.startswith(_KEEP)] or lines[1:3]
+        return " | ".join([head] + keep)[:700]
+    return (row.get("excerpt") or "")[:400]
+
+
+def brief(identity: str, topic: str, as_of=None, top: int = 4) -> dict:
+    """Two or three recalls (refuted hypotheses, failure modes, evidence) on `topic`, limited to what `identity` may read."""
+    may = set(reach(identity))
+    sections, text = [], [f"BRIEFING for {identity} on: {topic}" + (f" (as of {as_of})" if as_of else "")]
+    for key, title, aud, kinds, q in BRIEF_SECTIONS:
+        if aud not in may:
+            sections.append({"key": key, "title": title, "skipped": f"{identity} may not read {aud}", "items": []})
+            continue
+        resp, rows = _recall_rows(q.format(t=topic), identity, 60 if top > 0 else 0, as_of)
+        rows = [r for r in rows if r["metadata"].get("kind") in kinds]
+        if key == "refuted":
+            rows = [r for r in rows if r["metadata"].get("status") in ("refuted", "not_significant")]
+        rows = rows[:top]
+        sections.append({"key": key, "title": title, "query": q.format(t=topic), "items": [{**_clean(r), "summary": _summary(r)} for r in rows]})
+        text.append(f"\n## {title}" + ("" if rows else "\n(nothing found)"))
+        text += [f"- [{r['source_id']}] by {r['author']}, {str(r['occurred_at'])[:10]}: {_summary(r)}" for r in rows]
+    return {"identity": identity, "topic": topic, "as_of": as_of, "offline": offline(), "sections": sections, "briefing": "\n".join(text)}
+
+
+EPILOG = """\
+commands (all print JSON on stdout; errors go to stderr with exit code 1; set PAST_ALLOW_WRITES=1 for live calls,
+PAST_OFFLINE=1 to replay from data_out/memory_journal.jsonl with no network):
+  recall        python -m gpuf.memory recall --as proposer "upper tail under-covered at 7 days" --top 5
+  remember      python -m gpuf.memory remember --as researcher --audience gpuf-experiments --id exp-H30 \\
+                  --timestamp 2026-11-14T21:00:00Z --label "Experiment: H30" --text-file notes.txt
+  sync-ledger   python -m gpuf.memory sync-ledger          (new or changed ledger entries, as experimenter)
+  brief         python -m gpuf.memory brief --as proposer "upper tail under-covered at 7 days"
+  usage         python -m gpuf.memory usage              (credits left; read-only)
+  dry-run       python -m gpuf.memory dry-run FILE.jsonl  (prints the requests, sends nothing)
+identities: autopsy, scout, experimenter, proposer, forecaster, researcher. audiences: gpuf-failures, gpuf-evidence, gpuf-experiments.
+Docs: experiments/memory/README_memory.md"""
+
+
+def _parser():
+    import argparse
+    P = argparse.ArgumentParser(prog="python -m gpuf.memory", description="Shared agent memory on past.dev (journalled; offline replay).",
+                                epilog=EPILOG, formatter_class=argparse.RawDescriptionHelpFormatter)
+    sub = P.add_subparsers(dest="cmd", required=True)
+    mk = lambda n, h, ex: sub.add_parser(n, help=h, description=h, epilog="example:\n  " + ex, formatter_class=argparse.RawDescriptionHelpFormatter)
+    r = mk("recall", "Recall ranked memories as an identity; prints one row per source data point.",
+           'python -m gpuf.memory recall --as forecaster --as-of 2026-10-06 "announced price increases effective soon" --top 5')
+    r.add_argument("query"); r.add_argument("--as", dest="identity", required=True, help="reader identity (decides which audiences are visible)")
+    r.add_argument("--as-of", help="YYYY-MM-DD: only memories that occurred at or before the end of that day UTC")
+    r.add_argument("--top", type=int, default=8, help="max distinct sources printed (default 8)")
+    w = mk("remember", "Write one data point and wait until it is completed. Same --id again updates it, never duplicates.",
+           'python -m gpuf.memory remember --as scout --audience gpuf-evidence --id scout-abc123 --timestamp 2026-10-01T09:00:00Z --label "Evidence: example.com" --text "..."')
+    w.add_argument("--as", dest="identity", required=True, help="author identity")
+    w.add_argument("--audience", required=True, help="gpuf-failures | gpuf-evidence | gpuf-experiments")
+    w.add_argument("--id", required=True, help="stable id, no '/'"); w.add_argument("--timestamp", required=True, help="ISO 8601 with zone: when the content occurred / became known")
+    w.add_argument("--label", required=True); g = w.add_mutually_exclusive_group(required=True)
+    g.add_argument("--text"); g.add_argument("--text-file")
+    s = mk("sync-ledger", "Send every ledger entry new or changed since the last sync, as experimenter.", "python -m gpuf.memory sync-ledger --dry")
+    s.add_argument("--dry", action="store_true", help="list what would be sent; send nothing")
+    b = mk("brief", "Compact briefing before starting work: refuted hypotheses, failure modes and evidence on a topic.",
+           'python -m gpuf.memory brief --as proposer "upper tail under-covered at 7 days" --as-of 2026-11-06 --top 4')
+    b.add_argument("topic"); b.add_argument("--as", dest="identity", required=True); b.add_argument("--as-of")
+    b.add_argument("--top", type=int, default=4, help="items per section (default 4)"); b.add_argument("--text", action="store_true", help="print only the briefing text")
+    sub.add_parser("usage", help="credits left (read-only)"); d = sub.add_parser("dry-run", help="print the requests of a JSONL file, send nothing"); d.add_argument("file")
+    return P
+
+
 def _cli(argv: list[str]) -> int:
-    if argv[:1] == ["usage"]:
-        print(json.dumps(usage(), indent=2))
-        return 0
-    if argv[:1] == ["dry-run"] and len(argv) == 2:
+    a = _parser().parse_args(argv)
+    dump = lambda o: print(json.dumps(o, indent=2, ensure_ascii=False))
+    if a.cmd == "usage":
+        dump(usage())
+    elif a.cmd == "recall":
+        resp, rows = _recall_rows(a.query, a.identity, a.top, a.as_of)
+        dump({"identity": a.identity, "query": a.query, "as_of": a.as_of, "offline": offline(), "count": len(rows), "pending": resp.get("pending"),
+              "results": [_clean(r) for r in rows]})
+    elif a.cmd == "remember":
+        text = a.text if a.text is not None else pathlib.Path(a.text_file).read_text()
+        dump(remember(a.identity, a.audience, a.id, a.timestamp, a.label, text))
+    elif a.cmd == "sync-ledger":
+        dump(sync_ledger(a.dry))
+    elif a.cmd == "brief":
+        out = brief(a.identity, a.topic, a.as_of, a.top)
+        print(out["briefing"]) if a.text else dump(out)
+    elif a.cmd == "dry-run":
         set_dry_run(True)
         items = []
-        for line in pathlib.Path(argv[1]).read_text().splitlines():
+        for line in pathlib.Path(a.file).read_text().splitlines():
             if not line.strip():
                 continue
             j = json.loads(line)
@@ -324,9 +499,7 @@ def _cli(argv: list[str]) -> int:
         if items:
             ingest(items)
         print("dry run: nothing was sent", file=sys.stderr)
-        return 0
-    print("usage: python -m gpuf.memory usage | dry-run FILE.jsonl", file=sys.stderr)
-    return 2
+    return 0
 
 
 if __name__ == "__main__":

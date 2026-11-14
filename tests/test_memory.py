@@ -89,3 +89,62 @@ def test_dry_run_sends_nothing(env, capsys, tmp_path):
 def test_live_writes_need_explicit_opt_in():
     with pytest.raises(memory.PastError, match="PAST_ALLOW_WRITES"):
         memory.ingest(ITEMS)
+
+
+def _json(capsys):
+    return json.loads(capsys.readouterr().out)
+
+
+def test_cli_remember_then_recall_offline(env, monkeypatch, capsys):
+    monkeypatch.setenv("PAST_OFFLINE", "1")
+    memory.put_audience("gpuf-evidence", identities=["scout", "forecaster"])
+    assert memory._cli(["remember", "--as", "scout", "--audience", "gpuf-evidence", "--id", "scout-x", "--timestamp", "2026-10-01T00:00:00Z",
+                        "--label", "Evidence: x.com", "--text", "Nebius raises H100 prices"]) == 0
+    out = _json(capsys)
+    assert out["status"] == "completed" and out["offline"] and out["id"] == "scout-x"
+    assert memory._cli(["recall", "--as", "forecaster", "Nebius H100", "--top", "3"]) == 0
+    res = _json(capsys)["results"]
+    assert [r["source_id"] for r in res] == ["scout-x"] and res[0]["author"] == "scout" and res[0]["occurred_at"].startswith("2026-10-01")
+    assert memory._cli(["recall", "--as", "forecaster", "Nebius", "--as-of", "2026-09-30"]) == 0
+    assert _json(capsys)["results"] == []
+    assert memory._cli(["recall", "--as", "stranger", "Nebius"]) == 0
+    assert _json(capsys)["results"] == []
+
+
+def test_cli_sync_ledger_sends_only_new_or_changed(env, monkeypatch, capsys, tmp_path):
+    monkeypatch.setenv("PAST_OFFLINE", "1")
+    led = tmp_path / "ledger.jsonl"
+    monkeypatch.setenv("PAST_LEDGER", str(led))
+    row = lambda i, st: {"id": i, "agent": "a", "claim": "c", "status": st, "updated_utc": "2026-11-14T10:00:00+00:00"}
+    led.write_text(json.dumps(row("H1", "running")) + "\n" + json.dumps(row("H2", "running")) + "\n")
+    assert memory._cli(["sync-ledger"]) == 0 and _json(capsys)["sent"] == 2
+    assert memory._cli(["sync-ledger"]) == 0 and _json(capsys)["sent"] == 0
+    led.write_text(json.dumps(row("H1", "refuted")) + "\n" + json.dumps(row("H2", "running")) + "\n" + json.dumps(row("H3", "running")) + "\n")
+    assert memory._cli(["sync-ledger", "--dry"]) == 0 and _json(capsys)["to_send"] == ["exp-H1", "exp-H3"]
+    assert memory._cli(["sync-ledger"]) == 0 and _json(capsys)["sent"] == 2
+
+
+def test_brief_sections_follow_reach(env, monkeypatch, capsys):
+    monkeypatch.setenv("PAST_OFFLINE", "1")
+    memory.put_audience("gpuf-evidence", identities=["forecaster", "proposer"])
+    memory.put_audience("gpuf-failures", identities=["forecaster", "proposer"])
+    memory.put_audience("gpuf-experiments", identities=["proposer"])
+    memory.ingest([
+        {"id": "exp-H1", "audience": "gpuf-experiments", "identity": "experimenter", "timestamp": "2026-11-14T10:00:00+00:00", "label": "Experiment: H1",
+         "content": "Hypothesis ledger entry H1\nClaim: tail widening at h7", "metadata": {"agent": "experimenter", "kind": "experiment", "status": "refuted"}},
+        {"id": "autopsy-e", "audience": "gpuf-failures", "identity": "autopsy", "timestamp": "2026-10-03T23:59:59Z", "label": "Autopsy: s",
+         "content": "Autopsy event: tail at h7", "metadata": {"agent": "autopsy", "kind": "event"}}])
+    p = memory.brief("proposer", "tail at h7")
+    assert [s["key"] for s in p["sections"] if s["items"]] == ["refuted", "failures"]
+    assert p["sections"][0]["items"][0]["author"] == "experimenter" and "exp-H1" in p["briefing"]
+    f = memory.brief("forecaster", "tail at h7")
+    assert f["sections"][0]["skipped"] and "exp-H1" not in f["briefing"] and "autopsy-e" in f["briefing"]
+
+
+def test_cli_help_has_examples_and_failures_exit_nonzero(capsys):
+    with pytest.raises(SystemExit) as e:
+        memory._cli(["recall", "--help"])
+    assert e.value.code == 0 and "example:" in capsys.readouterr().out
+    with pytest.raises(SystemExit) as e:
+        memory._cli(["remember", "--as", "x"])
+    assert e.value.code == 2

@@ -5,8 +5,8 @@ import pytest
 
 from gpuf import data, harness, methods, panel, splits
 
-ORIGINS = [splits.DEV[5], splits.DEV[-1]]
-SIDS = [s for s in data.universe("rental_headline") if panel.supported(s)][:12]
+ORIGINS = [splits.DEV[30], splits.DEV[-1]]
+SIDS = [s for s in data.universe("rental_headline") if panel.supported(s)][::3]
 PARAMS = [{"mode": "mix", "boost": 10, "bkind": "any"}, {"mode": "soft", "c": 3.0, "boost": 10}]
 
 
@@ -39,4 +39,4 @@ def test_future_offer_rows_do_not_change_forecasts(params, mode, monkeypatch):
         a = ref[ref.origin_day <= o].reset_index(drop=True)
         b = got[got.origin_day <= o].reset_index(drop=True)
         pd.testing.assert_frame_equal(a, b)
-    assert min(ORIGINS) in ref.origin_day.values
+    assert set(ORIGINS) <= set(ref.origin_day.values)
