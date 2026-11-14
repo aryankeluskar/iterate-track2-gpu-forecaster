@@ -159,7 +159,7 @@ Query 5 (declared now, before running): ens of mix + gbm + chronos_last, equal w
 - prov follow-up (orchestrator re-run, dev headline, against prov 0.2089): calendar on 0.2827 (+0.074 [0.000,+0.100], first half exactly 0, second +0.089); no return of absent marketplace offers 0.2179 (+0.009 [0.000,+0.016]); both 0.2917. The gain from the calendar is two events and in-sample for the lag. Trend-reversal stress test: prov stays ahead of mix by +0.033 to +0.035 pooled under stop, reversal and mirrored paths.
 - Decision: the validated prov configuration {L 1, W 21, gate dyn} is not changed. The calendar switch may be turned on in the submitted run only if the forecast for origin 2026-11-06 is identical with it on and off (no entry takes effect before the last target date); to be checked on the forecast file, where no truth is involved.
 
-## 2026-11-14 12:47 PT: entry, autopsy2 and insight reports
+## 2026-11-14 12:36 PT: entry, autopsy2 and insight reports
 
 - entry (H30 not significant): the footprint flags are real (17.5 times for a provider listing the same GPU on the other collector) but the base rate is so low that the forecaster built on them does not beat prov at the measured rates. Not nominated.
 - autopsy2 (H31 supported): loss by cause across four systems is in experiments/autopsy2/results/loss_by_cause.csv with a figure. What remains in the current blend: offers entering 29%, dynamic repricing 16%, announced one-offs 14%, marketplace 11%, unannounced one-offs 10%, offers leaving 10%. Note for the blend rule: the six-member blend (with gbm and the long-context Chronos) is 0.2036 on dev against 0.2133 for mix + fm2 + analog + prov. The final agent's leave-one-out on both universes decides whether the rule's exception applies.
