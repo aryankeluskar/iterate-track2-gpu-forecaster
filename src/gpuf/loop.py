@@ -43,6 +43,7 @@ PRV = ["prov", {"L": 1, "W": 21, "gate": "dyn"}]
 ALIASES = {"mix": MIX, "drift": ["drift", {}], "ens4": ["ens", {"members": [MIX, FM2, ANA, PRV]}],
            "fragility_b20": ["fragility", {"mode": "mix", "boost": 20, "bkind": "any"}]}
 ALIASES["ens4_mix_fm2_analog_prov"] = ALIASES["ens4"]
+HYPERSCALERS = ["aws", "azure", "gcp", "oci"]
 EST = {"search": 0.007, "contents": 0.001}   # USD per call, the observed price of every cached call of each kind
 CAUSES = ["none", "dynamic_reprice", "announced_oneoff", "unannounced_oneoff", "entry", "exit", "marketplace_ask", "hyperscaler_spot"]
 DEFS = {  # experiments/autopsy2/protocol.yaml, priority order
@@ -378,7 +379,9 @@ def step_autopsy(a) -> dict:
               f"q10 {r.q10:.3f} q50 {r.q50:.3f} q90 {r.q90:.3f}" for r in top.itertuples() if r.loss > 0]
         row = {"cause": cause, "cells": int(len(g)), "share_of_lv_loss": round(float(lv / LV), 4),
                "loss_over_lv": round(float(g.loss.sum() / lv), 4) if lv > 0 else None,
-               "residual_share": round(float(g.loss.sum() / TL), 4), "points_of_lv": round(float(g.loss.sum() / LV), 4), "examples": ex}
+               "residual_share": round(float(g.loss.sum() / TL), 4), "points_of_lv": round(float(g.loss.sum() / LV), 4), "examples": ex,
+               "providers": HYPERSCALERS if cause == "hyperscaler_spot" else
+               [str(k) for k in g.groupby("provider").loss.sum().sort_values(ascending=False).head(5).index if k]}
         rows.append(row)
         txt = (f"Autopsy failure mode (cause) {cause} of system {slug} on dev headline (written by autopsy via gpuf.loop)\n"
                f"id: {cause}\ndefinition: {DEFS[cause]}\nsystem: {slug} {json.dumps(spec)}\ncells: {row['cells']} of {len(b)}\n"
@@ -712,8 +715,14 @@ def step_propose(a) -> dict:
     except m.PastError as e:
         brief_txt, brief_err = None, str(e)
     items = _mem_items()
-    ev_times = sorted(it["_journal_time"] for it in items.values() if it.get("audience") == "gpuf-evidence")
-    cal_times = sorted(r["utc"] for r in _journal() if r["step"] == "scout" and r["result"].get("new_calendar_entries"))
+    evid = [it for it in items.values() if it.get("audience") == "gpuf-evidence"]
+    cal_new = [(r["utc"], e) for r in _journal() if r["step"] == "scout" for e in r["result"].get("new_calendar_entries", [])]
+
+    def arrived(row, since):   # evidence that names a provider behind this cause's loss, journalled after `since`
+        pv = set(row.get("providers") or [])
+        ids = [it["id"] for it in evid if it["_journal_time"][:19] > since[:19] and (
+            (it.get("metadata") or {}).get("provider") in pv or any(re.search(rf"\b{re.escape(x)}\b", it["content"], re.I) for x in pv))]
+        return ids + [f"calendar:{e['provider']}:{e['effective_date']}" for t, e in cal_new if t[:19] > since[:19] and e["provider"] in pv]
     leads = {}
     fm = ROOT / "experiments/autopsy2/results/failure_modes_iter2.json"
     if fm.exists():
@@ -725,12 +734,13 @@ def step_propose(a) -> dict:
         untested = [{"id": e["id"], "status": e["status"], "claim": (e.get("claim") or "")[:140]} for e in hyps if e["status"] in ("registered", "running")]
         all_neg = bool(tested) and not untested and all(e["status"] in ("refuted", "not_significant", "untestable") for e in tested)
         newest = max((e["updated_utc"] for e in hyps), default="")
-        new_ev = [t for t in ev_times if t[:19] > newest[:19]] + [t for t in cal_times if t[:19] > newest[:19]]
-        state = ("excluded: every targeted hypothesis refuted, no new evidence since" if all_neg and not new_ev else
-                 f"reopened: all targeted hypotheses refuted, but {len(new_ev)} evidence items arrived since {newest[:19]}" if all_neg else
+        new_ev = arrived(r, newest) if all_neg else []
+        state = ("excluded: every targeted hypothesis refuted, no new evidence on its providers since" if all_neg and not new_ev else
+                 f"reopened: all targeted hypotheses refuted, but {len(new_ev)} evidence items on its providers arrived since {newest[:19]}" if all_neg else
                  "open: supported hypotheses target it and it still carries residual loss" if any(e["status"] == "supported" for e in tested) else
                  "open: registered hypotheses wait to be tested" if untested else "open: no hypothesis registered against it")
         out.append({"cause": r["cause"], "residual_share": r["residual_share"], "loss_over_lv": r["loss_over_lv"], "cells": r["cells"], "state": state,
+                    "providers": r.get("providers"), "new_evidence": new_ev[:10],
                     "registered_untested": untested, "tested": tested, "not_yet_registered_lead": leads.get(r["cause"])})
     ranked = [x for x in out if not x["state"].startswith("excluded")] + [x for x in out if x["state"].startswith("excluded")]
     return {"autopsy_of": last["system"], "autopsy_utc": auto[-1]["utc"], "dev_skill": last["dev_skill"], "ranked": ranked,
