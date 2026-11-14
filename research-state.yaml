@@ -1,53 +1,51 @@
+# Central state. Read this first when resuming. Authoritative detail: research-log.md (with corrections), data_out/ledger.jsonl, EVAL_PROTOCOL.md.
 project: track2-gpu-price-forecaster
-question: >
-  Can a hypothesis-testing loop produce q10/q50/q90 forecasts of posted GPU rental prices at 1, 3 and 7 days that beat the drift baseline on origins the loop never saw, and what does it learn about what moves those prices?
-phase: inner_loop   # bootstrap -> inner_loop -> outer_loop -> conclude
-updated: "2026-11-14T11:40-08:00"
-decision_due: "2026-11-14T15:00-08:00"
+updated: "2026-11-14T13:14-08:00"
+phase: conclude   # research done; packaging for submission. Team is still choosing between Track 2 and Track 5.
+deadline: "Sunday 15 Nov 14:00 PT submissions (page also says 14:30); team on platform by 12:00; round 1 pitch 14:45"
 
-evaluation:   # LOCKED in EVAL_PROTOCOL.md before any hypothesis is run
-  metric: pooled pinball skill vs last_value, quantiles 0.1/0.5/0.9, horizons 1/3/7
-  baseline_to_beat: drift (starter kit)
-  splits:   # Amendment 1
-    dev: daily origins 2026-08-18..2026-10-06
-    val: daily origins 2026-10-13..2026-10-30 (gate, queries counted)
-    test: organisers' Sunday scoring (no internal test set)
-  universe: 37 headline rental series as of 2026-11-06 (20 fastgpu, 13 gpurentalprices, 4 afhubbard)
-  reference: starter drift pooled skill 0.183267 on 15 weekly origins 2026-07-15..2026-10-24, headline tier as of 2026-10-24, h=1,3,7 (4209 cells)
+purpose_today: >
+  Prototype Track 2 and establish feasibility so the user can show the team, who choose between Track 2 and Track 5
+  (a teammate is prototyping Track 5; the orchestrator has not seen it). Brief for the team: to_human/track2_feasibility.md.
 
-tickets:
-  "01 Evaluation harness": claimed (opus subagent)
-  "02 Scoreable universe and loss profile": findings in, awaiting ranked hypotheses
-  "03 Literature survey": claimed (sonnet subagent)
-  "04 First hypotheses against drift": blocked by 01, 02
-  "05 Track 2 go or no-go": blocked by 04
+result:
+  submitted_forecaster: "method `final`: equal-weight blend of mix, gbm, chronos (long context), analog, prov, fm2 (16-day context), fragility; 14-day zero-width gate on non-headline series only"
+  one_command: "bash reproduce.sh final   (about 25 s; needs Chronos-Bolt-small in the local HF cache)"
+  files: "submissions/forecast_final_all.csv sha256 7b49870ea476...; submissions/forecast_final_headline.csv sha256 90330d1ea2a9..."
+  validation_13_30_oct: "headline 0.214 vs mix 0.112 vs drift 0.084; non-headline (never tuned on) 0.228 vs 0.178 vs 0.102; coverage 0.80"
+  dev: "headline 0.208 vs mix 0.169 vs drift 0.089; rental_all 0.164 vs mix 0.137"
+  ledger: "37 hypotheses: 13 supported, 15 refuted, 7 not significant, 2 untestable (row L3-frag-b20 is a loop re-run, not a hypothesis)"
 
-hypotheses:   # status: untested | running | supported | refuted
-  H1: {status: "refuted on afhubbard (EDA), open on fastgpu/gpurentalprices", claim: "Daily medians are a slow level plus composition noise, so a robust smoothed level beats last value as the centre of the forecast.", prediction: "q50 = median of last k days lowers pinball vs drift on noisy series (marketplace asks, spot); no gain on step series."}
-  H2: {status: "untested, top priority (EDA: P(change) 0.63 after a change vs 0.03 after two idle weeks)", claim: "Rate-card series move in rare steps; modelling the probability and size of a step separately beats empirical h-day change quantiles.", prediction: "Zero-inflated hazard model gives tighter intervals and higher skill on neocloud_rate_card series."}
-  H3: {status: "untested, top priority (33 of 37 series have under 90 days of history)", claim: "Per-series change quantiles are noisy for short histories; shrinking toward a pooled estimate by instrument class improves them.", prediction: "Hierarchical shrinkage raises mean-of-series skill, which is negative for drift."}
-  H4: {status: untested, claim: "Jumps in a median come from provider-mix changes and partly revert.", prediction: "Conditioning on a change in n_providers or n_obs at the origin improves the forecast for the next days."}
-  H5: {status: untestable (single data vintage), claim: "The trailing day of some collectors is provisional and gets revised.", prediction: "Using the day before the origin as the anchor beats the origin-day value for those collectors."}
-  H6: {status: untested, claim: "Pretrained time-series models (Chronos) carry no usable signal on step-like administered prices.", prediction: "Zero-shot Chronos quantiles lose to drift. A negative result worth reporting."}
-  H7: {status: "weak evidence against (EDA screen, 19 series)", claim: "Other collectors' series for the same GPU lead a given series.", prediction: "Cross-series lagged changes add skill at h=3 and h=7."}
-  H7b: {status: refuted on dev, claim: "Collector-wide breadth of recent changes predicts how far each series moves next.", prediction: "Width scaling by breadth gains +0.005 to +0.02."}
-  H8: {status: refuted on dev, claim: "gpurentalprices leads fastgpu by a day for the same GPU.", prediction: "Shifting the centre by the partner's last change helps h=1 and h=3."}
-  H9: {status: refuted on dev, claim: "A >5% one-day move partly reverts within 7 days.", prediction: "Centre shift against the jump helps h=7."}
-  H10: {status: "not significant on dev (+0.0096, CI -0.004..+0.015, one episode)", claim: "A burst of dated price-increase headlines (Exa) precedes upward jumps.", prediction: "Widening q90 on a burst gains +0.005 to +0.02 at h=7."}
-  H11: {status: running (agent autopsy), claim: "Every median jump is either a repriced offer near the middle or a change in panel membership; composition jumps revert and repricing jumps persist.", prediction: "Composition share of jumps is material and its reversal slope is clearly negative; repricing slope near zero."}
-  H12: {status: running (agent panel), claim: "Simulating the offer panel and recomputing the median beats scaling the last value by empirical log changes.", prediction: "First method with q50 loss below last value; better upper-tail coverage at h=7."}
-  H13: {status: running (agent exa_attrib), claim: "Large provider repricings are announced in public before they appear in the price data.", prediction: "Unknown; either answer is a finding. If yes, a search step before each forecast is justified."}
+caveats_that_must_appear_in_any_writeup:   # from experiments/audit/results/audit.md
+  - validation ranges rest on 3 week-clusters: call them rough ranges, not 90% intervals
+  - stricter validation p-values: prov ~0.005, fm2 ~0.005, fragility 0.05-0.08, analog 0.13-0.16; only prov and fm2 clearly hold; analog and fragility stay on dev evidence (stated deviation from Amendment 2)
+  - the 37 series are chosen as of 6 Nov (hindsight); point-in-time margin of mix over drift +0.033 vs +0.080 on the fixed set
+  - headline validation number is optimistic (members kept on that period); the non-headline number is the clean one
+  - analog leak found by the audit and fixed (<= 2.1e-5 in log on forecasts used; none possible at the scored origin); deletion test added
+  - validation query 5 was committed 32 s after its result; its score 0.1967 was missing from the log (now recorded)
+  - Exa calendar gain (prov with cal on, 0.283 vs 0.209 on dev) is in-sample on two events and OFF in the submission
+  - long-run section gives ranges; no method beat no-change on any backtest
+  - Sunday is one origin: on 50 dev origins the blend beat drift on 46 and was below last value on 2 (overlapping dates)
+  - hypotheses and forecasters were written by LLM agents directed by an orchestrator and a human; the loop's steps are commands, choosing and writing an idea is not automated
 
-trajectory_file: data_out/trajectory.jsonl
-agents_running:   # round 2, brief in experiments/AGENT_BRIEF_R2.md, dev only
-  autopsy: cause of every median change from the offer panel; failure taxonomy (H11)
-  panel: structural forecaster simulating the offer panel (H12)
-  exa_attrib: Exa search for public announcements before the largest repricings (H13)
-  memory: past.dev client and memory plan; no data sent until the owner approves
-  longrun: 2 to 3 year rental and resale view (capability ladder, decay, income approach)
-next_actions:
-  - collect round 2 reports; write failure taxonomy and verdicts to findings.md
-  - past.dev: show the owner the plan, get approval, run the small test, then wire writers and readers
-  - build the loop (autopsy -> scout -> proposer -> experimenter -> gate) around the surviving pieces
-  - one validation query per nominated method (orchestrator only), query count logged
-  - Sunday forecast file for origin 2026-11-06, reproduce.sh, findings, demo
+validation_budget: "Amendment 2: 4 direction queries used of 8 (q6 analog, q7 prov, q8 fm2, q9 fragility) + 2 final looks under Amendment 3 (q10 headline, q11 non-headline). No further validation runs planned. Only the orchestrator runs validation; declare in research-log.md and commit before running (experiments/valgate.py)."
+
+agents_running:
+  writeup: "README.md, FINDINGS.md, ATTRIBUTION.md, experiments/writeup/ (taskId suffix delegate-task:r7-writeup-1). On return: check every number against numbers.md, audit caveats prominent, 37 hypotheses, then commit."
+  demo_fix: "src/gpuf/demo.py -> demo/index.html, experiments/demo/pitch.md (thread r7-demo-1, taskId suffix thread-send:r8-demo-fix-1). Sent back for: no '90% interval' on validation, clean number first, 'what to keep in mind' section, 37 not 38, plain language from experiments/plain_ledger.json. On return: rebuild, run tests/test_demo.py, read the page, commit."
+
+open_items:
+  - user/team: choose track; create public repo and push (nothing pushed; secret scan clean); platform registration; 2-minute video
+  - ask Pacific: does Sunday score only the 37 headline series (--tier headline) or every series in the file? (we submit all 592 either way)
+  - past.dev: the submission form asks to prove better accuracy, latency and cost; the Resources tab says no proof needed. We have not measured what the memory adds.
+  - orchestrator has not read experiments/insight/results/insight.md or experiments/longrun/results/longrun.md line by line
+  - calendar file has a 9th entry added by the loop's scout (Nebius 1 June, confidence C, auto): used by nothing; check before citing
+  - insight agent found Lambda's 'effective 16 Nov' rates already in the gpurentalprices panel on 6 Nov: that calendar entry's date is wrong for that collector
+
+how_to_orchestrate:
+  - "Delegate through the t3-code MCP server: delegate_task with target {providerInstanceId: acpRegistry_devin, model: claude-opus-5-5-medium | claude-sonnet-5-5-medium}, mode async. Follow-ups to a finished child: t3_thread_send (mode auto) to its thread id. Completion wakes the thread; do not poll."
+  - "Machine: 15 cores, 24 GB. Earlier thrash at 19 agents (a 7 GB fine-tune). Keep at most ~6 agents, each process under 3 GB, OMP_NUM_THREADS=2."
+  - "Agents never commit and never run validation. The orchestrator's `git add -A` picks up agents' in-progress files; that is expected."
+  - "Briefs: experiments/AGENT_BRIEF.md, _R2, _R3, _R5 (shared memory). Gate scripts: experiments/halves.py (dev), experiments/valgate.py (validation)."
+  - "Before writing a research-log header, run `date`; earlier headers had to be corrected repeatedly."
+  - "User wants plain language in to_human/ (no jargon). to_human/progress.html is built by experiments/report.py; plain wording per idea is in experiments/plain_ledger.json (add a line for any new hypothesis)."

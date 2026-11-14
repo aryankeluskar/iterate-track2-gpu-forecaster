@@ -328,16 +328,21 @@ def explorer_data() -> dict:
 
 
 # ---------------------------------------------------------------- sections
-def val_section(gate: list[dict], log: list[dict], nhead: int) -> tuple[str, dict]:
+def bh(pvals: dict, q: float = 0.10) -> set:
+    """Benjamini-Hochberg at level q: the names whose p-values are kept."""
+    ps = sorted((v, k) for k, v in pvals.items())
+    kmax = max((i for i, (v, _) in enumerate(ps, 1) if v <= q * i / len(ps)), default=0)
+    return {k for _, k in ps[:kmax]}
+
+
+def val_section(gate: list[dict], log: list[dict], nhead: int, stats: dict) -> tuple[str, dict]:
     g = {r["name"]: r for r in gate}
     keep = [r for r in gate if r["name"].split("_")[0] in ("q6", "q7", "q8", "q9")]
-    ps = sorted((r["p_one_sided"], r["name"]) for r in keep)
-    m, passed, kmax = len(ps), set(), 0
-    for i, (p, n) in enumerate(ps, 1):
-        if p <= 0.10 * i / m:
-            kmax = i
-    passed = {n for _, n in ps[:kmax]}
-    # round 1 (queries 1 to 5): the first distinct candidate configurations on validation headline
+    sd = stats["directions"]
+    k_log = bh({r["name"]: r["p_one_sided"] for r in keep})
+    k_gauss = bh({r["name"]: sd[r["name"]]["val"]["p_sim_gauss_devacf"] for r in keep})
+    k_boot = bh({r["name"]: sd[r["name"]]["val"]["p_sim_block_bootstrap"] for r in keep})
+    # round 1 (queries 1 to 5): the first distinct candidate configurations on the held-back weeks, headline series
     seen, r1 = [], []
     for x in log:
         if x["split"] != "val" or x["universe"] != "rental_headline" or x["method"] in ("drift",) or "role" in x["params"]:
@@ -353,41 +358,45 @@ def val_section(gate: list[dict], log: list[dict], nhead: int) -> tuple[str, dic
 
     def label(method, params):
         if method == "ens":
-            alias = {"replay": "Chronos width", "chronos": "Chronos width"}
+            alias = {"replay": "Chronos range", "chronos": "Chronos range", "mix": "first model", "gbm": "boosted trees"}
             names = [alias.get(mm[0], mm[0]) for mm in params["members"]]
-            parts = []
-            for n in dict.fromkeys(names):
-                parts.append(f"{names.count(n)} variants of {n}" if names.count(n) > 1 else n)
-            return "blend of " + " + ".join(parts)
+            parts = [f"{names.count(n)} versions of the {n}" if names.count(n) > 1 else n for n in dict.fromkeys(names)]
+            return "mix of " + " + ".join(parts)
         if method == "chronos":
-            return "Chronos width around the last value"
-        if method == "fragility":
-            return "reference model with one-offer fragility tails"
-        return {"mix": "reference model (mix)"}.get(method, method)
+            return "Chronos range around the latest price"
+        return {"mix": "first model"}.get(method, method)
 
-    names = {"q6": "reference + nearest-neighbour analogs", "q7": "reference + provider simulator",
-             "q8": "reference + short-context Chronos width", "q9": "reference with one-offer fragility tails"}
+    names = {"q6": "first model + similar past situations", "q7": "first model + provider simulator",
+             "q8": "first model + Chronos range from the last 16 days", "q9": "first model + jumps if one offer leaves or joins"}
     rows = []
     for i, x in enumerate(r1, 1):
         sk = x["result"]["pooled_skill"]
         rows.append(f"<tr><td class=n>{i}</td><td>{esc(label(x['method'], x['params']))}</td><td class=n>{f3(sk)}</td>"
-                    f"<td>drift</td><td class=n>{sgn(sk - drift)}</td><td class=n>not in the log</td><td class=n>–</td><td>–</td></tr>")
+                    f"<td>baseline</td><td class=n>{sgn(sk - drift)}</td><td class=n>not logged</td><td class=n>–</td><td class=n>–</td><td>–</td></tr>")
     for r in keep:
-        q = r["name"].split("_")[0]
-        rows.append(f"<tr><td class=n>{q[1:]}</td><td>{esc(names[q])}</td><td class=n>{f3(r['skill'])}</td><td>reference</td>"
+        q, v = r["name"].split("_")[0], sd[r["name"]]["val"]
+        ps = sorted((v["p_sim_gauss_devacf"], v["p_sim_block_bootstrap"]))
+        strict = sum(r["name"] in k for k in (k_gauss, k_boot))
+        dec = (f"{'kept' if r['name'] in k_log else 'not kept'} / "
+               + ("kept by both" if strict == 2 else "kept by one of two" if strict == 1 else "not kept"))
+        rows.append(f"<tr><td class=n>{q[1:]}</td><td>{esc(names[q])}</td><td class=n>{f3(r['skill'])}</td><td>first model</td>"
                     f"<td class=n>{sgn(r['d_vs_ref'])}</td><td class=n>{ci(r['ci90'])}</td><td class=n>{esc(pv(r['p_one_sided']))}</td>"
-                    f"<td>{'kept' if r['name'] in passed else 'not kept'}</td></tr>")
+                    f"<td class=n>{ps[0]:.3f} to {ps[1]:.3f}</td><td>{dec}</td></tr>")
     fh, fn = g["q10_final_headline"], g["q11_final_nonhead"]
     nn = next(int(re.search(r"\d+", x["universe"]).group()) for x in log if x["universe"].startswith("custom") and x["split"] == "val")
-    for q, r, what in (("10", fh, f"final blend, {nhead} headline series (optimistic)"), ("11", fn, f"final blend, {nn} other posted rental series")):
-        rows.append(f"<tr class=final><td class=n>{q}</td><td>{esc(what)}</td><td class=n>{f3(r['skill'])}</td><td>drift</td>"
-                    f"<td class=n>{sgn(r['d_vs_drift'])}</td><td class=n>{ci(r['ci90_vs_drift'])}</td><td class=n>{esc(pv(r['p_one_sided']))}</td><td>submitted</td></tr>")
+    for q, r, what in (("11", fn, f"final mix, {nn} other series (never used for any choice)"), ("10", fh, f"final mix, the {nhead} scored series (optimistic)")):
+        rows.append(f"<tr class=final><td class=n>{q}</td><td>{esc(what)}</td><td class=n>{f3(r['skill'])}</td><td>baseline</td>"
+                    f"<td class=n>{sgn(r['d_vs_drift'])}</td><td class=n>{ci(r['ci90_vs_drift'])}</td><td class=n>{esc(pv(r['p_one_sided']))}</td><td class=n>–</td><td>submitted</td></tr>")
     nval = sum(1 for x in log if x["split"] == "val" and x["method"] not in ("drift", "mix") and "role" not in x["params"])
-    table = ("<div class=tw><table class=val><caption>Validation results, 13 to 30 October 2026 (origins the methods were not tuned on). "
-             "Skill is pooled over cells; differences are paired, with 90% week-block bootstrap intervals.</caption><thead><tr><th>Query</th><th>Candidate</th>"
-             "<th>Skill</th><th>Compared with</th><th>Difference</th><th>90% interval</th><th>One-sided p</th><th>Decision</th></tr></thead><tbody>"
-             + "".join(rows) + "</tbody></table></div>")
-    facts = {"bh_kept": sorted(passed), "n_val_candidate_runs": nval, "nonhead_series": nn}
+    vw = stats["val_weeks"]
+    table = ("<div class=tw><table class=val><caption>Results on the held-back weeks. Score: how much better than assuming prices stay where they are (0 is no better). "
+             f"Rough range: from resampling whole weeks; with {vw['n_weeks']} weeks there are only {vw['distinct_week_resamples']} distinct resamples, so treat it as a rough guide, not a confidence interval. "
+             "Logged p: the test we planned. Stricter p: the audit's simulation of that test on 18 days (two versions). Kept: false-discovery rule at 10%, first with the logged p, then with each stricter p.</caption>"
+             "<thead><tr><th>Query</th><th>What was tested</th><th>Score</th><th>Compared with</th><th>Difference</th><th>Rough range</th>"
+             "<th>Logged p</th><th>Stricter p</th><th>Kept: logged / stricter</th></tr></thead><tbody>" + "".join(rows) + "</tbody></table></div>")
+    facts = {"bh_kept": sorted(k_log), "bh_kept_gauss": sorted(k_gauss), "bh_kept_boot": sorted(k_boot),
+             "bh_kept_strict_both": sorted(k_gauss & k_boot), "n_val_candidate_runs": nval, "nonhead_series": nn,
+             "val_weeks": vw["n_weeks"], "val_resamples": vw["distinct_week_resamples"]}
     return table, facts
 
 
@@ -438,22 +447,26 @@ def loss_table(rows: list[dict]) -> str:
             + "</tr></thead><tbody>" + "".join(body) + "</tbody></table></div></details>")
 
 
-def ledger_section(led: list[dict]) -> tuple[str, dict]:
+def ledger_section(led: list[dict], plain: dict) -> tuple[str, dict]:
+    led = [r for r in led if not r["id"].startswith("L")]
     counts = {k: sum(1 for r in led if r["status"] == k) for k in STATUS}
     other = len(led) - sum(counts.values())
     btns = [f'<button type=button class=flt aria-pressed=true data-f="all">All <span class=n>{len(led)}</span></button>']
     btns += [f'<button type=button class=flt aria-pressed=false data-f="{k}">{v} <span class=n>{counts[k]}</span></button>' for k, v in STATUS.items()]
     items = []
     for r in led:
-        st = r["status"]
-        items.append(f'<li data-s="{esc(st)}"><div class=lh><span class="badge b-{esc(st)}">{esc(STATUS.get(st, st))}</span> '
-                     f'<b>{esc(r["id"])}</b> <span class=muted>tested by the {esc(r.get("agent", ""))} agent</span></div>'
-                     f'<p class=claim>{inline(r.get("claim", ""))}</p><p class=res>{inline(r.get("result", "") or "No result recorded.")}</p>'
-                     f'<p class=ev>Evidence: {inline(r.get("evidence", "") or "–")}</p></li>')
-    html_ = (f'<div class=filters role=group aria-label="Filter hypotheses by verdict">{"".join(btns)}</div>'
-             f'<p class=muted id=ledger-count aria-live=polite>Showing all {len(led)} hypotheses.</p>'
-             f'<div class=scroll tabindex=0 role=region aria-label="Hypothesis list"><ol class=ledger id=ledger>{"".join(items)}</ol></div>')
-    return html_, {"ledger_total": len(led), **{f"ledger_{k}": v for k, v in counts.items()}, "ledger_other": other}
+        st, pl = r["status"], plain.get(r["id"], {})
+        idea, res = pl.get("idea") or r.get("claim", ""), pl.get("result") or r.get("result", "") or "No result recorded."
+        items.append(f'<li data-s="{esc(st)}" data-id="{esc(r["id"])}"><div class=lh><span class="badge b-{esc(st)}">{esc(STATUS.get(st, st))}</span> '
+                     f'<b>{esc(r["id"])}</b></div><p class=claim>{inline(idea)}</p><p class=res>{inline(res)}</p>'
+                     f'<details><summary>Exact record</summary><p class=res><b>Claim:</b> {inline(r.get("claim", ""))}</p>'
+                     f'<p class=res><b>Result:</b> {inline(r.get("result", "") or "–")}</p>'
+                     f'<p class=ev>Tested by the {esc(r.get("agent", ""))} agent. Evidence: {inline(r.get("evidence", "") or "–")}</p></details></li>')
+    html_ = (f'<div class=filters role=group aria-label="Filter ideas by outcome">{"".join(btns)}</div>'
+             f'<p class=muted id=ledger-count aria-live=polite>Showing all {len(led)} ideas.</p>'
+             f'<div class=scroll tabindex=0 role=region aria-label="List of ideas tested"><ol class=ledger id=ledger>{"".join(items)}</ol></div>')
+    return html_, {"ledger_total": len(led), **{f"ledger_{k}": v for k, v in counts.items()}, "ledger_other": other,
+                   "ledger_plain_missing": sorted(r["id"] for r in led if r["id"] not in plain)}
 
 
 def calendar_section(cal: list[dict], check: dict, exa: dict, led: dict) -> tuple[str, dict]:
