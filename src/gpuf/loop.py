@@ -55,16 +55,16 @@ DEFS = {  # experiments/autopsy2/protocol.yaml, priority order
     "announced_oneoff": "repricing by a static provider with a calendar entry published on or before the origin, effective in (origin, target].",
     "unannounced_oneoff": "repricing by a static provider with no usable calendar entry.",
 }
-# Which ledger hypotheses target which cause: stems searched in claim + failure_mode (rule-based, shown in --help of propose)
+# Which ledger hypotheses target which cause: word-bounded patterns searched in claim + failure_mode (rule-based)
 CAUSE_TERMS = {
-    "none": ["activity gate", "zero width", "interval width", "width ignores"],
-    "dynamic_reprice": ["dynamic", "signed repricing", "repricing state", "recent signed", "changed recently"],
-    "announced_oneoff": ["announc", "calendar", "headline"],
-    "unannounced_oneoff": ["unannounced", "one-off", "lead", "footprint"],
-    "entry": ["entr", "composition", "membership", "one-offer-in", "provider-mix"],
-    "exit": ["exit", "composition", "membership", "one-offer-out", "provider-mix", "revert"],
-    "marketplace_ask": ["marketplace", "volatility", "pretrained"],
-    "hyperscaler_spot": ["hyperscaler", "afhubbard", "spot"],
+    "none": [r"activity gate", r"zero width", r"interval width", r"width ignores"],
+    "dynamic_reprice": [r"\bdynamic", r"signed repricing", r"repricing state", r"recent signed", r"changed recently"],
+    "announced_oneoff": [r"\bannounc", r"\bcalendar", r"\bheadlines?\b"],
+    "unannounced_oneoff": [r"\bunannounced", r"\bone-off", r"\blead(s|ing)?\b", r"\bfootprint"],
+    "entry": [r"\bentr(y|ies|ant|ants)\b", r"\benter", r"\bcomposition", r"\bmembership", r"one-offer-in", r"provider-mix"],
+    "exit": [r"\bexits?\b", r"\bleav(e|es|ing)\b", r"\bcomposition", r"\bmembership", r"one-offer-out", r"provider-mix"],
+    "marketplace_ask": [r"\bmarketplace", r"\bvolatility", r"\bpretrained"],
+    "hyperscaler_spot": [r"\bhyperscaler", r"\bafhubbard", r"\bspot\b"],
 }
 
 
@@ -664,28 +664,28 @@ def step_prior(a) -> dict:
             sources.append({"kind": kind, "date": pub, "title": title, "link": url, "highlight": re.sub(r"\s+", " ", hl)[:350],
                             "overlap": round(_jac(claim, f"{title} {hl}"), 3)})
     sources.sort(key=lambda s: -s["overlap"])
-    near = [m for m in mem if m["rank"] <= 5 and m["overlap"] >= 0.12] + [x for x in lex if x["overlap"] >= 0.2]
-    ref = [n for n in near if n["verdict"] in ("refuted", "not_significant")]
-    sup = [n for n in near if n["verdict"] == "supported"]
+    near = sorted([m for m in mem if m["rank"] <= 5 and m["overlap"] >= 0.12] + [x for x in lex if x["overlap"] >= 0.2], key=lambda n: -n["overlap"])
     lit = [s for s in sources if s["overlap"] >= 0.12]
-    if ref:
-        rec = f"already refuted here ({', '.join(sorted({n['hypothesis'] for n in ref}))}): re-test only with a new reason"
-    elif sup:
-        rec = f"already tested here and supported ({', '.join(sorted({n['hypothesis'] for n in sup}))}): build on it, do not re-run it"
+    nn = near[0] if near else None   # the nearest neighbour decides (a refuted opposite claim must not veto a supported one)
+    if nn and nn["verdict"] in ("refuted", "not_significant"):
+        rec = f"already refuted here ({nn['hypothesis']}, {nn['verdict']}): re-test only with a new reason"
+    elif nn and nn["verdict"] == "supported":
+        rec = f"already tested here and supported ({nn['hypothesis']}): build on it, do not re-run it"
     elif lit:
         rec = f"already known in the literature ({lit[0]['title'][:80]}, {lit[0]['date']}): cite it and test only what is new here"
     else:
         rec = "untested: no near neighbour in memory or the ledger, and no close source found"
     return {"claim": claim, "memory_hits": mem, "memory_error": err, "ledger_nearest": lex, "sources": sources[:a.top], "dropped": dropped,
             "exa_requests": reqs, **budget.report(), "recommendation": rec,
-            "rule": "refuted if a top-5 memory hit overlaps >= 0.12 (or a ledger claim >= 0.2) with status refuted/not_significant; "
-                    "supported likewise; literature if a dated source overlaps >= 0.12; else untested (overlap = Jaccard of 6-letter stems)"}
+            "rule": "nearest neighbour = the highest-overlap top-5 memory hit with overlap >= 0.12 or ledger claim with overlap >= 0.2; its "
+                    "verdict decides (refuted/not_significant -> refuted here, supported -> tested here); otherwise literature if a dated "
+                    "source overlaps >= 0.12; else untested (overlap = Jaccard of 6-letter stems)"}
 
 
 # ----------------------------------------------------------------------------- propose
 def _targets(cause: str, e: dict) -> bool:
     t = f"{e.get('claim') or ''} {e.get('failure_mode') or ''}".lower()
-    return any(s in t for s in CAUSE_TERMS[cause])
+    return any(re.search(s, t) for s in CAUSE_TERMS[cause])
 
 
 def step_propose(a) -> dict:

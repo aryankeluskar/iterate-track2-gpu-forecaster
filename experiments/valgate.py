@@ -12,7 +12,7 @@ name, cand = sys.argv[1], json.loads(sys.argv[2])
 uni = sys.argv[sys.argv.index("--universe") + 1] if "--universe" in sys.argv else "rental_headline"
 ref_spec = json.loads(sys.argv[sys.argv.index("--ref") + 1]) if "--ref" in sys.argv else MIX
 uni_name = uni
-if uni == "rental_nonhead":   # posted rental series outside the headline tier; never queried on validation before 14 Nov 12:50 PT
+if uni == "rental_nonhead":   # posted rental series outside the headline tier; never queried on validation before 14 Nov 12:47 PT
     head = set(data.universe("rental_headline"))
     uni = [s for s in data.universe("rental_all") if s not in head]
 

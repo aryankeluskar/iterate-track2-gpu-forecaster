@@ -187,7 +187,7 @@ Running besides: final (reproducibility: one command, every posted rental series
 - Secret scan by the orchestrator: neither API key value appears in any tracked file or in git history. Tracked content is 41 MB in 1,733 files.
 - Not done and needs the team: creating the public repository and pushing (nothing has been pushed), joining the platform by Sunday 12:00, recording the video.
 
-## 2026-11-14 12:52 PT: final blend built; its two validation looks declared before running
+## 2026-11-14 12:46 PT: final blend built; its two validation looks declared before running
 
 - final (agent report, checked by the orchestrator): `bash reproduce.sh final` runs in 25 s here and gives the same SHA-256 as the agent's two runs (all series d144025579fa..., headline 874522fc0c17...); 1,776 rows for 592 series, 249 with zero width (235 by the gate), headline file 111 rows; both pass the starter schema check and the frozen-cutoff scorer with no refusals. Dev: headline 0.208 against mix 0.169 (+0.039 [+0.025,+0.068]; halves +0.052 and +0.036); rental_all with the non-headline gate 0.164 against mix 0.137 (+0.027 [+0.007,+0.057]; halves +0.056 and +0.015). Leave-one-out under Amendment 3 drops no member (gbm misses by -0.0005 on one of four cells). Gate [14, 1] on non-headline series only. hyperscaler_list stays below the last value (-0.034).
 - The seven-member blend is below the four-member blend without gbm and the long-context Chronos on dev headline (0.208 against 0.213 to 0.216). The rule keeps them; that is the price of not choosing members on the number we want to report.
