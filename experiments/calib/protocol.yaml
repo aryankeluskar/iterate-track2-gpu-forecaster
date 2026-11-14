@@ -1,0 +1,19 @@
+slug: calib
+hypothesis: >
+  Drift's q10/q90 offsets from q50 are miscalibrated in a way predictable from drift's own past
+  pinball losses (few samples, rare large jumps => tails too wide for short-history series).
+  Keep drift's centre (q50) and rescale only the lower and upper offsets.
+mechanism: >
+  Empirical 10/90 quantiles of h-day log changes from 20-70 samples are noisy and pulled outward by
+  rare jumps; pinball-optimal tails for a series that changes on a third of days sit closer to q50.
+  A multiplier c in [0,1.5] per (collector, class, horizon, side), chosen by minimising pinball loss of
+  drift's past forecasts whose target date <= origin, should recover some of it.
+prediction: >
+  Optimal constant c below 1 (about 0.5-0.75) on fastgpu and gpurentalprices rate cards, mostly at h=7;
+  pooled skill gain over drift of +0.01 to +0.04; c near 1 on afhubbard. Online version keeps most of
+  the oracle-constant gain minus 30-50 percent. ACI on levels gains less than multiplier learning.
+refutation: >
+  Oracle constant c within [0.9,1.1] on the loss-heavy groups, or online-recalibrated paired difference
+  vs drift with 90% interval spanning zero on the second half of dev, or gains only on the half used for tuning.
+check_also: >
+  Pinball is minimised by true quantiles, not by 80% coverage: report when coverage improves but pinball does not.

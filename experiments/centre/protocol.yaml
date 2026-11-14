@@ -1,0 +1,19 @@
+slug: centre
+hypothesis: >
+  The centre of the h-day forecast is partly predictable from the series' own recent moves. On fastgpu
+  the latest 1-day change partly reverses (slope about -0.2 at h=3, -0.26 at h=7); on gpurentalprices it
+  persists (+0.2, +0.38). Shift drift's three quantiles by a ridge-predicted change.
+mechanism: >
+  fastgpu / gpurentalprices daily values are medians over the providers seen that day (3 to 17). A
+  provider dropping out of or re-entering the sample moves the median for a day or a few days, then it
+  reverts (fastgpu). Rate cards that are re-posted and stay posted (gpurentalprices) show momentum as
+  staggered provider repricing. Hence opposite signs by collector.
+prediction: >
+  Pooled fitted slope on x1 negative on fastgpu (about -0.15 to -0.3 at h=3,7), positive on
+  gpurentalprices. Shift gains +0.005 to +0.02 pooled skill over drift, mostly h=3 and h=7, concentrated
+  in fastgpu B300/B200 rate cards and gpurentalprices H100/B300. Gains larger for big-jump-only and undo
+  variants than for the full linear shift. Per-series slopes are widely dispersed.
+refutation: >
+  Paired difference vs drift with 90% interval spanning zero for every variant, or coefficient signs
+  flipping between first and second half of dev for the loss-heavy series, or gain only on the
+  half used to estimate the weights.

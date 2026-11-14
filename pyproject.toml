@@ -1,0 +1,10 @@
+[project]
+name = "gpuf"
+version = "0.1.0"
+description = "Leak-safe evaluation harness and forecasters for posted GPU rental prices (Iterate SF Track 2)"
+requires-python = ">=3.12"
+dependencies = ["duckdb", "pandas", "numpy", "pyarrow"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

@@ -21,6 +21,9 @@ A go/no-go decision on Track 2, backed by a working prototype: a leak-free evalu
 
 <!-- one line per resolved ticket -->
 
+- [Scoreable universe and loss profile](issues/02-scoreable-universe-and-loss-profile.md): Sunday scores 37 series, most with under 90 days of history; they move on a third of days.
+- [Literature survey](issues/03-literature-survey.md): gate method changes with e-values under a fixed look budget; short horizons are hard to beat.
+
 ## Not yet specified
 
 - Weight-space programming arm: an LLM-written tiny quantile net. Waits on knowing which features carry signal and which writer model is available.

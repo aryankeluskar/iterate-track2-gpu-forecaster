@@ -1,36 +1,49 @@
 project: track2-gpu-price-forecaster
 question: >
   Can a hypothesis-testing loop produce q10/q50/q90 forecasts of posted GPU rental prices at 1, 3 and 7 days that beat the drift baseline on origins the loop never saw, and what does it learn about what moves those prices?
-phase: bootstrap   # bootstrap -> inner_loop -> outer_loop -> conclude
-updated: "2026-11-14T10:35-08:00"
+phase: inner_loop   # bootstrap -> inner_loop -> outer_loop -> conclude
+updated: "2026-11-14T10:50-08:00"
 decision_due: "2026-11-14T15:00-08:00"
 
 evaluation:   # LOCKED in EVAL_PROTOCOL.md before any hypothesis is run
   metric: pooled pinball skill vs last_value, quantiles 0.1/0.5/0.9, horizons 1/3/7
   baseline_to_beat: drift (starter kit)
-  splits:
-    dev: daily origins 2026-05-01..2026-08-31
-    val: daily origins 2026-09-08..2026-10-04
-    test: daily origins 2026-10-12..2026-10-30 (locked, one look)
+  splits:   # Amendment 1
+    dev: daily origins 2026-08-18..2026-10-06
+    val: daily origins 2026-10-13..2026-10-30 (gate, queries counted)
+    test: organisers' Sunday scoring (no internal test set)
+  universe: 37 headline rental series as of 2026-11-06 (20 fastgpu, 13 gpurentalprices, 4 afhubbard)
   reference: starter drift pooled skill 0.183267 on 15 weekly origins 2026-07-15..2026-10-24, headline tier as of 2026-10-24, h=1,3,7 (4209 cells)
 
 tickets:
   "01 Evaluation harness": claimed (opus subagent)
-  "02 Scoreable universe and loss profile": claimed (sonnet subagent)
+  "02 Scoreable universe and loss profile": findings in, awaiting ranked hypotheses
   "03 Literature survey": claimed (sonnet subagent)
   "04 First hypotheses against drift": blocked by 01, 02
   "05 Track 2 go or no-go": blocked by 04
 
 hypotheses:   # status: untested | running | supported | refuted
-  H1: {status: untested, claim: "Daily medians are a slow level plus composition noise, so a robust smoothed level beats last value as the centre of the forecast.", prediction: "q50 = median of last k days lowers pinball vs drift on noisy series (marketplace asks, spot); no gain on step series."}
-  H2: {status: untested, claim: "Rate-card series move in rare steps; modelling the probability and size of a step separately beats empirical h-day change quantiles.", prediction: "Zero-inflated hazard model gives tighter intervals and higher skill on neocloud_rate_card series."}
-  H3: {status: untested, claim: "Per-series change quantiles are noisy for short histories; shrinking toward a pooled estimate by instrument class improves them.", prediction: "Hierarchical shrinkage raises mean-of-series skill, which is negative for drift."}
+  H1: {status: "refuted on afhubbard (EDA), open on fastgpu/gpurentalprices", claim: "Daily medians are a slow level plus composition noise, so a robust smoothed level beats last value as the centre of the forecast.", prediction: "q50 = median of last k days lowers pinball vs drift on noisy series (marketplace asks, spot); no gain on step series."}
+  H2: {status: "untested, top priority (EDA: P(change) 0.63 after a change vs 0.03 after two idle weeks)", claim: "Rate-card series move in rare steps; modelling the probability and size of a step separately beats empirical h-day change quantiles.", prediction: "Zero-inflated hazard model gives tighter intervals and higher skill on neocloud_rate_card series."}
+  H3: {status: "untested, top priority (33 of 37 series have under 90 days of history)", claim: "Per-series change quantiles are noisy for short histories; shrinking toward a pooled estimate by instrument class improves them.", prediction: "Hierarchical shrinkage raises mean-of-series skill, which is negative for drift."}
   H4: {status: untested, claim: "Jumps in a median come from provider-mix changes and partly revert.", prediction: "Conditioning on a change in n_providers or n_obs at the origin improves the forecast for the next days."}
-  H5: {status: untested, claim: "The trailing day of some collectors is provisional and gets revised.", prediction: "Using the day before the origin as the anchor beats the origin-day value for those collectors."}
+  H5: {status: untestable (single data vintage), claim: "The trailing day of some collectors is provisional and gets revised.", prediction: "Using the day before the origin as the anchor beats the origin-day value for those collectors."}
   H6: {status: untested, claim: "Pretrained time-series models (Chronos) carry no usable signal on step-like administered prices.", prediction: "Zero-shot Chronos quantiles lose to drift. A negative result worth reporting."}
-  H7: {status: untested, claim: "Other collectors' series for the same GPU lead a given series.", prediction: "Cross-series lagged changes add skill at h=3 and h=7."}
+  H7: {status: "weak evidence against (EDA screen, 19 series)", claim: "Other collectors' series for the same GPU lead a given series.", prediction: "Cross-series lagged changes add skill at h=3 and h=7."}
 
 trajectory_file: data_out/trajectory.jsonl
+agents_running:   # dev split only; brief in experiments/AGENT_BRIEF.md
+  harness-builder: finishing acceptance checks (ticket 01)
+  m-hazard: state-dependent hurdle mixture (H2)
+  m-gbm: pooled LightGBM quantile regression (H3)
+  m-calib: online interval recalibration of drift
+  m-foundation: TimesFM and Chronos zero-shot (H6)
+  m-decision: up/flat/down classifier + weight-space programming feasibility
+  m-hedge: online aggregation of experts under pinball loss
+  m-centre: momentum / reversion of the centre (H1 remnant)
+  m-panel: provider-level panel under the median (H4)
+  m-cross: cross-collector coupling (H7)
 next_actions:
-  - wait for tickets 01, 02, 03
-  - lock protocols for H1..H3 from the EDA facts, run on dev, gate on val
+  - collect agent reports; for each nominated method run ONE validation query (orchestrator only), gate = paired difference vs drift with error budget split across queries
+  - plug surviving methods into m-hedge's aggregator as experts
+  - outer-loop reflection, progress report in to_human/, then the go/no-go

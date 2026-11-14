@@ -1,0 +1,23 @@
+slug: gbm
+hypothesis: >
+  One pooled LightGBM quantile model (alpha .1/.5/.9) over all 592 rental series, target = h-day log change,
+  beats drift on rental_headline dev because it shares information across series: volatility/change-frequency
+  features calibrate interval width per series better than drift's rare-jump empirical quantiles, and
+  horizon/collector/class features capture partial reversion (fastgpu) vs momentum (gpurentalprices).
+mechanism: >
+  Drift intervals come from each series' own few historical h-day changes (wide when a rare jump is in the
+  sample, flat under 20 samples). A pooled model learns the mapping (recent vol, change frequency, days since
+  last change, horizon) -> conditional quantile from hundreds of series, so intervals are narrower on quiet
+  series and wider after changes (clustering).
+prediction: >
+  Skill gain over drift of +0.02 to +0.06 pooled, mostly from interval width (q10/q90) at h=3 and h=7 on
+  fastgpu and gpurentalprices rate cards; q50 learned centre adds little (smoothing/reversion centres lose
+  per EDA) so interval_only variant captures most of the gain. Headline-like-only training helps if flat
+  series dominate the pooled fit.
+refuted_if: >
+  Paired difference vs drift on dev has a 90% interval that includes zero or is negative for the full model
+  and the interval-only variant, or coverage of [q10,q90] is far from 0.8 (<0.6 or >0.95).
+leak_control: >
+  Model fitted at origin date t uses only (series, day) pairs with target date <= t and features from rows <= day;
+  reused only for origins >= t (refit every 7 days from first origin). Perturbation test in experiments/gbm/test_leak.py.
+variants: [full, interval_only (q50=last), headline_like_train (>10% change days so far)]
