@@ -1,0 +1,10 @@
+variant,origin,n,coverage_mix,coverage_nochange,abs_log_err_mix,abs_log_err_nochange,mix_beats_nochange_on_error
+as_run_then_noise0.25,2023-12,6,0.0,0.333,1.201,0.731,False
+as_run_then_noise0.25,2024-12,5,0.4,0.6,0.709,0.326,False
+as_run_then_noise0.25,2025-12,3,0.0,0.0,0.53,0.519,False
+as_run_then_noise0.60,2023-12,6,0.333,0.5,1.203,0.731,False
+as_run_then_noise0.60,2024-12,5,0.8,1.0,0.692,0.326,False
+as_run_then_noise0.60,2025-12,3,1.0,1.0,0.52,0.519,False
+frozen_v2_rates_noise0.60,2023-12,6,0.667,0.5,0.745,0.731,False
+frozen_v2_rates_noise0.60,2024-12,5,1.0,1.0,0.435,0.326,False
+frozen_v2_rates_noise0.60,2025-12,3,0.667,1.0,0.598,0.519,False

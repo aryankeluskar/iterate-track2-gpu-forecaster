@@ -1,0 +1,41 @@
+{
+ "static_balanced": {
+  "pairs": 11,
+  "never_moved_either_collector": [
+   "A100_40GB~A100_40GB",
+   "L40S~L40S",
+   "RTX_6000_Ada~RTX_6000_Ada",
+   "RTX_A6000~RTX_A6000",
+   "A100_80GB~A100_SXM_80GB"
+  ],
+  "moved_in_one_collector_only": [
+   "RTX_PRO_6000~RTX_PRO_6000"
+  ],
+  "mad7_median_all_pairs": 0.048379756014987695,
+  "mad7_median_active_pairs": 0.03440581778613362,
+  "mad7_balanced_median_all_pairs": 0.01924131463815536,
+  "mad7_balanced_median_active_pairs": 0.016791593997640363,
+  "mad7_static_balanced_all_pairs": 0.004657098688475705,
+  "mad7_static_balanced_active_pairs": 0.00853801426220546,
+  "n_active": 6
+ },
+ "static_mean": {
+  "pairs": 11,
+  "never_moved_either_collector": [
+   "A100_40GB~A100_40GB",
+   "L40S~L40S",
+   "RTX_6000_Ada~RTX_6000_Ada",
+   "RTX_A6000~RTX_A6000"
+  ],
+  "moved_in_one_collector_only": [
+   "A100_80GB~A100_SXM_80GB"
+  ],
+  "mad7_median_all_pairs": 0.048379756014987695,
+  "mad7_median_active_pairs": 0.03663043199066781,
+  "mad7_balanced_median_all_pairs": 0.01924131463815536,
+  "mad7_balanced_median_active_pairs": 0.018037193350642893,
+  "mad7_static_mean_all_pairs": 0.005327863930777415,
+  "mad7_static_mean_active_pairs": 0.008372357605507367,
+  "n_active": 7
+ }
+}

@@ -40,6 +40,41 @@ Rounding policy for validation numbers taken from val_gate.jsonl (raw values hav
 | 0.0167 | §9 item 3 | same row, column final-drift |
 | 0.1171 | §9 item 3 | experiments/advisor/check_maturity.py output, line 'gain_contribution not_tier', skill_points 0.117097 |
 | 0.1193 | §9 item 3 | experiments/maturity/results/diag.txt, row 'fixed 37', column final-drift; also dev.txt 'final against drift' |
+| 0.0063 | §7 index table | experiments/index/results/acceptance.json (a) index mean abs 7-day disagreement; index.md s2 |
+| 0.0319 | §7 index table | same, posted median |
+| 0.0081 | §7 index table | acceptance.json (b) index, worst one-provider deletion |
+| 0.0309 | §7 index table | same, posted median |
+| 16.6 | §7 | experiments/longrun/results/longrun_v3.md Table 1b, gpurentalprices H100 posted median, log points |
+| 1.9 | §7 | same table, fastgpu H100 posted median |
+| 2.6 | §7 buyer | experiments/longrun/results/longrun_v3.md change table: A100 per-unit ratio 2.57 (unique providers), rounded |
+| 1.8 | §7 buyer | same: H100 per-unit ratio 1.77, rounded |
+| 3.44 | §1 item 4; §8 | experiments/longrun/results/longrun_v3.md Table 1a and Table A, H100 unique-provider level |
+| 2.03 | §1 item 4; §8 | same, A100 80GB |
+| 2.28 | §1 item 4; §8 | experiments/longrun/results/longrun_v3.md Table A, H100 +24 months frozen q50 |
+| 1.20 | §1 item 4; §8 | same, q10 |
+| 4.12 | §1 item 4; §8 | same, q90 |
+| 2.08 | §8 | same, q10 |
+| 4.64 | §8 | same, q90 |
+| 1.76 | §8 | Table A, H100 +36 months q50 |
+| 3.69 | §8 | same, q90 |
+| 1.89 | §8 | Table A, A100 +12 months q50 |
+| 1.35 | §8 | same, q10 |
+| 2.66 | §8 | same, q90 |
+| 2.65 | §1 item 4; §8 | same, q90 |
+| 1.37 | §8 | Table A, A100 +36 months q50 |
+| 0.63 | §8 | same, q10 |
+| 2.63 | §8 | same, q90 |
+| 0.15 | §8 | experiments/longrun/results/longrun_v3.md s2: alternative weights move 0.15 from S2 |
+| 2.41 | §8 | Table A, H100 +24 months, toward shortage q50 |
+| 2.14 | §8 | Table A, H100 +24 months, toward glut q50 |
+| 2.6k | §8 | experiments/longrun/results/longrun_v3.md Table B, H100 +24 m frozen q50, utilisation 0.5, realised 0.70 |
+| 17.1k | §8 | Table B, H100 +24 m frozen q50, utilisation 0.85, realised 1.00 |
+| 0.9k | §8 | Table B, H100 +36 m frozen q50, lowest cell |
+| 9.6k | §8 | Table B, H100 +36 m frozen q50, highest cell |
+| 0.3k | §8 | Table B, A100 +24 m frozen q50, lowest cell |
+| 4.4k | §8 | Table B, A100 +24 m frozen q50, highest cell |
+| 15.1k | §8 | Table B, H100 +24 m no change, lowest cell |
+| 49.8k | §8 | Table B, H100 +24 m no change, highest cell |
 | 0.033 | §4 dev mix+prov second half; §9 item 3 | log 133 ("+0.033"); audit 51 and log 226 (point-in-time universe, mix minus drift) |
 | 0.034 | §4 dev mix+analog first half | log 124 |
 | 0.0361 | §4 dev submitted blend second half | dev.txt 8 |

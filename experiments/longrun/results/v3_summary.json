@@ -1,0 +1,14 @@
+{
+ "income_base_reserved36m": {
+  "H100": 2.9722,
+  "A100": 1.3631
+ },
+ "elec_cagr": 0.04381861943215859,
+ "sanity_all_hold": true,
+ "bt_a": {
+  "n": 16,
+  "coverage": 0.6875,
+  "mae_mix": 0.4778125,
+  "mae_nochange": 0.3911875
+ }
+}

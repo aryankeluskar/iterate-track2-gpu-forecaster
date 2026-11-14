@@ -1,0 +1,11 @@
+id,test,cells,cells_direction_holds,stat_min,stat_max,verdict,no_change_agrees
+R1,H100 q50 posted rent at +24m / 6 Nov level < 1,3,3,0.623,0.701,keep (conditional),False
+R2,A100 q50 posted rent at +24m / 6 Nov level < 1,3,3,0.728,0.787,keep (conditional),False
+R3,A100 q50 value +36m / q50 value Nov 2026 < 0.10,27,27,0.0,0.044,keep (conditional),
+R4_24m,H100 24-month loan: q10 cover / 20k >= 0.60,27,12,0.209,1.152,DROP,
+R4_36m,H100 36-month loan: q10 cover / 20k >= 0.60,27,12,0.209,1.155,DROP,
+R5,H100 q50 value at +36m < 10.5k (35% of 30k),27,27,505.876,10483.757,keep (conditional),
+R6,H100 q90 posted rent at +12m / 6 Nov level > 1,3,3,1.349,1.421,keep (conditional),True
+R7,"per-unit ratio vs frontier > 1 (H100, A100; v2 units and v3 unique)",4,4,1.767,2.95,keep (conditional),True
+R8,H100 q50 value Nov 2026 - Nov 2028 > 10k (2 years of 6-year straight line),27,22,7333.877,24047.91,DROP,
+R9,H100 q50 value Nov 2026 > 15k (6-year straight-line book at age 3),27,22,9287.975,42742.826,DROP,

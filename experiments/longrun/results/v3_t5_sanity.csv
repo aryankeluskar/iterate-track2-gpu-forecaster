@@ -1,0 +1,37 @@
+property,chip,m0,max_violation_usd,holds
+P1 lower utilisation never raises value,H100,0,-880.4485617195986,True
+P1 lower realised rent never raises value,H100,0,-586.0669501145684,True
+P2 higher cost never raises value: fixed opex +0.10 USD/GPU-h,H100,0,-615.5670497498245,True
+P2 higher cost never raises value: power price x1.5,H100,0,-153.3987246137949,True
+P2 higher cost never raises value: discount rate +5 points,H100,0,-29.293424902364677,True
+"P1 on displayed q50 (both directions, every weight set)",H100,0,,True
+P1 lower utilisation never raises value,H100,24,0.0,True
+P1 lower realised rent never raises value,H100,24,0.0,True
+P2 higher cost never raises value: fixed opex +0.10 USD/GPU-h,H100,24,0.0,True
+P2 higher cost never raises value: power price x1.5,H100,24,0.0,True
+P2 higher cost never raises value: discount rate +5 points,H100,24,0.0,True
+"P1 on displayed q50 (both directions, every weight set)",H100,24,,True
+P1 lower utilisation never raises value,H100,36,0.0,True
+P1 lower realised rent never raises value,H100,36,0.0,True
+P2 higher cost never raises value: fixed opex +0.10 USD/GPU-h,H100,36,0.0,True
+P2 higher cost never raises value: power price x1.5,H100,36,0.0,True
+P2 higher cost never raises value: discount rate +5 points,H100,36,0.0,True
+"P1 on displayed q50 (both directions, every weight set)",H100,36,,True
+P1 lower utilisation never raises value,A100,0,-171.74444513984625,True
+P1 lower realised rent never raises value,A100,0,-83.52976960220758,True
+P2 higher cost never raises value: fixed opex +0.10 USD/GPU-h,A100,0,-296.95426736188244,True
+P2 higher cost never raises value: power price x1.5,A100,0,-51.16438140882167,True
+P2 higher cost never raises value: discount rate +5 points,A100,0,-4.63227815454195,True
+"P1 on displayed q50 (both directions, every weight set)",A100,0,,True
+P1 lower utilisation never raises value,A100,24,0.0,True
+P1 lower realised rent never raises value,A100,24,0.0,True
+P2 higher cost never raises value: fixed opex +0.10 USD/GPU-h,A100,24,0.0,True
+P2 higher cost never raises value: power price x1.5,A100,24,0.0,True
+P2 higher cost never raises value: discount rate +5 points,A100,24,0.0,True
+"P1 on displayed q50 (both directions, every weight set)",A100,24,,True
+P1 lower utilisation never raises value,A100,36,0.0,True
+P1 lower realised rent never raises value,A100,36,0.0,True
+P2 higher cost never raises value: fixed opex +0.10 USD/GPU-h,A100,36,0.0,True
+P2 higher cost never raises value: power price x1.5,A100,36,0.0,True
+P2 higher cost never raises value: discount rate +5 points,A100,36,0.0,True
+"P1 on displayed q50 (both directions, every weight set)",A100,36,,True

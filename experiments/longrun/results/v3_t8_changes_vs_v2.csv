@@ -1,0 +1,28 @@
+number,v2,v3,why
+"H100 static rate-card level, 6 Nov (USD/GPU-h)",3.49,3.44,v2 counted 31 collector-provider units; v3 22 unique providers
+"A100 static rate-card level, 6 Nov (USD/GPU-h)",2.3485,2.03,v2 counted 20 collector-provider units; v3 14 unique providers
+"B200 static rate-card level, 6 Nov (USD/GPU-h)",6.3,6.25,v2 counted 17 collector-provider units; v3 11 unique providers
+A100 per-unit cost vs frontier (x),2.9504,2.5707,unique-provider levels
+H100 per-unit cost vs frontier (x),1.7787,1.7673,unique-provider levels
+"H100 rent +24m q10, frozen weights",1.215,1.1951647791621263,start level (unique providers) + Monte Carlo draw
+"H100 rent +24m q50, frozen weights",2.306,2.2753313193532043,start level (unique providers) + Monte Carlo draw
+"H100 rent +24m q90, frozen weights",4.169,4.119980963430127,start level (unique providers) + Monte Carlo draw
+"H100 rent +36m q10, frozen weights",0.764,0.7602032421537557,start level (unique providers) + Monte Carlo draw
+"H100 rent +36m q50, frozen weights",1.789,1.7610968673287344,start level (unique providers) + Monte Carlo draw
+"H100 rent +36m q90, frozen weights",3.763,3.694803609251855,start level (unique providers) + Monte Carlo draw
+"A100 rent +24m q10, frozen weights",1.01,0.8820426689106815,start level (unique providers) + Monte Carlo draw
+"A100 rent +24m q50, frozen weights",1.814,1.5689915406713542,start level (unique providers) + Monte Carlo draw
+"A100 rent +24m q90, frozen weights",3.047,2.650501280922711,start level (unique providers) + Monte Carlo draw
+"A100 rent +36m q10, frozen weights",0.731,0.6322691323239862,start level (unique providers) + Monte Carlo draw
+"A100 rent +36m q50, frozen weights",1.573,1.3679092855288,start level (unique providers) + Monte Carlo draw
+"A100 rent +36m q90, frozen weights",3.036,2.6313100959232902,start level (unique providers) + Monte Carlo draw
+H100 income value Nov 2026 q50 (v2-style inputs),26138.0,26027.731707773248,"Monte Carlo draw only (income uses GetDeploying reserved-36m, not the panel level); v3 headline is now the grid"
+H100 income value Nov 2028 q50 (v2-style inputs),9992.0,10158.785628335523,"Monte Carlo draw only (income uses GetDeploying reserved-36m, not the panel level); v3 headline is now the grid"
+H100 income value Nov 2029 q50 (v2-style inputs),5321.0,5293.0093805177485,"Monte Carlo draw only (income uses GetDeploying reserved-36m, not the panel level); v3 headline is now the grid"
+A100 income value Nov 2026 q50 (v2-style inputs),9128.0,9127.747550260638,"Monte Carlo draw only (income uses GetDeploying reserved-36m, not the panel level); v3 headline is now the grid"
+A100 income value Nov 2028 q50 (v2-style inputs),2265.0,2278.1222361172468,"Monte Carlo draw only (income uses GetDeploying reserved-36m, not the panel level); v3 headline is now the grid"
+A100 income value Nov 2029 q50 (v2-style inputs),144.0,144.32534971829978,"Monte Carlo draw only (income uses GetDeploying reserved-36m, not the panel level); v3 headline is now the grid"
+H100 24-month LTV at q10,0.654,0.22 to 1.11,"now a range over the utilisation x realised-rate grid, frozen weights; a conditional model output"
+H100 36-month LTV at q10,0.647,0.22 to 1.11,"now a range over the utilisation x realised-rate grid, frozen weights; a conditional model output"
+A100 24-month LTV at q10,0.628,0.10 to 1.26,"now a range over the utilisation x realised-rate grid, frozen weights; a conditional model output"
+A100 36-month LTV at q10,0.62,0.10 to 1.30,"now a range over the utilisation x realised-rate grid, frozen weights; a conditional model output"

@@ -9,8 +9,8 @@ Can a loop that tests hypotheses against its own forecast failures beat the star
 1. A posted rental median is the middle of a panel of 3 to 17 provider offers; it moves only when an offer near the middle is repriced or an offer enters or leaves. Forecasting that panel, not the series, produced the gains.
 2. On the 18 validation origins the submitted blend scored 0.2141 pooled skill against 0.0845 for drift on the 37 scored series, and 0.2275 against 0.1021 on the other posted rental series.
 3. These numbers are optimistic: part of the blend was chosen on the validation period, the 37 series were chosen with hindsight, and an independent audit found that only two of the four later directions survive a correctly sized test.
-4. Rents in 2 to 3 years: the H100 static rate-card median goes from 3.49 USD per GPU-hour to 2.31 (1.21 to 4.17) at +24 months; the A100 from 2.35 to 1.81 (1.01 to 3.05). No method beat "no change" in any long-horizon backtest: these are ranges with stated assumptions, not forecasts with skill.
-5. The most usable economic finding: 32 of the 37 scored medians fail an index-quality test, and 25 move more than 5% if one offer or provider is removed.
+4. Rents in 2 to 3 years: the H100 static rate-card median goes from 3.44 USD per GPU-hour to 2.28 (1.20 to 4.12) at +24 months; the A100 80GB from 2.03 to 1.57 (0.88 to 2.65). No method beat "no change" in any long-horizon backtest: these are stress ranges with stated assumptions, not forecasts with skill.
+5. The most usable economic finding: 32 of the 37 scored medians fail an index-quality test, and 25 move more than 5% if one offer or provider is removed. A provider-balanced index of like-for-like offers, computable daily, cut the disagreement between two collectors by 80% on practice dates and moved the right way in all 14 announced-repricing cases.
 
 ## 2. Method
 
@@ -123,29 +123,40 @@ Exa supplied the dated public record the price data lacks: a calendar of announc
 
 ## 7. Economic insight
 
-**A posted median indexes a few providers, not a market.** Only 5 of the 37 scored series pass every robustness test on 6 November; no H100 or A100 on-demand series does. The two collectors disagree by 0.048 log over 7 days on posted medians and by 0.005 on the same static offers. A third of static H100 and H200 rate-card providers raised prices from August to early November and none cut; their mean rose about 5 to 10% while posted medians report 15 to 21% ([figure](experiments/insight/results/fig1_index_quality.png), `experiments/insight/results/insight.md`).
+**A posted median indexes a few providers, not a market.** Only 5 of the 37 scored series pass every robustness test on 6 November; no H100 or A100 on-demand series does, and 25 move more than 5% if one offer or provider is removed ([figure](experiments/insight/results/fig1_index_quality.png), `experiments/insight/results/insight_v2.md`). From August to early November, on the same static offers, rate-card prices rose about 6 to 10 log points on H100, H200, B200 and B300 and none fell, while the posted H100 median rose 16.6 on one collector and 1.9 on the other: the posted median can overstate or understate the common move. The static and dynamic labels in that report use each provider's whole sample, so they describe the window and are not a rule that could have been applied in real time.
 
-- **Lessor.** Do not index a lease to the 32 failing series; use the equal-weight change of a fixed set of static rate cards (0.005 log of cross-collector disagreement per week against 0.048).
-- **Lender.** Mark collateral on a basket, haircut by at least the worst removal (7.2% at the median series, 58% on afhubbard A100 SXM spot). The long-run model's 10th-percentile path supports about 65% loan-to-value on a 20k USD used H100.
-- **Reserved-capacity buyer.** Per unit of inference work an A100 costs about 2.3 times a B200 and an H100 about 1.5 times; fewer than 6% of A100-against-B200 provider pairs reverse that. 2 of 9 recent large static steps came with 10 to 15 days' notice: lock terms when one appears.
+**An instrument that can be computed every day: a provider-balanced index** (`src/gpuf/index.py`, `experiments/index/results/index.md`, [figure](experiments/index/results/fig_H100.png)). Each day it takes the offers listed on both that day and the previous one, reduces each provider to one median log change, averages providers with equal weights, and publishes with every value the number of providers, the largest provider's share of the move and the change if any one provider is removed. Its acceptance test was fixed before any number was computed, on practice dates 15 September to 6 October and the 11 GPU models both collectors quote:
+
+| check | index | posted median | constant index |
+|---|---|---|---|
+| mean absolute 7-day disagreement between the two collectors (log) | 0.0063 | 0.0319 | 0 |
+| worst change of the 7-day move when one provider is deleted | 0.0081 | 0.0309 | |
+| right direction when Nebius or Jarvislabs repriced (14 cases) | 14 | 11 | 0 |
+
+All parts passed (the threshold for the first was 20% lower). Limits: about three weeks and two repricing events; the two collectors list many of the same providers, so their agreement is consistency, not truth; on most days one provider is the whole move, which the published warning shows; and it is an index of change that gives no price level.
+
+How each reader would use it. These are conditional readings of posted asks; nothing here is a calibrated haircut, an advance rate or realised revenue.
+
+- **Lessor.** An escalation clause tied to the index's change avoids the moves that come only from list membership. The starting level still has to come from the spread of provider prices, which is wide.
+- **Lender.** Read the posted median and the index together: when the median jumps and the index does not, the list changed, not the prices. The worst removal on the index-quality card (7.2% at the median series, 58% on afhubbard A100 SXM spot) measures how far a mark can move from membership alone; it is a sensitivity, not a haircut.
+- **Reserved-capacity buyer.** When a provider says "market rates are up", compare its step with the index over the same dates and with the number of providers behind it. Per unit of inference work on posted asks an A100 costs about 2.3 to 2.6 times a B200 and an H100 about 1.5 to 1.8 times, depending on the provider set. 2 of 9 recent large static steps came with dated notice, too few to estimate how often notice comes.
 
 ## 8. The 2 to 3 year view
 
-**Ranges from a three-scenario mixture**, starting from the static neocloud rate-card median on 6 November ([figure](experiments/longrun/results/v2_fig3_scenarios.png)):
+**Ranges from a three-scenario mixture**, starting from the static neocloud rate-card median on 6 November with each provider counted once (`experiments/longrun/results/longrun_v3.md`, which corrects version 2):
 
-| USD per GPU-hour, q50 (q10 to q90) | now | +12 months | +24 months | +36 months |
+| USD per GPU-hour, q50 (q10 to q90) | now, and if nothing changes | +12 months | +24 months | +36 months |
 |---|---|---|---|---|
-| H100 | 3.49 | 3.11 (2.11 to 4.69) | 2.31 (1.21 to 4.17) | 1.79 (0.76 to 3.76) |
-| A100 | 2.35 | 2.20 (1.55 to 3.09) | 1.81 (1.01 to 3.05) | 1.57 (0.73 to 3.04) |
-| resale by income approach, USD per GPU | now | | +24 months | +36 months |
-| H100 | 26.1k (12.1k to 54.2k) | | 10.0k | 5.3k |
-| A100 | 9.1k (4.0k to 18.7k) | | 2.3k | 0.1k |
+| H100 | 3.44 | 3.05 (2.08 to 4.64) | 2.28 (1.20 to 4.12) | 1.76 (0.76 to 3.69) |
+| A100 80GB | 2.03 | 1.89 (1.35 to 2.66) | 1.57 (0.88 to 2.65) | 1.37 (0.63 to 2.63) |
 
-Scenario probabilities are judgement, frozen before computing: shortage persists through 2027, 0.35; eases to the multi-year trend, 0.40; successor glut from 2028, 0.25. Published used-GPU figures, mostly asking prices, fall inside the resale ranges.
+Scenario probabilities are judgement, frozen before computing: shortage persists through 2027, 0.35; eases to the multi-year trend, 0.40; successor glut from 2028, 0.25. Moving 0.15 of weight toward shortage or toward glut moves the H100 middle at +24 months to 2.41 or 2.14.
 
-**Backtests that failed.** Age decay lost to no-change on 117 weekly-median series (log error 0.66 against 0.42). On AWS spot from year-ends 2023 to 2025 the mixture's centre never beat no-change (0.60 to 0.88 against 0.54), and its intervals covered only with noise of 0.6 log per root-year; the projections use 0.25, so widen them for spot. The one-year mixture covered 11 of 16 series, but its probabilities were set knowing 2026. Nothing beyond 24 months can be backtested.
+**Resale, worked out from future rent (income approach).** This is a model output; no public record of used-GPU sales exists. The middle value of an H100 at +24 months runs from 2.6k to 17.1k USD across utilisation of 50 to 85% and realised rent of 70 to 100% of the posted rate, and from 0.9k to 9.6k at +36 months. An A100 80GB runs from 0.3k to 4.4k at +24 months and is near zero at +36 months. Utilisation and realised rate each move the H100 value by a factor of 2 to 3; the scenario weights move it by 10 to 30%. If rents simply stay where they are, the H100 is worth 15.1k to 49.8k at +24 months, above the scenario range in every cell: the gap is the size of the bet that rents fall. Published used-GPU figures (H100 18k to 22k, mostly asking prices) are consistent with today's cells at middling utilisation; that is a consistency check, not a validation.
 
-**Assumptions.** Utilisation (50 to 85%) dominates resale value; remaining life (H100 4 to 7 years, A100 2 to 5) and the discount rate matter less. Most of the 2026 rise in aggregator medians is panel effect, so earlier trends are upper bounds.
+**Backtests that failed.** Age decay lost to no-change on 117 weekly-median series (log error 0.66 against 0.42). On AWS spot from year-ends 2023 to 2025 the mixture's centre never beat no-change (0.60 to 0.88 against 0.54), and its intervals covered only with noise of 0.6 log per root-year; the projections use 0.25, so widen them for spot. The one-year mixture covered 11 of 16 series, but its probabilities were set knowing 2026. Nothing beyond 24 months can be backtested. Read every number in this section as a stress range, not a forecast.
+
+**Withdrawn from version 2.** A loan cover of "about 65%" (across the grid the 10th-percentile cover runs from 22% to 111% of a 20k used price, so no single loan-to-value follows); "faster than six-year straight-line depreciation" and "no impairment on a six-year schedule" (each fails in 5 of 27 cells); "two thirds of the aggregator's rise is panel effect" and "earlier trends are upper bounds" (the aggregator has no offer rows, and nothing in the pack observes same-offer prices before August).
 
 ## 9. Limitations, in order of importance
 
@@ -171,6 +182,9 @@ Scenario probabilities are judgement, frozen before computing: shortage persists
 | decisions and corrections | `research-log.md`, `EVAL_PROTOCOL.md` |
 | loss by cause | `experiments/autopsy/results/failure_modes.json`, `experiments/autopsy2/results/loss_by_cause.csv` |
 | calendar and attribution | `data_out/repricing_calendar.jsonl`, `experiments/exa_attrib/results/attribution.md`, `experiments/prov/results/cal_summary.json` |
-| economic insight | `experiments/insight/results/insight.md` |
-| long-run view | `experiments/longrun/results/longrun.md` |
+| economic insight | `experiments/insight/results/insight_v2.md` (corrected copy of `insight.md`) |
+| provider-balanced index | `experiments/index/results/index.md`, `experiments/index/results/acceptance.json`, `data_out/balanced_index.csv` |
+| long-run view | `experiments/longrun/results/longrun_v3.md` (versions 1 and 2 kept beside it) |
+| maturity diagnostic and its review | `experiments/maturity/results/`, `experiments/advisor/review_maturity.md` |
+| independent adviser | `experiments/advisor/advice.md` |
 | the loop | `experiments/loop/iteration3.md`, `src/gpuf/loop.py` |

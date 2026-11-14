@@ -1,0 +1,82 @@
+slug: longrun3
+version: 3
+written: >
+  2026-11-14, BEFORE running any version 3 code. Read beforehand: AGENT_BRIEF_R9.md, description.md (s1, s5, s8),
+  advisor/advice.md (s1 Pacific row, s3 item 6, s4 items 6-8, s5 Pacific Q5, s7), longrun.md (v2), protocol_v2.yaml,
+  panel_v2.py, scen_v2.py, insight.md, insight/analysis.py. The only data inspected before writing this file was the
+  list of provider NAMES quoting neocloud on-demand rate cards on 2026-11-06 in each collector (no prices), to check
+  that names are already normalised across collectors (they are: e.g. lambdalabs, nebius, coreweave appear identically).
+memory_items_read: [exp-H36, exp-H29, exp-H33, exp-H4]
+memory_items_that_changed_the_plan: >
+  None changed the plan. exp-H36 (my v2 record) contains the 'two thirds' wording that this version withdraws.
+scope: >
+  Corrections only. Origin stays 2026-11-06. No new historical selection, no new scenario, no change to the frozen
+  scenario rates, noise (0.25 static / 0.41 posted) or probabilities (0.35/0.40/0.25). Backtests are not re-run or tuned:
+  the year-end 2023/2024/2025 AWS results are read from v2_t3c_backtest_aws_rolling.csv and only re-summarised by origin.
+
+task1_provider_weighting:
+  v2_definition: "collector-provider units: median of a (collector, provider)'s static offers on 2026-11-06; a provider seen
+    by both collectors counts twice. Relabelled as such in v3."
+  v3_primary_rule: >
+    Unique providers. Step 1 as in v2: per (collector, provider, chip) the median price of its offers on 2026-11-06, using
+    only (collector, provider) pairs classified static (reprice rate < 0.02 over that collector's sample, unchanged).
+    Step 2 (reconciliation): a provider with such a price in both collectors gets ONE price = geometric mean of its two
+    collector prices (equal weight to each collector, because neither collector is known to be more accurate).
+    Step 3: level = median over unique providers; 90% CI = percentile bootstrap over unique providers (1000 draws).
+  rule_sensitivity_reported_not_used: "reconcile by taking the gpurentalprices price; by taking the fastgpu price."
+  diagnostics: "number of providers in both collectors per chip; median absolute log gap between their two prices."
+  reported_side_by_side: "H100, A100 80GB, H200, B200, B300 levels; per-unit ratios vs frontier (min of B200, B300 per unit,
+    as v2) under v2 units and v3 unique providers; how much each downstream headline number moves."
+  downstream: "v3 rent paths start from the unique-provider level. The income-approach value is NOT affected: v2 and v3
+    take rent from the GetDeploying reserved-36-month median, which this task does not touch."
+
+task2_wording: >
+  Withdraw 'about two thirds of GetDeploying's rise is panel effect' and 'v1's 12-month rises are upper bounds'. Report
+  only the same-offer change on gpurentalprices and fastgpu (the two collectors with offer rows), Aug/Sep to 6 Nov,
+  recomputed by panel_v3.py with v2's code path, and list what is unobserved.
+
+task3_decision_table:
+  chips: [H100, A100]
+  horizons_months: [24, 36]   # Nov 2026 also shown for context
+  utilisation_levels: [0.50, 0.675, 0.85]          # v2's range ends and midpoint
+  realised_over_posted_levels: [0.70, 0.85, 1.00]  # posted = GetDeploying reserved-36m median; 0.70 added below v2's 0.85
+                                                   # floor because posted asks are not realised revenue
+  scenario_weights:
+    frozen: {S1: 0.35, S2: 0.40, S3: 0.25}
+    toward_shortage: {S1: 0.50, S2: 0.25, S3: 0.25}   # 0.15 moved from S2 to S1 (v2 s6 wording)
+    toward_glut: {S1: 0.35, S2: 0.25, S3: 0.40}       # 0.15 moved from S2 to S3
+  other_inputs: "drawn exactly as v2 (discount 10-20%, life H100 4-7 y / A100 2-5 y, fixed opex, power +4.4%/yr);
+    common random numbers across all cells so cells differ only by the stated inputs."
+  method: "simulate N=20000 paths per scenario (same frozen rates and 0.25 noise); a weight set is a weighted mixture
+    of the three scenario pools. Monte Carlo draws differ from v2, so frozen-weight numbers may move by MC noise."
+  no_change_column: "rent held at the 6 Nov level; value with the rent index held flat (same grid, same other draws)."
+  backtests_shown_alongside: "v2_t3c (AWS spot, origins Dec 2023/2024/2025, 12 and 24 months) per origin and variant,
+    and v2_t3a (one-year aggregator). Read from file, not re-run."
+  spot_noise_display: "rent q10-q90 also shown at 0.60 log/sqrt(year) for frozen weights (v2 s3 caveat). Display only."
+  sanity_properties:
+    P1: "lower utilisation or lower realised rent never raises value: per draw, across the 3x3 grid, value is
+      non-decreasing in utilisation and in realised rate (tolerance 1e-6 USD), at m0 = 0, 24, 36, both chips."
+    P2: "higher costs never raise value: per draw, value with fixed opex +0.10 USD/GPU-h, power price x1.5, and discount
+      rate +5 points (each separately) is <= base value (tolerance 1e-6), at the midpoint cell, m0 = 0, 24, 36."
+    on_violation: "report the violation and its size; do not alter the model to hide it."
+
+task4_recommendation_tests:   # each v2 recommendation gets a direction test over the 27 cells (3 util x 3 real x 3 weights);
+                              # DROP if the direction is not the same in all 27 cells; otherwise keep, worded conditionally.
+  R1_lessor_H100_rent_falls: "q50 posted rent at +24 months < 6 Nov level, every weight set (rent does not depend on util/real)."
+  R2_lessor_A100_rent_falls: "same test for A100."
+  R3_lessor_A100_not_past_2029: "A100 q50 value at +36 months < 10% of the same cell's q50 value at Nov 2026."
+  R4_lender_H100_ltv_in_market_band: "q10 cover / 20k >= 0.60 (the low end of reported 60-70% advance rates) for 24 and 36-month
+    loans. Cover defined as v2 (PV at 10% of net income over the term + PV of income value at maturity)."
+  R5_lender_35pct_residual_optimistic: "H100 q50 income value at +36 months < 35% of 30k (10.5k)."
+  R6_buyer_upside_tail_12m: "H100 q90 posted rent at +12 months > 6 Nov level, every weight set."
+  R7_buyer_older_chips_dearer_per_unit: "per-unit ratio vs frontier > 1 for H100 and A100 under both provider definitions."
+  R8_operator_dep_faster_than_SL6: "H100 q50 value Nov 2026 - q50 value Nov 2028 > 10k (two years of 6-year straight line on 30k)."
+  R9_operator_no_impairment_SL6: "H100 q50 value Nov 2026 > 15k (6-year straight-line book at age 3.0 years)."
+  no_change_flag: "for R1, R2, R6 also state whether no-change agrees; no-change beat every method on every backtest."
+
+acceptance:
+  - "origin 2026-11-06; no new historical selection; frozen rates/noise/probabilities unchanged."
+  - "every number in longrun_v3.md is produced by panel_v3.py / scen_v3.py (or read from a named v2 file by them)."
+  - "P1 and P2 hold, or the violation is reported."
+  - "nothing is presented as a calibrated lending rule; dropped recommendations are listed."
+drop_claim_if: "a v3 recommendation fails its direction test -> dropped and listed; if P1/P2 fail -> value table flagged."
