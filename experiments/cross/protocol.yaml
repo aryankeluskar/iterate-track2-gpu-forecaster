@@ -1,0 +1,10 @@
+slug: cross
+hypotheses:
+  H-a: error correction. Gap = (log A_t - log B_t) minus its expanding mean (to t) for two collectors' medians of the same GPU/tier. Gap predicts h-day log change of A (negative slope) and B (positive slope).
+  H-b: collector-wide change days. Share of a collector's series changing on day t raises P(change) and |change| of its other series over t+1..t+h. Prediction: positive slope, intervals should widen after a refresh.
+  H-c: within-collector factor. Mean log change over last k days of the collector's other series predicts own h-day change (sign unknown; fastgpu tends to reversal, gpurentalprices momentum).
+  H-d: generation spreads (B300-B200, H200-H100) deviation from expanding mean reverts.
+mechanism: collectors scrape overlapping offers with different lags/medians; refreshes are batched.
+prediction: weak. H-a slope -0.1..-0.3 on the same-GPU rate cards at h=3,7; H-b positive on |y| at h=1; H-c small; H-d ~0. Expect at most a small gain on fastgpu B300/B200.
+refute: pooled slope CI (week block bootstrap) covers 0 and lies inside the shuffled-date placebo 95% band, or harness method fails to beat drift with 90% CI above 0.
+data: dev origins 2026-08-18..2026-10-06, targets <= 2026-10-13. Features use rows dated <= origin only.

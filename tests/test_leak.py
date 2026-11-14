@@ -4,7 +4,7 @@ import pytest
 
 from gpuf import baselines, data, harness, splits
 
-ORIGINS = [splits.DEV[0], splits.DEV[60], splits.DEV[-1], splits.STARTER15[-1]]
+ORIGINS = [splits.DEV[0], splits.DEV[30], splits.DEV[-1], splits.STARTER15[-1]]
 
 
 def _cross(sid, days, vals, origin_day, horizons, ctx):
@@ -75,4 +75,4 @@ def test_test_split_is_locked():
     with pytest.raises(splits.LockedSplit):
         harness.evaluate(baselines.drift, "test")
     with pytest.raises(splits.LockedSplit):
-        harness.evaluate(baselines.drift, [splits.TEST[3]])
+        harness.evaluate(baselines.drift, [splits.TEST[0]])

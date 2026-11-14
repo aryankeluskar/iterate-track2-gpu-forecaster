@@ -1,0 +1,36 @@
+slug: hazard
+method: hazard (src/gpuf/methods/hazard.py)
+hypothesis: >
+  The h-day log change of a posted rental series is exactly zero with a probability that depends
+  on the series' recent state (days since its last change, number of changes in the last 7 and 14
+  days, collector x instrument class), and otherwise is a draw from a jump-size distribution that
+  does not depend on that state. Drift ignores the state: it mixes zeros and jumps in the series'
+  unconditional proportion.
+mechanism: >
+  Changes cluster (afhubbard: P(change) 0.63 the day after a change vs 0.03 after two idle weeks).
+  After a long idle spell drift's q10/q90 are too wide (it prices in jumps that are unlikely), so a
+  higher state-dependent zero mass collapses the interval toward the last value and saves pinball
+  loss; right after a burst of changes drift is too narrow / its q50 too sticky and a lower zero mass
+  widens it. Pooling the hazard and jump sizes across collector x class (rental_all as training
+  data, expanding window) fixes the few-sample problem of per-series quantiles (60-89 days).
+model: >
+  p0(state, h) = P(value at t+h == value at t | state at t), estimated as empirical rates in
+  state bins (tsl bins x n7 bins) over all rental_all series of the same collector x class, using
+  only pairs with t+h <= origin, shrunk toward the bin rate pooled over all groups, then toward the
+  series' own rate. Non-zero h-day log change ~ pooled empirical distribution of non-zero h-day
+  changes in the group, each standardized by its series' median |non-zero h-day change| and
+  rescaled by the target series' (shrunk) scale. q10/q50/q90 read off the mixture
+  p0 * delta_0 + (1 - p0) * G.
+ablations:
+  a_state_p0_own_jumps: drift's own non-zero h-day changes as G, state-dependent p0.
+  b_pooled_jumps_flat_p0: pooled scaled jumps, p0 = series' unconditional zero rate (no state).
+prediction: >
+  Beats drift on dev pooled skill by +0.01 to +0.03, with most of the gain on idle cells
+  (tsl >= 7, interval narrows) and at h = 3 and 7; on recently active cells (>= 2 changes in the
+  last 7 days) roughly a tie or a small gain. Ablation (a) should carry most of the gain if the
+  state mechanism is real; (b) should be near drift if gains come from state, not pooling.
+refuted_if: >
+  The full model and ablation (a) do not beat drift (paired difference 90% interval includes or is
+  below zero) AND the idle-cell subset shows no gain; or ablation (b) matches or beats the full model
+  (gain is pooling of jump sizes, not state dependence).
+split: dev only (origins per harness splits.DEV), universe rental_headline, horizons 1, 3, 7.

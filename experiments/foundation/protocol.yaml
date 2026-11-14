@@ -1,0 +1,6 @@
+slug: foundation
+written: before the first run (dev split only)
+hypothesis: H6. Zero-shot pretrained time-series models (Chronos-Bolt, TimesFM) carry no usable signal on short, step-like posted prices.
+mechanism: They are trained on smooth, seasonal series and see 20 to 90 points of context here; their quantiles will be too smooth at the centre and miscalibrated in width.
+prediction: Raw zero-shot quantiles lose to drift on dev pooled skill. Keeping the last value as the centre and using only the model's interval width may tie.
+refuted_if: Any zero-shot variant beats drift with a 90% interval above zero.

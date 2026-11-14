@@ -67,7 +67,7 @@ def run(method: str, split: str, universe: str, params: dict | None = None, unlo
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--method", required=True)
-    ap.add_argument("--split", default="dev", choices=["dev", "val", "test", "starter15"])
+    ap.add_argument("--split", default="dev", choices=["dev", "dev_old", "val", "test", "starter15"])
     ap.add_argument("--universe", default="rental_headline", choices=list(data.UNIVERSES))
     ap.add_argument("--params", default="{}", help="JSON dict passed to the method factory")
     ap.add_argument("--unlock-test", action="store_true", help="required for --split test (logged)")

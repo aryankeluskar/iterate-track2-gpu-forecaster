@@ -1,0 +1,9 @@
+slug: mix
+written: before the first mix run (dev split only)
+hypotheses:
+  H3_pooling: Per-series h-day change quantiles rest on too few samples (and drift is flat below 20). Mixing in peer-group changes with prior strength k raises pooled skill. Prediction, +0.02 to +0.05 over drift on dev, mostly on fastgpu (history starts 09-08) and at h=7. Refuted if no k>0 beats k=0 with a 90% interval above zero.
+  H2_state: Changes cluster, so conditioning samples on "changed in the last sk days" tightens intervals when idle and widens after a change. Prediction, +0.01 to +0.03 on top of pooling, mostly h=1. Refuted if state=chg1/chgk does not beat state=none at the same k.
+  H_centre: The median h-day change (drift's centre) is noise on short histories. Prediction, centre=last beats centre=median for h=1 and h=3, not for h=7. Refuted if centre=median wins at every horizon.
+  H_recency: Recent changes are more informative (half-life weights). Prior exploratory result says shorter lookbacks hurt drift, so expected null or negative.
+  H_width: Drift under-covers on dev (0.63 against 0.80). Prediction, scale>1 gains. Refuted if scale=1 is the optimum once pooled.
+  H_direction (added before its first run): After a move, the next h-day change depends on the move's sign (reversion on fastgpu, momentum on gpurentalprices per the EDA). Conditioning samples on the sign (state dirk/dirchg) within the collector-class pool should beat the unsigned state. Refuted if dirk/dirchg do not beat chgk at the same k.
