@@ -219,4 +219,5 @@ def make(base=("mix", {}), mode="conf", pool="all", hl=0.0, gamma=0.02, nmin=40,
             out[h] = adjust(h, key, origin_day, q) if h in HS else q
         return out
 
+    f.state, f.offsets, f.adjust = st, offsets, adjust
     return f

@@ -1,0 +1,12 @@
+{
+  "name": "05_spot_lower",
+  "unit": 4,
+  "read_direction": {"afhubbard": 1, "horizon": 1.75},
+  "bias": -1.75,
+  "write_direction": [1, 0, 0],
+  "magnitude": 0.1823215567939546,
+  "control_seed": 105,
+  "mechanism": "Widen the lower log offset 20% at h7 for the long-history afhubbard spot collector. This addresses its downward tail separately from short-history posted rate cards.",
+  "prediction": "Practice pooled skill rises 0.001 to 0.003; improvement comes only from afhubbard h7.",
+  "evidence_before_edit": "Practice afhubbard h7 lower miss rate 0.271 versus upper 0.094; afhubbard accounts for 19.1% of baseline loss."
+}

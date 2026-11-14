@@ -17,6 +17,8 @@ V = {"conf_all": dict(mode="conf", pool="all"), "conf_cc": dict(mode="conf", poo
      "scale_all": dict(mode="scale", pool="all"), "scale_cc": dict(mode="scale", pool="cc"),
      "scale_all_pw1": dict(mode="scale", pool="all", pw=1)}
 extra = json.loads(sys.argv[1]) if len(sys.argv) > 1 else {}
+if extra.pop('__only__', False):
+    V = {}
 V.update(extra)
 
 def ev(m, p, name=None):
@@ -53,5 +55,5 @@ for bname, base in (("mix", MIX), ("ens3", ENS3)):
         out[(bname, vn)] = c
     df = pd.DataFrame(rows).set_index("variant")
     print(df.round(4).to_string())
-    df.round(5).to_csv(f"experiments/tail/results/variants_{bname}.csv")
-pd.to_pickle(out, "runs/tail/cells.pkl")
+    df.round(5).to_csv(f"experiments/tail/results/variants_{bname}{'_x' if len(sys.argv) > 1 else ''}.csv")
+pd.to_pickle(out, "runs/tail/cells%s.pkl" % ("_x" if "__x" in "".join(sys.argv) else ""))

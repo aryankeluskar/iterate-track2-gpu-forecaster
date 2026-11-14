@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 import fcntl
 import hashlib
 import json
+import math
 from pathlib import Path
 
 import numpy as np
@@ -32,7 +33,15 @@ def digest(path):
 
 
 def write_json(path, obj):
-    Path(path).write_text(json.dumps(obj, indent=2, allow_nan=False) + "\n")
+    def finite(value):
+        if isinstance(value, dict):
+            return {k: finite(v) for k, v in value.items()}
+        if isinstance(value, (list, tuple)):
+            return [finite(v) for v in value]
+        if isinstance(value, float) and not math.isfinite(value):
+            return None
+        return value
+    Path(path).write_text(json.dumps(finite(obj), indent=2, allow_nan=False) + "\n")
 
 
 def append(path, obj):
@@ -222,6 +231,8 @@ def train():
     early_start = CUTOFF - 6
     fit = (cells.origin_day < early_start) & (cells.target_day < early_start)
     valid = cells.origin_day >= early_start
+    fit_index = torch.tensor(fit.to_numpy(copy=True))
+    valid_index = torch.tensor(valid.to_numpy(copy=True))
     tx = torch.tensor(x, dtype=torch.float64)
     base = torch.tensor(np.log(cells[["q10", "q50", "q90"]].to_numpy()), dtype=torch.float64)
     y = torch.tensor(cells.y.to_numpy(), dtype=torch.float64)[:, None]
@@ -254,8 +265,8 @@ def train():
         best_weights = initial
         for epoch in range(501):
             loss = losses()
-            validation = float(loss[valid.to_numpy()].mean().detach())
-            training = float(loss[fit.to_numpy()].mean().detach())
+            validation = float(loss[valid_index].mean().detach())
+            training = float(loss[fit_index].mean().detach())
             history.append({"epoch": epoch, "fit_loss": training, "early_stop_loss": validation})
             if validation < best - 1e-10:
                 best, best_epoch, stale = validation, epoch, 0
@@ -265,7 +276,7 @@ def train():
             if epoch == 500 or stale >= 40:
                 break
             optimizer.zero_grad()
-            loss[fit.to_numpy()].mean().backward()
+            loss[fit_index].mean().backward()
             optimizer.step()
         np.savez(WEIGHTS / f"{mode}.npz", **best_weights)
         write_json(RESULTS / f"{mode}_training.json", history)
@@ -313,7 +324,8 @@ def random_search():
 
 
 def contribution(a, b, field):
-    m = a[[*KEY, field, "loss", "baseline_loss"]].merge(
+    columns = list(dict.fromkeys([*KEY, field, "loss", "baseline_loss"]))
+    m = a[columns].merge(
         b[[*KEY, "loss"]], on=KEY, suffixes=("_a", "_b"), validate="one_to_one")
     m["gain"] = m.loss_b - m.loss_a
     grouped = m.groupby(field).agg(n_cells=("gain", "size"), gain=("gain", "sum"))
@@ -325,15 +337,19 @@ def final():
     frozen = json.loads((RESULTS / "freeze.json").read_text())
     if digest(WEIGHTS / "hand.npz") != frozen["hand_sha256"]:
         raise RuntimeError("frozen hand weights changed")
-    guard = RESULTS / "heldout_started.json"
-    with guard.open("x") as f:
-        json.dump({"timestamp": now(), "policy": "one final evaluation; never tune afterward"}, f)
     names = {"mix": None, "drift": None, "zero": "zero.npz", "hand": "hand.npz",
              "adam_zero": "adam_zero.npz", "adam_function_zero": "adam_function_zero.npz",
              "random40": "random40.npz", "random50": "random50.npz"}
     for filename in frozen["kept"]:
         if filename != frozen["incumbent"]:
             names["prefix_" + Path(filename).stem] = filename
+    guard = RESULTS / "heldout_started.json"
+    with guard.open("x") as f:
+        json.dump({"timestamp": now(), "policy": "one final evaluation; never tune afterward",
+                   "weights": {n: {"path": filename, "sha256": digest(WEIGHTS / filename)}
+                               for n, filename in names.items() if filename},
+                   "runner_sha256": digest(__file__),
+                   "method_sha256": digest(data.ROOT / "src/gpuf/methods/wsp.py")}, f, indent=2)
     all_cells = {}
     for name, filename in names.items():
         params = ({"weights": str(WEIGHTS / filename), "base": BASE} if filename else
@@ -349,6 +365,21 @@ def final():
     handq = all_cells["hand"][["q10", "q50", "q90"]].to_numpy()
     all_cells["blend"] = replace_quantiles(all_cells["mix"], np.exp((np.log(mixq) + np.log(handq)) / 2))
     all_cells["blend"].to_parquet(SCRATCH / "final_blend.parquet", index=False)
+    summarize_final(all_cells, names)
+
+
+def finish():
+    """Recover reporting from already saved forecasts; never forecast or score again."""
+    started = json.loads((RESULTS / "heldout_started.json").read_text())
+    names = {"mix": None, "drift": None}
+    names.update({n: item["path"] for n, item in started["weights"].items()})
+    for item in started["weights"].values():
+        assert digest(WEIGHTS / item["path"]) == item["sha256"]
+    all_cells = {n: pd.read_parquet(SCRATCH / f"final_{n}.parquet") for n in [*names, "blend"]}
+    summarize_final(all_cells, names)
+
+
+def summarize_final(all_cells, names):
     output = {"timestamp": now(), "zero_identity": {
         "max_abs_quantile_difference": 0., "mix_dev_skill": scoring._pooled(all_cells["mix"])["pooled_skill"],
         "zero_dev_skill": scoring._pooled(all_cells["zero"])["pooled_skill"]},
@@ -374,7 +405,7 @@ def final():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=["prepare", "score", "patch", "freeze", "train", "random", "final"])
+    parser.add_argument("command", choices=["prepare", "score", "patch", "freeze", "train", "random", "final", "finish"])
     parser.add_argument("path", nargs="?")
     parser.add_argument("--label", default="zero")
     args = parser.parse_args()
@@ -384,7 +415,7 @@ def main():
         apply_rule(args.path)
     else:
         {"prepare": prepare, "freeze": freeze, "train": train,
-         "random": random_search, "final": final}[args.command]()
+         "random": random_search, "final": final, "finish": finish}[args.command]()
 
 
 if __name__ == "__main__":

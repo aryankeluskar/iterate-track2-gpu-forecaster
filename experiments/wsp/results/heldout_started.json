@@ -1,0 +1,44 @@
+{
+  "timestamp": "2026-11-14T19:51:52.744409+00:00",
+  "policy": "one final evaluation; never tune afterward",
+  "weights": {
+    "zero": {
+      "path": "zero.npz",
+      "sha256": "03bc4632ca5fbefb3161691be77cc2a73d11bb3408f2bac7922497a6a6eee219"
+    },
+    "hand": {
+      "path": "hand.npz",
+      "sha256": "c2018f05c0598f43c20e6d5e65c9c46839295599ae4043119334b9a1154e3229"
+    },
+    "adam_zero": {
+      "path": "adam_zero.npz",
+      "sha256": "03bc4632ca5fbefb3161691be77cc2a73d11bb3408f2bac7922497a6a6eee219"
+    },
+    "adam_function_zero": {
+      "path": "adam_function_zero.npz",
+      "sha256": "6cf3bc91c2bd71984712c5ce07ae490013329d480d30833fde0c45bf7576d584"
+    },
+    "random40": {
+      "path": "random40.npz",
+      "sha256": "1ace04dae202626252e1de744c32d7cfe170d5aaabf3a530d1c037b7782d8328"
+    },
+    "random50": {
+      "path": "random50.npz",
+      "sha256": "1ace04dae202626252e1de744c32d7cfe170d5aaabf3a530d1c037b7782d8328"
+    },
+    "prefix_02_dormant_shrink": {
+      "path": "02_dormant_shrink.npz",
+      "sha256": "699032b873b26dd1bd949aa7de87022de956fa71e4c9de3dbe640a2e0becff13"
+    },
+    "prefix_03_panel_upper_headroom": {
+      "path": "03_panel_upper_headroom.npz",
+      "sha256": "e0d6b1d0ed9ebfc20598ae92d73eba46267f48563be654b53cf16430a5fcfbad"
+    },
+    "prefix_05_spot_lower": {
+      "path": "05_spot_lower.npz",
+      "sha256": "3f3441670c5d02bde45e0e84475253df7323dc216e3816805eba8a3b30c80c3e"
+    }
+  },
+  "runner_sha256": "8d07090e74aca88e5b3f527617a23fba511c8585d5f8d2fad76f0411c88d7484",
+  "method_sha256": "21f22af3ae25e68f3b991de8c982de416a02757caf66919bec7d87838f7fc6b2"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "04_short_upper_shrink",
+  "unit": 3,
+  "read_direction": {"horizon": -3.5},
+  "bias": 1.5,
+  "write_direction": [0, -1, 0],
+  "magnitude": 0.2231435513142097,
+  "control_seed": 104,
+  "mechanism": "Only h1 activates: shrink the upper log offset 20% because the practice upper tail is conservative at one day.",
+  "prediction": "Practice pooled skill rises 0.001 to 0.004; h1 upper exceedances rise toward 10%, with no h3/h7 effect.",
+  "evidence_before_edit": "At h1 only 3.19% exceed q90, versus 7.39% below q10."
+}

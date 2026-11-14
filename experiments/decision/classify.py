@@ -77,15 +77,18 @@ def questions(h):
 
 
 def state(r):
+    r = r._asdict() if hasattr(r, "_asdict") else r
+    r = type("R", (), r)
     return {"collector": r.collector, "instrument_class": r.cls, "gpu": r.gpu, "pricing_tier": r.tier,
-            "daily_pct_changes_last14": [float(r[f"c{i}"]) if np.isfinite(r[f"c{i}"]) else None for i in range(14)],
+            "daily_pct_changes_last14": [float(getattr(r, f"c{i}")) if np.isfinite(getattr(r, f"c{i}")) else None for i in range(14)],
             "days_since_last_change": int(r.dsc), "n_providers": None if not np.isfinite(r.n_prov) else int(r.n_prov),
             "median_position_p25_p75": None if not np.isfinite(r.pos) else round(float(r.pos), 2)}
 
 
 def subsample(df, n, seed):
-    return df.groupby(["collector", "horizon_days"], group_keys=False).apply(
-        lambda g: g.sample(min(len(g), max(1, int(round(n * len(g) / len(df))))), random_state=seed))
+    ix = [g.sample(min(len(g), max(1, int(round(n * len(g) / len(df))))), random_state=seed).index
+          for _, g in df.groupby(["collector", "horizon_days"])]
+    return df.loc[np.concatenate(ix)]
 
 
 def run_laya(sub, agent):

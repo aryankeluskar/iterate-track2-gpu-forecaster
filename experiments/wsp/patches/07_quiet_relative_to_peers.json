@@ -1,0 +1,12 @@
+{
+  "name": "07_quiet_relative_to_peers",
+  "unit": 6,
+  "read_direction": {"peer_vol": 1, "vol": -1},
+  "bias": -0.1,
+  "write_direction": [-1, -1, 0],
+  "magnitude": 0.15,
+  "control_seed": 107,
+  "mechanism": "Shrink both tails when a series' EWMA absolute daily log change is substantially smaller than the collector-class peers'. Pooling can import excessive volatility from differently priced offers.",
+  "prediction": "Practice pooled skill rises 0.001 to 0.005; most gain comes from unchanged or under-1% outcomes.",
+  "evidence_before_edit": "Reference mix pools peer returns without volatility normalization; the own-versus-peer volatility feature is causal and fixed before scoring."
+}

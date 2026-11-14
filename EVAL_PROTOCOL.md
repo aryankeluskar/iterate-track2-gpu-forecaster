@@ -46,7 +46,7 @@ The Universe, Metric, Baseline, Leakage and Reference sections stand. The Origin
 
 Secondary check for any accepted change: it must not lower pooled skill on the all-tier rental universe on validation, and its result on the four long-history afhubbard series over the old dev period (May to August) is reported as a robustness check.
 
-## Amendment 2 (14 November 2026, about 11:55 PT): gate for round 2 and 3 directions
+## Amendment 2 (14 November 2026, about 11:50 PT): gate for round 2 and 3 directions
 
 Written before any round 2 or round 3 direction was scored on validation. State of the validation period at this point: five method queries on the headline universe (research-log.md, 12:10 entry), none on the non-headline series.
 

@@ -1,0 +1,13 @@
+[["base_check", {"kappa":0.0,"skew":0.0}],
+ ["dev centre k0.25", {"feats":["dev"],"kappa":0.25}],
+ ["dev centre k0.5", {"feats":["dev"],"kappa":0.5}],
+ ["dev skew 0.5", {"feats":["dev"],"skew":0.5}],
+ ["dev skew 1.0", {"feats":["dev"],"skew":1.0}],
+ ["pos centre k0.25", {"feats":["pos"],"kappa":0.25}],
+ ["pos centre k0.5", {"feats":["pos"],"kappa":0.5}],
+ ["pos skew 0.5", {"feats":["pos"],"skew":0.5}],
+ ["pos skew 1.0", {"feats":["pos"],"skew":1.0}],
+ ["dev+pos centre k0.5", {"feats":["dev","pos"],"kappa":0.5}],
+ ["dev+pos skew 0.5", {"feats":["dev","pos"],"skew":0.5}],
+ ["gap centre k0.5", {"feats":["gap"],"kappa":0.5}],
+ ["gap skew 0.5", {"feats":["gap"],"skew":0.5}]]

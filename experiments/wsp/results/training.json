@@ -1,0 +1,30 @@
+{
+  "adam_zero": {
+    "best_epoch": 0,
+    "epochs": 40,
+    "best_early_stop_loss": 0.007460788031094882,
+    "changed_weights": {
+      "w1": 0,
+      "b1": 0,
+      "w2": 0,
+      "b2": 0
+    },
+    "n_fit": 731,
+    "n_early_stop": 593,
+    "n_purged": 179
+  },
+  "adam_function_zero": {
+    "best_epoch": 26,
+    "epochs": 66,
+    "best_early_stop_loss": 0.007262404954294204,
+    "changed_weights": {
+      "w1": 393,
+      "b1": 22,
+      "w2": 66,
+      "b2": 3
+    },
+    "n_fit": 731,
+    "n_early_stop": 593,
+    "n_purged": 179
+  }
+}

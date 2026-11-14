@@ -13,7 +13,7 @@ fm2 params
   grids   list of grid paths (several = average their log offsets from their own median, equal weights)
   lo, hi  quantile levels for the lower and upper end (must be in every grid, or are linearly interpolated)
   centre  "last" (q50 = last value, width = model offsets from the model median) or "model" (raw quantiles)
-  scale   multiplier on the log offsets
+  scale   multiplier on the log offsets; sup / sdn override it for the upper / lower side
 """
 from __future__ import annotations
 
@@ -174,7 +174,7 @@ def offsets(df, lo, hi):
 
 
 @register("fm2")
-def make(grids=(), lo=0.1, hi=0.9, centre="last", scale=1.0):
+def make(grids=(), lo=0.1, hi=0.9, centre="last", scale=1.0, sup=None, sdn=None):
     K = ["series_id", "origin_day", "horizon_days"]
     parts = []
     for i, p in enumerate(grids):
@@ -185,8 +185,8 @@ def make(grids=(), lo=0.1, hi=0.9, centre="last", scale=1.0):
     for p in parts[1:]:
         df = df.merge(p.drop(columns="last"), on=K)
     n = len(parts)
-    dn = df[[f"dn{i}" for i in range(n)]].mean(axis=1).to_numpy() * scale
-    up = df[[f"up{i}" for i in range(n)]].mean(axis=1).to_numpy() * scale
+    dn = df[[f"dn{i}" for i in range(n)]].mean(axis=1).to_numpy() * (scale if sdn is None else sdn)
+    up = df[[f"up{i}" for i in range(n)]].mean(axis=1).to_numpy() * (scale if sup is None else sup)
     last = df["last"].to_numpy()
     if centre == "last":
         q = np.c_[last * np.exp(-dn), last, last * np.exp(up)]

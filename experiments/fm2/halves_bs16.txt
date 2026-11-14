@@ -1,0 +1,20 @@
+1 1 base_loss=2.3 skill_fm=+0.174 skill_mix=+0.235 mean_logwidth_fm-mix=+0.0085 above_q90 fm=0.028 mix=0.032 cov fm=0.94 mix=0.89
+1 3 base_loss=4.2 skill_fm=+0.176 skill_mix=+0.141 mean_logwidth_fm-mix=+0.0041 above_q90 fm=0.048 mix=0.056 cov fm=0.87 mix=0.81
+1 7 base_loss=8.8 skill_fm=+0.224 skill_mix=+0.170 mean_logwidth_fm-mix=-0.0025 above_q90 fm=0.104 mix=0.110 cov fm=0.72 mix=0.66
+2 1 base_loss=9.1 skill_fm=+0.064 skill_mix=+0.095 mean_logwidth_fm-mix=+0.0203 above_q90 fm=0.091 mix=0.111 cov fm=0.86 mix=0.83
+2 3 base_loss=21.8 skill_fm=+0.133 skill_mix=+0.149 mean_logwidth_fm-mix=+0.0170 above_q90 fm=0.182 mix=0.208 cov fm=0.74 mix=0.69
+2 7 base_loss=42.2 skill_fm=+0.183 skill_mix=+0.194 mean_logwidth_fm-mix=+0.0071 above_q90 fm=0.324 mix=0.330 cov fm=0.57 mix=0.55
+half 1 top loss series:
+                                                           share   gain
+series_id                                                             
+afhubbard.hyperscaler_spot.A100_40GB.spot.median          0.055 -0.000
+afhubbard.hyperscaler_spot.V100.spot.median               0.074 -0.002
+gpurentalprices.neocloud_rate_card.B200.on_demand.median  0.125  0.005
+gpurentalprices.marketplace_ask.H100_80GB.spot.median     0.494  0.021
+half 2 top loss series:
+                                                           share   gain
+series_id                                                             
+gpurentalprices.marketplace_ask.H100_80GB.spot.median     0.060  0.004
+fastgpu_daily.neocloud_rate_card.B200.on_demand.median    0.090 -0.006
+gpurentalprices.neocloud_rate_card.B300.on_demand.median  0.109 -0.002
+fastgpu_daily.neocloud_rate_card.B300.on_demand.median    0.154 -0.006

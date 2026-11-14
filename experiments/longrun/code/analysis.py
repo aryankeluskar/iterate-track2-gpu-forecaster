@@ -298,51 +298,63 @@ N = 20000
 ELEC = RNG.uniform(0.05, 0.12, N)        # USD per kWh, industrial / colo pass-through range
 PUE = RNG.uniform(1.2, 1.5, N)
 unit_draw = RNG.choice(list(UNIT_SETS), N)
+# Long-run within-chip rate: the only multi-year within-chip estimates are AWS spot segment A (p4d 2022-05..2026-02,
+# p5 2023-07..2026-02). The RATE is borrowed, never the level: levels stay on the aggregator instrument.
+LR = {"A100": "p4d.24xlarge", "H100": "p5.48xlarge"}
+# Level noise calibrated on the backtest: no-change log error sd over 26 weeks on the five chips, scaled to one year.
+s_year = float(np.std(np.log(r_head.truth / r_head.nochange_q50), ddof=1) * np.sqrt(52 / 26))
+out["step4_level_sd_per_sqrt_year"] = s_year
+EPOCH_PP = 0.30   # Epoch AI data insight (2024-10-23): hardware at fixed performance ~30% cheaper each year (cited in longrun.md)
+
+
+def lr_rate(c: str, n: int) -> np.ndarray:
+    row = decdf[(decdf.instrument == "hyperscaler_spot/aws/segA") & (decdf.chip.str.contains(LR[c], regex=False))].iloc[0]
+    return row.bs[RNG.integers(0, len(row.bs), n)] * 52.18   # log change per year
+
+
 proj = []
 paths = {}
 for c in ["H100", "A100"]:
-    for m in ["on_demand", "spot"]:
+    for m in ["on_demand", "spot", "reserved_36m"]:
         p0 = float(price.loc[f"aggregator_median/getdeploying/{m}", c])
-        # decay model: pool of instrument estimates for this chip (each drawn from its own bootstrap)
-        pool = decdf[(decdf.chip.str.startswith(c)) & (~decdf.instrument.str.contains("segB"))]
-        pick = RNG.integers(0, len(pool), N)
-        g = np.array([pool.iloc[i].bs[RNG.integers(0, len(pool.iloc[i].bs))] for i in pick]) * 52.18  # log per yr
-        wsd = np.std(np.diff(np.log(agg_final[(agg_final.chip == c) & (agg_final.pricing_mode == m)].sort_values("week_start").median_usd_per_gpu_hour)), ddof=1)
-        # strict per-unit parity: frontier per-unit price today x units, frontier unit price declines at g_f
+        g = lr_rate(c, N)
+        # strict per-unit parity: frontier per-unit price today x units; the frontier unit price falls at the hardware
+        # price-performance rate (half the draws from the pack's Epoch-catalogue fit, half around Epoch's published 30%/yr)
         pf0 = float(price.loc[f"aggregator_median/getdeploying/{m}", ["B200", "B300"]].div(U.loc[["B200", "B300"], "xbench"]).min())
-        b200 = decdf[(decdf.chip == "B200") & (decdf.instrument == f"aggregator_median/{m}")]
-        gf_a = b200.iloc[0].bs[RNG.integers(0, NB, N)] * 52.18 if len(b200) else np.zeros(N)
-        gf_b = -pp["bs"][RNG.integers(0, NB, N)]
-        gf = np.where(RNG.random(N) < 0.5, gf_a, gf_b)
+        x = np.where(RNG.random(N) < 0.5, np.exp(pp["bs"][RNG.integers(0, NB, N)]) - 1, RNG.uniform(0.25, 0.35, N))
+        gf = -np.log1p(x)
         ui = np.array([U.loc[c, k] for k in unit_draw])
         uf = np.array([U.loc["B300", k] for k in unit_draw])
+        pfu = np.array([float(price.loc[f"aggregator_median/getdeploying/{m}", ["B200", "B300"]].div(U.loc[["B200", "B300"], k]).min()) for k in UNIT_SETS])
+        pfu = dict(zip(UNIT_SETS, pfu))
+        pf_draw = np.array([pfu[k] for k in unit_draw])
         prem0 = float(rel.loc[f"aggregator_median/getdeploying/{m}", c])
         ptr = trend[c]["annual_change_of_ratio"]
         for T in (24, 36):
             yrs = T / 12
-            noise = RNG.normal(0, wsd * np.sqrt(T * 4.348), N)
+            noise = RNG.normal(0, s_year * np.sqrt(yrs), N)
             dm = p0 * np.exp(g * yrs + noise)
             handicap = np.maximum(TDP[c] - ui * TDP["B300"] / uf, 0) / 1000 * PUE * ELEC
-            par = np.maximum(ui * (pf0 * U.loc["B300", "xbench"] / U.loc["B300", "xbench"]) * np.exp(gf * yrs) - handicap, 0.01)
-            # premium-persists variant: today's per-unit premium, moving at its observed 12-month trend (capped at 1x floor)
+            par = np.maximum(ui * pf_draw * np.exp(gf * yrs + noise) - handicap, 0.01)
+            # premium-persists variant: today's per-unit premium, moving at its observed 12-month trend (floored at 1x)
             prem = np.maximum(prem0 * (1 + ptr) ** yrs, 1.0)
             pp_ = np.maximum(par * prem, 0.01)
-            for name, x in [("decay", dm), ("parity_strict", par), ("parity_premium_persists", pp_)]:
-                q = np.percentile(x, [10, 50, 90])
+            for name, xx in [("decay", dm), ("parity_strict", par), ("parity_premium_persists", pp_)]:
+                q = np.percentile(xx, [10, 50, 90])
                 proj.append({"chip": c, "instrument": f"aggregator_median/{m}", "p0_nov2026": p0, "horizon_m": T, "model": name,
                              "q10": q[0], "q50": q[1], "q90": q[2]})
-            paths[(c, m, T)] = dm
-        out[f"step4_{c}_{m}_decay_rate_q10_50_90"] = (np.exp(np.percentile(g, [10, 50, 90])) - 1).round(3).tolist()
-        out[f"step4_{c}_{m}_handicap_usd_h_q50"] = float(np.median(np.maximum(TDP[c] - ui * TDP["B300"] / uf, 0) / 1000 * PUE * ELEC))
+                paths[(c, m, T, name)] = q
+        out[f"step4_{c}_decay_rate_q10_50_90"] = (np.exp(np.percentile(g, [10, 50, 90])) - 1).round(3).tolist()
+        out[f"step4_{c}_handicap_usd_h_q50"] = float(np.median(np.maximum(TDP[c] - ui * TDP["B300"] / uf, 0) / 1000 * PUE * ELEC))
+        out[f"step4_{c}_{m}_parity_today"] = float(np.median(ui * pf_draw))
 projdf = pd.DataFrame(proj)
 projdf.round(3).to_csv(RES / "t4_projections.csv", index=False)
 
 # ---------------------------------------------------------------- step 5: income-approach value per GPU (Nov 2026)
-def income_value(c: str, n: int = 20000, start_m: int = 0) -> np.ndarray:
-    p0 = float(price.loc["aggregator_median/getdeploying/on_demand", c])
-    pool = decdf[(decdf.chip.str.startswith(c)) & (~decdf.instrument.str.contains("segB"))]
-    pick = RNG.integers(0, len(pool), n)
-    g = np.array([pool.iloc[i].bs[RNG.integers(0, len(pool.iloc[i].bs))] for i in pick]) * 52.18
+def income_value(c: str, n: int = 20000, start_m: int = 0, mode: str = "reserved_36m") -> np.ndarray:
+    """Rent = aggregator median for `mode` (reserved_36m: what a lessor can lock today), decaying at the long-run rate."""
+    p0 = float(price.loc[f"aggregator_median/getdeploying/{mode}", c])
+    g = lr_rate(c, n)
     util = RNG.uniform(0.5, 0.85, n)
     r = RNG.uniform(0.10, 0.20, n)
     life = RNG.uniform(*({"H100": (2, 5), "A100": (1, 4)}[c]), n)
@@ -352,7 +364,7 @@ def income_value(c: str, n: int = 20000, start_m: int = 0) -> np.ndarray:
     for mth in range(start_m + 1, start_m + 61):
         rent = p0 * np.exp(g * mth / 12)
         net = np.maximum((rent * util - fixed - elec * util) * 730, 0)  # operator idles the GPU when net < 0
-        alive = (mth - start_m) <= life * 12
+        alive = (mth - start_m) <= np.maximum(life - start_m / 12, 0) * 12   # remaining life shrinks with age
         val += np.where(alive, net / (1 + r) ** ((mth - start_m) / 12), 0)
     return val, dict(util=util, r=r, life=life, fixed=fixed, g=g)
 
@@ -360,14 +372,17 @@ def income_value(c: str, n: int = 20000, start_m: int = 0) -> np.ndarray:
 res5 = {}
 sens = []
 for c in ["H100", "A100"]:
-    v, par = income_value(c)
-    res5[c] = {"q10": float(np.percentile(v, 10)), "q50": float(np.median(v)), "q90": float(np.percentile(v, 90))}
-    v24, _ = income_value(c, start_m=24)
-    res5[c + "_at_+24m"] = {"q10": float(np.percentile(v24, 10)), "q50": float(np.median(v24)), "q90": float(np.percentile(v24, 90))}
-    for k, a in par.items():
-        lo, hi = np.percentile(a, [20, 80])
-        sens.append({"chip": c, "input": k, "low_quintile_value_q50": float(np.median(v[a <= lo])), "high_quintile_value_q50": float(np.median(v[a >= hi])),
-                     "low_input": float(lo), "high_input": float(hi)})
+    for mode in ["reserved_36m", "on_demand"]:
+        v, par = income_value(c, mode=mode)
+        res5[f"{c}_{mode}_nov2026"] = {"q10": float(np.percentile(v, 10)), "q50": float(np.median(v)), "q90": float(np.percentile(v, 90))}
+        v24, _ = income_value(c, start_m=24, mode=mode)
+        res5[f"{c}_{mode}_nov2028"] = {"q10": float(np.percentile(v24, 10)), "q50": float(np.median(v24)), "q90": float(np.percentile(v24, 90))}
+        if mode != "reserved_36m":
+            continue
+        for k, a in par.items():
+            lo, hi = np.percentile(a, [20, 80])
+            sens.append({"chip": c, "input": k, "low_input": float(lo), "high_input": float(hi),
+                         "value_q50_if_input_low": float(np.median(v[a <= lo])), "value_q50_if_input_high": float(np.median(v[a >= hi]))})
 pd.DataFrame(sens).round(3).to_csv(RES / "t5_income_sensitivity.csv", index=False)
 out["step5_income_value_per_gpu"] = res5
 

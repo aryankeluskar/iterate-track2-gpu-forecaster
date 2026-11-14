@@ -1,0 +1,12 @@
+{
+  "name": "03_panel_upper_headroom",
+  "unit": 2,
+  "read_direction": {"median_position": -1, "horizon": 1},
+  "bias": -0.5,
+  "write_direction": [0, 1, 0],
+  "magnitude": 0.1823215567939546,
+  "control_seed": 103,
+  "mechanism": "A median nearer the panel's p25 than p75 leaves more room for an upward panel-median step. Widen the upper offset where that asymmetry and forecast horizon give a positive activation.",
+  "prediction": "Practice pooled skill rises 0.001 to 0.005 through up >5% cells at h7, while q50 stays fixed.",
+  "evidence_before_edit": "Up >5% carries 34.84% of practice baseline loss, and 48.94% of those cells exceed mix q90."
+}

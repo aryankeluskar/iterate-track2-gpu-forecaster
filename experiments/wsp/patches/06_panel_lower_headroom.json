@@ -1,0 +1,12 @@
+{
+  "name": "06_panel_lower_headroom",
+  "unit": 5,
+  "read_direction": {"median_position": 1, "horizon": 1},
+  "bias": -0.5,
+  "write_direction": [1, 0, 0],
+  "magnitude": 0.1823215567939546,
+  "control_seed": 106,
+  "mechanism": "If the median is closer to p75, the panel has more room below its median. Widen the lower log offset with this asymmetry, more at long horizons.",
+  "prediction": "Practice pooled skill rises 0.001 to 0.004 through downside moves where the current panel is skewed below its median.",
+  "evidence_before_edit": "The symmetric upper-panel hypothesis improved practice 0.000422, but does not establish the lower hypothesis. Lower widening gated by recent activity failed."
+}

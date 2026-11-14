@@ -1,0 +1,12 @@
+{
+  "name": "02_dormant_shrink",
+  "unit": 1,
+  "read_direction": {"age": 1},
+  "bias": -1,
+  "write_direction": [-1, -1, 0],
+  "magnitude": 0.2231435513142097,
+  "control_seed": 102,
+  "mechanism": "After 14 idle days, reduce both log offsets gradually, reaching 20% shrinkage at 28 days. Posted rate cards that have been idle need less residual spread.",
+  "prediction": "Practice pooled skill rises 0.001 to 0.004 through lower no-change loss; a loss on new jumps would refute the gain.",
+  "evidence_before_edit": "970/1503 practice cells are unchanged, but mix spends 0.33957 total cell loss there."
+}

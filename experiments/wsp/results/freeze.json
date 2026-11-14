@@ -1,0 +1,25 @@
+{
+  "timestamp": "2026-11-14T19:51:21.668668+00:00",
+  "incumbent": "07_quiet_relative_to_peers.npz",
+  "hand_sha256": "c2018f05c0598f43c20e6d5e65c9c46839295599ae4043119334b9a1154e3229",
+  "passes_sha256": "e72d7ba1d7c228fa64f80fdb380d8c4402df38cf26f8ef9372b879659330ac78",
+  "decisions_sha256": "cf4d1bf1969277546fa6ccaa33eeaa1bfb0140db77788c867e9bb1323cac5210",
+  "protocol_sha256": "daea581a2dc3b0137f76c903f2665b1c9affdaf62696a18adc6a199e8579ad7d",
+  "patch_hashes": {
+    "01_recent_lower.json": "ef926da3f4347ddfdbfb6c01aca8cb14d4b93e16ae23ac82be2571cf896bb755",
+    "02_dormant_shrink.json": "221c7c4bddb5fe5af2ea14b9cb030e846b2c1eb50f3e9450949957b470fecefd",
+    "03_panel_upper_headroom.json": "dd2721275cba9b1068c45d784f642b04deca9eacb513471f178be3f2a3dd263d",
+    "04_short_upper_shrink.json": "1544c3007434c8c39567f58571be3e0dca45374a99f0584e292bc72e58862752",
+    "05_spot_lower.json": "866618a543d75590cddf57fd929045103bfadc5fd7651bd01b292932ec5ea3ec",
+    "06_panel_lower_headroom.json": "930c7e9edd564c44bd5cbe53fb554fb10bf804e78d86f253118a6f148f9d3f7b",
+    "07_quiet_relative_to_peers.json": "3051500f00103bc65e3b6aa54fd48e5daa6094e3dfa2ab9e2db8731dce76374a",
+    "08_recent_upper.json": "bad9decbfe2a1f3731e1fb91a00155806ab0b306cf175b247ec8d8ae769ed200"
+  },
+  "hand_forward_calls": 17,
+  "kept": [
+    "02_dormant_shrink.npz",
+    "03_panel_upper_headroom.npz",
+    "05_spot_lower.npz",
+    "07_quiet_relative_to_peers.npz"
+  ]
+}

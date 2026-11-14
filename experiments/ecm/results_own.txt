@@ -1,66 +1,66 @@
-H1 all pairs (closing signal)              h=1 n= 1904 ser=102 dates=19 wk= 4 slope=+0.000 [+0.000,+0.001] rho=-0.048 [-0.178,+0.086] | null shuf [-0.16,-0.06] p=1.00 circ [-0.14,-0.04] p=0.78
-H1 all pairs (closing signal)              h=3 n= 1904 ser=102 dates=19 wk= 4 slope=+0.003 [+0.000,+0.003] rho=+0.081 [-0.112,+0.250] | null shuf [-0.15,+0.02] p=0.34 circ [-0.16,+0.04] p=0.30
-H1 all pairs (closing signal)              h=7 n= 1904 ser=102 dates=19 wk= 4 slope=+0.005 [-0.002,+0.007] rho=+0.206 [+0.052,+0.316] | null shuf [-0.12,+0.10] p=0.00 circ [-0.33,+0.12] p=0.30
-H1 exact, fastgpu side                     h=1 n=  952 ser=51 dates=19 wk= 4 slope=+0.001 [-0.001,+0.001] rho=-0.147 [-0.288,-0.004] | null shuf [-0.26,-0.11] p=0.80 circ [-0.23,-0.06] p=0.35
-H1 exact, fastgpu side                     h=3 n=  952 ser=51 dates=19 wk= 4 slope=+0.003 [-0.002,+0.005] rho=-0.028 [-0.305,+0.208] | null shuf [-0.21,-0.01] p=0.94 circ [-0.20,+0.04] p=0.66
-H1 exact, fastgpu side                     h=7 n=  952 ser=51 dates=19 wk= 4 slope=+0.005 [-0.004,+0.005] rho=+0.129 [-0.069,+0.266] | null shuf [-0.12,+0.08] p=0.02 circ [-0.32,+0.17] p=0.45
-H1 exact, gprice side                      h=1 n=  952 ser=51 dates=19 wk= 4 slope=-0.000 [-0.000,+0.003] rho=+0.046 [-0.077,+0.181] | null shuf [-0.13,+0.01] p=0.60 circ [-0.07,-0.00] p=0.42
-H1 exact, gprice side                      h=3 n=  952 ser=51 dates=19 wk= 4 slope=+0.002 [+0.001,+0.004] rho=+0.184 [+0.077,+0.299] | null shuf [-0.13,+0.07] p=0.00 circ [-0.12,+0.05] p=0.00
-H1 exact, gprice side                      h=7 n=  952 ser=51 dates=19 wk= 4 slope=+0.006 [-0.001,+0.009] rho=+0.291 [+0.179,+0.372] | null shuf [-0.14,+0.12] p=0.00 circ [-0.34,+0.07] p=0.12
-H1 exact, headline series only             h=1 n=  439 ser=24 dates=19 wk= 4 slope=-0.001 [-0.003,-0.000] rho=-0.147 [-0.360,+0.091] | null shuf [-0.23,-0.08] p=0.46 circ [-0.17,-0.01] p=0.21
-H1 exact, headline series only             h=3 n=  439 ser=24 dates=19 wk= 4 slope=+0.002 [-0.007,+0.003] rho=-0.037 [-0.348,+0.196] | null shuf [-0.20,+0.02] p=0.85 circ [-0.14,+0.10] p=0.91
-H1 exact, headline series only             h=7 n=  439 ser=24 dates=19 wk= 4 slope=+0.003 [-0.005,+0.004] rho=+0.119 [-0.138,+0.295] | null shuf [-0.16,+0.10] p=0.12 circ [-0.40,+0.22] p=0.66
-H1 exact, rate-card/list classes           h=1 n= 1216 ser=64 dates=19 wk= 4 slope=+0.000 [-0.001,+0.000] rho=-0.129 [-0.292,+0.024] | null shuf [-0.22,-0.12] p=0.94 circ [-0.19,-0.11] p=0.54
-H1 exact, rate-card/list classes           h=3 n= 1216 ser=64 dates=19 wk= 4 slope=+0.002 [-0.001,+0.003] rho=+0.004 [-0.221,+0.204] | null shuf [-0.19,-0.04] p=1.00 circ [-0.16,-0.02] p=1.00
-H1 exact, rate-card/list classes           h=7 n= 1216 ser=64 dates=19 wk= 4 slope=+0.004 [-0.002,+0.004] rho=+0.116 [-0.068,+0.258] | null shuf [-0.15,+0.05] p=0.08 circ [-0.33,+0.09] p=0.30
-H1 exact, spot classes                     h=1 n=  498 ser=28 dates=19 wk= 4 slope=+0.001 [-0.001,+0.002] rho=+0.043 [-0.089,+0.171] | null shuf [-0.10,+0.07] p=0.43 circ [-0.10,+0.09] p=0.87
-H1 exact, spot classes                     h=3 n=  498 ser=28 dates=19 wk= 4 slope=+0.004 [+0.000,+0.006] rho=+0.171 [+0.005,+0.330] | null shuf [-0.16,+0.13] p=0.02 circ [-0.23,+0.14] p=0.21
-H1 exact, spot classes                     h=7 n=  498 ser=28 dates=19 wk= 4 slope=+0.013 [+0.001,+0.021] rho=+0.350 [+0.206,+0.449] | null shuf [-0.16,+0.16] p=0.00 circ [-0.45,+0.17] p=0.30
-H1 alias A100_80GB/SXM_80GB                h=1 n=  114 ser= 6 dates=19 wk= 4 slope=+0.003 [+0.002,+0.007] rho=-0.073 [-0.231,+0.104] | null shuf [-0.32,-0.05] p=0.94 circ [-0.27,-0.16] p=1.00
-H1 alias A100_80GB/SXM_80GB                h=3 n=  114 ser= 6 dates=19 wk= 4 slope=+0.007 [+0.000,+0.008] rho=+0.029 [-0.095,+0.151] | null shuf [-0.28,+0.02] p=0.90 circ [-0.17,-0.03] p=1.00
-H1 alias A100_80GB/SXM_80GB                h=7 n=  114 ser= 6 dates=19 wk= 4 slope=+0.011 [-0.004,+0.015] rho=+0.315 [-0.031,+0.495] | null shuf [-0.22,+0.16] p=0.01 circ [-0.21,-0.04] p=0.00
-H1 |z| vs |y| exact all                    h=1 n= 1904 ser=102 dates=19 wk= 4 slope=+0.001 [+0.000,+0.003] rho=+0.213 [+0.054,+0.346] | null shuf [+0.12,+0.21] p=0.02 circ [+0.11,+0.14] p=0.00
-H1 |z| vs |y| exact all                    h=3 n= 1904 ser=102 dates=19 wk= 4 slope=+0.001 [+0.000,+0.005] rho=+0.172 [+0.018,+0.274] | null shuf [+0.04,+0.20] p=0.11 circ [-0.00,+0.12] p=0.00
-H1 |z| vs |y| exact all                    h=7 n= 1904 ser=102 dates=19 wk= 4 slope=+0.000 [-0.001,+0.007] rho=+0.039 [-0.021,+0.171] | null shuf [-0.05,+0.13] p=0.52 circ [-0.13,+0.26] p=0.87
-H1 |z| vs |y| exact headline               h=1 n=  439 ser=24 dates=19 wk= 4 slope=+0.005 [+0.002,+0.005] rho=+0.274 [+0.169,+0.339] | null shuf [+0.06,+0.24] p=0.01 circ [+0.03,+0.11] p=0.00
-H1 |z| vs |y| exact headline               h=3 n=  439 ser=24 dates=19 wk= 4 slope=+0.006 [+0.005,+0.011] rho=+0.261 [+0.100,+0.368] | null shuf [-0.01,+0.21] p=0.00 circ [-0.10,+0.08] p=0.00
-H1 |z| vs |y| exact headline               h=7 n=  439 ser=24 dates=19 wk= 4 slope=+0.005 [+0.004,+0.014] rho=+0.130 [-0.012,+0.256] | null shuf [-0.10,+0.18] p=0.10 circ [-0.22,+0.21] p=0.77
+H1 all pairs (closing signal)              h=1 n= 1904 ser=102 dates=19 wk= 4 slope=+0.000 [+0.000,+0.001] rho=-0.048 [-0.178,+0.086] | slope-null shuf [-0.002,+0.001] p=0.35 circ [+0.000,+0.001] p=0.34
+H1 all pairs (closing signal)              h=3 n= 1904 ser=102 dates=19 wk= 4 slope=+0.003 [+0.000,+0.003] rho=+0.081 [-0.112,+0.250] | slope-null shuf [-0.003,+0.002] p=0.04 circ [-0.000,+0.002] p=0.00
+H1 all pairs (closing signal)              h=7 n= 1904 ser=102 dates=19 wk= 4 slope=+0.005 [-0.002,+0.007] rho=+0.206 [+0.052,+0.316] | slope-null shuf [-0.003,+0.003] p=0.00 circ [-0.007,+0.003] p=0.20
+H1 exact, fastgpu side                     h=1 n=  952 ser=51 dates=19 wk= 4 slope=+0.001 [-0.001,+0.001] rho=-0.147 [-0.288,-0.004] | slope-null shuf [-0.003,+0.001] p=0.14 circ [+0.000,+0.001] p=0.00
+H1 exact, fastgpu side                     h=3 n=  952 ser=51 dates=19 wk= 4 slope=+0.003 [-0.002,+0.005] rho=-0.028 [-0.305,+0.208] | slope-null shuf [-0.003,+0.002] p=0.03 circ [-0.000,+0.002] p=0.00
+H1 exact, fastgpu side                     h=7 n=  952 ser=51 dates=19 wk= 4 slope=+0.005 [-0.004,+0.005] rho=+0.129 [-0.069,+0.266] | slope-null shuf [-0.003,+0.003] p=0.00 circ [-0.007,+0.004] p=0.20
+H1 exact, gprice side                      h=1 n=  952 ser=51 dates=19 wk= 4 slope=-0.000 [-0.000,+0.003] rho=+0.046 [-0.077,+0.181] | slope-null shuf [-0.004,+0.002] p=0.91 circ [+0.000,+0.001] p=1.00
+H1 exact, gprice side                      h=3 n=  952 ser=51 dates=19 wk= 4 slope=+0.002 [+0.001,+0.004] rho=+0.184 [+0.077,+0.299] | slope-null shuf [-0.004,+0.003] p=0.37 circ [-0.000,+0.001] p=0.00
+H1 exact, gprice side                      h=7 n=  952 ser=51 dates=19 wk= 4 slope=+0.006 [-0.001,+0.009] rho=+0.291 [+0.179,+0.372] | slope-null shuf [-0.004,+0.004] p=0.00 circ [-0.009,+0.003] p=0.20
+H1 exact, headline series only             h=1 n=  439 ser=24 dates=19 wk= 4 slope=-0.001 [-0.003,-0.000] rho=-0.147 [-0.360,+0.091] | slope-null shuf [-0.003,+0.002] p=0.18 circ [+0.000,+0.001] p=0.00
+H1 exact, headline series only             h=3 n=  439 ser=24 dates=19 wk= 4 slope=+0.002 [-0.007,+0.003] rho=-0.037 [-0.348,+0.196] | slope-null shuf [-0.004,+0.003] p=0.35 circ [+0.000,+0.003] p=0.59
+H1 exact, headline series only             h=7 n=  439 ser=24 dates=19 wk= 4 slope=+0.003 [-0.005,+0.004] rho=+0.119 [-0.138,+0.295] | slope-null shuf [-0.004,+0.004] p=0.13 circ [-0.009,+0.006] p=0.67
+H1 exact, rate-card/list classes           h=1 n= 1216 ser=64 dates=19 wk= 4 slope=+0.000 [-0.001,+0.000] rho=-0.129 [-0.292,+0.024] | slope-null shuf [-0.002,+0.001] p=0.96 circ [+0.000,+0.000] p=1.00
+H1 exact, rate-card/list classes           h=3 n= 1216 ser=64 dates=19 wk= 4 slope=+0.002 [-0.001,+0.003] rho=+0.004 [-0.221,+0.204] | slope-null shuf [-0.002,+0.002] p=0.07 circ [+0.000,+0.001] p=0.00
+H1 exact, rate-card/list classes           h=7 n= 1216 ser=64 dates=19 wk= 4 slope=+0.004 [-0.002,+0.004] rho=+0.116 [-0.068,+0.258] | slope-null shuf [-0.002,+0.002] p=0.00 circ [-0.005,+0.003] p=0.20
+H1 exact, spot classes                     h=1 n=  498 ser=28 dates=19 wk= 4 slope=+0.001 [-0.001,+0.002] rho=+0.043 [-0.089,+0.171] | slope-null shuf [-0.006,+0.004] p=0.33 circ [+0.000,+0.001] p=0.08
+H1 exact, spot classes                     h=3 n=  498 ser=28 dates=19 wk= 4 slope=+0.004 [+0.000,+0.006] rho=+0.171 [+0.005,+0.330] | slope-null shuf [-0.006,+0.006] p=0.27 circ [-0.003,+0.003] p=0.00
+H1 exact, spot classes                     h=7 n=  498 ser=28 dates=19 wk= 4 slope=+0.013 [+0.001,+0.021] rho=+0.350 [+0.206,+0.449] | slope-null shuf [-0.009,+0.008] p=0.00 circ [-0.018,+0.006] p=0.20
+H1 alias A100_80GB/SXM_80GB                h=1 n=  114 ser= 6 dates=19 wk= 4 slope=+0.003 [+0.002,+0.007] rho=-0.073 [-0.231,+0.104] | slope-null shuf [-0.011,+0.002] p=0.05 circ [-0.001,+0.001] p=0.00
+H1 alias A100_80GB/SXM_80GB                h=3 n=  114 ser= 6 dates=19 wk= 4 slope=+0.007 [+0.000,+0.008] rho=+0.029 [-0.095,+0.151] | slope-null shuf [-0.011,+0.005] p=0.15 circ [-0.001,+0.004] p=0.00
+H1 alias A100_80GB/SXM_80GB                h=7 n=  114 ser= 6 dates=19 wk= 4 slope=+0.011 [-0.004,+0.015] rho=+0.315 [-0.031,+0.495] | slope-null shuf [-0.010,+0.009] p=0.01 circ [-0.011,+0.004] p=0.00
+H1 |z| vs |y| exact all                    h=1 n= 1904 ser=102 dates=19 wk= 4 slope=+0.001 [+0.000,+0.003] rho=+0.213 [+0.054,+0.346] | slope-null shuf [-0.001,+0.002] p=0.17 circ [-0.001,-0.001] p=0.25
+H1 |z| vs |y| exact all                    h=3 n= 1904 ser=102 dates=19 wk= 4 slope=+0.001 [+0.000,+0.005] rho=+0.172 [+0.018,+0.274] | slope-null shuf [-0.002,+0.003] p=0.61 circ [-0.002,-0.001] p=1.00
+H1 |z| vs |y| exact all                    h=7 n= 1904 ser=102 dates=19 wk= 4 slope=+0.000 [-0.001,+0.007] rho=+0.039 [-0.021,+0.171] | slope-null shuf [-0.002,+0.003] p=0.80 circ [-0.004,+0.005] p=1.00
+H1 |z| vs |y| exact headline               h=1 n=  439 ser=24 dates=19 wk= 4 slope=+0.005 [+0.002,+0.005] rho=+0.274 [+0.169,+0.339] | slope-null shuf [-0.001,+0.004] p=0.00 circ [-0.002,-0.001] p=0.00
+H1 |z| vs |y| exact headline               h=3 n=  439 ser=24 dates=19 wk= 4 slope=+0.006 [+0.005,+0.011] rho=+0.261 [+0.100,+0.368] | slope-null shuf [-0.003,+0.006] p=0.03 circ [-0.004,-0.002] p=0.00
+H1 |z| vs |y| exact headline               h=7 n=  439 ser=24 dates=19 wk= 4 slope=+0.005 [+0.004,+0.014] rho=+0.130 [-0.012,+0.256] | slope-null shuf [-0.004,+0.005] p=0.05 circ [-0.006,+0.007] p=0.78
 H1 exact |z|>1.0                           h=1 n=  606 ser=78 dates=19 wk= 4 slope=-0.000 [-0.001,+0.001] rho=+0.009 [-0.077,+0.191]
 H1 exact |z|>1.0                           h=3 n=  606 ser=78 dates=19 wk= 4 slope=+0.001 [+0.000,+0.003] rho=+0.063 [-0.000,+0.197]
 H1 exact |z|>1.0                           h=7 n=  606 ser=78 dates=19 wk= 4 slope=+0.003 [+0.002,+0.006] rho=+0.186 [+0.123,+0.227]
 H1 exact |z|>2.0                           h=1 n=  296 ser=64 dates=19 wk= 4 slope=-0.001 [-0.001,-0.000] rho=-0.032 [-0.119,+0.193]
 H1 exact |z|>2.0                           h=3 n=  296 ser=64 dates=19 wk= 4 slope=-0.001 [-0.001,+0.002] rho=-0.032 [-0.113,+0.210]
 H1 exact |z|>2.0                           h=7 n=  296 ser=64 dates=19 wk= 4 slope=+0.001 [+0.001,+0.004] rho=+0.197 [-0.060,+0.259]
-H2 level dev vs own 30d median [all]       h=1 n=12272 ser=318 dates=50 wk= 8 slope=-0.143 [-0.222,-0.100] rho=+0.163 [+0.086,+0.235] | null shuf [+0.14,+0.21] p=0.60 circ [+0.06,+0.28] p=0.32
-H2 level dev vs own 30d median [all]       h=3 n=12272 ser=318 dates=50 wk= 8 slope=-0.224 [-0.289,-0.155] rho=+0.073 [-0.016,+0.162] | null shuf [+0.09,+0.20] p=0.99 circ [+0.00,+0.33] p=0.47
-H2 level dev vs own 30d median [all]       h=7 n=12272 ser=318 dates=50 wk= 8 slope=-0.324 [-0.426,-0.215] rho=-0.021 [-0.097,+0.074] | null shuf [+0.03,+0.17] p=0.99 circ [-0.08,+0.46] p=0.80
-H2 position asymmetry p75/p25 [all]        h=1 n= 5367 ser=169 dates=50 wk= 8 slope=+0.182 [+0.045,+0.264] rho=-0.051 [-0.116,+0.019] | null shuf [-0.10,-0.04] p=0.86 circ [-0.11,-0.00] p=0.60
-H2 position asymmetry p75/p25 [all]        h=3 n= 5367 ser=169 dates=50 wk= 8 slope=+0.236 [+0.078,+0.319] rho=+0.014 [-0.066,+0.088] | null shuf [-0.10,-0.01] p=0.98 circ [-0.14,+0.05] p=0.85
-H2 position asymmetry p75/p25 [all]        h=7 n= 5367 ser=169 dates=50 wk= 8 slope=+0.303 [+0.167,+0.370] rho=+0.070 [-0.007,+0.134] | null shuf [-0.09,-0.01] p=0.19 circ [-0.23,+0.07] p=0.31
-H2 level dev vs own 30d median [headline]  h=1 n= 1230 ser=37 dates=50 wk= 8 slope=-0.143 [-0.227,-0.080] rho=+0.200 [+0.069,+0.315] | null shuf [+0.07,+0.23] p=0.13 circ [-0.00,+0.28] p=0.11
-H2 level dev vs own 30d median [headline]  h=3 n= 1230 ser=37 dates=50 wk= 8 slope=-0.308 [-0.486,-0.143] rho=+0.093 [-0.041,+0.231] | null shuf [+0.04,+0.23] p=0.74 circ [-0.07,+0.38] p=0.26
-H2 level dev vs own 30d median [headline]  h=7 n= 1230 ser=37 dates=50 wk= 8 slope=-0.476 [-0.657,-0.314] rho=-0.054 [-0.169,+0.096] | null shuf [-0.01,+0.21] p=0.77 circ [-0.13,+0.58] p=0.64
-H2 position asymmetry p75/p25 [headline]   h=1 n= 1230 ser=37 dates=50 wk= 8 slope=+0.116 [+0.074,+0.171] rho=-0.030 [-0.106,+0.044] | null shuf [-0.09,+0.04] p=0.51 circ [-0.14,+0.08] p=0.83
-H2 position asymmetry p75/p25 [headline]   h=3 n= 1230 ser=37 dates=50 wk= 8 slope=+0.240 [+0.131,+0.353] rho=+0.046 [-0.056,+0.140] | null shuf [-0.09,+0.05] p=0.30 circ [-0.21,+0.11] p=0.77
-H2 position asymmetry p75/p25 [headline]   h=7 n= 1230 ser=37 dates=50 wk= 8 slope=+0.362 [+0.257,+0.480] rho=+0.146 [+0.044,+0.221] | null shuf [-0.10,+0.06] p=0.00 circ [-0.29,+0.11] p=0.07
-H2 level dev vs own 30d median [fastgpu]   h=1 n= 1786 ser=94 dates=19 wk= 4 slope=-0.109 [-0.196,-0.004] rho=+0.059 [-0.174,+0.258] | null shuf [+0.01,+0.20] p=0.82 circ [-0.01,+0.17] p=0.35
-H2 level dev vs own 30d median [fastgpu]   h=3 n= 1786 ser=94 dates=19 wk= 4 slope=-0.272 [-0.489,-0.027] rho=-0.079 [-0.428,+0.251] | null shuf [-0.07,+0.19] p=0.44 circ [-0.12,+0.28] p=0.80
-H2 level dev vs own 30d median [fastgpu]   h=7 n= 1786 ser=94 dates=19 wk= 4 slope=-0.477 [-0.636,-0.266] rho=-0.253 [-0.428,-0.022] | null shuf [-0.15,+0.17] p=0.00 circ [-0.27,+0.48] p=0.45
-H2 position asymmetry p75/p25 [fastgpu]    h=1 n= 1044 ser=59 dates=19 wk= 4 slope=+0.139 [-0.015,+0.290] rho=-0.032 [-0.210,+0.146] | null shuf [-0.12,-0.00] p=0.84 circ [-0.11,+0.04] p=0.49
-H2 position asymmetry p75/p25 [fastgpu]    h=3 n= 1044 ser=59 dates=19 wk= 4 slope=+0.314 [-0.062,+0.687] rho=+0.030 [-0.176,+0.219] | null shuf [-0.11,+0.07] p=0.58 circ [-0.10,+0.10] p=0.90
-H2 position asymmetry p75/p25 [fastgpu]    h=7 n= 1044 ser=59 dates=19 wk= 4 slope=+0.438 [+0.203,+0.645] rho=+0.137 [+0.076,+0.201] | null shuf [-0.10,+0.08] p=0.00 circ [-0.24,+0.16] p=0.45
-H2 level dev vs own 30d median [gprice]    h=1 n= 5540 ser=119 dates=50 wk= 8 slope=-0.313 [-0.423,-0.231] rho=+0.132 [+0.059,+0.189] | null shuf [+0.19,+0.25] p=1.00 circ [+0.17,+0.27] p=1.00
-H2 level dev vs own 30d median [gprice]    h=3 n= 5540 ser=119 dates=50 wk= 8 slope=-0.432 [-0.528,-0.349] rho=+0.035 [-0.025,+0.091] | null shuf [+0.14,+0.23] p=1.00 circ [+0.09,+0.31] p=1.00
-H2 level dev vs own 30d median [gprice]    h=7 n= 5540 ser=119 dates=50 wk= 8 slope=-0.546 [-0.632,-0.459] rho=-0.047 [-0.123,+0.025] | null shuf [+0.09,+0.20] p=1.00 circ [+0.01,+0.44] p=0.76
-H2 position asymmetry p75/p25 [gprice]     h=1 n= 2114 ser=56 dates=50 wk= 8 slope=+0.109 [+0.057,+0.185] rho=-0.132 [-0.181,-0.061] | null shuf [-0.17,-0.09] p=0.42 circ [-0.21,-0.06] p=0.23
-H2 position asymmetry p75/p25 [gprice]     h=3 n= 2114 ser=56 dates=50 wk= 8 slope=+0.264 [+0.132,+0.416] rho=-0.090 [-0.172,-0.001] | null shuf [-0.16,-0.06] p=0.81 circ [-0.25,+0.00] p=0.34
-H2 position asymmetry p75/p25 [gprice]     h=7 n= 2114 ser=56 dates=50 wk= 8 slope=+0.492 [+0.293,+0.630] rho=-0.035 [-0.166,+0.095] | null shuf [-0.15,-0.04] p=0.98 circ [-0.32,+0.04] p=0.61
-H2 |dev| vs |y| [all]                      h=1 n=12272 ser=318 dates=50 wk= 8 slope=+0.031 [-0.002,+0.111] rho=+0.354 [+0.271,+0.425] | null shuf [+0.21,+0.28] p=0.00 circ [+0.14,+0.32] p=0.00
-H2 |dev| vs |y| [all]                      h=3 n=12272 ser=318 dates=50 wk= 8 slope=+0.004 [-0.055,+0.139] rho=+0.293 [+0.210,+0.370] | null shuf [+0.16,+0.26] p=0.00 circ [+0.07,+0.37] p=0.12
-H2 |dev| vs |y| [all]                      h=7 n=12272 ser=318 dates=50 wk= 8 slope=-0.044 [-0.149,+0.167] rho=+0.209 [+0.126,+0.305] | null shuf [+0.10,+0.23] p=0.09 circ [-0.02,+0.48] p=0.22
-H2 panel width log(p75/p25) vs |y| [all]   h=1 n= 5916 ser=171 dates=50 wk= 8 slope=+0.015 [-0.002,+0.038] rho=+0.024 [-0.003,+0.065] | null shuf [+0.01,+0.06] p=0.74 circ [-0.01,+0.09] p=0.63
-H2 panel width log(p75/p25) vs |y| [all]   h=3 n= 5916 ser=171 dates=50 wk= 8 slope=+0.034 [+0.010,+0.071] rho=+0.014 [-0.022,+0.069] | null shuf [-0.00,+0.07] p=0.84 circ [-0.01,+0.11] p=0.59
-H2 panel width log(p75/p25) vs |y| [all]   h=7 n= 5916 ser=171 dates=50 wk= 8 slope=+0.046 [+0.001,+0.125] rho=-0.005 [-0.044,+0.048] | null shuf [-0.00,+0.07] p=0.93 circ [-0.01,+0.12] p=0.86
-H2 panel width vs |y| [headline]           h=1 n= 1430 ser=37 dates=50 wk= 8 slope=+0.012 [+0.006,+0.019] rho=+0.025 [-0.043,+0.152] | null shuf [-0.06,+0.04] p=0.35 circ [-0.07,+0.03] p=0.33
-H2 panel width vs |y| [headline]           h=3 n= 1430 ser=37 dates=50 wk= 8 slope=+0.027 [+0.005,+0.064] rho=+0.010 [-0.046,+0.132] | null shuf [-0.05,+0.05] p=0.67 circ [-0.06,+0.06] p=0.77
-H2 panel width vs |y| [headline]           h=7 n= 1430 ser=37 dates=50 wk= 8 slope=+0.046 [+0.010,+0.093] rho=+0.006 [-0.036,+0.112] | null shuf [-0.04,+0.06] p=0.84 circ [-0.07,+0.08] p=0.91
+H2 level dev vs own 30d median [all]       h=1 n=12272 ser=318 dates=50 wk= 8 slope=-0.143 [-0.222,-0.100] rho=+0.163 [+0.086,+0.235] | slope-null shuf [-0.034,+0.048] p=0.00 circ [-0.032,+0.057] p=0.00
+H2 level dev vs own 30d median [all]       h=3 n=12272 ser=318 dates=50 wk= 8 slope=-0.224 [-0.289,-0.155] rho=+0.073 [-0.016,+0.162] | slope-null shuf [-0.061,+0.119] p=0.00 circ [-0.062,+0.208] p=0.02
+H2 level dev vs own 30d median [all]       h=7 n=12272 ser=318 dates=50 wk= 8 slope=-0.324 [-0.426,-0.215] rho=-0.021 [-0.097,+0.074] | slope-null shuf [-0.112,+0.192] p=0.00 circ [-0.142,+0.633] p=0.06
+H2 position asymmetry p75/p25 [all]        h=1 n= 5367 ser=169 dates=50 wk= 8 slope=+0.182 [+0.045,+0.264] rho=-0.051 [-0.116,+0.019] | slope-null shuf [-0.043,+0.100] p=0.00 circ [-0.032,+0.023] p=0.00
+H2 position asymmetry p75/p25 [all]        h=3 n= 5367 ser=169 dates=50 wk= 8 slope=+0.236 [+0.078,+0.319] rho=+0.014 [-0.066,+0.088] | slope-null shuf [-0.080,+0.050] p=0.00 circ [-0.029,+0.052] p=0.00
+H2 position asymmetry p75/p25 [all]        h=7 n= 5367 ser=169 dates=50 wk= 8 slope=+0.303 [+0.167,+0.370] rho=+0.070 [-0.007,+0.134] | slope-null shuf [-0.090,+0.083] p=0.00 circ [-0.204,+0.096] p=0.00
+H2 level dev vs own 30d median [headline]  h=1 n= 1230 ser=37 dates=50 wk= 8 slope=-0.143 [-0.227,-0.080] rho=+0.200 [+0.069,+0.315] | slope-null shuf [-0.087,+0.086] p=0.00 circ [-0.075,+0.061] p=0.00
+H2 level dev vs own 30d median [headline]  h=3 n= 1230 ser=37 dates=50 wk= 8 slope=-0.308 [-0.486,-0.143] rho=+0.093 [-0.041,+0.231] | slope-null shuf [-0.132,+0.142] p=0.00 circ [-0.175,+0.120] p=0.00
+H2 level dev vs own 30d median [headline]  h=7 n= 1230 ser=37 dates=50 wk= 8 slope=-0.476 [-0.657,-0.314] rho=-0.054 [-0.169,+0.096] | slope-null shuf [-0.204,+0.226] p=0.00 circ [-0.218,+0.606] p=0.05
+H2 position asymmetry p75/p25 [headline]   h=1 n= 1230 ser=37 dates=50 wk= 8 slope=+0.116 [+0.074,+0.171] rho=-0.030 [-0.106,+0.044] | slope-null shuf [-0.047,+0.056] p=0.00 circ [-0.047,+0.047] p=0.00
+H2 position asymmetry p75/p25 [headline]   h=3 n= 1230 ser=37 dates=50 wk= 8 slope=+0.240 [+0.131,+0.353] rho=+0.046 [-0.056,+0.140] | slope-null shuf [-0.074,+0.075] p=0.00 circ [-0.109,+0.118] p=0.00
+H2 position asymmetry p75/p25 [headline]   h=7 n= 1230 ser=37 dates=50 wk= 8 slope=+0.362 [+0.257,+0.480] rho=+0.146 [+0.044,+0.221] | slope-null shuf [-0.106,+0.103] p=0.00 circ [-0.273,+0.103] p=0.01
+H2 level dev vs own 30d median [fastgpu]   h=1 n= 1786 ser=94 dates=19 wk= 4 slope=-0.109 [-0.196,-0.004] rho=+0.059 [-0.174,+0.258] | slope-null shuf [-0.082,+0.097] p=0.00 circ [-0.066,+0.097] p=0.00
+H2 level dev vs own 30d median [fastgpu]   h=3 n= 1786 ser=94 dates=19 wk= 4 slope=-0.272 [-0.489,-0.027] rho=-0.079 [-0.428,+0.251] | slope-null shuf [-0.189,+0.205] p=0.01 circ [-0.188,+0.270] p=0.00
+H2 level dev vs own 30d median [fastgpu]   h=7 n= 1786 ser=94 dates=19 wk= 4 slope=-0.477 [-0.636,-0.266] rho=-0.253 [-0.428,-0.022] | slope-null shuf [-0.258,+0.298] p=0.00 circ [-0.356,+0.687] p=0.30
+H2 position asymmetry p75/p25 [fastgpu]    h=1 n= 1044 ser=59 dates=19 wk= 4 slope=+0.139 [-0.015,+0.290] rho=-0.032 [-0.210,+0.146] | slope-null shuf [-0.093,+0.103] p=0.00 circ [-0.074,+0.061] p=0.00
+H2 position asymmetry p75/p25 [fastgpu]    h=3 n= 1044 ser=59 dates=19 wk= 4 slope=+0.314 [-0.062,+0.687] rho=+0.030 [-0.176,+0.219] | slope-null shuf [-0.187,+0.172] p=0.00 circ [-0.180,+0.154] p=0.00
+H2 position asymmetry p75/p25 [fastgpu]    h=7 n= 1044 ser=59 dates=19 wk= 4 slope=+0.438 [+0.203,+0.645] rho=+0.137 [+0.076,+0.201] | slope-null shuf [-0.253,+0.217] p=0.00 circ [-0.645,+0.326] p=0.20
+H2 level dev vs own 30d median [gprice]    h=1 n= 5540 ser=119 dates=50 wk= 8 slope=-0.313 [-0.423,-0.231] rho=+0.132 [+0.059,+0.189] | slope-null shuf [-0.065,+0.068] p=0.00 circ [-0.052,+0.040] p=0.00
+H2 level dev vs own 30d median [gprice]    h=3 n= 5540 ser=119 dates=50 wk= 8 slope=-0.432 [-0.528,-0.349] rho=+0.035 [-0.025,+0.091] | slope-null shuf [-0.085,+0.088] p=0.00 circ [-0.066,+0.065] p=0.00
+H2 level dev vs own 30d median [gprice]    h=7 n= 5540 ser=119 dates=50 wk= 8 slope=-0.546 [-0.632,-0.459] rho=-0.047 [-0.123,+0.025] | slope-null shuf [-0.103,+0.129] p=0.00 circ [-0.144,+0.455] p=0.01
+H2 position asymmetry p75/p25 [gprice]     h=1 n= 2114 ser=56 dates=50 wk= 8 slope=+0.109 [+0.057,+0.185] rho=-0.132 [-0.181,-0.061] | slope-null shuf [-0.090,+0.077] p=0.01 circ [-0.032,+0.050] p=0.00
+H2 position asymmetry p75/p25 [gprice]     h=3 n= 2114 ser=56 dates=50 wk= 8 slope=+0.264 [+0.132,+0.416] rho=-0.090 [-0.172,-0.001] | slope-null shuf [-0.150,+0.104] p=0.00 circ [-0.075,+0.113] p=0.00
+H2 position asymmetry p75/p25 [gprice]     h=7 n= 2114 ser=56 dates=50 wk= 8 slope=+0.492 [+0.293,+0.630] rho=-0.035 [-0.166,+0.095] | slope-null shuf [-0.221,+0.146] p=0.00 circ [-0.550,+0.141] p=0.05
+H2 |dev| vs |y| [all]                      h=1 n=12272 ser=318 dates=50 wk= 8 slope=+0.031 [-0.002,+0.111] rho=+0.354 [+0.271,+0.425] | slope-null shuf [-0.033,+0.052] p=0.18 circ [-0.046,+0.073] p=0.24
+H2 |dev| vs |y| [all]                      h=3 n=12272 ser=318 dates=50 wk= 8 slope=+0.004 [-0.055,+0.139] rho=+0.293 [+0.210,+0.370] | slope-null shuf [-0.068,+0.127] p=0.97 circ [-0.083,+0.243] p=1.00
+H2 |dev| vs |y| [all]                      h=7 n=12272 ser=318 dates=50 wk= 8 slope=-0.044 [-0.149,+0.167] rho=+0.209 [+0.126,+0.305] | slope-null shuf [-0.116,+0.213] p=0.60 circ [-0.150,+0.640] p=0.97
+H2 panel width log(p75/p25) vs |y| [all]   h=1 n= 5916 ser=171 dates=50 wk= 8 slope=+0.015 [-0.002,+0.038] rho=+0.024 [-0.003,+0.065] | slope-null shuf [-0.025,+0.022] p=0.25 circ [-0.017,+0.023] p=0.10
+H2 panel width log(p75/p25) vs |y| [all]   h=3 n= 5916 ser=171 dates=50 wk= 8 slope=+0.034 [+0.010,+0.071] rho=+0.014 [-0.022,+0.069] | slope-null shuf [-0.041,+0.039] p=0.09 circ [-0.030,+0.015] p=0.02
+H2 panel width log(p75/p25) vs |y| [all]   h=7 n= 5916 ser=171 dates=50 wk= 8 slope=+0.046 [+0.001,+0.125] rho=-0.005 [-0.044,+0.048] | slope-null shuf [-0.048,+0.051] p=0.07 circ [-0.056,+0.027] p=0.15
+H2 panel width vs |y| [headline]           h=1 n= 1430 ser=37 dates=50 wk= 8 slope=+0.012 [+0.006,+0.019] rho=+0.025 [-0.043,+0.152] | slope-null shuf [-0.015,+0.019] p=0.19 circ [-0.020,+0.014] p=0.18
+H2 panel width vs |y| [headline]           h=3 n= 1430 ser=37 dates=50 wk= 8 slope=+0.027 [+0.005,+0.064] rho=+0.010 [-0.046,+0.132] | slope-null shuf [-0.025,+0.022] p=0.02 circ [-0.030,+0.020] p=0.03
+H2 panel width vs |y| [headline]           h=7 n= 1430 ser=37 dates=50 wk= 8 slope=+0.046 [+0.010,+0.093] rho=+0.006 [-0.036,+0.112] | slope-null shuf [-0.028,+0.037] p=0.00 circ [-0.038,+0.036] p=0.00

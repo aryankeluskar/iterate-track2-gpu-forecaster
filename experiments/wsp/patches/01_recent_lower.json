@@ -1,0 +1,12 @@
+{
+  "name": "01_recent_lower",
+  "unit": 0,
+  "read_direction": {"horizon": 1.75, "age": -4.666666666666667},
+  "bias": -0.75,
+  "write_direction": [1, 0, 0],
+  "magnitude": 0.26236426446749106,
+  "control_seed": 101,
+  "mechanism": "At h=7 only, a change in the last three days activates a linearly decaying widening of the lower log offset. A change today widens it 30%. Activity can persist after a downward repricing.",
+  "prediction": "Practice pooled skill rises 0.002 to 0.01; h7 below-q10 frequency falls, with gains on downward >5% moves.",
+  "evidence_before_edit": "Zero practice pass: h7 below_q10 0.22555 versus above_q90 0.10978; down >5% carries 24.84% of baseline loss."
+}

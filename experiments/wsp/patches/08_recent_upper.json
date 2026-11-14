@@ -1,0 +1,12 @@
+{
+  "name": "08_recent_upper",
+  "unit": 7,
+  "read_direction": {"horizon": 1.75, "age": -4.666666666666667},
+  "bias": -0.75,
+  "write_direction": [0, 1, 0],
+  "magnitude": 0.26236426446749106,
+  "control_seed": 108,
+  "mechanism": "At h7, widen the upper log offset after a change in the last three days, reaching 30% widening after a change today. Upward repricing may continue within an active episode.",
+  "prediction": "Practice pooled skill rises 0.002 to 0.008 via up-over-5% outcomes; no effect at h1 or h3.",
+  "evidence_before_edit": "Practice up-over-5% moves carry 34.84% of baseline loss; prior lower-tail activation with the same gate failed, so direction rather than activity alone is at issue."
+}

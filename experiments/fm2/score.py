@@ -27,6 +27,8 @@ def ref():
 def line(label, c, drift, mix, blend=None):
     dd, dm = compare.paired(c, drift), compare.paired(c, mix)
     hs = " ".join(f"h{h}={skill(g):+.3f}" for h, g in c.groupby("horizon_days"))
+    mid = np.sort(c.origin_day.unique())[len(c.origin_day.unique()) // 2]
+    hs += f" half1={skill(c[c.origin_day < mid]):+.3f} half2={skill(c[c.origin_day >= mid]):+.3f}"
     src = " ".join(f"{s[:4]}={(g['loss_d'].sum() - g['loss'].sum()) / c['baseline_loss'].sum():+.3f}"
                    for s, g in c.merge(drift[compare.KEY + ['loss']], on=compare.KEY, suffixes=('', '_d')).groupby('source_id'))
     cov = ((c["y"] >= c["q10"]) & (c["y"] <= c["q90"])).mean()

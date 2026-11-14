@@ -69,6 +69,9 @@ def screen(df, name, xcol='x', ycol='y', reps=600, seed=0, null=True, absmode=Fa
             d[xcol] = d[xcol] - d.groupby('sid')[xcol].transform('mean'); d[ycol] = d[ycol] - d.groupby('sid')[ycol].transform('mean')
         x = d[xcol].to_numpy(); y = d[ycol].to_numpy(); wk = (d.t.to_numpy() // 7)
         absmode_local = False
+        if (x * x).sum() < 1e-12 or (y * y).sum() < 1e-12:
+            rows.append(dict(signal=name, h=h, n=len(d), note='x or y constant after demeaning'))
+            continue
         b, r = stats(x, y, wk)
         bs, rs = [], []
         for _ in range(reps):
@@ -76,6 +79,9 @@ def screen(df, name, xcol='x', ycol='y', reps=600, seed=0, null=True, absmode=Fa
             if np.ptp(x[ix]) == 0 or np.ptp(y[ix]) == 0:
                 continue
             bb, rr = stats(x[ix], y[ix], wk[ix]); bs.append(bb); rs.append(rr)
+        if len(bs) < 20:
+            rows.append(dict(signal=name, h=h, n=len(d), note='bootstrap degenerate'))
+            continue
         rec = dict(signal=name, h=h, n=len(d), n_series=d.sid.nunique(), n_dates=d.t.nunique(), n_weeks=len(np.unique(wk)),
                    slope=b, slope_lo=np.percentile(bs, 5), slope_hi=np.percentile(bs, 95),
                    rho=r, rho_lo=np.percentile(rs, 5), rho_hi=np.percentile(rs, 95))
@@ -90,7 +96,7 @@ def screen(df, name, xcol='x', ycol='y', reps=600, seed=0, null=True, absmode=Fa
                     if mode == 'shuffle':
                         Xp = X[rng.permutation(T)]
                     else:
-                        if T < 16:
+                        if T < 30:
                             continue
                         Xp = np.roll(X, int(rng.integers(5, T - 5)), axis=0)
                     m = np.isfinite(Xp) & np.isfinite(Y)
@@ -110,7 +116,7 @@ def fmt(rows):
     out = []
     for r in rows:
         if 'note' in r:
-            out.append(f"{r['signal']:42s} h={r['h']} n={r['n']} (too few)")
+            out.append(f"{r['signal']:42s} h={r['h']} n={r['n']} ({r.get('note','too few')})")
             continue
         s = (f"{r['signal']:42s} h={r['h']} n={r['n']:5d} ser={r['n_series']:2d} dates={r['n_dates']:2d} wk={r['n_weeks']:2d} "
              f"slope={r['slope']:+.3f} [{r['slope_lo']:+.3f},{r['slope_hi']:+.3f}] rho={r['rho']:+.3f} [{r['rho_lo']:+.3f},{r['rho_hi']:+.3f}]")

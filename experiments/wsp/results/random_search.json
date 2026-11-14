@@ -1,0 +1,302 @@
+[
+  {
+    "step": 1,
+    "skill": 0.1721195898015282,
+    "kept": true,
+    "incumbent_skill": 0.1721195898015282
+  },
+  {
+    "step": 2,
+    "skill": 0.17337712181626874,
+    "kept": true,
+    "incumbent_skill": 0.17337712181626874
+  },
+  {
+    "step": 3,
+    "skill": 0.16770691883601108,
+    "kept": false,
+    "incumbent_skill": 0.17337712181626874
+  },
+  {
+    "step": 4,
+    "skill": 0.08294271377114759,
+    "kept": false,
+    "incumbent_skill": 0.17337712181626874
+  },
+  {
+    "step": 5,
+    "skill": 0.16712018446753762,
+    "kept": false,
+    "incumbent_skill": 0.17337712181626874
+  },
+  {
+    "step": 6,
+    "skill": 0.12050180276652611,
+    "kept": false,
+    "incumbent_skill": 0.17337712181626874
+  },
+  {
+    "step": 7,
+    "skill": 0.1680410125344055,
+    "kept": false,
+    "incumbent_skill": 0.17337712181626874
+  },
+  {
+    "step": 8,
+    "skill": 0.15361883230316487,
+    "kept": false,
+    "incumbent_skill": 0.17337712181626874
+  },
+  {
+    "step": 9,
+    "skill": 0.1733826506827928,
+    "kept": true,
+    "incumbent_skill": 0.1733826506827928
+  },
+  {
+    "step": 10,
+    "skill": 0.1343403641786356,
+    "kept": false,
+    "incumbent_skill": 0.1733826506827928
+  },
+  {
+    "step": 11,
+    "skill": 0.17670971208287178,
+    "kept": true,
+    "incumbent_skill": 0.17670971208287178
+  },
+  {
+    "step": 12,
+    "skill": 0.15949606825916252,
+    "kept": false,
+    "incumbent_skill": 0.17670971208287178
+  },
+  {
+    "step": 13,
+    "skill": 0.16443055243384241,
+    "kept": false,
+    "incumbent_skill": 0.17670971208287178
+  },
+  {
+    "step": 14,
+    "skill": 0.17528699403516368,
+    "kept": false,
+    "incumbent_skill": 0.17670971208287178
+  },
+  {
+    "step": 15,
+    "skill": 0.16587505145703096,
+    "kept": false,
+    "incumbent_skill": 0.17670971208287178
+  },
+  {
+    "step": 16,
+    "skill": 0.18442161402786383,
+    "kept": true,
+    "incumbent_skill": 0.18442161402786383
+  },
+  {
+    "step": 17,
+    "skill": 0.05234473945504403,
+    "kept": false,
+    "incumbent_skill": 0.18442161402786383
+  },
+  {
+    "step": 18,
+    "skill": 0.18565337023555084,
+    "kept": true,
+    "incumbent_skill": 0.18565337023555084
+  },
+  {
+    "step": 19,
+    "skill": 0.185681521738416,
+    "kept": true,
+    "incumbent_skill": 0.185681521738416
+  },
+  {
+    "step": 20,
+    "skill": 0.19209015875470103,
+    "kept": true,
+    "incumbent_skill": 0.19209015875470103
+  },
+  {
+    "step": 21,
+    "skill": 0.1688294525131977,
+    "kept": false,
+    "incumbent_skill": 0.19209015875470103
+  },
+  {
+    "step": 22,
+    "skill": 0.14934536575413526,
+    "kept": false,
+    "incumbent_skill": 0.19209015875470103
+  },
+  {
+    "step": 23,
+    "skill": 0.1963263176388913,
+    "kept": true,
+    "incumbent_skill": 0.1963263176388913
+  },
+  {
+    "step": 24,
+    "skill": 0.19567956310613543,
+    "kept": false,
+    "incumbent_skill": 0.1963263176388913
+  },
+  {
+    "step": 25,
+    "skill": 0.197099765171174,
+    "kept": true,
+    "incumbent_skill": 0.197099765171174
+  },
+  {
+    "step": 26,
+    "skill": 0.1863456262067873,
+    "kept": false,
+    "incumbent_skill": 0.197099765171174
+  },
+  {
+    "step": 27,
+    "skill": 0.1830913429119928,
+    "kept": false,
+    "incumbent_skill": 0.197099765171174
+  },
+  {
+    "step": 28,
+    "skill": 0.19246019285203764,
+    "kept": false,
+    "incumbent_skill": 0.197099765171174
+  },
+  {
+    "step": 29,
+    "skill": 0.2026145676516775,
+    "kept": true,
+    "incumbent_skill": 0.2026145676516775
+  },
+  {
+    "step": 30,
+    "skill": 0.20200468131820293,
+    "kept": false,
+    "incumbent_skill": 0.2026145676516775
+  },
+  {
+    "step": 31,
+    "skill": 0.17493792254771245,
+    "kept": false,
+    "incumbent_skill": 0.2026145676516775
+  },
+  {
+    "step": 32,
+    "skill": 0.1692211027575502,
+    "kept": false,
+    "incumbent_skill": 0.2026145676516775
+  },
+  {
+    "step": 33,
+    "skill": 0.20323464705270666,
+    "kept": true,
+    "incumbent_skill": 0.20323464705270666
+  },
+  {
+    "step": 34,
+    "skill": 0.1482211825067321,
+    "kept": false,
+    "incumbent_skill": 0.20323464705270666
+  },
+  {
+    "step": 35,
+    "skill": 0.20054901745141718,
+    "kept": false,
+    "incumbent_skill": 0.20323464705270666
+  },
+  {
+    "step": 36,
+    "skill": 0.20339690902755103,
+    "kept": true,
+    "incumbent_skill": 0.20339690902755103
+  },
+  {
+    "step": 37,
+    "skill": 0.2019984739824574,
+    "kept": false,
+    "incumbent_skill": 0.20339690902755103
+  },
+  {
+    "step": 38,
+    "skill": 0.1957110471815645,
+    "kept": false,
+    "incumbent_skill": 0.20339690902755103
+  },
+  {
+    "step": 39,
+    "skill": 0.2033513176442837,
+    "kept": false,
+    "incumbent_skill": 0.20339690902755103
+  },
+  {
+    "step": 40,
+    "skill": -0.22662790200901806,
+    "kept": false,
+    "incumbent_skill": 0.20339690902755103
+  },
+  {
+    "step": 41,
+    "skill": 0.20183704041429662,
+    "kept": false,
+    "incumbent_skill": 0.20339690902755103
+  },
+  {
+    "step": 42,
+    "skill": 0.20191264253738106,
+    "kept": false,
+    "incumbent_skill": 0.20339690902755103
+  },
+  {
+    "step": 43,
+    "skill": 0.20336715087484458,
+    "kept": false,
+    "incumbent_skill": 0.20339690902755103
+  },
+  {
+    "step": 44,
+    "skill": 0.1844480720106969,
+    "kept": false,
+    "incumbent_skill": 0.20339690902755103
+  },
+  {
+    "step": 45,
+    "skill": 0.19348619638321285,
+    "kept": false,
+    "incumbent_skill": 0.20339690902755103
+  },
+  {
+    "step": 46,
+    "skill": 0.18444021882125394,
+    "kept": false,
+    "incumbent_skill": 0.20339690902755103
+  },
+  {
+    "step": 47,
+    "skill": 0.1670445875114247,
+    "kept": false,
+    "incumbent_skill": 0.20339690902755103
+  },
+  {
+    "step": 48,
+    "skill": 0.20332223992601783,
+    "kept": false,
+    "incumbent_skill": 0.20339690902755103
+  },
+  {
+    "step": 49,
+    "skill": 0.20290917580065537,
+    "kept": false,
+    "incumbent_skill": 0.20339690902755103
+  },
+  {
+    "step": 50,
+    "skill": 0.13987199709955234,
+    "kept": false,
+    "incumbent_skill": 0.20339690902755103
+  }
+]
