@@ -2,25 +2,17 @@
 Same store and blends as slice.py."""
 import datetime as dt
 import numpy as np, pandas as pd
-D = pd.read_parquet("runs/maturity/cells.parquet")
-MEM = ["mix", "gbm", "chronos", "analog", "prov", "fm2", "fragility"]
-T = (0.1, 0.5, 0.9); Q = ("q10", "q50", "q90")
-def pin(y, f, t):
-    d = y - f; return np.maximum(t * d, (t - 1) * d)
-def loss_of(members):
-    tot = np.zeros(len(D))
-    for t, q in zip(T, Q):
-        L = np.log(np.maximum(np.stack([D[f"{m}_{q}"].to_numpy(float) for m in members]), 1e-9))
-        n = (~np.isnan(L)).sum(0)
-        f = np.where(n > 0, np.exp(np.nansum(L, 0) / np.maximum(n, 1)), D["last"].to_numpy())
-        tot += pin(D["y"].to_numpy(), f, t)
-    return tot / 3
+import sys; sys.path.insert(0, 'experiments/maturity')
+import blendlib
+D = blendlib.load()
+MEM = blendlib.MEM
+loss_of = lambda members: blendlib.loss(D, members)
 SYS = {"drift": ["drift"], "mix": ["mix"], "final7": MEM, "no_pre": [m for m in MEM if m not in ("chronos", "fm2")],
        "analog": ["analog"], "prov": ["prov"], "fragility": ["fragility"], "gbm": ["gbm"], "chronos": ["chronos"], "fm2": ["fm2"]}
+blendlib.check(D)
 for k, m in SYS.items():
     D["L_" + k] = loss_of(m)
 D["date"] = D.origin_day.map(lambda o: dt.date.fromordinal(int(o)).isoformat())
-D["src"] = D.series_id.str.split(".").str[0]
 C = list(SYS)
 def tab(title, groups):
     print(f"\n## {title}")
@@ -46,6 +38,6 @@ for lab, g in [("<30", x[x.rows < 30]), ("30-59", x[(x.rows >= 30) & (x.rows < 6
           "  ".join(f"{m} w {g['w_' + m].median():.3f} cov {((g.y >= g[m + '_q10']) & (g.y <= g[m + '_q90'])).mean():.2f}" for m in ["mix", "chronos", "fm2", "analog", "prov", "drift"]))
 # every posted rental series from the two young collectors, by rows, all origins: does the pattern hold beyond the 37?
 for src in ["fastgpu_daily", "gpurentalprices"]:
-    x = D[(D.src == src) & ~D.gate14]
-    tab(f"all active series of {src} by rows", [(l, x[m]) for l, m in [("<30", x.rows < 30), ("30-44", (x.rows >= 30) & (x.rows < 45)), ("45-59", (x.rows >= 45) & (x.rows < 60)), ("60+", x.rows >= 60)]])
-    tab(f"all active series of {src}, origins 2026-09-25..2026-10-01 vs 2026-10-02..2026-10-06", [(f"{a}..{b}", x[(x.date >= a) & (x.date <= b)]) for a, b in W[2:]])
+    x = D[(D.src == src) & D.moved14]
+    tab(f"all series with a change in the last 14 days, {src} by rows", [(l, x[m]) for l, m in [("<30", x.rows < 30), ("30-44", (x.rows >= 30) & (x.rows < 45)), ("45-59", (x.rows >= 45) & (x.rows < 60)), ("60+", x.rows >= 60)]])
+    tab(f"all series with a change in the last 14 days, {src}, origins 2026-09-25..2026-10-01 vs 2026-10-02..2026-10-06", [(f"{a}..{b}", x[(x.date >= a) & (x.date <= b)]) for a, b in W[2:]])

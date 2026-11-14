@@ -1,22 +1,15 @@
 """Third look (dev only): what the members do in the days right after a large one-day step in the published median."""
 import numpy as np, pandas as pd
 from gpuf import data
-D = pd.read_parquet("runs/maturity/cells.parquet")
+import sys; sys.path.insert(0, 'experiments/maturity')
+import blendlib
+D = blendlib.load()
 store = data.load_store(data.series_path())
-MEM = ["mix", "gbm", "chronos", "analog", "prov", "fm2", "fragility"]
-T = (0.1, 0.5, 0.9); Q = ("q10", "q50", "q90")
-def pin(y, f, t):
-    d = y - f; return np.maximum(t * d, (t - 1) * d)
-def loss_of(members):
-    tot = np.zeros(len(D))
-    for t, q in zip(T, Q):
-        L = np.log(np.maximum(np.stack([D[f"{m}_{q}"].to_numpy(float) for m in members]), 1e-9))
-        n = (~np.isnan(L)).sum(0)
-        f = np.where(n > 0, np.exp(np.nansum(L, 0) / np.maximum(n, 1)), D["last"].to_numpy())
-        tot += pin(D["y"].to_numpy(), f, t)
-    return tot / 3
+MEM = blendlib.MEM
+loss_of = lambda members: blendlib.loss(D, members)
 SYS = {"drift": ["drift"], "mix": ["mix"], "final7": MEM, "no_pre": [m for m in MEM if m not in ("chronos", "fm2")],
        "analog": ["analog"], "prov": ["prov"], "fragility": ["fragility"], "gbm": ["gbm"], "chronos": ["chronos"], "fm2": ["fm2"]}
+blendlib.check(D)
 for k, m in SYS.items():
     D["L_" + k] = loss_of(m)
 pairs = D[["series_id", "origin_day"]].drop_duplicates()
@@ -40,7 +33,7 @@ def tab(title, groups):
         if not len(g) or g.baseline_loss.sum() <= 0: continue
         print(f"{lab:<34}{len(g):>6}{g.series_id.nunique():>5}{g.origin_day.nunique():>5}{(g.y != g['last']).mean():>7.2f} " +
               "".join(f"{1 - g['L_' + c].sum() / g.baseline_loss.sum():>+10.4f}" for c in C))
-for name, X in [("the 37 headline series", D[D.in37]), ("other active rental series", D[~D.in37 & ~D.gate14])]:
+for name, X in [("the 37 headline series", D[D.in37]), ("other rental series whose median changed in the last 14 days", D[~D.in37 & D.moved14])]:
     a = X.step.abs()
     tab(f"{name}: by the largest one-day step in the last 3 days (log)", [("no step (0)", X[a == 0]), ("0 to 2%", X[(a > 0) & (a < 0.02)]),
         ("2 to 5%", X[(a >= 0.02) & (a < 0.05)]), ("5 to 10%", X[(a >= 0.05) & (a < 0.10)]), ("10% or more", X[a >= 0.10])])

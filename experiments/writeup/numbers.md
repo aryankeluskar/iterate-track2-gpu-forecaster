@@ -38,6 +38,7 @@ Rounding policy for validation numbers taken from val_gate.jsonl (raw values hav
 | 0.1375 | §9 item 3 | same row, column drift |
 | 0.1708 | §9 item 3 | same row, column mix |
 | 0.0167 | §9 item 3 | same row, column final-drift |
+| 0.1171 | §9 item 3 | experiments/advisor/check_maturity.py output, line 'gain_contribution not_tier', skill_points 0.117097 |
 | 0.1193 | §9 item 3 | experiments/maturity/results/diag.txt, row 'fixed 37', column final-drift; also dev.txt 'final against drift' |
 | 0.033 | §4 dev mix+prov second half; §9 item 3 | log 133 ("+0.033"); audit 51 and log 226 (point-in-time universe, mix minus drift) |
 | 0.034 | §4 dev mix+analog first half | log 124 |
