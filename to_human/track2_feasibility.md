@@ -41,6 +41,18 @@ Scores are pooled skill against the last value, the organisers' headline metric.
 - The research loop as commands (an agent is building it); this is what the "autonomy" criterion looks at.
 - By the team: public repo and push, platform registration by Sunday 12:00, a 2-minute video.
 
+## Track 2 against Track 5: what the hackathon page says
+
+Read from the Resources, Teams and Projects tabs on Saturday afternoon; details and quotes in `experiments/submission/track_choice.md`.
+
+- **Track 5 is open-ended.** "Your idea doesn't fit tracks 1-4? Build whatever you want. Same rules ... same judging criteria." It names no question, benchmark, sponsor or judges.
+- **Only Track 2 has its own prize** ($5K in compute: $3K, $1.5K, $500), stacked on the overall top 3. Track 5 has none.
+- **Finals:** "The top 2 of each track go to the finals." The page does not say whether Track 5 sends teams on the same terms.
+- **The submission form's track list has Tracks 1 to 4 only.** Ask the organisers on Discord how a Track 5 project is submitted before committing to it.
+- **Sponsor challenges** (Exa, past.dev, Modal) are open to both tracks.
+- **Not on the page:** how many teams chose each track, Track 5's judges, and the overall cash amounts.
+- **past.dev wording differs between two places.** The submission form says "prove better accuracy, latency gains and cost reduction than the common existing approaches"; the Resources tab says you do not have to prove the memory improves results. We have not measured what the memory adds.
+
 ## What this does not tell you
 
-Nothing here compares Track 2 with Track 5. I have not seen the Track 5 prototype. An agent is reading the Track 5 text, the prizes by track and the finalist rule from the hackathon page.
+Nothing here compares the two prototypes. I have not seen the Track 5 one.

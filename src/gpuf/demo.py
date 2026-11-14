@@ -900,7 +900,7 @@ function domain(s){let lo=Infinity,hi=-Infinity;
   if(s.kind==='panel')s.offers.forEach(o=>o.v.forEach(up));else{s.groups.forEach(g=>{up(g.q[0]);up(g.q[2]);});s.med.forEach(up);}
   s.fc.forEach(f=>{up(f[1]);up(f[3]);});
   const core=s.med.filter(v=>v!=null).concat(s.fc.flatMap(f=>[f[1],f[3]]));
-  lo=Math.max(lo,Math.min(...core)/1.4);hi=Math.min(hi,Math.max(...core)*1.4);
+  if(s.kind==='panel'){lo=Math.max(lo,Math.min(...core)/1.4);hi=Math.min(hi,Math.max(...core)*1.4);}
   const pad=(hi-lo)*0.06||0.1;return [Math.max(0,lo-pad),hi+pad];}
 const clamp=(v,a,b)=>Math.min(Math.max(v,a),b);
 function today(s,i){if(s.kind!=='panel')return null;
