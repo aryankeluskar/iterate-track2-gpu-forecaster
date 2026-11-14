@@ -125,7 +125,7 @@ Query 5 (declared now, before running): ens of mix + gbm + chronos_last, equal w
 - Declared, query 6 on validation headline (first of the 8 in Amendment 2's budget): ens of mix (reference params) and analog {"pool":"all","k":600,"drop":["n14","sign"],"cap":"2026-11-06"}, against mix. The cap is moved from the dev cap only so the neighbour table can hold outcomes up to each validation origin; each origin still uses only situations whose outcome day is on or before it.
 - Result, query 6: blend of mix and analog 0.1340 against mix 0.1121 on validation headline (1,816 cells): +0.0219, 90% CI [+0.0068,+0.0433], one-sided DM p=0.031. drift 0.0845. By horizon: h=1 -0.0001, h=3 +0.0070, h=7 +0.0150. By collector: fastgpu +0.0132, gpurentalprices +0.0106, afhubbard -0.0019. First direction of rounds 2 to 4 to hold on validation. Budget used: 1 of 8.
 
-## 2026-11-14 12:25 PT: round 3 and 4 reports; prov and fm2 pass the dev gate; queries 7 and 8 declared
+## 2026-11-14 12:18 PT: round 3 and 4 reports; prov and fm2 pass the dev gate; queries 7 and 8 declared
 
 - Reports in: tail (H14: the upper-tail gap is one multi-week regime, 0.11 above q90 in the first half of dev and 0.33 in the second; conformal q90 correction +0.023 on mix but -0.006 in the first half; not nominated), decision (H17 refuted: Laya zero-shot is below the base rate even after temperature refit, log loss 1.105 against 0.760; logistic regression 0.562, LightGBM 0.491; fine-tune not completed), fm2 (H18), wsp (H20), prov (H24), policy (H26 refuted as a prior), calendar (H27 supported). Details in the ledger.
 - Orchestrator re-run on dev headline (experiments/halves.py, against mix 0.1691):
@@ -140,7 +140,7 @@ Query 5 (declared now, before running): ens of mix + gbm + chronos_last, equal w
   - Query 8, mix + fm2: 0.1698, +0.0577 [+0.0391,+0.0795], p<0.001. h=1 -0.005, h=3 +0.011, h=7 +0.052; fastgpu +0.052, gpurentalprices +0.007.
   - With query 6 (p=0.031) all three pass Benjamini-Hochberg at 10%. Kept so far: analog, prov, fm2. Budget used: 3 of 8.
 
-## 2026-11-14 12:32 PT: round 5 launched
+## 2026-11-14 12:22 PT: round 5 launched
 
 - hazard (H16 refuted: whether a price moves is predictable, AUC 0.83; direction is not, AUC 0.54; the hurdle forecaster loses to mix) and midstate (H25 not significant: the middle-provider state as a lookup key ties mix; the same information simulated, as in prov, wins).
 - Round 5, six agents at most at once after the thrashing incident: prov follow-up (Exa calendar inside the simulator, marketplace fixes, synthetic trend-reversal stress test); final (the rule-based blend for every posted rental series behind one command, leave-one-out on rental_all, gate decision); autopsy2 (iteration 2 failure analysis: loss by cause across drift, mix, the earlier blend and the current blend; H31); entry (H30); insight (economic section: index quality per series, robust statistics, announced changes). Still running from before: fragility, memory go-live.
