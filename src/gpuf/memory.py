@@ -387,7 +387,7 @@ BRIEF_SECTIONS = (
      "Hypotheses already tested and refuted or not significant, on: {t}"),
     ("failures", "Failure modes and dated failure cases of the median forecast", "gpuf-failures", {"event", "failure_mode", "case"},
      "Failure modes and dated failure cases of the median forecast on: {t}"),
-    ("evidence", "Dated web evidence", "gpuf-evidence", {"web_evidence"}, "Dated web evidence about: {t}"),
+    ("evidence", "Dated web evidence", "gpuf-evidence", {"web_evidence"}, "Web evidence: provider announced GPU price increase, quoted sentence, URL, related to: {t}"),
 )
 _KEEP = ("Claim:", "Result:", "Quoted sentence:", "URL:", "Cause:", "Median:", "definition:", "share_of_blend_loss:", "share_of_last_value_loss:", "Explains:", "Prediction:")
 

@@ -9,30 +9,34 @@ def cli(*a):
 L = ["# Cross-agent use of the shared memory (live output)", "", "Every block below is the unedited stdout of `python -m gpuf.memory ...` against past.dev, or a table computed from it.", ""]
 
 # (a) scout reads autopsy
-q = "big median moves caused by one provider repricing or entering the panel, with no news explanation yet"
+import datetime as dt
+q = "Autopsy event: one-day move of the median caused by a provider repricing or entering the panel, pivotal provider"
 ra = json.loads(cli("recall", "--as", "scout", q, "--top", "40"))
-ev = json.loads(cli("recall", "--as", "scout", "dated web evidence about provider price changes", "--top", "40"))
-ev_text = " ".join((r["excerpt"] or "") + r["label"] for r in ev["results"] if r["author"] == "scout").lower()
-rows = []
+eq = "Web evidence: provider announced GPU price increase, quoted sentence, URL"
+ev = json.loads(cli("recall", "--as", "scout", eq, "--top", "40"))
+evid = [r for r in ev["results"] if r["author"] == "scout"]
+L += ["## (a) `scout` reads what `autopsy` wrote", "", f"`python -m gpuf.memory recall --as scout \"{q}\" --top 40` returned {ra['count']} sources; authors: {sorted({r['author'] for r in ra['results']})}. First 2 rows:", "", "```json", json.dumps(ra["results"][:2], indent=1), "```", "",
+      f"`python -m gpuf.memory recall --as scout \"{eq}\" --top 40` returned {len(evid)} scout evidence sources already in memory: " + ", ".join(f"`{r['source_id']}` ({r['label'].split(': ')[1]}, {r['occurred_at'][:10]})" for r in evid) + ".", ""]
+def covered(prov, d):
+    day = dt.date.fromisoformat(d)
+    for r in evid:
+        t = dt.date.fromisoformat(r["occurred_at"][:10])
+        if re.search(r"\b" + re.escape(prov) + r"\b", (r["excerpt"] or "").lower()) and -14 <= (day - t).days <= 45:
+            return r["source_id"]
+L += ["Autopsy events returned, with whether scout evidence for the provider exists within 45 days before the move (or 14 days after):", "", "| autopsy source id | date | pivotal / involved providers | scout evidence in memory | search next |", "|---|---|---|---|---|"]
+todo = []
 for r in ra["results"]:
-    md = r["metadata"] if "metadata" in r else {}
-L += ["## (a) `scout` reads what `autopsy` wrote", "", f"`python -m gpuf.memory recall --as scout \"{q}\" --top 40` returned {ra['count']} sources; authors: {sorted({r['author'] for r in ra['results']})}.", "", "```json", json.dumps({**ra, "results": ra["results"][:3]}, indent=1)[:3500], "```", "(first 3 of the rows shown)", ""]
-cand = []
-for r in ra["results"]:
-    if r["author"] != "autopsy" or "Autopsy:" not in (r["label"] or ""):
-        continue
     ex = r["excerpt"] or ""
     m1 = re.search(r"Pivotal provider: (\S+)", ex)
-    m2 = re.search(r"Autopsy event (\d{4}-\d\d-\d\d) on series (\S+)", ex)
-    cand.append((r["source_id"], r["occurred_at"][:10], m1.group(1) if m1 else None, r["label"]))
-L += ["Autopsy cases returned, and what scout should search next (an autopsy event whose provider has no scout evidence in memory):", "", "| autopsy source id | date | provider | scout evidence for provider in memory? | search next |", "|---|---|---|---|---|"]
-for sid, d, prov, lab in cand:
-    if prov and prov != "none":
-        has = prov.lower() in ev_text
-        L.append(f"| `{sid}` | {d} | {prov} | {'yes' if has else 'no'} | {'-' if has else f'Exa: {prov} price change news {d}'} |")
-    else:
-        L.append(f"| `{sid}` | {d} | (case, no single provider) | n/a | see text of record |")
-L.append("")
+    if r["author"] != "autopsy" or not m1:
+        continue
+    d = r["occurred_at"][:10]
+    provs = [x for x in m1.group(1).split(",") if x != "none"]
+    cov = {p: covered(p, d) for p in provs}
+    miss = [p for p, c in cov.items() if not c]
+    L.append(f"| `{r['source_id']}` | {d} | {', '.join(provs)} | {', '.join(f'{p}: {c}' for p, c in cov.items() if c) or 'none'} | " + (f"Exa: `{', '.join(miss)} price change {d}`" if miss else "-") + " |")
+    todo += [(p, d) for p in miss]
+L += ["", "Next searches for scout (distinct provider, first date): " + "; ".join(f"{p} {d}" for p, d in sorted({p: min(d for q_, d in todo if q_ == p) for p, _ in todo}.items())) + ".", ""]
 # (b) proposer brief
 topic = "upper tail under-covered at 7 days"
 bj = json.loads(cli("brief", "--as", "proposer", topic, "--top", "4"))

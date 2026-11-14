@@ -1,0 +1,297 @@
+{
+ "n_cells": 534,
+ "providers": {
+  "verda": 261,
+  "scaleway": 204,
+  "sfcompute": 48,
+  "spheron": 21
+ },
+ "mean_trailing_drift_%/day": 0.278,
+ "share_of_truth_changed": {
+  "flat": 0.719,
+  "reverse": 0.852,
+  "mirror": 0.727
+ },
+ "actual": {
+  "prov": {
+   "pooled_skill": 0.2089,
+   "stressed_cells_skill": 0.3037,
+   "stressed_loss": 19.874,
+   "stressed_lv_loss": 28.543
+  },
+  "mix": {
+   "pooled_skill": 0.1691,
+   "stressed_cells_skill": 0.246,
+   "stressed_loss": 21.522,
+   "stressed_lv_loss": 28.543
+  },
+  "blend": {
+   "pooled_skill": 0.1978,
+   "stressed_cells_skill": 0.2886,
+   "stressed_loss": 20.305,
+   "stressed_lv_loss": 28.543
+  },
+  "prov_minus_mix_pooled": 0.0398,
+  "blend_minus_mix_pooled": 0.0287
+ },
+ "flat": {
+  "prov": {
+   "pooled_skill": 0.1386,
+   "stressed_cells_skill": 0.0671,
+   "stressed_loss": 19.674,
+   "stressed_lv_loss": 21.089
+  },
+  "mix": {
+   "pooled_skill": 0.1057,
+   "stressed_cells_skill": 0.0294,
+   "stressed_loss": 20.469,
+   "stressed_lv_loss": 21.089
+  },
+  "blend": {
+   "pooled_skill": 0.13,
+   "stressed_cells_skill": 0.0601,
+   "stressed_loss": 19.821,
+   "stressed_lv_loss": 21.089
+  },
+  "prov_minus_mix_pooled": 0.0329,
+  "blend_minus_mix_pooled": 0.0243
+ },
+ "reverse": {
+  "prov": {
+   "pooled_skill": 0.1392,
+   "stressed_cells_skill": 0.0817,
+   "stressed_loss": 23.531,
+   "stressed_lv_loss": 25.625
+  },
+  "mix": {
+   "pooled_skill": 0.1043,
+   "stressed_cells_skill": 0.0383,
+   "stressed_loss": 24.644,
+   "stressed_lv_loss": 25.625
+  },
+  "blend": {
+   "pooled_skill": 0.1319,
+   "stressed_cells_skill": 0.0787,
+   "stressed_loss": 23.609,
+   "stressed_lv_loss": 25.625
+  },
+  "prov_minus_mix_pooled": 0.0349,
+  "blend_minus_mix_pooled": 0.0276
+ },
+ "mirror": {
+  "prov": {
+   "pooled_skill": 0.15,
+   "stressed_cells_skill": 0.1221,
+   "stressed_loss": 25.878,
+   "stressed_lv_loss": 29.477
+  },
+  "mix": {
+   "pooled_skill": 0.1148,
+   "stressed_cells_skill": 0.0787,
+   "stressed_loss": 27.158,
+   "stressed_lv_loss": 29.477
+  },
+  "blend": {
+   "pooled_skill": 0.1411,
+   "stressed_cells_skill": 0.1138,
+   "stressed_loss": 26.123,
+   "stressed_lv_loss": 29.477
+  },
+  "prov_minus_mix_pooled": 0.0352,
+  "blend_minus_mix_pooled": 0.0263
+ },
+ "loss_ratio_by_provider_h": {
+  "scaleway|h1|actual": [
+   0.977,
+   0.981
+  ],
+  "scaleway|h1|flat": [
+   0.972,
+   0.986
+  ],
+  "scaleway|h1|mirror": [
+   1.005,
+   0.996
+  ],
+  "scaleway|h1|reverse": [
+   0.995,
+   0.986
+  ],
+  "scaleway|h3|actual": [
+   0.965,
+   0.977
+  ],
+  "scaleway|h3|flat": [
+   0.996,
+   0.997
+  ],
+  "scaleway|h3|mirror": [
+   1.015,
+   1.001
+  ],
+  "scaleway|h3|reverse": [
+   1.008,
+   0.997
+  ],
+  "scaleway|h7|actual": [
+   0.96,
+   0.977
+  ],
+  "scaleway|h7|flat": [
+   0.986,
+   0.993
+  ],
+  "scaleway|h7|mirror": [
+   1.013,
+   1.003
+  ],
+  "scaleway|h7|reverse": [
+   1.005,
+   0.996
+  ],
+  "sfcompute|h1|actual": [
+   0.914,
+   0.953
+  ],
+  "sfcompute|h1|flat": [
+   0.819,
+   0.906
+  ],
+  "sfcompute|h1|mirror": [
+   0.884,
+   0.934
+  ],
+  "sfcompute|h1|reverse": [
+   0.827,
+   0.909
+  ],
+  "sfcompute|h3|actual": [
+   0.88,
+   0.933
+  ],
+  "sfcompute|h3|flat": [
+   0.826,
+   0.904
+  ],
+  "sfcompute|h3|mirror": [
+   0.9,
+   0.929
+  ],
+  "sfcompute|h3|reverse": [
+   0.844,
+   0.914
+  ],
+  "sfcompute|h7|actual": [
+   0.839,
+   0.897
+  ],
+  "sfcompute|h7|flat": [
+   0.809,
+   0.877
+  ],
+  "sfcompute|h7|mirror": [
+   0.843,
+   0.898
+  ],
+  "sfcompute|h7|reverse": [
+   0.816,
+   0.882
+  ],
+  "spheron|h1|actual": [
+   1.272,
+   1.038
+  ],
+  "spheron|h1|flat": [
+   2.091,
+   1.522
+  ],
+  "spheron|h1|mirror": [
+   1.306,
+   1.074
+  ],
+  "spheron|h1|reverse": [
+   1.891,
+   1.388
+  ],
+  "spheron|h3|actual": [
+   3.047,
+   1.656
+  ],
+  "spheron|h3|flat": [
+   8.325,
+   4.523
+  ],
+  "spheron|h3|mirror": [
+   3.615,
+   2.254
+  ],
+  "spheron|h3|reverse": [
+   6.682,
+   3.662
+  ],
+  "spheron|h7|actual": [
+   4.847,
+   2.849
+  ],
+  "spheron|h7|flat": [
+   5.867,
+   3.338
+  ],
+  "spheron|h7|mirror": [
+   4.765,
+   2.809
+  ],
+  "spheron|h7|reverse": [
+   4.704,
+   2.719
+  ],
+  "verda|h1|actual": [
+   0.945,
+   0.966
+  ],
+  "verda|h1|flat": [
+   1.04,
+   1.02
+  ],
+  "verda|h1|mirror": [
+   1.044,
+   1.021
+  ],
+  "verda|h1|reverse": [
+   1.047,
+   1.023
+  ],
+  "verda|h3|actual": [
+   0.787,
+   0.861
+  ],
+  "verda|h3|flat": [
+   0.855,
+   0.898
+  ],
+  "verda|h3|mirror": [
+   0.863,
+   0.898
+  ],
+  "verda|h3|reverse": [
+   0.86,
+   0.896
+  ],
+  "verda|h7|actual": [
+   0.854,
+   0.899
+  ],
+  "verda|h7|flat": [
+   0.878,
+   0.922
+  ],
+  "verda|h7|mirror": [
+   0.864,
+   0.919
+  ],
+  "verda|h7|reverse": [
+   0.873,
+   0.908
+  ]
+ }
+}
