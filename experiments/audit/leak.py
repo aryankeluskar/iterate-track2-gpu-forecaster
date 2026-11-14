@@ -108,7 +108,7 @@ def perturb(o: int, kind: str, seed: int):
 
 def install(series_df: pd.DataFrame, raw_df: pd.DataFrame, tag: str):
     """Point every input path at the given tables and clear every module-level cache."""
-    path = RUNS / f"series_{tag}.csv"
+    path = RUNS / f"series_{sys.argv[1]}_{tag}.csv"
     series_df.to_csv(path, index=False)
     data.series_path = lambda p=str(path): p
     data.load_store.cache_clear()
@@ -144,9 +144,24 @@ _cheat_factory.cache = {}
 SPECS["cheat"] = ("cheat", {})
 
 
+def _cheat_panel():
+    """Positive control for the panel: median of the series' offers on the last panel day, whatever its date."""
+    def f(sid, days, vals, origin_day, horizons, ctx):
+        if not panel.supported(sid):
+            return None
+        g = panel._index()[panel.parse_sid(sid)]
+        v = float(g.loc[g["day"] == g["day"].max(), "price"].median())
+        return {h: (v, v, v) for h in horizons}
+    return f
+
+
+SPECS["cheat_panel"] = ("cheat_panel", {})
+
+
 def run(method, origins, store, inst=None):
     m, p = SPECS[method]
-    f = inst or (_cheat_factory() if m == "cheat" else methods.get(m, **p))
+    f = inst or ({"cheat": _cheat_factory, "cheat_panel": _cheat_panel}[m]() if m.startswith("cheat")
+                 else methods.get(m, **p))
     fc, _ = harness.forecast(f, origins, SIDS, (1, 3, 7), store, META)
     return fc.sort_values(["series_id", "origin_day", "horizon_days"]).reset_index(drop=True), f
 

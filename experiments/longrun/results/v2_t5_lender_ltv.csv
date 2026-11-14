@@ -1,0 +1,5 @@
+chip,loan_months,q10_cover_usd,ltv_supported_vs_market,q10_residual_at_maturity_usd,q10_residual_share_of_new_30k,q50_residual_at_maturity_usd
+H100,24,13072.475,0.654,699.186,0.023,10171.978
+H100,36,12942.356,0.647,0.0,0.0,5278.01
+A100,24,4394.945,0.628,13.73,0.001,2253.728
+A100,36,4338.218,0.62,0.0,0.0,132.797

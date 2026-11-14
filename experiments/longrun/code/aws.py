@@ -12,7 +12,7 @@ import pandas as pd
 ROOT = pathlib.Path(__file__).resolve().parents[3]
 PACK = ROOT / "data/pack/gpu-price-pack-v0.1.1-handover"
 OUT = ROOT / "runs/longrun"
-TYPES = ["p4d.24xlarge", "p4de.24xlarge", "p5.48xlarge", "p5e.48xlarge", "p5en.48xlarge", "p6-b200.48xlarge", "p6-b300.48xlarge"]
+TYPES = ["p3.16xlarge", "p4d.24xlarge", "p4de.24xlarge", "p5.48xlarge", "p5e.48xlarge", "p5en.48xlarge", "p6-b200.48xlarge", "p6-b300.48xlarge"]
 SEGMENTS = {"A": ("2022-05-31", "2026-02-28"), "B": ("2026-07-01", "2026-10-31")}
 
 

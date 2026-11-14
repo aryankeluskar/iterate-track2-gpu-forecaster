@@ -53,8 +53,8 @@ def _setup(split, origin):
         store, cat = data.load_store(data.series_path()), data.load_catalog()
     else:
         o = starter_common.day_of(starter_common.parse_date(origin))
-        if splits.touches([o], splits.VAL):
-            raise ValueError("validation origins are run by the orchestrator only")
+        if splits.touches([o], splits.VAL) and os.environ.get("GPUF_ORCHESTRATOR") != "1":
+            raise ValueError("validation origins are run by the orchestrator only (set GPUF_ORCHESTRATOR=1)")
         origins = [o]
         if origin == data.AS_OF:  # exactly the inputs gpuf.submit uses (it checks no row is after the cutoff)
             from .submit import history
