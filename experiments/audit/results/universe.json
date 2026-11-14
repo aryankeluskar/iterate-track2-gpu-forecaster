@@ -1,0 +1,78 @@
+{
+ "rule_reproduces_catalog_at_2026-11-06": true,
+ "n_at_2026-11-06": 37,
+ "per_origin": {
+  "2026-08-18": {
+   "n_pit": 4,
+   "n_pit_and_37": 4,
+   "n_pit_not_37": 0,
+   "n_37_not_pit": 33
+  },
+  "2026-08-25": {
+   "n_pit": 4,
+   "n_pit_and_37": 4,
+   "n_pit_not_37": 0,
+   "n_37_not_pit": 33
+  },
+  "2026-09-01": {
+   "n_pit": 4,
+   "n_pit_and_37": 4,
+   "n_pit_not_37": 0,
+   "n_37_not_pit": 33
+  },
+  "2026-09-08": {
+   "n_pit": 4,
+   "n_pit_and_37": 4,
+   "n_pit_not_37": 0,
+   "n_37_not_pit": 33
+  },
+  "2026-09-15": {
+   "n_pit": 4,
+   "n_pit_and_37": 4,
+   "n_pit_not_37": 0,
+   "n_37_not_pit": 33
+  },
+  "2026-09-22": {
+   "n_pit": 4,
+   "n_pit_and_37": 4,
+   "n_pit_not_37": 0,
+   "n_37_not_pit": 33
+  },
+  "2026-09-29": {
+   "n_pit": 4,
+   "n_pit_and_37": 4,
+   "n_pit_not_37": 0,
+   "n_37_not_pit": 33
+  },
+  "2026-10-06": {
+   "n_pit": 15,
+   "n_pit_and_37": 15,
+   "n_pit_not_37": 0,
+   "n_37_not_pit": 22
+  }
+ },
+ "scores": {
+  "drift": {
+   "headline37_fixed": 0.08864891883240733,
+   "n37": 4278,
+   "headline_point_in_time": 0.13752664882799714,
+   "n_pit": 745,
+   "pit_and_37": 0.13752664882799714,
+   "pit_not_37": null,
+   "n_pit_not_37": 0,
+   "rental_all": 0.0959559701918995
+  },
+  "mix": {
+   "headline37_fixed": 0.16910940958983656,
+   "n37": 4278,
+   "headline_point_in_time": 0.1708199723145828,
+   "n_pit": 745,
+   "pit_and_37": 0.1708199723145828,
+   "pit_not_37": null,
+   "n_pit_not_37": 0,
+   "rental_all": 0.1368280512567922
+  },
+  "mix_minus_drift_headline37_fixed": 0.08046049075742923,
+  "mix_minus_drift_headline_point_in_time": 0.033293323486585646
+ }
+}

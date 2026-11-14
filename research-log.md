@@ -197,3 +197,7 @@ Running besides: final (reproducibility: one command, every posted rental series
   - Query 10, final blend on validation headline (1,816 cells): 0.2141 against mix 0.1121 and drift 0.0845. +0.1021 over mix [+0.0914,+0.1139]; +0.1297 over drift [+0.098,+0.152]. Coverage of [q10,q90] 0.80; 11% above q90 at h=7. h=1 0.000, h=3 +0.024, h=7 +0.078 against mix. Optimistic by construction, and slightly below fragility alone (0.2190), which is reported and changes nothing.
   - Query 11, the same forecaster on the non-headline posted rental series (22,390 cells; first evaluation of any kind on these cells): 0.2276 against mix 0.1777 and drift 0.1021. +0.0499 over mix [+0.0411,+0.0569]; +0.1255 over drift [+0.115,+0.134]. Coverage 0.85. Gains on afhubbard +0.010, fastgpu +0.017, gpurentalprices +0.025; cheapest -0.001.
   - Validation budget of Amendment 2: 4 direction queries used of 8, plus these two looks under Amendment 3. No further validation runs are planned for the submitted forecaster.
+
+## 2026-11-14 12:51 PT: hyper report
+
+- hyper (H35 refuted for spot, zero width confirmed for list): the provider simulator does not transfer to the hyperscaler panels; independent offer moves cancel across 450 offers. Hyperscaler list prices never reprice; their median moves only when an offer enters or leaves (14 of 1,152 series-days), so any interval width is paid for on the other 99% of cells. The submitted blend's gate already gives those series zero width. Submitted forecaster unchanged.

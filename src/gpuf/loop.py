@@ -222,6 +222,14 @@ def _mem():
     return memory
 
 
+def _ledger():
+    """gpuf.ledger with its path following PAST_LEDGER (the same file memory.sync_ledger reads)."""
+    from . import ledger
+    if os.environ.get("PAST_LEDGER"):
+        ledger.PATH = pathlib.Path(os.environ["PAST_LEDGER"])
+    return ledger
+
+
 def _mem_items() -> dict[str, dict]:
     """Latest version of every data point written through the memory journal, by id."""
     out = {}
@@ -625,7 +633,7 @@ def step_prior(a) -> dict:
     claim = a.claim
     rows, err = _recall(claim, "proposer", limit=40)
     led = {}
-    from . import ledger
+    ledger = _ledger()
     for e in ledger.load():
         led[e["id"]] = e
     mem = []
@@ -693,7 +701,7 @@ def step_propose(a) -> dict:
     if not auto:
         raise SystemExit("error: no autopsy in the loop journal yet; run first:\n  python -m gpuf.loop autopsy --system ens4")
     last = auto[-1]["result"]
-    from . import ledger
+    ledger = _ledger()
     led = ledger.load()
     tab = sorted(last["table"], key=lambda r: -r["residual_share"])
     m = _mem()
@@ -746,7 +754,8 @@ def verdict(d_all: float, ci_lo: float, d_first: float, d_second: float) -> str:
 
 
 def step_gate(a) -> dict:
-    from . import compare, ledger
+    from . import compare
+    ledger = _ledger()
     cslug, cand = spec_of(a.candidate)
     rslug, ref = spec_of(a.ref)
     c, r = system_cells(cand), system_cells(ref)
@@ -835,7 +844,7 @@ def step_forecast(a) -> dict:
 
 # ----------------------------------------------------------------------------- status
 def step_status(a) -> dict:
-    from . import ledger
+    ledger = _ledger()
     led = ledger.load()
     by = {}
     for e in led:
