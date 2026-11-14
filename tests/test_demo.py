@@ -87,7 +87,7 @@ def test_numbers_match_sources(built):
         tot = next(r for r in csv.DictReader(f) if r["cause"] == "total")
     assert facts["loss_total"] == {k: round(float(tot[f"{k}_loss_over_lv"]), 4) for k in ("S0", "S1", "S2", "S3")}
     # 3. ledger counts
-    led = demo.jl(demo.P["ledger"])
+    led = [r for r in demo.jl(demo.P["ledger"]) if not r["id"].startswith("L")]
     assert facts["ledger_total"] == len(led)
     for k in ("supported", "refuted", "not_significant", "untestable"):
         assert facts[f"ledger_{k}"] == sum(r["status"] == k for r in led)
@@ -128,3 +128,45 @@ def test_explorer_panel_reproduces_card(built):
             assert s["rows"] == s["card"]["offers"]
             assert s["origin_median"] == pytest.approx(s["card"]["median"], abs=1e-3)
     assert ex["days"][-1] == "2026-11-06"
+
+
+def test_loop_reruns_not_counted(built):
+    _, text, _, _, facts = built
+    rows = demo.jl(demo.P["ledger"])
+    assert facts["ledger_total"] == sum(not r["id"].startswith("L") for r in rows)
+    assert not re.search(r'data-id="L', text)
+    assert facts["ledger_plain_missing"] == sorted(set(r["id"] for r in rows if not r["id"].startswith("L")) - set(json.loads(demo.P["plain"].read_text())))
+
+
+def test_no_90_interval_on_validation_numbers(built):
+    _, text, *_ = built
+    outside_longrun = re.sub(r"<section id=s7 .*?</section>", "", text, flags=re.S)
+    # allowed only where a quoted record says the ranges are *not* 90% intervals
+    assert not re.search(r"(?<!not )90% intervals?", outside_longrun), re.search(r".{80}90% interval.{40}", outside_longrun)
+    assert not re.search(r"90% interval[^<]{0,12}[+−-]?\d", outside_longrun)
+    assert "rough range" in text.lower()
+
+
+def test_clean_number_leads_and_strict_tests(built):
+    _, text, _, _, facts = built
+    gate = {r["name"]: r for r in demo.jl(demo.P["val_gate"])}
+    s1 = re.search(r"<section id=s1 .*?</section>", text, re.S).group(0)
+    assert s1.index(f"{gate['q11_final_nonhead']['skill']:.3f}") < s1.index(f"{gate['q10_final_headline']['skill']:.3f}")
+    st = json.loads(demo.P["stats"].read_text())
+    assert facts["bh_kept"] == sorted(st["bh10_pass_logged_p_one_sided"])
+    assert facts["bh_kept_gauss"] == sorted(st["bh10_pass_p_sim_gauss_devacf"])
+    assert facts["bh_kept_boot"] == sorted(st["bh10_pass_p_sim_block_bootstrap"])
+    for v in st["directions"].values():
+        ps = sorted((v["val"]["p_sim_gauss_devacf"], v["val"]["p_sim_block_bootstrap"]))
+        assert f"{ps[0]:.3f} to {ps[1]:.3f}" in text
+    assert "id=s1k" in text and "What to keep in mind" in text
+
+
+def test_hashes_shown_equal_files(built):
+    _, text, *_ = built
+    for k in ("headline", "all", "members"):
+        rel = str(demo.P[k].relative_to(demo.ROOT))
+        m = re.search(rf"<code>{re.escape(rel)}</code></td><td class=h><code>([0-9a-f]{{64}})</code>", text)
+        assert m and m.group(1) == demo.sha(demo.P[k])
+    for _, paths in demo.EVIDENCE:
+        assert all((demo.ROOT / p).exists() for p in paths)

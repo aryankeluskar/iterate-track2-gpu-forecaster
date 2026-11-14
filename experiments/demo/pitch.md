@@ -1,40 +1,38 @@
 # Pitch: 3 minutes, walking demo/index.html top to bottom
 
-Open `demo/index.html` from the file system before you start (no server and no network needed). Every number below is on the page and comes from a file in the repo. If a file changes, rebuild with `PYTHONPATH=src .venv/bin/python -m gpuf.demo` and re-read the numbers from the page, not from this script.
+Open `demo/index.html` from disk before you start (no server, no network). Every number below is on the page and comes from a file in the repo. If files change, rebuild with `PYTHONPATH=src .venv/bin/python -m gpuf.demo` and read the numbers off the page, not from this script.
 
-## Script (about 400 words)
+## Script (about 420 words, under 3 minutes)
 
-**[Headline, 0:00 to 0:30]**
-"Pacific asked what GPUs will rent for. The numbers everyone quotes are posted medians. We built an AI scientist that forecasts them one, three and seven days ahead and learns from its own failures. On 18 validation days it had never been tuned on, it scored a skill of 0.214. The organisers' drift baseline scored 0.084. On 555 series nobody had looked at, it scored 0.228 against 0.102. Its 80% intervals contained 80% of outcomes."
+**[Result, 0:00 to 0:30]**
+"Pacific asked what GPUs will rent for. The prices everyone quotes are posted prices. We built an AI scientist that forecasts them one, three and seven days ahead and improves by studying its own mistakes. The clean result first: on 555 price series we never used for any decision, it scores 0.228, against 0.102 for the organisers' baseline. Zero means no better than assuming prices stay put. On the 37 series scored on Sunday it scores 0.214 against 0.084, but that one flatters us, because we kept some parts of the mix for doing well on those same weeks. 80% of real prices landed inside our low-to-high range, which is the target."
 
-**[Panel explorer, 0:30 to 1:20]** *(B300 preset is loaded by default)*
-"Here is why. A posted median is not a market price. It is the middle of a small panel, here ten offers. Orange means a provider that reprices most days. Blue means static. Watch Verda." *Drag the slider from late September to mid-October.* "Verda climbs every day. The median follows only while Verda holds the middle. Once it passes Together, here at 9.99, the median stops. The dashed lines show where the median jumps if one offer leaves or joins. The system found this by taking apart its own worst misses. Then it stopped forecasting the line and started simulating the panel. On the right: this index moves 2.5% if one offer leaves." *Click the A100 40GB preset.* "Here Lambda holds five of seven offers. Lambda is the index."
+**[What to keep in mind, 0:30 to 0:55]**
+"Two caveats matter most. First, Sunday scores a single date. On 50 practice dates we beat the baseline on 46, but those dates overlap, so one bad week is possible. Second, of the four new models we added, an independent audit says only two clearly hold on the held-back weeks. The other two stay in only because they helped on the practice dates. The rest is listed here: a tiny leak that was found and fixed, and series that were picked with hindsight."
 
-**[How it improved, 1:20 to 1:50]**
-"Each bar splits forecast loss by what physically happened. The provider simulator went after the orange segment, frequent repricers. Fragility tails went after offers entering and leaving. We declared each validation query before running it. Four directions passed a false-discovery test. What remains is mostly new offers entering, which nobody announces."
+**[Offer explorer, 0:55 to 1:45]** *(B300 preset is loaded)*
+"Here's what the system found. A posted price is the middle of a short list of provider offers, here ten. Orange means a provider that changes its price most days. Blue means it rarely does. Watch Verda." *Drag the slider from late September to about 18 October.* "Verda climbs every day. The price follows it only while Verda is in the middle. Once Verda passes Together at 9.99, the price stops there. The dashed lines show where the price jumps if one offer leaves or joins. So we stopped forecasting the line and started simulating the list." *Click the A100 40GB preset.* "Here Lambda holds five of the seven offers, so Lambda is the index."
 
-**[Ledger, 1:50 to 2:05]**
-"We tested 38 hypotheses. 15 were refuted and 7 were not significant, and they stay on the page next to the 14 that held."
+**[How it improved, 1:45 to 2:10]**
+"Each bar splits our error by what happened to the list. The provider simulator took out the orange part. In the table, each new model got one look at the held-back weeks, written down before it ran. The planned test and the stricter test sit side by side, so you can see which two hold."
 
-**[Exa, 2:05 to 2:25]**
-"Search is how we explain the jumps. Exa found dated repricing announcements. Every source is linked with its date and the quoted sentence. 17 of 17 checkable offers moved to exactly the announced price. The negative result: only 2 of the 37 largest repricings were announced ahead."
+**[Ideas tested and Exa, 2:10 to 2:35]**
+"We tested 37 ideas. 13 worked, 15 didn't and 7 made no clear difference, and all of them are listed. Exa found dated price announcements, each linked with its quote. 17 of 17 offers we could check moved to exactly the announced price. But only 2 of the 37 largest price changes were announced beforehand."
 
-**[Shared memory, 2:25 to 2:40]**
-"Four agents write to past.dev and four read from it. The forecaster's recall is limited to what was known on its forecast date. Here it asks as of 6 October, and nothing later comes back."
-
-**[Two to three years and reproduce, 2:40 to 3:00]**
-"For the long view: H100 static rate cards go from 3.49 today to about 2.3 at 24 months, with the range and the assumptions shown, and the backtests that failed are stated. One command rebuilds the forecasts. The hashes are on the page."
+**[Memory, long run, reproduce, 2:35 to 3:00]**
+"Four agents write to shared memory in past.dev and four read from it. The forecaster only sees what was known on its forecast date. Over two to three years we give ranges, H100 from 3.49 now to about 2.3 at 24 months, and nothing beat 'no change' on the backtests. One command rebuilds the forecasts, and the file hashes are on the page."
 
 ## Video shot list (2 minutes)
 
 | # | time | shot | on screen | voice |
 |---|---|---|---|---|
-| 1 | 0:00–0:12 | Page top, still | question, result sentence, three number cards | question and the two skill numbers |
-| 2 | 0:12–0:45 | Explorer, B300 preset, slow slider drag from ~25 Sep to 18 Oct | Verda's orange diamond passing Together; median line stopping at 9.99; lower chart cursor moving | "the median follows Verda until it passes its neighbour, then stops" |
-| 3 | 0:45–0:55 | Slider back to 6 Nov; zoom on the three forecast rows and the facts panel | q10, q50, q90 at 1, 3, 7 days; "2.5% if one offer leaves" | forecast and index fragility |
-| 4 | 0:55–1:05 | A100 40GB preset | five Lambda offers at 1.99; facts "if one provider leaves 36%" | "one provider is the index" |
-| 5 | 1:05–1:20 | Loss-by-cause bars, then the validation table | orange segment shrinking across systems; rows 6 to 11 | "each change aimed at a cause found by failure analysis; declared before it ran" |
-| 6 | 1:20–1:30 | Ledger, click "refuted" filter | refuted list with results | "refuted results stay visible" |
-| 7 | 1:30–1:45 | Exa timeline and table; hover a source link (do not click) | Nebius and Jarvislabs rows with dates and quotes; "17 of 17" line | "every claim traces to a dated source" |
-| 8 | 1:45–1:53 | Shared-memory matrix and recall 1 | writers by audience; "nothing later than the bound" | "agents share memory, date-bounded for the forecaster" |
-| 9 | 1:53–2:00 | Long-run figure, then the reproduce command and hashes | rent paths; `bash reproduce.sh final` | "one command rebuilds it" |
+| 1 | 0:00–0:12 | Page top, still | result sentence; the three number cards, clean number first | 0.228 against 0.102 on series never used; 0.214 on the scored 37 is optimistic |
+| 2 | 0:12–0:24 | Scroll to "What to keep in mind" | first and third bullets highlighted | one scored date; two of four new models clearly hold |
+| 3 | 0:24–0:55 | Offer explorer, B300 preset, slow slider drag from ~25 Sep to 18 Oct | Verda's orange diamond passing Together; the middle line stopping at 9.99 | "the price follows Verda until it passes its neighbour, then stops" |
+| 4 | 0:55–1:03 | Slider back to 6 Nov; the three forecast rows and the side panel | low, middle and high estimates at 1, 3, 7 days; "2.5% if one offer leaves" | forecast and how solid this price is |
+| 5 | 1:03–1:10 | A100 40GB preset | five Lambda offers at 1.99; "if one provider leaves 36%" | "one provider is the index" |
+| 6 | 1:10–1:25 | Error-by-cause bars, then the held-back-weeks table | orange part shrinking; "Logged p" and "Stricter p" columns | "planned test and stricter test side by side" |
+| 7 | 1:25–1:33 | Ideas tested, click "did not work" | the 15 failed ideas | "failures stay on the record" |
+| 8 | 1:33–1:45 | Exa timeline and table; hover a source link (do not click) | Nebius and Jarvislabs rows; the "17 of 17" line; "What did not work" | "every claim traces to a dated source" |
+| 9 | 1:45–1:53 | Shared-memory tables and recall 1 | writers by folder; "none is later than the bound" | "agents share memory; the forecaster's view stops at its date" |
+| 10 | 1:53–2:00 | Long-run figure, then the reproduce command and hashes | rent paths; `bash reproduce.sh final` | "ranges, not a proven forecast; one command rebuilds it" |

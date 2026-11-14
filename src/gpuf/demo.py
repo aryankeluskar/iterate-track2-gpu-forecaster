@@ -52,46 +52,57 @@ P = {
     "protocol": ROOT / "EVAL_PROTOCOL.md",
     "scout": ROOT / "src/gpuf/scout.py",
     "manifest": data.PACK / "MANIFEST.sha256",
+    "log": ROOT / "research-log.md",
+    "stats": ROOT / "experiments/audit/results/stats.json",
+    "universe": ROOT / "experiments/audit/results/universe.json",
+    "analog_fix": ROOT / "experiments/audit/results/analog_fix.json",
+    "plain": ROOT / "experiments/plain_ledger.json",
 }
+AUDIT = ROOT / "experiments/audit/results"
 
 EVIDENCE = [
-    ("Each scored median is reproduced exactly from the offers in the pack; every jump is a repriced offer near the middle or an offer entering or leaving (H11)",
+    ("Each published price is exactly the middle of its list of offers; every jump is a provider near the middle changing price or an offer joining or leaving (H11)",
      ["src/gpuf/panel.py", "experiments/autopsy/results", "data_out/ledger.jsonl"]),
-    ("Evaluation protocol, splits, leak rule and the three amendments, each committed before the runs it governs",
+    ("Test plan, practice and held-back dates, leak rule, and the three later changes to the plan",
      ["EVAL_PROTOCOL.md", "research-log.md"]),
-    ("Validation results, with every query logged", ["data_out/val_gate.jsonl", "data_out/val_query_log.jsonl"]),
-    ("Loss by cause across the four systems", ["experiments/autopsy2/results/loss_by_cause.csv", "experiments/autopsy2/protocol.yaml"]),
-    ("All hypotheses and verdicts", ["data_out/ledger.jsonl", "src/gpuf/ledger.py"]),
-    ("Provider simulator and the one-offer fragility tails", ["src/gpuf/methods/prov.py", "src/gpuf/methods/fragility.py"]),
-    ("The submitted forecaster and its files", ["src/gpuf/methods/final.py", "reproduce.sh", "submissions/forecast_final_headline.csv",
+    ("Results on the held-back weeks, with every look logged", ["data_out/val_gate.jsonl", "data_out/val_query_log.jsonl"]),
+    ("Forecast error by cause for the four models", ["experiments/autopsy2/results/loss_by_cause.csv", "experiments/autopsy2/protocol.yaml"]),
+    ("Every idea tested and its outcome", ["data_out/ledger.jsonl", "src/gpuf/ledger.py"]),
+    ("Provider simulator and the jump estimates", ["src/gpuf/methods/prov.py", "src/gpuf/methods/fragility.py"]),
+    ("The submitted forecast and how it is built", ["src/gpuf/methods/final.py", "reproduce.sh", "submissions/forecast_final_headline.csv",
                                                  "submissions/forecast_final_all.csv", "submissions/forecast_final_all_members.csv"]),
-    ("Index-quality card and provider repricing rates", ["experiments/insight/results/t1_index_quality_card.csv",
+    ("How solid each price is, and how often each provider changes price", ["experiments/insight/results/t1_index_quality_card.csv",
                                                          "experiments/insight/results/t0_provider_reprice_rates.csv", "experiments/insight/results/insight.md"]),
-    ("Repricing calendar found by Exa search, and its check against the panel", ["data_out/repricing_calendar.jsonl",
+    ("Announcement calendar found with Exa, and its check against the offers", ["data_out/repricing_calendar.jsonl",
                                                                                 "experiments/calendar/results/partb_summary.json",
                                                                                 "experiments/calendar/results/b1_panel_check.csv"]),
     ("Exa calls and cached responses", ["src/gpuf/scout.py", "data_out/exa_cache"]),
-    ("Were large repricings announced ahead (Exa attribution); pricing-policy label", ["experiments/exa_attrib/results/attribution.md",
+    ("Were large price changes announced beforehand; did published pricing policies help", ["experiments/exa_attrib/results/attribution.md",
                                                                                      "experiments/policy/results/score_report.txt"]),
-    ("Shared memory (past.dev): client, journal of every call, who writes and reads what", ["src/gpuf/memory.py", "data_out/memory_journal.jsonl",
+    ("Shared memory (past.dev): client, log of every call, who writes and reads what", ["src/gpuf/memory.py", "data_out/memory_journal.jsonl",
                                                                                           "experiments/memory/README_memory.md"]),
     ("The 2 to 3 year view", ["experiments/longrun/results/longrun.md", "experiments/longrun/results/v2_t2_scenario_paths.csv"]),
     ("The whole story with timestamps", ["research-log.md"]),
+    ("The independent audit: leak tests, stricter statistics, series chosen with hindsight", ["experiments/audit/results/audit.md", "experiments/audit/results/stats.json", "experiments/audit/results/universe.json"]),
 ]
 
 COLLECTOR = {"fastgpu_daily": "FastGPU", "gpurentalprices": "gpurentalprices.com", "afhubbard": "GPU Price Tracker"}
 CLASS = {"neocloud_rate_card": "neocloud rate card", "neocloud_spot": "neocloud spot", "marketplace_ask": "marketplace ask",
          "hyperscaler_spot": "hyperscaler spot", "hyperscaler_list": "hyperscaler list"}
 TIER = {"on_demand": "on-demand", "spot": "spot"}
-CAUSE = {"none": "no move (cost of interval width)", "dynamic_reprice": "a frequently repricing provider moved",
-         "announced_oneoff": "one-off repricing, announced", "unannounced_oneoff": "one-off repricing, not announced",
-         "entry": "an offer entered", "exit": "an offer left", "marketplace_ask": "marketplace asks",
-         "hyperscaler_spot": "hyperscaler spot (no offer panel)"}
-SYSTEMS = [("S0", "drift (baseline)"), ("S1", "reference model"), ("S2", "earlier blend"), ("S3", "current blend")]
-STATUS = {"supported": "supported", "refuted": "refuted", "not_significant": "not significant", "untestable": "untestable"}
+CAUSE = {"none": "price did not move (cost of the range)", "dynamic_reprice": "a provider that changes price most days moved",
+         "announced_oneoff": "one-off price change, announced", "unannounced_oneoff": "one-off price change, not announced",
+         "entry": "an offer joined the list", "exit": "an offer left the list", "marketplace_ask": "marketplace asking prices",
+         "hyperscaler_spot": "big-cloud spot prices (no offer list)"}
+SYSTEMS = [("S0", "organisers' baseline"), ("S1", "our first model"), ("S2", "first mix"), ("S3", "mix with list-based models")]
+STATUS = {"supported": "worked", "refuted": "did not work", "not_significant": "no clear difference", "untestable": "could not be tested"}
+PLAIN_M = {"chronos": "Chronos range", "drift": "organisers' baseline", "fm2_live": "16-day Chronos range", "fragility": "jump estimates",
+           "gbm": "boosted trees", "mix": "first model", "prov": "provider simulator", "prov_cal": "provider simulator with calendar"}
+DIR = {"q6": "similar past situations", "q7": "the provider simulator", "q8": "the Chronos range from the last 16 days",
+       "q9": "the jump estimates (where the middle goes if one offer leaves or joins)"}
 DEFAULT_SID = "gpurentalprices.neocloud_rate_card.B300.on_demand.median"
 PRESETS = [
-    (DEFAULT_SID, "B300 rate card: a frequent repricer climbs through the middle"),
+    (DEFAULT_SID, "B300 rate card: a provider that changes price daily climbs through the middle"),
     ("gpurentalprices.neocloud_rate_card.A100_40GB.on_demand.median", "A100 40GB rate card: one provider sets the median"),
     ("fastgpu_daily.neocloud_spot.B200.spot.median", "B200 spot: four offers, one of them climbing"),
 ]
@@ -396,14 +407,14 @@ def val_section(gate: list[dict], log: list[dict], nhead: int, stats: dict) -> t
              "<th>Logged p</th><th>Stricter p</th><th>Kept: logged / stricter</th></tr></thead><tbody>" + "".join(rows) + "</tbody></table></div>")
     facts = {"bh_kept": sorted(k_log), "bh_kept_gauss": sorted(k_gauss), "bh_kept_boot": sorted(k_boot),
              "bh_kept_strict_both": sorted(k_gauss & k_boot), "n_val_candidate_runs": nval, "nonhead_series": nn,
-             "val_weeks": vw["n_weeks"], "val_resamples": vw["distinct_week_resamples"]}
+             "val_weeks": vw["n_weeks"], "val_resamples": vw["distinct_week_resamples"], "val_days": sum(vw["origins_per_week"])}
     return table, facts
 
 
 def loss_svg(rows: list[dict]) -> str:
     causes = [r for r in rows if r["cause"] != "total"]
     tot = {s: float(next(r for r in rows if r["cause"] == "total")[f"{s}_loss_over_lv"]) for s, _ in SYSTEMS}
-    W, L, R, BH, GAP, top = 960, 170, 70, 34, 16, 20
+    W, L, R, BH, GAP, top = 960, 215, 70, 34, 16, 20
     x = lambda v: L + v * (W - L - R)
     shade = {"dynamic_reprice": "var(--a1)", "entry": "var(--a2)", "exit": "var(--a2l)", "none": "var(--g1)", "announced_oneoff": "var(--g2)",
              "unannounced_oneoff": "var(--g3)", "marketplace_ask": "var(--g4)", "hyperscaler_spot": "var(--g5)"}
@@ -415,14 +426,14 @@ def loss_svg(rows: list[dict]) -> str:
         for r in causes:
             v = float(r[f"{s}_loss_share_of_total_lv"])
             parts.append(f'<rect x="{x(acc):.1f}" y="{y}" width="{x(acc + v) - x(acc):.1f}" height="{BH}" fill="{shade[r["cause"]]}" stroke="var(--bg)" stroke-width="1">'
-                         f'<title>{esc(name)}: {esc(CAUSE[r["cause"]])}, {v:.3f} of last-value loss</title></rect>')
+                         f'<title>{esc(name)}: {esc(CAUSE[r["cause"]])}, {v:.3f} of the no-change error</title></rect>')
             acc += v
         parts.append(f'<text x="{x(acc) + 6:.1f}" y="{y + BH / 2 + 5}" class="num">{tot[s]:.3f}</text>')
     yb = top + 4 * (BH + GAP)
     for t in np.arange(0, 1.01, 0.2):
         parts.append(f'<line x1="{x(t):.1f}" x2="{x(t):.1f}" y1="{top - 6}" y2="{yb - GAP + 4}" class="grid"/>'
                      f'<text x="{x(t):.1f}" y="{yb + 8}" text-anchor="middle" class="tick">{t:.1f}</text>')
-    parts.append(f'<text x="{x(0.5):.1f}" y="{yb + 30}" text-anchor="middle" class="tick">loss as a share of the last-value forecast\'s loss (shorter is better; 1.0 = no better than repeating the last price)</text>')
+    parts.append(f'<text x="{x(0.5):.1f}" y="{yb + 30}" text-anchor="middle" class="tick">error as a share of the error from assuming prices stay put (shorter is better; 1.0 = no better)</text>')
     leg, lx, ly = [], L, yb + 52
     for r in causes:
         lab = CAUSE[r["cause"]]
@@ -440,10 +451,10 @@ def loss_table(rows: list[dict]) -> str:
     th = "".join(f"<th>{esc(n)}</th>" for _, n in SYSTEMS)
     body = []
     for r in rows:
-        lab = "total (1 − skill on dev)" if r["cause"] == "total" else CAUSE[r["cause"]]
+        lab = "total (1 − score on practice dates)" if r["cause"] == "total" else CAUSE[r["cause"]]
         cells = "".join(f"<td class=n>{float(r[f'{s}_loss_share_of_total_lv']):.3f}</td>" for s, _ in SYSTEMS)
         body.append(f"<tr{' class=final' if r['cause'] == 'total' else ''}><td>{esc(lab)}</td><td class=n>{int(r['cells']):,}</td>{cells}</tr>")
-    return ("<details><summary>Numbers behind the chart</summary><div class=tw><table><thead><tr><th>Cause</th><th>Cells</th>" + th
+    return ("<details><summary>Numbers behind the chart</summary><div class=tw><table><thead><tr><th>What happened</th><th>Forecasts</th>" + th
             + "</tr></thead><tbody>" + "".join(body) + "</tbody></table></div></details>")
 
 
@@ -469,7 +480,7 @@ def ledger_section(led: list[dict], plain: dict) -> tuple[str, dict]:
                    "ledger_plain_missing": sorted(r["id"] for r in led if r["id"] not in plain)}
 
 
-def calendar_section(cal: list[dict], check: dict, exa: dict, led: dict) -> tuple[str, dict]:
+def calendar_section(cal: list[dict], check: dict, exa: dict, led: dict, plain: dict) -> tuple[str, dict]:
     cal = sorted(cal, key=lambda r: (r["effective_date"], r["provider"], r["published"]))
     ds = [dt.date.fromisoformat(r[k]) for r in cal for k in ("published", "effective_date")] + [ORIGIN]
     d0, d1 = min(ds) - dt.timedelta(days=4), max(ds) + dt.timedelta(days=6)
@@ -513,11 +524,13 @@ def calendar_section(cal: list[dict], check: dict, exa: dict, led: dict) -> tupl
     n_ahead = sum(1 for r in cal if r.get("announced_before_effective") and (r.get("lead_days") or 0) > 0)
     facts = {"cal_entries": len(cal), "cal_ahead": n_ahead, "cal_hits": check["b1_hits"], "cal_checkable": check["b1_checkable"],
              "exa_events": exa["n_events"], "exa_announced": exa["n_announced_before"]}
-    neg = (f"<ul class=neg><li><strong>Most large repricings were not announced.</strong> Of the {exa['n_events']} largest repricing events on the development period, "
-           f"{exa['n_announced_before']} had a dated public announcement before the move ({exa['marketplace_events']} were marketplace asks, which have nothing to announce). "
-           f"A keyword rule for spotting announcements also fired on {exa['control_false_alarms_v2']} of {exa['control_pairs']} control dates with no repricing. "
-           f"Ledger H13, verdict {esc(STATUS.get(led['H13']['status'], led['H13']['status']))}.</li>"
-           f"<li><strong>A provider's published pricing policy did not help.</strong> {inline(led['H26']['result'])} Ledger H26, verdict {esc(STATUS.get(led['H26']['status'], led['H26']['status']))}.</li></ul>")
+    h26 = plain.get("H26", {}).get("result") or led["H26"]["result"]
+    neg = (f"<ul class=neg><li><strong>Most large price changes were not announced.</strong> Of the {exa['n_events']} largest price changes on the practice dates, "
+           f"{exa['n_announced_before']} had a dated public announcement beforehand ({exa['marketplace_events']} were marketplace asking prices, which nobody announces). "
+           f"Our rule for spotting announcements also fired on {exa['control_false_alarms_v2']} of {exa['control_pairs']} dates with no price change. "
+           f"Idea H13: {esc(STATUS.get(led['H13']['status'], led['H13']['status']))}.</li>"
+           f"<li><strong>A provider's published pricing policy did not help predict how often it changes price.</strong> {inline(h26)} "
+           f"Idea H26: {esc(STATUS.get(led['H26']['status'], led['H26']['status']))}.</li></ul>")
     return svg, table, neg, facts
 
 
@@ -664,7 +677,71 @@ def protocol_bits() -> dict:
     t = P["protocol"].read_text()
     leak = re.search(r"## Leakage rule\s+(.+?)\n\n", t, re.S).group(1).strip()
     v = re.search(r"Validation: every day from (\S+) to (\S+) \((\d+) origins", t)
-    return {"leak": leak, "val_from": v.group(1), "val_to": v.group(2), "val_origins": int(v.group(3))}
+    d = re.search(r"Dev: every day from (\S+) to (\S+) \(targets", t)
+    return {"leak": leak, "val_from": v.group(1), "val_to": v.group(2), "val_origins": int(v.group(3)),
+            "dev_from": d.group(1), "dev_to": d.group(2), "val_nice": nice_range(v.group(1), v.group(2)), "dev_nice": nice_range(d.group(1), d.group(2))}
+
+
+def nice_range(a: str, b: str) -> str:
+    d0, d1 = dt.date.fromisoformat(a), dt.date.fromisoformat(b)
+    return f"{d0.day} to {d1.day} {d1:%B}" if d0.month == d1.month else f"{d0.day} {d0:%B} to {d1.day} {d1:%B}"
+
+
+def names_of(keys) -> str:
+    n = [DIR[k.split("_")[0]] for k in sorted(keys)]
+    return " and ".join(n) if len(n) < 3 else ", ".join(n[:-1]) + " and " + n[-1]
+
+
+def keep_facts(gate: list[dict], vfacts: dict, members: list[str]) -> dict:
+    """The caveats, each number read from its file."""
+    m = re.search(r"beats drift on (\d+) of (\d+) origins.*?below the last value on (\d+)", P["log"].read_text())
+    beat, ndev, below = map(int, m.groups())
+    u = json.loads(P["universe"].read_text())["scores"]
+    pit, fixed = u["mix_minus_drift_headline_point_in_time"], u["mix_minus_drift_headline37_fixed"]
+    leak = json.loads(P["analog_fix"].read_text())["val_origins_shipped_vs_patched"]["analog"]["max_abs_log_diff"]
+    clean, caught, checks = [], 0, 0
+    for f in sorted(AUDIT.glob("leak_*.json")):
+        d = json.loads(f.read_text())
+        bad = [v["cells_not_bit_identical"] for v in d["perturbation"].values()]
+        if d["method"].startswith("cheat"):
+            caught, checks = caught + sum(b > 0 for b in bad), checks + len(bad)
+        elif d["method"] != "analog" and not any(bad):
+            clean.append(d["method"])
+    chk = json.loads(P["cal_check"].read_text())
+    evs = [e["event"] for e in chk["events"] if e["event"] != "ALL"]
+    note = json.loads(pd.read_csv(P["headline"]).method_note.iloc[0])
+    cal_on = any("cal" in k for k in note)
+    lr = re.search(r"No version of the method beat no-change[^.]*\.", P["longrun"].read_text())
+    dirs = [r["name"] for r in gate if r["name"].split("_")[0] in DIR]
+    both = set(vfacts["bh_kept_strict_both"])
+    one = (set(vfacts["bh_kept_gauss"]) | set(vfacts["bh_kept_boot"])) - both
+    none_ = set(dirs) - both - one
+    nhead = None
+    lk = f"{leak:.1e}".replace("e-0", "e-")
+    items = [
+        f"<b>Sunday's scoring is one forecast date.</b> On {ndev} practice dates the mix beat the organisers' baseline on {beat} and did worse than assuming no change on {below}. "
+        f"Neighbouring dates share most of their data, so this is weaker than {ndev} separate tests; one bad week is possible.",
+        f"<b>The scored series were picked with hindsight.</b> They are the ones that qualify on 6 November. Applying the organisers' rule date by date instead, our first model's lead over the baseline "
+        f"is {sgn(pit)} on the forecasts that qualified at the time, against {sgn(fixed)} on the fixed set. Numbers on the scored series are flattered by this.",
+        f"<b>Only {len(both)} of the {len(dirs)} new models clearly hold on the held-back weeks.</b> The test we planned is too easy to pass with only {vfacts['val_days']} days. "
+        f"Under the audit's stricter version: {names_of(both)}, held under both versions" + (f"; {names_of(one)}, held under one of two" if one else "")
+        + (f"; {names_of(none_)}, held under neither" if none_ else "") +
+        ". The unproven ones stay in the mix because leaving either out lowered the score on the practice dates; that is a departure from our original rule.",
+        f"<b>The audit found one small leak, now fixed.</b> One model ({DIR['q6']}) could be nudged by data from after the forecast date: at most {(np.exp(leak) - 1) * 100:.4f}% of a price ({lk} in log) on forecasts that were used, "
+        f"and not at all on Sunday's date, which has no later data. Every other model ({', '.join(PLAIN_M.get(c, c) for c in clean)}) gave identical forecasts when all later data was deleted or scrambled; "
+        f"two deliberately cheating test models were caught in {caught} of {checks} checks.",
+        f"<b>The announcement calendar's gain rests on {len(evs)} events</b> ({', '.join(e.split()[0].capitalize() + ' on ' + nice_date(dt.date.fromisoformat(e.split()[1])) for e in evs)}) "
+        f"and is switched {'on' if cal_on else 'off'} in the submitted forecast.",
+        "<b>The 2 to 3 year view gives ranges, not a tested forecast.</b> " + (lr.group(0).replace("no-change", "assuming no change") if lr else "See its backtests."),
+        "<b>Who did the work.</b> Ideas and forecasting code were written by LLM research agents, directed by an orchestrator agent and a human. "
+        "Each step of the research loop is a command (<code>python -m gpuf.loop</code>), but choosing and writing a new idea is not automated.",
+    ]
+    val_text = (f"Each new model got one look at the held-back weeks, written down in <code>research-log.md</code> before it ran, and was compared with our first model. "
+                f"With the test we planned, {len(vfacts['bh_kept'])} of {len(dirs)} passed a false-discovery rule at 10%. With the audit's stricter test, {len(both)} pass under both versions"
+                f"{f' and {len(one)} under one' if one else ''}. Query 5 was added after seeing queries 1 to 4, and the audit found its plan was committed 32 seconds after its result was logged.")
+    return {"items": items, "val_text": val_text,
+            "facts": {"keep_dev_beat": beat, "keep_dev_n": ndev, "keep_dev_below": below, "keep_pit": round(pit, 4), "keep_fixed": round(fixed, 4),
+                      "keep_leak": leak, "keep_clean_members": clean, "keep_cal_events": len(evs), "keep_cal_on": cal_on}}
 
 
 def exa_lines() -> list[int]:
@@ -683,10 +760,11 @@ def build(out: Path = OUT) -> Path:
     proto = protocol_bits()
     ex = explorer_data()
     nhead = len(ex["series"])
-    val_html, vfacts = val_section(gate, log, nhead)
-    led_html, lfacts = ledger_section(led_rows)
+    stats, plain = json.loads(P["stats"].read_text()), json.loads(P["plain"].read_text())
+    val_html, vfacts = val_section(gate, log, nhead, stats)
+    led_html, lfacts = ledger_section(led_rows, plain)
     cal_svg, cal_table, cal_neg, cfacts = calendar_section(jl(P["calendar"]), json.loads(P["cal_check"].read_text()),
-                                                           json.loads(P["exa_head"].read_text()), led)
+                                                           json.loads(P["exa_head"].read_text()), led, plain)
     mem_html, mfacts = memory_section(jl(P["journal"]))
     lr_html, lrfacts = longrun_section()
     total = next(r for r in loss if r["cause"] == "total")
@@ -899,7 +977,7 @@ ol.ledger{list-style:none;padding:0 12px 0 0;margin:0}.scroll{max-height:640px;o
 .b-supported{color:var(--a2);border-color:var(--a2)}.b-refuted{color:var(--a1);border-color:var(--a1)}.b-not_significant{color:var(--muted);border-color:var(--muted);border-style:dashed}
 .b-untestable{color:var(--muted);border-color:var(--line)}
 .recall{border-left:3px solid var(--line);padding:2px 0 2px 14px;font-size:14px}.recall blockquote{margin:4px 0 8px;white-space:pre-wrap;color:var(--fg)}
-.neg li{margin:6px 0}.check{font-size:16px}
+.neg li,.keep li{margin:7px 0}.check{font-size:16px}
 figure{margin:14px 0}figure img{max-width:100%}figcaption{font-size:13px;color:var(--muted)}
 @media (max-width:760px){.big{grid-template-columns:1fr}.exp{grid-template-columns:1fr}.terms dl{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
@@ -915,7 +993,7 @@ const N=D.days.length;let cur=byId[D.default]||D.series[0],idx=N-1;
 const e=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const f2=x=>x==null?'n/a':x.toFixed(2);
 const COL={dyn:'var(--a1)',sta:'var(--a2)',mid:'var(--mid)',na:'var(--mid)'};
-const CLS={dyn:'reprices often',sta:'static',mid:'in between',na:'rate unknown'};
+const CLS={dyn:'changes price most days',sta:'rarely changes price',mid:'in between',na:'rate unknown'};
 function sym(c,x,y){
   if(c==='dyn')return `<path d="M${x} ${y-7} L${x+7} ${y} L${x} ${y+7} L${x-7} ${y} Z" fill="${COL[c]}"/>`;
   if(c==='mid')return `<rect x="${x-5}" y="${y-5}" width="10" height="10" fill="${COL[c]}"/>`;
@@ -947,11 +1025,11 @@ function drawStrip(){const s=cur,[d0,d1]=domain(s),W=720,L=215,R=105,RH=20,top=2
       if(isMid)out.push(`<rect x="0" y="${y-RH/2}" width="${W-R+10}" height="${RH}" class="midrow"/>`);
       out.push(`<text x="${L-12}" y="${y+4}" text-anchor="end" class="${isMid?'labb':'lab'}">${e(x.l)}</text>`);
       out.push(`<line x1="${L}" x2="${X(x.v)}" y1="${y}" y2="${y}" class="grid" stroke-dasharray="1 3"/>`);
-      out.push(`<g>${off(x.v)?`<text x="${X(x.v)+(x.v>d1?3:-3)}" y="${y+4}" text-anchor="${x.v>d1?'start':'end'}" class="labb">${x.v>d1?'›':'‹'}</text>`:''}${sym(x.c,X(x.v),y)}<title>${e(x.l)}: ${f2(x.v)} USD per GPU-hour; ${CLS[x.c]}${x.r!=null?' ('+Math.round(x.r*100)+'% of days in the 21 days to 6 Nov)':''}</title></g>`);
+      out.push(`<g>${off(x.v)?`<text x="${X(x.v)+(x.v>d1?3:-3)}" y="${y+4}" text-anchor="${x.v>d1?'start':'end'}" class="labb">${x.v>d1?'›':'‹'}</text>`:''}${sym(x.c,X(x.v),y)}<title>${e(x.l)}: ${f2(x.v)} USD per GPU-hour; ${CLS[x.c]}${x.r!=null?' (changed price on '+Math.round(x.r*100)+'% of days in the 21 days to 6 Nov)':''}</title></g>`);
       out.push(`<text x="${X(x.v)+(off(x.v)&&x.v>d1?16:10)}" y="${y+4}" class="tick">${f2(x.v)}${off(x.v)?' (off scale)':''}</text>`);});
     const yb=top+rows*RH;
     if(m!=null){out.push(`<line x1="${X(m)}" x2="${X(m)}" y1="${top-8}" y2="${yb}" stroke="var(--fg)" stroke-width="2.5"/>`);
-      out.push(`<text x="${X(m)}" y="${top-12}" text-anchor="middle" class="labb">median ${f2(m)}</text>`);}
+      out.push(`<text x="${X(m)}" y="${top-12}" text-anchor="middle" class="labb">middle ${f2(m)}</text>`);}
     [jd,ju].forEach((v,j)=>{if(v!=null&&Math.abs(v-m)>1e-9){out.push(`<line x1="${X(v)}" x2="${X(v)}" y1="${top}" y2="${yb}" stroke="var(--fg)" stroke-dasharray="4 3"/>`);
       out.push(`<text x="${X(v)+(j?4:-4)}" y="${yb+13}" text-anchor="${j?'start':'end'}" class="tick">${f2(v)}</text>`);}});
   }else{
@@ -961,9 +1039,9 @@ function drawStrip(){const s=cur,[d0,d1]=domain(s),W=720,L=215,R=105,RH=20,top=2
       out.push(`<line x1="${X(g.q[0])}" x2="${X(g.q[2])}" y1="${y}" y2="${y}" stroke="${COL[g.c]}" stroke-width="4"/>`);
       out.push(`<g>${sym(g.c,X(g.q[1]),y)}<title>${e(g.p)}: 10th to 90th percentile ${f2(g.q[0])} to ${f2(g.q[2])}, median ${f2(g.q[1])}</title></g>`);});
     const m=s.origin_median,yb=top+rows*RH;
-    out.push(`<line x1="${X(m)}" x2="${X(m)}" y1="${top-8}" y2="${yb}" stroke="var(--fg)" stroke-width="2.5"/><text x="${X(m)}" y="${top-12}" text-anchor="middle" class="labb">median ${f2(m)}</text>`);}
+    out.push(`<line x1="${X(m)}" x2="${X(m)}" y1="${top-8}" y2="${yb}" stroke="var(--fg)" stroke-width="2.5"/><text x="${X(m)}" y="${top-12}" text-anchor="middle" class="labb">middle ${f2(m)}</text>`);}
   const yf=top+(rows+1.2)*RH,lbl={1:'+1 day (7 Nov)',3:'+3 days (9 Nov)',7:'+7 days (13 Nov)'};
-  out.push(`<text x="${L-12}" y="${yf-8}" text-anchor="end" class="tick">forecast made on 6 Nov:</text>`);
+  out.push(`<text x="${L-12}" y="${yf-8}" text-anchor="end" class="tick">forecast on 6 Nov (low | middle | high):</text>`);
   s.fc.forEach((f,k)=>{const y=yf+k*RH+RH/2;
     out.push(`<text x="${L-12}" y="${y+4}" text-anchor="end" class="lab">${lbl[f[0]]}</text>`);
     out.push(`<line x1="${X(f[1])}" x2="${X(f[3])}" y1="${y}" y2="${y}" stroke="var(--fg)" stroke-width="5" opacity="0.35"/>`);
@@ -979,36 +1057,36 @@ function drawHist(){const s=cur,[d0,d1]=domain(s),W=960,H=300,L=60,R=30,T=16,B=4
   out.push(`<rect x="${X(N-0.5)}" y="${T}" width="${X(xmax)-X(N-0.5)}" height="${H-T-B}" fill="var(--soft)"/><text x="${X(N+3)}" y="${T+14}" text-anchor="middle" class="tick">forecast</text>`);
   ticks(d0,d1,6).forEach(t=>out.push(`<line x1="${L}" x2="${W-R}" y1="${Y(t)}" y2="${Y(t)}" class="grid"/><text x="${L-6}" y="${Y(t)+4}" text-anchor="end" class="tick">${t.toFixed(2)}</text>`));
   for(let i=N-1;i>=0;i-=7)out.push(`<text x="${X(i)}" y="${H-B+16}" text-anchor="middle" class="tick">${e(D.labels[i])}</text><line x1="${X(i)}" x2="${X(i)}" y1="${H-B}" y2="${H-B+4}" stroke="var(--line)"/>`);
-  out.push(`<text x="${L}" y="${H-4}" class="tick">USD per GPU-hour, daily, ${e(D.labels[0])} to ${e(D.labels[N-1])} 2026</text>`);
+  out.push(`<text x="${L}" y="${H-4}" class="tick">US dollars per GPU-hour, daily, ${e(D.labels[0])} to ${e(D.labels[N-1])} 2026</text>`);
   if(s.kind==='panel')s.offers.forEach(o=>{const d=path(o.v,X,Y,s.med);if(d)lines.push(`<path d="${d}" fill="none" stroke="${COL[o.c]}" stroke-width="1.6" opacity="0.6"><title>${e(o.l)}</title></path>`);});
-  lines.push(`<path d="${path(s.med,X,Y,s.med)}" fill="none" stroke="var(--fg)" stroke-width="2.6"><title>median</title></path>`);
+  lines.push(`<path d="${path(s.med,X,Y,s.med)}" fill="none" stroke="var(--fg)" stroke-width="2.6"><title>middle (published price)</title></path>`);
   out.push(`<clipPath id="hclip"><rect x="${L}" y="${T}" width="${W-L-R}" height="${H-T-B}"/></clipPath><g clip-path="url(#hclip)">${lines.join('')}</g>`);
   if(s.med.some(v=>v==null))out.push(`<text x="${W-R}" y="${H-4}" text-anchor="end" class="tick">lines are joined across days the collector did not publish</text>`);
   s.fc.forEach(f=>{const x=X(N-1+f[0]);out.push(`<line x1="${x}" x2="${x}" y1="${Y(f[1])}" y2="${Y(f[3])}" stroke="var(--fg)" stroke-width="6" opacity="0.3"/><circle cx="${x}" cy="${Y(f[2])}" r="4" fill="var(--fg)"><title>+${f[0]} days: ${f2(f[1])} to ${f2(f[3])}, median ${f2(f[2])}</title></circle>`);});
   if(s.kind==='panel')out.push(`<line x1="${X(idx)}" x2="${X(idx)}" y1="${T}" y2="${H-B}" stroke="var(--fg)" stroke-dasharray="2 3"/>`);
   hist.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Offers and median over the previous ${N} days with the forecast">${out.join('')}</svg>`;}
 function drawFacts(){const c=cur.card,pct=v=>v==null?'n/a':v.toFixed(1)+'%';
-  const rows=[['Offers',c.offers],['Providers',c.providers],['Middle offer held by',e(c.mid.split('|').join(', '))],
-   ['Their 21-day repricing rate',c.mid_rate21==null?'n/a':Math.round(c.mid_rate21*100)+'% of days'],
-   ['Median move if one offer leaves',pct(c.frag)],['If one provider leaves',pct(c.pfrag)],
-   ['Largest pass-through of a 10% repricing',c.pt==null?'n/a':Math.round(c.pt*100)+'% ('+e(c.pt_provider)+')'],
-   ['Gap between neighbours of the middle',pct(c.gap)],['Days the median moved, last 60',c.moved60==null?'n/a':Math.round(c.moved60*100)+'%'],
-   ['Robust enough to use alone as an index',c.alone?'yes':'no'],
-   ['Forecast members used',cur.members?e(cur.members.join(', ')):'all seven'],
-   ['Zero-width forecast (activity gate)',cur.gated.length?'yes, horizons '+cur.gated.join(', '):'no']];
+  const rows=[['Offers',c.offers],['Providers',c.providers],['Middle offer belongs to',e(c.mid.split('|').join(', '))],
+   ['How often they changed price (21 days)',c.mid_rate21==null?'n/a':Math.round(c.mid_rate21*100)+'% of days'],
+   ['Price change if one offer leaves',pct(c.frag)],['If one provider leaves',pct(c.pfrag)],
+   ['Most of a 10% price rise one provider passes on',c.pt==null?'n/a':Math.round(c.pt*100)+'% ('+e(c.pt_provider)+')'],
+   ['Gap between the offers either side of the middle',pct(c.gap)],['Days the price moved, last 60',c.moved60==null?'n/a':Math.round(c.moved60*100)+'%'],
+   ['Solid enough to use alone as an index',c.alone?'yes':'no'],
+   ['Models in the forecast mix',cur.members?e(cur.members.join(', ')):'none'],
+   ['Forecast held at the latest price',cur.gated.length?'yes, days ahead '+cur.gated.join(', '):'no']];
   facts.innerHTML=rows.map(r=>`<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join('');}
 function drawReadout(){const s=cur;daylab.textContent=D.labels[idx]+' 2026';
   day.setAttribute('aria-valuetext',D.labels[idx]+' 2026');
-  if(s.kind!=='panel'){readout.textContent=`This series is the median of ${s.rows.toLocaleString('en')} availability-zone rows from ${s.groups.length} hyperscalers on 6 November, so offers are summarised by provider (bar: 10th to 90th percentile across zones). The slider is not used; the lower chart shows the median for the previous ${N} days.`;return;}
+  if(s.kind!=='panel'){readout.textContent=`This series is the median of ${s.rows.toLocaleString('en')} availability-zone rows from ${s.groups.length} hyperscalers on 6 November, so offers are summarised by provider (bar: low to high across zones, dot: middle). The slider is not used here; the bottom chart shows the price for the previous ${N} days.`;return;}
   const o=today(s,idx),n=o.length;if(!n){readout.textContent='No offers on this day.';return;}
   const p=o.map(x=>x.v),m=median(p),[jd,ju]=jumps(p),lo=(n-1)>>1,hi=n>>1;
   const mid=[...new Set([o[lo],o[hi]].map(x=>x.l+' ('+CLS[x.c]+')'))].join(' and ');
   const provs=new Set(o.map(x=>x.p)).size;
-  readout.innerHTML=`<b>${e(D.labels[idx])}:</b> median ${f2(m)} USD per GPU-hour from ${n} offers by ${provs} providers. The middle ${lo===hi?'offer is':'offers are'} ${e(mid)}. `+
-    (jd!=null?`If one offer left or joined, the median would move to ${f2(jd)} or ${f2(ju)}.`:'');}
+  readout.innerHTML=`<b>${e(D.labels[idx])}:</b> middle price ${f2(m)} USD per GPU-hour from ${n} offers by ${provs} providers. The middle ${lo===hi?'offer is':'offers are'} ${e(mid)}. `+
+    (jd!=null?`If one offer left or joined, it would move to ${f2(jd)} or ${f2(ju)}.`:'');}
 function draw(){drawStrip();drawHist();drawFacts();drawReadout();
   day.disabled=cur.kind!=='panel';document.querySelectorAll('#presets button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.sid===cur.id?'true':'false'));
-  const pr=D.presets.find(p=>p[0]===cur.id);document.getElementById('preset-note').textContent=pr?pr[1]+'. Drag the day slider from late September to 6 November and watch the coloured offers move past the middle.':'';}
+  const pr=D.presets.find(p=>p[0]===cur.id);document.getElementById('preset-note').textContent=pr?pr[1]+'. Drag the day slider from late September to 6 November and watch the orange offers move past the middle.':'';}
 D.series.forEach(s=>{const op=document.createElement('option');op.value=s.id;op.textContent=s.name;sel.appendChild(op);});
 const pz=document.getElementById('presets');D.presets.forEach(p=>{const b=document.createElement('button');b.type='button';b.dataset.sid=p[0];b.textContent=byId[p[0]].name.split(' (')[0];b.title=p[1];
   b.addEventListener('click',()=>{cur=byId[p[0]];sel.value=cur.id;idx=N-1;day.value=idx;draw();});pz.appendChild(b);});
@@ -1024,7 +1102,7 @@ const items=[...document.querySelectorAll('#ledger li')],cnt=document.getElement
 document.querySelectorAll('.flt').forEach(b=>b.addEventListener('click',()=>{const f=b.dataset.f;
   document.querySelectorAll('.flt').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));
   let k=0;items.forEach(li=>{const on=f==='all'||li.dataset.s===f;li.hidden=!on;if(on)k++;});
-  cnt.textContent=f==='all'?`Showing all ${k} hypotheses.`:`Showing ${k} of ${items.length} hypotheses (${b.firstChild.textContent.trim()}).`;}));
+  cnt.textContent=f==='all'?`Showing all ${k} ideas.`:`Showing ${k} of ${items.length} ideas (${b.firstChild.textContent.trim()}).`;}));
 })();
 """
 
@@ -1033,12 +1111,12 @@ TEMPLATE = """<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Forecasting posted GPU rental prices from the offers behind each median</title>
+<title>Forecasting GPU rental prices from the offers behind each price</title>
 <style>%%CSS%%</style>
 </head>
 <body>
 <nav aria-label="Sections"><ol>
-<li><a href="#s1">Result</a></li><li><a href="#s2">Panel explorer</a></li><li><a href="#s3">How it improved</a></li><li><a href="#s4">Ledger</a></li>
+<li><a href="#s1">Result</a></li><li><a href="#s1k">Keep in mind</a></li><li><a href="#s2">Offer explorer</a></li><li><a href="#s3">How it improved</a></li><li><a href="#s4">Ideas tested</a></li>
 <li><a href="#s5">Search (Exa)</a></li><li><a href="#s6">Shared memory</a></li><li><a href="#s7">2 to 3 years</a></li><li><a href="#s8">Reproduce</a></li></ol></nav>
 <main>
 %%BODY%%
