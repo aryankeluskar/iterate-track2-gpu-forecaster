@@ -710,55 +710,69 @@ def build(out: Path = OUT) -> Path:
     W = next(r for r in gate if r["name"].startswith("q7_"))["candidate"][1]["members"][1][1]["W"]
     nkept = len(vfacts["bh_kept"])
     nval_dir = len([r for r in gate if r["name"].split("_")[0] in ("q6", "q7", "q8", "q9")])
+    k = keep_facts(gate, vfacts, members)
+    facts.update(k["facts"])
+    vrng = f"rough range {ci(fn['ci90_vs_drift'])}"
+    why_rough = (f"The ranges are rough: the held-back period is only {vfacts['val_weeks']} weeks, so resampling whole weeks gives just "
+                 f"{vfacts['val_resamples']} distinct draws.")
 
     head = f"""
 <section id=s1 aria-labelledby=h1>
 <p class=kicker>Iterate AI Research Hackathon, Track 2 (Pacific Machines)</p>
-<h1 id=h1>Forecasting posted GPU rental prices by modelling the offers behind each median</h1>
-<p class=q><b>Question.</b> What will the posted GPU rental medians in the data pack be 1, 3 and 7 days after 6 November 2026, with intervals that can be trusted?</p>
-<p class=lead><b>Result.</b> On {proto['val_origins']} validation origins it had not been tuned on ({proto['val_from']} to {proto['val_to']}), the submitted forecaster scored a pooled skill of
-<b>{f3(fh['skill'])}</b> against <b>{f3(fh['drift_skill'])}</b> for the drift baseline on the {nhead} headline series (difference {sgn(fh['d_vs_drift'])}, 90% interval {ci(fh['ci90_vs_drift'])}),
-and <b>{f3(fn['skill'])}</b> against <b>{f3(fn['drift_skill'])}</b> on {vfacts['nonhead_series']} other posted rental series that no one had evaluated before (difference {sgn(fn['d_vs_drift'])}, {ci(fn['ci90_vs_drift'])}).</p>
+<h1 id=h1>Forecasting GPU rental prices by looking at the offers behind each price</h1>
+<p class=q><b>Question.</b> What will posted GPU rental prices be 1, 3 and 7 days after 6 November 2026, and how sure can we be?</p>
+<p class=lead><b>Result.</b> On {vfacts['nonhead_series']} price series we never used for any choice, our forecast scored <b>{f3(fn['skill'])}</b> against <b>{f3(fn['drift_skill'])}</b> for the organisers' baseline
+(difference {sgn(fn['d_vs_drift'])}, {vrng}). On the {nhead} series that will be scored on Sunday it scored <b>{f3(fh['skill'])}</b> against <b>{f3(fh['drift_skill'])}</b>, but that number flatters us:
+{nkept} of the {len(members)} models in the mix were kept because they did well on those same weeks. Both were measured on {proto['val_origins']} held-back days, {proto['val_nice']}.
+The score says how much better we are than assuming prices stay where they are; 0 is no better. {why_rough}</p>
 <div class=big>
-<div><span class=v>{f3(fh['skill'])} <small>vs {f3(fh['drift_skill'])}</small></span><span class=k>skill on the {nhead} headline series, against drift ({fh['n_cells']:,} forecasts). Optimistic: {nkept} of its members were kept on this period.</span></div>
-<div><span class=v>{f3(fn['skill'])} <small>vs {f3(fn['drift_skill'])}</small></span><span class=k>skill on {vfacts['nonhead_series']} series nobody had tuned on ({fn['n_cells']:,} forecasts). The cleaner estimate.</span></div>
-<div><span class=v>{fh['coverage']:.2f}</span><span class=k>share of outcomes inside the 10th to 90th percentile interval on the headline series (target 0.80).</span></div>
+<div><span class=v>{f3(fn['skill'])} <small>vs {f3(fn['drift_skill'])}</small></span><span class=k>score on {vfacts['nonhead_series']} series never used for any choice ({fn['n_cells']:,} forecasts), against the organisers' baseline. The clean number.</span></div>
+<div><span class=v>{f3(fh['skill'])} <small>vs {f3(fh['drift_skill'])}</small></span><span class=k>score on the {nhead} series scored on Sunday ({fh['n_cells']:,} forecasts). Optimistic, for the reason above.</span></div>
+<div><span class=v>{fh['coverage'] * 100:.0f}%</span><span class=k>of real prices fell between our low and high estimates on the {nhead} scored series. The target is 80%.</span></div>
 </div>
-<p><b>The idea.</b> A posted GPU price median is the middle of a small panel of provider offers, {nmin} to {nmax} of them on the neocloud and marketplace series. It moves only when a provider near the middle reprices,
-or when an offer enters or leaves. The system found this by analysing its own forecast failures, then stopped forecasting the series as a line and started forecasting the panel:
-each offer follows its own provider's recent repricing, and the median is read off the simulated panel. That change held on dates it had not seen.</p>
-<details class=terms><summary>Terms used on this page</summary><dl>
-<dt>Offer</dt><dd>One provider's posted price for one GPU configuration on one day, in USD per GPU-hour.</dd>
-<dt>Panel</dt><dd>All offers behind one series on one day. The series value is their median, reproduced exactly from the offers in the pack.</dd>
-<dt>Skill</dt><dd>1 minus the forecast's pinball loss (at the 10th, 50th and 90th percentiles) divided by the loss of repeating the last price. 0 means no better than repeating the last price.</dd>
-<dt>Drift</dt><dd>The organisers' baseline: the last price scaled by the historical spread of that series' price changes.</dd>
-<dt>Reference model</dt><dd>The system's first validated model (called <code>mix</code> in the code): drift pooled across similar series and conditioned on whether the price moved recently.</dd>
-<dt>Provider simulator</dt><dd>A forecaster (<code>prov</code>) that moves each offer the way its provider repriced over the previous {W} days and takes the median of the simulated panel, so a climbing provider pulls the median only until it passes the next offer.</dd>
-<dt>One-offer fragility</dt><dd>The largest move of the median if one offer left the panel. The fragility forecaster puts interval mass on the values the median would jump to if one offer left or joined.</dd>
-<dt>Cell</dt><dd>One forecast: a series, an origin date and a horizon.</dd>
+<p><b>The idea.</b> A posted GPU price is the middle of a short list of offers from different providers ({nmin} to {nmax} of them here). It changes only when a provider near the middle changes its price,
+or when an offer joins or leaves the list. The system found this by studying where its own forecasts went wrong. It then stopped forecasting the price as a line and started simulating the list:
+each offer moves the way its provider's prices moved over the last {W} days, and the forecast is the middle of the simulated list.</p>
+<details class=terms><summary>Words used on this page</summary><dl>
+<dt>Offer</dt><dd>One provider's posted price for one GPU setup on one day, in US dollars per GPU-hour.</dd>
+<dt>The list and its middle</dt><dd>The short list of provider offers behind each published price, and its middle value (the median). The published price is exactly that middle value.</dd>
+<dt>Score</dt><dd>How much better than assuming prices stay where they are: 1 minus our error divided by the error of repeating the latest price. 0 is no better. The error counts the low, middle and high estimate.</dd>
+<dt>Low, middle and high estimate</dt><dd>We give three numbers per forecast: 1 in 10 chance the price ends below the low one, 1 in 10 above the high one, and the middle one in between.</dd>
+<dt>Organisers' baseline</dt><dd>The latest price, widened by how much that series has moved in the past (called "drift" in the starter kit).</dd>
+<dt>Practice dates and held-back weeks</dt><dd>We built and compared ideas on the practice dates ({proto['dev_nice']}). The held-back weeks ({proto['val_nice']}) were looked at once per idea, after writing down what we would test.</dd>
+<dt>Forecast date and days ahead</dt><dd>The forecast date is the last day of data a forecast may use (6 November for Sunday). Days ahead is 1, 3 or 7.</dd>
+<dt>Scored series</dt><dd>The {nhead} series the organisers will score, picked by their rule as of 6 November (the "headline tier").</dd>
+<dt>Our first model</dt><dd>Our first idea that beat the baseline: borrow price history from similar series and widen the range when the price moved recently.</dd>
+<dt>Provider simulator</dt><dd>Moves each offer the way its provider moved prices over the last {W} days and takes the middle of the simulated list, so a climbing provider pulls the price up only until it passes the next offer.</dd>
 </dl></details>
+</section>"""
+
+    keep_sec = f"""
+<section id=s1k aria-labelledby=h1k>
+<h2 id=h1k>What to keep in mind</h2>
+<ul class=keep>{''.join(f'<li>{x}</li>' for x in k['items'])}</ul>
 </section>"""
 
     explorer = f"""
 <section id=s2 aria-labelledby=h2>
-<h2 id=h2>The panel behind each median</h2>
-<p>Pick any of the {nhead} scored series. The upper chart shows every offer on the day chosen with the slider, sorted by price, coloured by how often its provider repriced in the 21 days to 6 November.
-Dashed lines mark where the median would jump if one offer left or one joined. The three bottom rows are the submitted forecast from 6 November. The lower chart shows the previous {WINDOW} days (prices on or before 6 November only).</p>
+<h2 id=h2>The list of offers behind each price</h2>
+<p>Pick any of the {nhead} scored series. The top chart shows every offer on the day set by the slider, cheapest at the bottom, coloured by how often that provider changed its price in the 21 days to 6 November.
+Dashed lines show where the middle would move if one offer left or one joined. The last three rows are our forecast made on 6 November. The bottom chart shows the {WINDOW} days before (prices up to 6 November only).</p>
 <div class=controls>
 <label for=sel>Series</label> <select id=sel></select>
 <span class=presets role=group aria-label="Preset series" id=presets></span>
 </div>
 <p class=muted id=preset-note></p>
-<div class=legend aria-hidden=true><span><svg width=14 height=14><path d="M7 1 L13 7 L7 13 L1 7 Z" fill="var(--a1)"/></svg> reprices often (on {ex['dyn'] * 100:.0f}% or more of days)</span>
-<span><svg width=14 height=14><circle cx=7 cy=7 r=5.5 fill="var(--a2)"/></svg> static (under {ex['static'] * 100:.0f}% of days)</span>
+<div class=legend aria-hidden=true><span><svg width=14 height=14><path d="M7 1 L13 7 L7 13 L1 7 Z" fill="var(--a1)"/></svg> changes price on {ex['dyn'] * 100:.0f}% or more of days</span>
+<span><svg width=14 height=14><circle cx=7 cy=7 r=5.5 fill="var(--a2)"/></svg> rarely changes (under {ex['static'] * 100:.0f}% of days)</span>
 <span><svg width=14 height=14><rect x=2 y=2 width=10 height=10 fill="var(--mid)"/></svg> in between</span>
-<span><svg width=22 height=14><line x1=0 x2=22 y1=7 y2=7 stroke="var(--fg)" stroke-width=2.5/></svg> median</span>
-<span><svg width=22 height=14><line x1=0 x2=22 y1=7 y2=7 stroke="var(--fg)" stroke-dasharray="4 3"/></svg> median if one offer leaves or joins</span></div>
+<span><svg width=22 height=14><line x1=0 x2=22 y1=7 y2=7 stroke="var(--fg)" stroke-width=2.5/></svg> middle (the published price)</span>
+<span><svg width=22 height=14><line x1=0 x2=22 y1=7 y2=7 stroke="var(--fg)" stroke-dasharray="4 3"/></svg> middle if one offer leaves or joins</span></div>
 <div class=exp>
 <div class=stripwrap><div id=strip></div>
 <div class=sliderrow><label for=day>Day</label> <input type=range id=day min=0 max={WINDOW - 1} step=1 value={WINDOW - 1}> <output id=daylab for=day></output></div>
 <p id=readout aria-live=polite></p></div>
-<aside class=facts aria-labelledby=facth><h3 id=facth>Index quality on 6 November</h3><dl id=facts></dl>
+<aside class=facts aria-labelledby=facth><h3 id=facth>How solid this price is, 6 November</h3><dl id=facts></dl>
 <p class=muted>From <code>experiments/insight/results/t1_index_quality_card.csv</code>.</p></aside>
 </div>
 <div id=hist></div>
@@ -766,49 +780,49 @@ Dashed lines mark where the median would jump if one offer left or one joined. T
 
     improved = f"""
 <section id=s3 aria-labelledby=h3>
-<h2 id=h3>How it improved: where the forecast loss went</h2>
-<p>Each bar splits a system's forecast loss on the development period ({int(total['cells']):,} cells) by what physically happened to the panel. The system aimed its later members at the causes it found:
-the provider simulator at frequent repricers (orange), the fragility tails at offers entering and leaving (blue). The current blend here is the six-member blend analysed in the second failure analysis;
-the submitted forecaster ({len(members)} members: {', '.join(members)}) adds the fragility tails.</p>
+<h2 id=h3>How it improved: where the forecast error went</h2>
+<p>Each bar splits a model's forecast error on the practice dates ({int(total['cells']):,} forecasts) by what happened to the list of offers. Later additions were aimed at the causes found:
+the provider simulator at providers that change price most days (orange), the jump estimates at offers joining and leaving (blue). The last bar is the six-model mix studied in the second failure analysis;
+the submitted forecast ({len(members)} models: {', '.join(members)}) adds the jump estimates.</p>
 {loss_svg(loss)}
 {loss_table(loss)}
-<p>Validation queries were spent sparingly: {nval_dir} round-two directions were sent to validation, each declared in <code>research-log.md</code> before it ran, each tested against the reference model, and kept only if it passed the
-Benjamini-Hochberg false-discovery rule at 10% over that round ({len(vfacts['bh_kept'])} of {nval_dir} passed). Query 5 is the exception: it was added after seeing queries 1 to 4, which the log says, and it was used only to pick a safety-net submission.
-The final blend's members were fixed on development data by a rule written before it was scored (EVAL_PROTOCOL.md, Amendment 3), and it was then scored once on each universe.</p>
+<p>{k['val_text']}</p>
 {val_html}
 </section>"""
 
     ledger = f"""
 <section id=s4 aria-labelledby=h4>
-<h2 id=h4>The ledger: every hypothesis and its verdict</h2>
-<p>Each hypothesis was registered with a prediction and a refutation condition before it was tested. Refuted and not-significant results stay in the record; several of them pointed to the next idea.</p>
+<h2 id=h4>Every idea we tested, and what happened</h2>
+<p>{lfacts['ledger_total']} ideas: {lfacts['ledger_supported']} worked, {lfacts['ledger_refuted']} did not, {lfacts['ledger_not_significant']} made no clear difference, {lfacts['ledger_untestable']} could not be tested.
+Each was written down with what would count as failure before it was tested, and the failures stay in the list. Rows where the loop tool re-ran an earlier idea are left out. Open "Exact record" for the original wording.</p>
 {led_html}
 </section>"""
 
     exa = f"""
 <section id=s5 aria-labelledby=h5>
 <h2 id=h5>What search found (Exa)</h2>
-<p>The scout agent searched the web through Exa for dated provider price announcements, keeping only pages published on or before each forecast origin and never opening price-tracker pages.
-The calendar below is what it kept: {cfacts['cal_entries']} entries, {cfacts['cal_ahead']} of them published before the effective date. Exa is called in <code>src/gpuf/scout.py</code> (lines {lines}); every response is cached in <code>data_out/exa_cache/</code>.</p>
+<p>The scout agent used Exa to search the web for dated price announcements by providers. It kept only pages published on or before each forecast date and never opened price-tracker pages.
+It found {cfacts['cal_entries']} announcements, {cfacts['cal_ahead']} of them published before the new price took effect. Exa is called in <code>src/gpuf/scout.py</code> (lines {lines}); every response is cached in <code>data_out/exa_cache/</code>.</p>
 {cal_svg}
-<p class=muted>Hollow dot: date the source was published. Filled dot: date the new price took effect. Blue: published before the effective date. Grey: published on or after it.</p>
-<p class=check><b>Check against the panel:</b> {cfacts['cal_hits']} of {cfacts['cal_checkable']} offers that could be checked moved to exactly the announced price (<code>experiments/calendar/results/partb_summary.json</code>).</p>
+<p class=muted>Hollow dot: date the source was published. Filled dot: date the new price took effect. Blue: published before that date. Grey: published on or after it.</p>
+<p class=check><b>Checked against the offers:</b> {cfacts['cal_hits']} of {cfacts['cal_checkable']} offers we could check moved to exactly the announced price (<code>experiments/calendar/results/partb_summary.json</code>).</p>
 {cal_table}
-<h3>Honest negatives</h3>
+<h3>What did not work</h3>
 {cal_neg}
 </section>"""
 
     memory = f"""
 <section id=s6 aria-labelledby=h6>
 <h2 id=h6>Shared memory between agents (past.dev)</h2>
-<p>Agents write what they learn to three audiences in past.dev: failure cases (the autopsy agent), dated web evidence (the scout), and tested hypotheses (the experimenter and method agents).
-Other agents read from it before they start. The forecaster may read only failures and evidence, and only records dated on or before its forecast origin.</p>
+<p>Agents write what they learn to three shared folders in past.dev (it calls them audiences): failure cases (the autopsy agent), dated web evidence (the scout), and tested ideas (the experimenter and method agents).
+Other agents read from them before they start. The forecaster may read only failures and evidence, and only records dated on or before its forecast date.</p>
 {mem_html}
 </section>"""
 
     longrun = f"""
 <section id=s7 aria-labelledby=h7>
 <h2 id=h7>The 2 to 3 year view</h2>
+<p class=muted>In the tables below, q50 is the middle estimate and q10 to q90 the low-to-high range. S1, S2 and S3 are the three scenarios.</p>
 {lr_html}
 </section>"""
 
@@ -817,7 +831,7 @@ Other agents read from it before they start. The forecaster may read only failur
 <h2 id=h8>Reproduce</h2>
 <p>From <code>track_2/</code>, with the pack in <code>data/pack/</code>: <code>bash reproduce.sh final</code> checks the pack against its manifest, rebuilds the series as of 6 November and writes the three submission files below
 (it needs the Chronos-Bolt-small weights in the local Hugging Face cache, never downloads). This page: <code>PYTHONPATH=src .venv/bin/python -m gpuf.demo</code>.</p>
-<p><b>Leak rule</b> (EVAL_PROTOCOL.md): {inline(proto['leak'])}</p>
+<p><b>Leak rule</b> (EVAL_PROTOCOL.md; “origin d” is the forecast date): {inline(proto['leak'])}</p>
 <h3>Submission files</h3><div class=tw><table><thead><tr><th>File</th><th>SHA-256</th></tr></thead><tbody>{subs}</tbody></table></div>
 <h3>Where each claim's evidence lives</h3><div class=tw><table><thead><tr><th>Claim</th><th>Files</th></tr></thead><tbody>{ev}</tbody></table></div>
 <details><summary>Every input this page was built from, with its SHA-256</summary><div class=tw><table><tbody>{hashes}</tbody></table></div></details>
@@ -825,7 +839,7 @@ Other agents read from it before they start. The forecaster may read only failur
 
     js_data = json.dumps(ex, sort_keys=True, separators=(",", ":"), ensure_ascii=False).replace("</", "<\\/")
     js_facts = json.dumps(facts, sort_keys=True, separators=(",", ":")).replace("</", "<\\/")
-    page = (TEMPLATE.replace("%%BODY%%", head + explorer + improved + ledger + exa + memory + longrun + repro)
+    page = (TEMPLATE.replace("%%BODY%%", head + keep_sec + explorer + improved + ledger + exa + memory + longrun + repro)
             .replace("%%DATA%%", js_data).replace("%%FACTS%%", js_facts).replace("%%JS%%", JS).replace("%%CSS%%", CSS))
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(page)

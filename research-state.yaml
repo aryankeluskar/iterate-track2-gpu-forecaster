@@ -1,6 +1,6 @@
 # Central state. Read this first when resuming. Authoritative detail: research-log.md (with corrections), data_out/ledger.jsonl, EVAL_PROTOCOL.md.
 project: track2-gpu-price-forecaster
-updated: "2026-11-14T13:14-08:00"
+updated: "2026-11-14T13:16-08:00"
 phase: conclude   # research done; packaging for submission. Team is still choosing between Track 2 and Track 5.
 deadline: "Sunday 15 Nov 14:00 PT submissions (page also says 14:30); team on platform by 12:00; round 1 pitch 14:45"
 
@@ -30,7 +30,26 @@ caveats_that_must_appear_in_any_writeup:   # from experiments/audit/results/audi
 
 validation_budget: "Amendment 2: 4 direction queries used of 8 (q6 analog, q7 prov, q8 fm2, q9 fragility) + 2 final looks under Amendment 3 (q10 headline, q11 non-headline). No further validation runs planned. Only the orchestrator runs validation; declare in research-log.md and commit before running (experiments/valgate.py)."
 
+next_phase:   # set by the user at 13:15 PT, to start after compaction
+  goal: "Find the room for improvement, then keep shipping strong work against description.md's criteria, with a GPT-6 Astra advisor agent."
+  advisor: "Launched: delegate_task r9-advisor-1, model gpt-6-astra-medium (provider acpRegistry_devin), read-only, writes experiments/advisor/advice.md: blunt diagnosis per criterion, at most ten ranked next steps with evidence, test, effort and risk, things to cut, hard Q&A, and the one thing to do first."
+  when_the_advisor_reports:
+    - "Read advice.md in full; check each cited number against its file before acting on it."
+    - "Pick the top items by value per hour; register each as a hypothesis in the ledger (and experiments/plain_ledger.json) before any run; launch at most ~6 agents (Opus/Sonnet via acpRegistry_devin), briefs must include AGENT_BRIEF_R2, _R3, _R5."
+    - "Re-ask the advisor (t3_thread_send to its thread) to review each result before it is called done; it advises, it does not build."
+    - "Anything that changes the submitted forecaster needs: practice-date gate on both halves (experiments/halves.py), a declared check on the held-back weeks if budget allows (4 left), leak test with deletion, rerun of `bash reproduce.sh final`, new hashes in the log."
+  orchestrator's own candidates (unverified, for comparison with the advisor's list):
+    - "offers joining a list ~30% and offers leaving ~10% of remaining error (experiments/autopsy2, experiments/loop/iteration3.md); leaving has not improved under any method"
+    - "announced one-off changes ~14%: the Exa calendar works on practice dates but is off in the submission (two events, in-sample)"
+    - "blend dilution: seven members 0.208 vs four members 0.213-0.216 on practice dates; fragility alone 0.219 vs blend 0.214 on held-back weeks"
+    - "hyperscaler list prices below no-change (-0.034); hyperscaler spot untouched by the provider idea"
+    - "autonomy: the loop's propose step is rule-based; writing a new idea is done by agents by hand"
+    - "past.dev: no measurement of what the memory adds (the submission form asks for proof)"
+    - "economic insight: a list-robust price index a lender could use, tested for stability and agreement across data sources"
+    - "long-run view: ranges only, no skill on backtests"
+
 agents_running:
+  advisor: "experiments/advisor/advice.md (taskId suffix delegate-task:r9-advisor-1, GPT-6 Astra). Read-only adviser."
   writeup: "README.md, FINDINGS.md, ATTRIBUTION.md, experiments/writeup/ (taskId suffix delegate-task:r7-writeup-1). On return: check every number against numbers.md, audit caveats prominent, 37 hypotheses, then commit."
   demo_fix: "src/gpuf/demo.py -> demo/index.html, experiments/demo/pitch.md (thread r7-demo-1, taskId suffix thread-send:r8-demo-fix-1). Sent back for: no '90% interval' on validation, clean number first, 'what to keep in mind' section, 37 not 38, plain language from experiments/plain_ledger.json. On return: rebuild, run tests/test_demo.py, read the page, commit."
 
