@@ -65,6 +65,10 @@ for m in MEMBERS:
     cfg[f"loo_-{m}"] = (tuple(x for x in MEMBERS if x != m), None, "all")
 for m in MEMBERS:
     cfg[f"only_{m}"] = ((m,), None, "all")
+NOGBM = tuple(x for x in MEMBERS if x != "gbm")
+cfg["final6_nogbm_gate14_nonhead"] = (NOGBM, (14, 1), "nonhead")
+cfg["orch4_mix_fm2_analog_prov"] = (("mix", "fm2", "analog", "prov"), None, "all")
+cfg["orch5_plus_fragility"] = (("mix", "fm2", "analog", "prov", "fragility"), None, "all")
 C = {}
 for k, (mem, g, sc) in cfg.items():
     C[k], fc = reblend(mem, g, sc)
@@ -107,8 +111,8 @@ for uni in ("headline", "all"):
     print(f"\n## rental_{uni}: against mix (d = config - mix, 90% week-block bootstrap)")
     ref = sub(C["mix"], uni)
     print(f"{'mix':<24} skill {sk(ref):+.4f} | first {sk(ref[ref.origin_day <= CUT]):+.4f} second {sk(ref[ref.origin_day > CUT]):+.4f}  n {len(ref)}")
-    for k in ["drift", "final", "final_gate14_all", "final_gate14_nonhead", "alt_frag_wraps_blend6"] + \
-             [f"only_{m}" for m in MEMBERS]:
+    for k in ["drift", "final", "final_gate14_all", "final_gate14_nonhead", "loo_-gbm", "final6_nogbm_gate14_nonhead",
+              "alt_frag_wraps_blend6", "orch4_mix_fm2_analog_prov", "orch5_plus_fragility"] + [f"only_{m}" for m in MEMBERS]:
         if uni == "headline" and k == "final_gate14_nonhead":
             continue
         print(halves_line(k, sub(C[k], uni), ref, "mix"), flush=True)
@@ -116,8 +120,10 @@ for uni in ("headline", "all"):
     print(halves_line("final", sub(C["final"], uni), sub(C["drift"], uni), "drift"))
     print(f"\n## rental_{uni}: leave-one-out, d = final - final without member (positive = member helps)")
     for m in MEMBERS:
-        print(halves_line(f"-{m}", sub(C["final"], uni), sub(C[f"loo_-{m}"], uni), "loo").replace(
-            f"skill {sk(sub(C['final'], uni)):+.4f}", f"loo skill {sk(sub(C[f'loo_-{m}'], uni)):+.4f}"), flush=True)
+        lo_ = sub(C[f"loo_-{m}"], uni)
+        line = halves_line(f"-{m}", sub(C["final"], uni), lo_, "loo")
+        print(f"-{m:<11} without: skill {sk(lo_):+.4f} first {sk(lo_[lo_.origin_day <= CUT]):+.4f} second "
+              f"{sk(lo_[lo_.origin_day > CUT]):+.4f} || " + line.split("  ", 1)[1], flush=True)
     print(f"\n## rental_{uni}: gate effect, d = gated - ungated final")
     for k in ("final_gate14_all", "final_gate14_nonhead"):
         if uni == "headline" and k == "final_gate14_nonhead":
@@ -125,7 +131,8 @@ for uni in ("headline", "all"):
         print(halves_line(k, sub(C[k], uni), sub(C["final"], uni), "final"))
 
 print("\n## rental_all by instrument class: pooled skill (cells, first / second half)")
-keys = ["drift", "mix", "final", "final_gate14_all", "final_gate14_nonhead", "alt_frag_wraps_blend6"] + [f"loo_-{m}" for m in MEMBERS]
+keys = ["drift", "mix", "final", "final_gate14_all", "final_gate14_nonhead", "alt_frag_wraps_blend6", "final6_nogbm_gate14_nonhead"] + \
+    [f"loo_-{m}" for m in MEMBERS] + [f"only_{m}" for m in MEMBERS if m != "mix"]
 rows = []
 for k in keys:
     c = C[k]
