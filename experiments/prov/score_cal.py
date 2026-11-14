@@ -36,7 +36,7 @@ if __name__ == "__main__":
     mix = ref("mix")
     b2 = pd.read_csv(ROOT / "experiments/calendar/results/b2_cells.csv")
     b2["origin_day"] = b2.origin.map(lambda s: starter_common.day_of(starter_common.parse_date(s)))
-    aff_keys = b2.rename(columns={"series": "series_id", "h": "horizon_days"})[K]
+    aff_keys = b2.rename(columns={"series": "series_id", "h": "horizon_days"})[K].drop_duplicates()
     p0 = C["prov"].sort_values(K).reset_index(drop=True)
     aff = p0[K].merge(aff_keys.assign(aff=True), on=K, how="left").aff.fillna(False).astype(bool)
     mid = np.sort(p0.origin_day.unique())[len(p0.origin_day.unique()) // 2]

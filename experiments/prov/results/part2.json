@@ -1,0 +1,53 @@
+{
+ "p2_noret_mkt": {
+  "skill": 0.2179,
+  "vs_prov": [
+   0.009,
+   0.0,
+   0.0156
+  ],
+  "series_gain_vs_prov_share_of_total_B": 0.00901,
+  "series_cells_changed": 21,
+  "outside_gain_vs_prov_share_of_total_B": 0.0,
+  "outside_cells_changed": 0,
+  "series_skill(variant,prov,mix)": [
+   0.3067,
+   0.2404,
+   0.2623
+  ]
+ },
+ "p2_bidir": {
+  "skill": 0.2158,
+  "vs_prov": [
+   0.007,
+   -0.0033,
+   0.0279
+  ],
+  "series_gain_vs_prov_share_of_total_B": 0.00795,
+  "series_cells_changed": 149,
+  "outside_gain_vs_prov_share_of_total_B": -0.00098,
+  "outside_cells_changed": 422,
+  "series_skill(variant,prov,mix)": [
+   0.2989,
+   0.2404,
+   0.2623
+  ]
+ },
+ "p2_mkt_base": {
+  "skill": 0.2118,
+  "vs_prov": [
+   0.003,
+   -0.012,
+   0.0123
+  ],
+  "series_gain_vs_prov_share_of_total_B": 0.00297,
+  "series_cells_changed": 150,
+  "outside_gain_vs_prov_share_of_total_B": 0.0,
+  "outside_cells_changed": 0,
+  "series_skill(variant,prov,mix)": [
+   0.2623,
+   0.2404,
+   0.2623
+  ]
+ }
+}

@@ -1,0 +1,7 @@
+entry a_same_gpu_other_coll: panel-days flagged 3120 (0.31) P(event|flag) 0.0115 P(event|no flag) 0.0026 lift 4.5; mean candidates 3.4; events caught 36 of 54
+entry d_left_other_panel_3d: panel-days flagged 7310 (0.72) P(event|flag) 0.0037 P(event|no flag) 0.0097 lift 0.4; mean candidates 1.4; events caught 27 of 54
+entry c_entered_other_panel_3d: panel-days flagged 5668 (0.56) P(event|flag) 0.0081 P(event|no flag) 0.0018 lift 4.5; mean candidates 2.0; events caught 46 of 54
+exit c_entered_other_panel_1d: panel-days flagged 390 (0.04) P(event|flag) 0.0923 P(event|no flag) 0.0074 lift 12.4; mean candidates 1.1; events caught 36 of 108
+exit d_left_other_panel_1d: panel-days flagged 720 (0.07) P(event|flag) 0.0667 P(event|no flag) 0.0064 lift 10.4; mean candidates 1.1; events caught 48 of 108
+exit d_left_other_panel_3d: panel-days flagged 1177 (0.12) P(event|flag) 0.0586 P(event|no flag) 0.0044 lift 13.4; mean candidates 1.1; events caught 69 of 108
+exit c_entered_other_panel_3d: panel-days flagged 822 (0.08) P(event|flag) 0.0693 P(event|no flag) 0.0055 lift 12.6; mean candidates 1.1; events caught 57 of 108

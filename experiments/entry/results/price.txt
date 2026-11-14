@@ -1,0 +1,6 @@
+entries by known providers with price: 56
+a: same-GPU price on other collector: n=29  pooled err 0.299 (med 0.251)
+   e_a_raw: mean abs log err 0.237 (median 0.000); diff vs pooled -0.062 [-0.162,+0.040]; within 5% of actual: 0.55 vs pooled 0.07
+   e_a_scaled: mean abs log err 0.243 (median 0.147); diff vs pooled -0.055 [-0.110,+0.001]; within 5% of actual: 0.17 vs pooled 0.07
+b: ratio on other GPUs same collector: n=25  pooled err 0.307 (med 0.206)
+   e_b: mean abs log err 0.298 (median 0.190); diff vs pooled -0.009 [-0.049,+0.031]; within 5% of actual: 0.12 vs pooled 0.04

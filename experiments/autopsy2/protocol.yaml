@@ -1,0 +1,26 @@
+slug: autopsy2
+ledger_id: H31
+task: Iteration 2 failure analysis. Where is the remaining dev loss of the current blend, by physical cause, and what was observable at the origin?
+systems:
+  S0: drift
+  S1: mix {"pool":"cc","k":20,"state":"chgk","sk":3,"hl":30}
+  S2: ens of mix, gbm {"mode":"full","train":"all","save_importance":false}, replay chronos_last
+  S3: ens of mix, gbm, chronos replay, fm2 {"grids":["runs/fm2/grid_bs16_rental_headline.parquet"],"lo":0.15}, analog {"pool":"all","k":600,"drop":["n14","sign"]}, prov {"L":1,"W":21,"gate":"dyn"}
+data_rules: dev split only; panel rows dt <= 2026-10-13; calendar entries usable only if published <= origin.
+causes: |
+  Every dev cell falls in exactly one cause (priority order): hyperscaler_spot (afhubbard, no panel); none (no move);
+  marketplace_ask (marketplace ask series); entry (composition-dominated, an offer entered); exit (composition-dominated, an offer left, none entered);
+  dynamic_reprice (repricing-dominated or mixed, pivotal provider reprices on >15% of days in the trailing 21 days at the origin);
+  announced_oneoff (static pivotal provider, calendar entry published <= origin for that provider and GPU);
+  unannounced_oneoff (rest).
+predictions:
+  shrank_most_S2_to_S3: dynamic_reprice (prov targets it; Verda staircase, Scaleway, AWS fastgpu). Predicted loss/LV on dynamic cells falls by at least 0.15 more than the S3 average fall.
+  second: marketplace_ask (sfcompute) via fm2 short-context width.
+  little_change: entry, exit, unannounced_oneoff (nothing in S3 sees them coming; analog n_providers helps width a little).
+  residual_dominant: entry + unannounced_oneoff together carry > 50% of S3 loss; entry alone is the single largest cause.
+  width_cost: no-move cells carry 10-20% of S3 loss (non-trivial but not dominant).
+  up_tail: S3 h=7 above-q90 rate stays above 0.2; residual misses are mostly up-moves.
+refuted_if:
+  - Loss/LV shrinks roughly uniformly across causes from S2 to S3 (no cause falls >0.1 more than average).
+  - The S3 residual is dominated (>40%) by width cost on no-move cells.
+  - Dynamic-provider cells do not fall the most.

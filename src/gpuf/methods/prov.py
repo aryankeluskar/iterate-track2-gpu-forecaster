@@ -154,7 +154,7 @@ def make(W=14, L=7, hl=7.0, a=3.0, sizes="signed", comp=True, centre="sim", gate
         idx = np.r_[np.nonzero(cur)[0], ret]
         m0, S, N = len(idx), (3 if comp else 0), n_paths
         R = np.zeros((N, m0, H))
-        for pv in set(provs[idx]):
+        for pv in sorted(set(provs[idx])):
             x = window(src, pv, o)
             if x is None or x[2].sum() == 0:
                 continue

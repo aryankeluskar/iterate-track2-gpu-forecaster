@@ -1,0 +1,9 @@
+slug: entry
+failure_mode: up-moves >5% with a brand-new offer entering before the target day (115 dev cells, 31% of last-value loss on 33 panel series); exits likewise
+hypothesis: panel entries/exits are predictable from the provider's footprint elsewhere (same GPU on other collector, other GPUs on same collector, recent entries/exits in sibling panels), and the entry price is near the provider's price for that GPU on the other collector or its usual ratio to panel median.
+mechanism: a provider joining panel (c,g) tomorrow is usually visible today on (c',g) or (c,g'); batch relisting across series is one provider event.
+prediction:
+  step1: at least one flag (same-collector sibling-panel entry within 1-3 days, or presence elsewhere) lifts daily per-provider entry probability by >=5x over unconditional (~1-2%/panel-day, much lower per provider-panel pair), mostly on gpurentalprices rate cards. Cross-reference price beats pooled-ratio entry price only if the same provider's price elsewhere is within ~10% (guess: modest, 20-30% lower abs log error).
+  step2: if built, entry adds +0.005 to +0.015 skill over prov on up-move/entry cells, a small loss on no-move cells; overall change within +-0.01 and likely not significant.
+refutation: no flag lifts entry rate >3x, or lifted candidate sets are so wide (precision <5%) that adding events widens tails on no-move cells for no gain; or cross-ref price error not lower than pooled. Then clean negative, stop after step 1.
+rules: dev only (rows <= 2026-10-13 in analysis), OMP_NUM_THREADS=2.

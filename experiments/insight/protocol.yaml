@@ -1,0 +1,38 @@
+slug: insight
+kind: descriptive economics (not a scored forecaster; writes nothing used by forecasters)
+written: 2026-11-14, before any computation in this directory
+data: gpu-price-pack v0.1.1-handover, rental_observations (fastgpu_daily, gpurentalprices, afhubbard), rows to 2026-11-06
+rules:
+  - may read every pack row up to 2026-11-06 (descriptive work)
+  - reports no forecast accuracy on dates after 2026-10-13
+  - OMP_NUM_THREADS=2, each process under 3 GB, no subagents, no git commit
+claim_under_test: >
+  A posted-price median is a mechanical statistic of a 3-17 offer panel, not one market price;
+  its reliability depends on who holds the middle offer and on how many offers sit near it.
+definitions:
+  offer: persistent key from gpuf.panel (provider|region|sku|gpu_count#occurrence)
+  reprice_rate: share of offer-days (consecutive days, same key) with a price change, per (collector, provider), trailing 21 days to 2026-11-06
+  dynamic_repricer: reprice_rate >= 0.15 (prov.py bands; static < 0.02)
+  fragility: max over offers of |median(panel without offer) / median - 1|
+  neighbour_gap: (next order statistic above the middle - next below) / median
+  iqr_spread: (p75 - p25) / median over offers
+  robust_stats: median over offers present on both days (balanced panel); 20% trimmed mean; median of static providers only; median of provider medians (one vote per provider)
+expectations:
+  q1_card:
+    - most robust: gpurentalprices rate-card H100/H200/A100 panels with 10+ offers and a static middle
+    - least robust: fastgpu panels of 3-5 offers, and any panel whose middle is held by verda; expect 8-15 of 33 panels with fragility above 5%
+    - afhubbard hyperscaler spot medians have hundreds of AZ rows so fragility near 0, but they are administered prices
+  q2_common_vs_idiosyncratic:
+    - for the same GPU on both collectors, daily median changes correlate weakly (corr < 0.3 at 1 day)
+    - balanced-panel or static-only statistic moves on fewer days (expect < half the change-days) and cross-collector agreement of 7-day and 30-day changes improves
+    - refuted if the robust statistic moves as much as the median and agrees no better across collectors
+  q3_static_trend:
+    - static rate-card providers stepped up H100/H200/B200/B300 on-demand in discrete steps (DigitalOcean 1 Aug, Fireworks 1 Sep, Nebius 1 Oct, Jarvislabs 5 Oct); the rise is narrow (fewer than a third of static providers stepped up from Aug to early Nov) and the headline medians overstate breadth because verda drifts up daily
+    - refuted if a majority of static providers raised prices
+  q4_horizon:
+    - share of large (>=10%) static rate-card steps with a dated advance announcement: 20-40%; lead times 7-19 days
+    - announced changes matter for 30-day marks, not for 1-7 day forecasts at a 6 Nov origin (Lambda 16 Nov is 10 days out)
+  q5_dispersion:
+    - p75/p25 across providers 1.3-1.8 for the same GPU; max/min 2-4; dispersion higher for older chips (A100, V100) than for B200/B300
+    - dispersion roughly stable over Aug-Nov
+deliverables: results/insight.md, results/*.csv, up to six PNG figures

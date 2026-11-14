@@ -1,0 +1,79 @@
+--- entry both at-risk 362618 events 56
+entry       a_same_gpu_other_coll              at-risk flagged   10738 events   29 rate 0.0027 | uncond 0.00015 (56/362618) | lift   17.5 [10.4,22.0] | precision 0.003
+entry       b_other_gpu_same_coll              at-risk flagged  290030 events   25 rate 0.0001 | uncond 0.00015 (56/362618) | lift    0.6 [0.3,1.0] | precision 0.000
+entry       c_entered_other_panel_1d           at-risk flagged    5129 events    4 rate 0.0008 | uncond 0.00015 (56/362618) | lift    5.0 [0.9,13.1] | precision 0.001
+entry       d_left_other_panel_1d              at-risk flagged    5880 events    6 rate 0.0010 | uncond 0.00015 (56/362618) | lift    6.6 [2.7,12.1] | precision 0.001
+entry       c_entered_other_panel_3d           at-risk flagged   11301 events    6 rate 0.0005 | uncond 0.00015 (56/362618) | lift    3.4 [1.4,7.7] | precision 0.001
+entry       d_left_other_panel_3d              at-risk flagged   10562 events    6 rate 0.0006 | uncond 0.00015 (56/362618) | lift    3.7 [1.5,7.2] | precision 0.001
+entry       c_entered_other_panel_7d           at-risk flagged   23873 events    6 rate 0.0003 | uncond 0.00015 (56/362618) | lift    1.6 [0.7,3.0] | precision 0.000
+entry       d_left_other_panel_7d              at-risk flagged   16407 events    7 rate 0.0004 | uncond 0.00015 (56/362618) | lift    2.8 [1.3,5.0] | precision 0.000
+entry       e_left_same_gpu_other_coll_1d      at-risk flagged      36 events    1 rate 0.0278 | uncond 0.00015 (56/362618) | lift  179.9 [0.0,723.0] | precision 0.028
+entry       e_left_same_gpu_other_coll_3d      at-risk flagged     114 events    1 rate 0.0088 | uncond 0.00015 (56/362618) | lift   56.8 [0.0,183.9] | precision 0.009
+entry       e_left_same_gpu_other_coll_7d      at-risk flagged     257 events    4 rate 0.0156 | uncond 0.00015 (56/362618) | lift  100.8 [0.0,247.7] | precision 0.016
+entry       any_footprint                      at-risk flagged  294369 events   50 rate 0.0002 | uncond 0.00015 (56/362618) | lift    1.1 [1.0,1.2] | precision 0.000
+--- entry fastgpu_daily at-risk 106691 events 26
+entry       a_same_gpu_other_coll              at-risk flagged    4101 events   15 rate 0.0037 | uncond 0.00024 (26/106691) | lift   15.0 [4.6,20.5] | precision 0.004
+entry       b_other_gpu_same_coll              at-risk flagged   67340 events   13 rate 0.0002 | uncond 0.00024 (26/106691) | lift    0.8 [0.2,1.6] | precision 0.000
+entry       c_entered_other_panel_1d           at-risk flagged    2543 events    0 rate 0.0000 | uncond 0.00024 (26/106691) | lift    0.0 [0.0,0.0] | precision 0.000
+entry       d_left_other_panel_1d              at-risk flagged     639 events    0 rate 0.0000 | uncond 0.00024 (26/106691) | lift    0.0 [0.0,0.0] | precision 0.000
+entry       c_entered_other_panel_3d           at-risk flagged    4770 events    0 rate 0.0000 | uncond 0.00024 (26/106691) | lift    0.0 [0.0,0.0] | precision 0.000
+entry       d_left_other_panel_3d              at-risk flagged    1915 events    0 rate 0.0000 | uncond 0.00024 (26/106691) | lift    0.0 [0.0,0.0] | precision 0.000
+entry       c_entered_other_panel_7d           at-risk flagged    8783 events    0 rate 0.0000 | uncond 0.00024 (26/106691) | lift    0.0 [0.0,0.0] | precision 0.000
+entry       d_left_other_panel_7d              at-risk flagged    4525 events    0 rate 0.0000 | uncond 0.00024 (26/106691) | lift    0.0 [0.0,0.0] | precision 0.000
+entry       e_left_same_gpu_other_coll_1d      at-risk flagged      12 events    1 rate 0.0833 | uncond 0.00024 (26/106691) | lift  342.0 [0.0,889.0] | precision 0.083
+entry       e_left_same_gpu_other_coll_3d      at-risk flagged      30 events    1 rate 0.0333 | uncond 0.00024 (26/106691) | lift  136.8 [0.0,374.1] | precision 0.033
+entry       e_left_same_gpu_other_coll_7d      at-risk flagged      53 events    4 rate 0.0755 | uncond 0.00024 (26/106691) | lift  309.7 [0.0,659.2] | precision 0.075
+entry       any_footprint                      at-risk flagged   69778 events   25 rate 0.0004 | uncond 0.00024 (26/106691) | lift    1.5 [1.4,1.5] | precision 0.000
+--- entry gpurentalprices at-risk 255927 events 30
+entry       a_same_gpu_other_coll              at-risk flagged    6637 events   14 rate 0.0021 | uncond 0.00012 (30/255927) | lift   18.0 [0.0,26.0] | precision 0.002
+entry       b_other_gpu_same_coll              at-risk flagged  222690 events   12 rate 0.0001 | uncond 0.00012 (30/255927) | lift    0.5 [0.2,1.1] | precision 0.000
+entry       c_entered_other_panel_1d           at-risk flagged    2586 events    4 rate 0.0015 | uncond 0.00012 (30/255927) | lift   13.2 [0.0,39.2] | precision 0.002
+entry       d_left_other_panel_1d              at-risk flagged    5241 events    6 rate 0.0011 | uncond 0.00012 (30/255927) | lift    9.8 [3.2,27.0] | precision 0.001
+entry       c_entered_other_panel_3d           at-risk flagged    6531 events    6 rate 0.0009 | uncond 0.00012 (30/255927) | lift    7.8 [2.4,24.7] | precision 0.001
+entry       d_left_other_panel_3d              at-risk flagged    8647 events    6 rate 0.0007 | uncond 0.00012 (30/255927) | lift    5.9 [1.9,15.3] | precision 0.001
+entry       c_entered_other_panel_7d           at-risk flagged   15090 events    6 rate 0.0004 | uncond 0.00012 (30/255927) | lift    3.4 [1.1,9.6] | precision 0.000
+entry       d_left_other_panel_7d              at-risk flagged   11882 events    7 rate 0.0006 | uncond 0.00012 (30/255927) | lift    5.0 [2.0,13.2] | precision 0.001
+entry       e_left_same_gpu_other_coll_1d      at-risk flagged      24 events    0 rate 0.0000 | uncond 0.00012 (30/255927) | lift    0.0 [0.0,0.0] | precision 0.000
+entry       e_left_same_gpu_other_coll_3d      at-risk flagged      84 events    0 rate 0.0000 | uncond 0.00012 (30/255927) | lift    0.0 [0.0,0.0] | precision 0.000
+entry       e_left_same_gpu_other_coll_7d      at-risk flagged     204 events    0 rate 0.0000 | uncond 0.00012 (30/255927) | lift    0.0 [0.0,0.0] | precision 0.000
+entry       any_footprint                      at-risk flagged  224591 events   25 rate 0.0001 | uncond 0.00012 (30/255927) | lift    0.9 [0.8,1.1] | precision 0.000
+--- exit both at-risk 22854 events 108
+exit        a_same_gpu_other_coll              at-risk flagged    7600 events   22 rate 0.0029 | uncond 0.00473 (108/22854) | lift    0.6 [0.1,1.1] | precision 0.003
+exit        b_other_gpu_same_coll              at-risk flagged   22647 events  106 rate 0.0047 | uncond 0.00473 (108/22854) | lift    1.0 [1.0,1.0] | precision 0.005
+exit        c_entered_other_panel_1d           at-risk flagged     430 events   28 rate 0.0651 | uncond 0.00473 (108/22854) | lift   13.8 [7.7,22.0] | precision 0.065
+exit        d_left_other_panel_1d              at-risk flagged     764 events   48 rate 0.0628 | uncond 0.00473 (108/22854) | lift   13.3 [10.0,17.2] | precision 0.063
+exit        c_entered_other_panel_3d           at-risk flagged     935 events   39 rate 0.0417 | uncond 0.00473 (108/22854) | lift    8.8 [5.5,13.9] | precision 0.042
+exit        d_left_other_panel_3d              at-risk flagged    1240 events   63 rate 0.0508 | uncond 0.00473 (108/22854) | lift   10.8 [8.0,13.7] | precision 0.051
+exit        c_entered_other_panel_7d           at-risk flagged    1983 events   50 rate 0.0252 | uncond 0.00473 (108/22854) | lift    5.3 [3.7,8.0] | precision 0.025
+exit        d_left_other_panel_7d              at-risk flagged    1621 events   69 rate 0.0426 | uncond 0.00473 (108/22854) | lift    9.0 [6.8,11.6] | precision 0.043
+exit        e_left_same_gpu_other_coll_1d      at-risk flagged      15 events    0 rate 0.0000 | uncond 0.00473 (108/22854) | lift    0.0 [0.0,0.0] | precision 0.000
+exit        e_left_same_gpu_other_coll_3d      at-risk flagged      42 events    1 rate 0.0238 | uncond 0.00473 (108/22854) | lift    5.0 [0.0,15.0] | precision 0.024
+exit        e_left_same_gpu_other_coll_7d      at-risk flagged      98 events    1 rate 0.0102 | uncond 0.00473 (108/22854) | lift    2.2 [0.0,5.4] | precision 0.010
+exit        any_footprint                      at-risk flagged   22647 events  106 rate 0.0047 | uncond 0.00473 (108/22854) | lift    1.0 [1.0,1.0] | precision 0.005
+--- exit fastgpu_daily at-risk 7192 events 28
+exit        a_same_gpu_other_coll              at-risk flagged    3492 events   14 rate 0.0040 | uncond 0.00389 (28/7192) | lift    1.0 [0.1,1.8] | precision 0.004
+exit        b_other_gpu_same_coll              at-risk flagged    7159 events   27 rate 0.0038 | uncond 0.00389 (28/7192) | lift    1.0 [0.8,1.0] | precision 0.004
+exit        c_entered_other_panel_1d           at-risk flagged     197 events    5 rate 0.0254 | uncond 0.00389 (28/7192) | lift    6.5 [0.0,17.4] | precision 0.025
+exit        d_left_other_panel_1d              at-risk flagged      31 events    0 rate 0.0000 | uncond 0.00389 (28/7192) | lift    0.0 [0.0,0.0] | precision 0.000
+exit        c_entered_other_panel_3d           at-risk flagged     389 events    5 rate 0.0129 | uncond 0.00389 (28/7192) | lift    3.3 [0.0,13.0] | precision 0.013
+exit        d_left_other_panel_3d              at-risk flagged     104 events    0 rate 0.0000 | uncond 0.00389 (28/7192) | lift    0.0 [0.0,0.0] | precision 0.000
+exit        c_entered_other_panel_7d           at-risk flagged     761 events    5 rate 0.0066 | uncond 0.00389 (28/7192) | lift    1.7 [0.0,5.9] | precision 0.007
+exit        d_left_other_panel_7d              at-risk flagged     272 events    0 rate 0.0000 | uncond 0.00389 (28/7192) | lift    0.0 [0.0,0.0] | precision 0.000
+exit        e_left_same_gpu_other_coll_1d      at-risk flagged       3 events    0 rate 0.0000 | uncond 0.00389 (28/7192) | lift    0.0 [0.0,0.0] | precision 0.000
+exit        e_left_same_gpu_other_coll_3d      at-risk flagged       6 events    1 rate 0.1667 | uncond 0.00389 (28/7192) | lift   42.8 [23.8,120.6] | precision 0.167
+exit        e_left_same_gpu_other_coll_7d      at-risk flagged      14 events    1 rate 0.0714 | uncond 0.00389 (28/7192) | lift   18.3 [9.2,57.1] | precision 0.071
+exit        any_footprint                      at-risk flagged    7159 events   27 rate 0.0038 | uncond 0.00389 (28/7192) | lift    1.0 [0.8,1.0] | precision 0.004
+--- exit gpurentalprices at-risk 15662 events 80
+exit        a_same_gpu_other_coll              at-risk flagged    4108 events    8 rate 0.0019 | uncond 0.00511 (80/15662) | lift    0.4 [0.0,0.9] | precision 0.002
+exit        b_other_gpu_same_coll              at-risk flagged   15488 events   79 rate 0.0051 | uncond 0.00511 (80/15662) | lift    1.0 [1.0,1.0] | precision 0.005
+exit        c_entered_other_panel_1d           at-risk flagged     233 events   23 rate 0.0987 | uncond 0.00511 (80/15662) | lift   19.3 [10.3,30.2] | precision 0.099
+exit        d_left_other_panel_1d              at-risk flagged     733 events   48 rate 0.0655 | uncond 0.00511 (80/15662) | lift   12.8 [10.7,14.6] | precision 0.065
+exit        c_entered_other_panel_3d           at-risk flagged     546 events   34 rate 0.0623 | uncond 0.00511 (80/15662) | lift   12.2 [8.2,16.4] | precision 0.062
+exit        d_left_other_panel_3d              at-risk flagged    1136 events   63 rate 0.0555 | uncond 0.00511 (80/15662) | lift   10.9 [9.4,12.0] | precision 0.055
+exit        c_entered_other_panel_7d           at-risk flagged    1222 events   45 rate 0.0368 | uncond 0.00511 (80/15662) | lift    7.2 [5.7,9.2] | precision 0.037
+exit        d_left_other_panel_7d              at-risk flagged    1349 events   69 rate 0.0511 | uncond 0.00511 (80/15662) | lift   10.0 [9.1,11.0] | precision 0.051
+exit        e_left_same_gpu_other_coll_1d      at-risk flagged      12 events    0 rate 0.0000 | uncond 0.00511 (80/15662) | lift    0.0 [0.0,0.0] | precision 0.000
+exit        e_left_same_gpu_other_coll_3d      at-risk flagged      36 events    0 rate 0.0000 | uncond 0.00511 (80/15662) | lift    0.0 [0.0,0.0] | precision 0.000
+exit        e_left_same_gpu_other_coll_7d      at-risk flagged      84 events    0 rate 0.0000 | uncond 0.00511 (80/15662) | lift    0.0 [0.0,0.0] | precision 0.000
+exit        any_footprint                      at-risk flagged   15488 events   79 rate 0.0051 | uncond 0.00511 (80/15662) | lift    1.0 [1.0,1.0] | precision 0.005
+novel-provider entries (never seen on either collector before): 54; entries by known providers: 56
