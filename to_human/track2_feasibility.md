@@ -13,7 +13,7 @@ The score says how much better we are than simply assuming every price stays whe
 | Tested on | Us | Organisers' baseline |
 |---|---|---|
 | Three held-back weeks, the 37 series that get scored | 0.214 | 0.084 |
-| Three held-back weeks, every other series (we never tuned anything on these) | 0.228 | 0.102 |
+| Three held-back weeks, every other series (the first time we checked these on those weeks; we did use them on the practice dates) | 0.228 | 0.102 |
 | The practice dates we built on, the 37 scored series | 0.208 | 0.089 |
 
 We also give a price range for each forecast. On the held-back weeks, 80% of real prices landed inside it. The target is 80%.

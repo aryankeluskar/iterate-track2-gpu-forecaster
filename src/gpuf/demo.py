@@ -395,7 +395,7 @@ def val_section(gate: list[dict], log: list[dict], nhead: int, stats: dict) -> t
                     f"<td class=n>{ps[0]:.3f} to {ps[1]:.3f}</td><td>{dec}</td></tr>")
     fh, fn = g["q10_final_headline"], g["q11_final_nonhead"]
     nn = next(int(re.search(r"\d+", x["universe"]).group()) for x in log if x["universe"].startswith("custom") and x["split"] == "val")
-    for q, r, what in (("11", fn, f"final mix, {nn} other series (never used for any choice)"), ("10", fh, f"final mix, the {nhead} scored series (optimistic)")):
+    for q, r, what in (("11", fn, f"final mix, {nn} other series (first check of these on the held-back weeks)"), ("10", fh, f"final mix, the {nhead} scored series (optimistic)")):
         rows.append(f"<tr class=final><td class=n>{q}</td><td>{esc(what)}</td><td class=n>{f3(r['skill'])}</td><td>baseline</td>"
                     f"<td class=n>{sgn(r['d_vs_drift'])}</td><td class=n>{ci(r['ci90_vs_drift'])}</td><td class=n>{esc(pv(r['p_one_sided']))}</td><td class=n>–</td><td>submitted</td></tr>")
     nval = sum(1 for x in log if x["split"] == "val" and x["method"] not in ("drift", "mix") and "role" not in x["params"])
@@ -799,12 +799,12 @@ def build(out: Path = OUT) -> Path:
 <p class=kicker>Iterate AI Research Hackathon, Track 2 (Pacific Machines)</p>
 <h1 id=h1>Forecasting GPU rental prices by looking at the offers behind each price</h1>
 <p class=q><b>Question.</b> What will posted GPU rental prices be 1, 3 and 7 days after 6 November 2026, and how sure can we be?</p>
-<p class=lead><b>Result.</b> On {vfacts['nonhead_series']} price series we never used for any choice, our forecast scored <b>{f3(fn['skill'])}</b> against <b>{f3(fn['drift_skill'])}</b> for the organisers' baseline
+<p class=lead><b>Result.</b> On {vfacts['nonhead_series']} other price series, checked on the held-back weeks for the first time, our forecast scored <b>{f3(fn['skill'])}</b> against <b>{f3(fn['drift_skill'])}</b> for the organisers' baseline
 (difference {sgn(fn['d_vs_drift'])}, {vrng}). On the {nhead} series that will be scored on Sunday it scored <b>{f3(fh['skill'])}</b> against <b>{f3(fh['drift_skill'])}</b>, but that number flatters us:
 {nkept} of the {len(members)} models in the mix were kept because they did well on those same weeks. Both were measured on {proto['val_origins']} held-back days, {proto['val_nice']}.
 The score says how much better we are than assuming prices stay where they are; 0 is no better. {why_rough}</p>
 <div class=big>
-<div><span class=v>{f3(fn['skill'])} <small>vs {f3(fn['drift_skill'])}</small></span><span class=k>score on {vfacts['nonhead_series']} series never used for any choice ({fn['n_cells']:,} forecasts), against the organisers' baseline. The clean number.</span></div>
+<div><span class=v>{f3(fn['skill'])} <small>vs {f3(fn['drift_skill'])}</small></span><span class=k>score on {vfacts['nonhead_series']} other series, the first time we checked them on the held-back weeks ({fn['n_cells']:,} forecasts), against the organisers' baseline. The cleaner number: nothing was chosen on these series in these weeks, though we did use them on the practice dates.</span></div>
 <div><span class=v>{f3(fh['skill'])} <small>vs {f3(fh['drift_skill'])}</small></span><span class=k>score on the {nhead} series scored on Sunday ({fh['n_cells']:,} forecasts). Optimistic, for the reason above.</span></div>
 <div><span class=v>{fh['coverage'] * 100:.0f}%</span><span class=k>of real prices fell between our low and high estimates on the {nhead} scored series. The target is 80%.</span></div>
 </div>

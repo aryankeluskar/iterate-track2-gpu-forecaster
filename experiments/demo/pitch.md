@@ -5,7 +5,7 @@ Open `demo/index.html` from disk before you start (no server, no network). Every
 ## Script (about 420 words, under 3 minutes)
 
 **[Result, 0:00 to 0:30]**
-"Pacific asked what GPUs will rent for. The prices everyone quotes are posted prices. We built an AI scientist that forecasts them one, three and seven days ahead and improves by studying its own mistakes. The clean result first: on 555 price series we never used for any decision, it scores 0.228, against 0.102 for the organisers' baseline. Zero means no better than assuming prices stay put. On the 37 series scored on Sunday it scores 0.214 against 0.084, but that one flatters us, because we kept some parts of the mix for doing well on those same weeks. 80% of real prices landed inside our low-to-high range, which is the target."
+"Pacific asked what GPUs will rent for. The prices everyone quotes are posted prices. We built an AI scientist that forecasts them one, three and seven days ahead and improves by studying its own mistakes. The clean result first: on 555 other price series, checked on the held-back weeks for the first time, it scores 0.228, against 0.102 for the organisers' baseline. Zero means no better than assuming prices stay put. On the 37 series scored on Sunday it scores 0.214 against 0.084, but that one flatters us, because we kept some parts of the mix for doing well on those same weeks. 80% of real prices landed inside our low-to-high range, which is the target."
 
 **[What to keep in mind, 0:30 to 0:55]**
 "Two caveats matter most. First, Sunday scores a single date. On 50 practice dates we beat the baseline on 46, but those dates overlap, so one bad week is possible. Second, of the four new models we added, an independent audit says only two clearly hold on the held-back weeks. The other two stay in only because they helped on the practice dates. The rest is listed here: a tiny leak that was found and fixed, and series that were picked with hindsight."
@@ -26,7 +26,7 @@ Open `demo/index.html` from disk before you start (no server, no network). Every
 
 | # | time | shot | on screen | voice |
 |---|---|---|---|---|
-| 1 | 0:00–0:12 | Page top, still | result sentence; the three number cards, clean number first | 0.228 against 0.102 on series never used; 0.214 on the scored 37 is optimistic |
+| 1 | 0:00–0:12 | Page top, still | result sentence; the three number cards, clean number first | 0.228 against 0.102 on series first checked on those weeks; 0.214 on the scored 37 is optimistic |
 | 2 | 0:12–0:24 | Scroll to "What to keep in mind" | first and third bullets highlighted | one scored date; two of four new models clearly hold |
 | 3 | 0:24–0:55 | Offer explorer, B300 preset, slow slider drag from ~25 Sep to 18 Oct | Verda's orange diamond passing Together; the middle line stopping at 9.99 | "the price follows Verda until it passes its neighbour, then stops" |
 | 4 | 0:55–1:03 | Slider back to 6 Nov; the three forecast rows and the side panel | low, middle and high estimates at 1, 3, 7 days; "2.5% if one offer leaves" | forecast and how solid this price is |

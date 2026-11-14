@@ -122,7 +122,7 @@ h1{{font-size:23px;margin-bottom:4px}}h2{{font-size:18px;margin-top:30px}}img{{m
 
 <h2>The short version</h2>
 <ul>
-<li><b>It works.</b> On three weeks of prices we held back and never built on, our forecaster scores 0.214. The organisers' baseline scores 0.084.</li>
+<li><b>It works.</b> On three held-back weeks our forecaster scores 0.214 on the 37 scored prices; the organisers' baseline scores 0.084. That number flatters us a little, because some parts of the forecaster were kept for doing well on those same weeks. On the other prices, checked on those weeks for the first time, it scores 0.228 against 0.102.</li>
 <li><b>Why it works.</b> Each published GPU price is just the middle of a short list of offers from providers. It moves when a provider near
 the middle changes its price, or when a provider joins or leaves the list. We forecast that list, not the price line.</li>
 <li><b>How we got there.</b> We tried {len(ledger)} ideas: {tally}. All of them are in the table below, including the ones that failed.</li>
