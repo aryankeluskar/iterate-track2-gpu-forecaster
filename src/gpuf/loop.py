@@ -614,6 +614,7 @@ def step_scout(a) -> dict:
             "providers_searched": sorted(unexplained), "searches": len(jobs), **budget.report(), "contents_fetches": n_contents,
             "dropped": drops, "kept_sources": len(kept), "kept_with_effective_date_language": sum(k["eff"] for k in kept.values()),
             "new_calendar_entries": new_entries, "rejected_candidates": rejected[:25], "n_rejected": len(rejected),
+            "rejected_by_reason": {w: sum(r["why"].split(" (")[0] == w for r in rejected) for w in sorted({r["why"].split(" (")[0] for r in rejected})},
             "calendar_entries_now": len(cal_entries()), "dry_run": a.dry_run,
             "evidence_written": _write(ev, "scout") if ev and not a.dry_run else {"sent": 0},
             "exa_spend_usd": exa_spend_all()}
