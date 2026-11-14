@@ -230,3 +230,10 @@ Audit (experiments/audit/results/audit.md, an independent agent told to break th
 ## 2026-11-14 13:05 PT: track-choice facts
 
 - experiments/submission/track_choice.md (read from the hackathon page; nothing submitted): Track 5 is open-ended with no prize of its own; only Track 2 has a track prize; the top 2 of each track go to the finals; the submission form's track list shows Tracks 1 to 4 only; team counts per track are not visible. The past.dev challenge text on the submission form asks to "prove better accuracy, latency gains and cost reduction than the common existing approaches", which the Resources tab does not; we have no measurement of what the shared memory adds.
+
+## 2026-11-14 13:10 PT: loop CLI
+
+- loop (agent report; orchestrator ran its offline tests, the status step and the refusal of a validation origin): `python -m gpuf.loop` has steps autopsy, scout, prior, propose, gate, forecast, status. One recorded iteration in experiments/loop/iteration3.md: autopsy of the four-member blend (offers entering 30% of remaining loss), scout as of 6 October (108 searches, 72 from cache, one new calendar entry: a Nebius repricing of 1 June reported 82 days later, graded C, used by nothing), prior-work check, propose, gate reproducing fragility's dev result (+0.0232), forecast for origin 6 October. Exa is called in step_scout and step_prior; past.dev is read in scout (as scout, reading autopsy's records), prior, propose and forecast (date-bounded) and written in autopsy, scout and gate. Exa spend for the whole project $7.62.
+- Still done by hand in an iteration: writing a new hypothesis or forecaster, choosing what to gate, declaring and running validation queries, checking calendar lines the scout adds, and this log.
+- The loop's gate added a ledger row (L3-frag-b20) that repeats H28; relabelled as a re-run, not a hypothesis. Ledger counts quoted to the team should use 37 hypotheses, not 38.
+- reproduce rerun after the calendar file gained its ninth entry: same file hashes (the calendar switch is off in the submission).

@@ -691,6 +691,11 @@ def build(out: Path = OUT) -> Path:
     subs = "".join(f"<tr><td><code>{esc(rel(P[k]))}</code></td><td class=h><code>{sha(P[k])}</code></td></tr>" for k in ("headline", "all", "members"))
     ev = "".join(f"<tr><td>{esc(c)}</td><td>{'<br>'.join(('<code>' + esc(p) + '</code>' + ('' if (ROOT / p).exists() else ' <b>(missing)</b>')) for p in ps)}</td></tr>" for c, ps in EVIDENCE)
     lines = ", ".join(str(n) for n in exa_lines())
+    card = pd.read_csv(P["card"])
+    nmin, nmax = (int(v) for v in card.loc[card.src != "afhubbard", "n_offers"].agg(["min", "max"]))
+    members = json.loads(pd.read_csv(P["headline"]).method_note.iloc[0])["members"]
+    W = next(r for r in gate if r["name"].startswith("q7_"))["candidate"][1]["members"][1][1]["W"]
+    nkept = len(vfacts["bh_kept"])
     nval_dir = len([r for r in gate if r["name"].split("_")[0] in ("q6", "q7", "q8", "q9")])
 
     head = f"""
@@ -702,11 +707,11 @@ def build(out: Path = OUT) -> Path:
 <b>{f3(fh['skill'])}</b> against <b>{f3(fh['drift_skill'])}</b> for the drift baseline on the {nhead} headline series (difference {sgn(fh['d_vs_drift'])}, 90% interval {ci(fh['ci90_vs_drift'])}),
 and <b>{f3(fn['skill'])}</b> against <b>{f3(fn['drift_skill'])}</b> on {vfacts['nonhead_series']} other posted rental series that no one had evaluated before (difference {sgn(fn['d_vs_drift'])}, {ci(fn['ci90_vs_drift'])}).</p>
 <div class=big>
-<div><span class=v>{f3(fh['skill'])} <small>vs {f3(fh['drift_skill'])}</small></span><span class=k>skill on the {nhead} headline series, against drift ({fh['n_cells']:,} forecasts). Optimistic: four of its members were kept on this period.</span></div>
+<div><span class=v>{f3(fh['skill'])} <small>vs {f3(fh['drift_skill'])}</small></span><span class=k>skill on the {nhead} headline series, against drift ({fh['n_cells']:,} forecasts). Optimistic: {nkept} of its members were kept on this period.</span></div>
 <div><span class=v>{f3(fn['skill'])} <small>vs {f3(fn['drift_skill'])}</small></span><span class=k>skill on {vfacts['nonhead_series']} series nobody had tuned on ({fn['n_cells']:,} forecasts). The cleaner estimate.</span></div>
 <div><span class=v>{fh['coverage']:.2f}</span><span class=k>share of outcomes inside the 10th to 90th percentile interval on the headline series (target 0.80).</span></div>
 </div>
-<p><b>The idea.</b> A posted GPU price median is the middle of a small panel of provider offers, usually 3 to 17 of them. It moves only when a provider near the middle reprices,
+<p><b>The idea.</b> A posted GPU price median is the middle of a small panel of provider offers, {nmin} to {nmax} of them on the neocloud and marketplace series. It moves only when a provider near the middle reprices,
 or when an offer enters or leaves. The system found this by analysing its own forecast failures, then stopped forecasting the series as a line and started forecasting the panel:
 each offer follows its own provider's recent repricing, and the median is read off the simulated panel. That change held on dates it had not seen.</p>
 <details class=terms><summary>Terms used on this page</summary><dl>
@@ -715,7 +720,7 @@ each offer follows its own provider's recent repricing, and the median is read o
 <dt>Skill</dt><dd>1 minus the forecast's pinball loss (at the 10th, 50th and 90th percentiles) divided by the loss of repeating the last price. 0 means no better than repeating the last price.</dd>
 <dt>Drift</dt><dd>The organisers' baseline: the last price scaled by the historical spread of that series' price changes.</dd>
 <dt>Reference model</dt><dd>The system's first validated model (called <code>mix</code> in the code): drift pooled across similar series and conditioned on whether the price moved recently.</dd>
-<dt>Provider simulator</dt><dd>A forecaster (<code>prov</code>) that moves each offer the way its provider repriced over the previous 21 days and takes the median of the simulated panel, so a climbing provider pulls the median only until it passes the next offer.</dd>
+<dt>Provider simulator</dt><dd>A forecaster (<code>prov</code>) that moves each offer the way its provider repriced over the previous {W} days and takes the median of the simulated panel, so a climbing provider pulls the median only until it passes the next offer.</dd>
 <dt>One-offer fragility</dt><dd>The largest move of the median if one offer left the panel. The fragility forecaster puts interval mass on the values the median would jump to if one offer left or joined.</dd>
 <dt>Cell</dt><dd>One forecast: a series, an origin date and a horizon.</dd>
 </dl></details>
@@ -751,7 +756,7 @@ Dashed lines mark where the median would jump if one offer left or one joined. T
 <h2 id=h3>How it improved: where the forecast loss went</h2>
 <p>Each bar splits a system's forecast loss on the development period ({int(total['cells']):,} cells) by what physically happened to the panel. The system aimed its later members at the causes it found:
 the provider simulator at frequent repricers (orange), the fragility tails at offers entering and leaving (blue). The current blend here is the six-member blend analysed in the second failure analysis;
-the submitted forecaster adds the fragility tails as a seventh member.</p>
+the submitted forecaster ({len(members)} members: {', '.join(members)}) adds the fragility tails.</p>
 {loss_svg(loss)}
 {loss_table(loss)}
 <p>Validation queries were spent sparingly: {nval_dir} round-two directions were sent to validation, each declared in <code>research-log.md</code> before it ran, each tested against the reference model, and kept only if it passed the
@@ -798,7 +803,7 @@ Other agents read from it before they start. The forecaster may read only failur
 <section id=s8 aria-labelledby=h8>
 <h2 id=h8>Reproduce</h2>
 <p>From <code>track_2/</code>, with the pack in <code>data/pack/</code>: <code>bash reproduce.sh final</code> checks the pack against its manifest, rebuilds the series as of 6 November and writes the three submission files below
-(about 25 seconds; needs the Chronos-Bolt-small weights in the local Hugging Face cache, never downloads). This page: <code>PYTHONPATH=src .venv/bin/python -m gpuf.demo</code>.</p>
+(it needs the Chronos-Bolt-small weights in the local Hugging Face cache, never downloads). This page: <code>PYTHONPATH=src .venv/bin/python -m gpuf.demo</code>.</p>
 <p><b>Leak rule</b> (EVAL_PROTOCOL.md): {inline(proto['leak'])}</p>
 <h3>Submission files</h3><div class=tw><table><thead><tr><th>File</th><th>SHA-256</th></tr></thead><tbody>{subs}</tbody></table></div>
 <h3>Where each claim's evidence lives</h3><div class=tw><table><thead><tr><th>Claim</th><th>Files</th></tr></thead><tbody>{ev}</tbody></table></div>
