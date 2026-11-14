@@ -113,13 +113,13 @@ Query 5 (declared now, before running): ens of mix + gbm + chronos_last, equal w
 - longrun (final): H29 refuted by its own backtest (no-change beats the decay model over one year on 117 weekly-median series and on AWS spot). The write-up is conditional: 2026 is a shortage regime in which every on-demand median rose 15-82% a year, against a multi-year AWS spot decline of 31%/yr (H100) and 9.5%/yr (A100). Older chips rent at a premium per unit of work over B200/B300 (A100 2.30x, H100 1.78x), shrinking. Report: experiments/longrun/results/longrun.md. Not yet reviewed line by line by the orchestrator.
 - Machine: load 87, swap 11.1 of 12.3 GB used. No new launches until agents finish.
 
-## 2026-11-14 12:12 PT: four round 3 reports; machine thrash fixed
+## 2026-11-14 12:08 PT: four round 3 reports; machine thrash fixed
 
 - analog (H21 supported on dev, nominee pending the orchestrator's re-run), stack (H15 not significant: equal weights), ecm (H19 refuted), allrental (H23: routing over-fits, the activity gate carries over). Details in the ledger.
 - Machine: load reached 130 with swap full. Cause: the Laya fine-tune process at 7.2 GB (over its limit) on a 24 GB machine with the browser holding several GB. Killed that process and told the decision agent to fine-tune only a head on cached embeddings under 3 GB or skip it. Cancelled the tabpfn agent (heaviest job, lowest expected gain; H22 marked untestable, not a result about the method). Load fell to about 50 within a minute.
 - Orchestrator gate script added: experiments/halves.py (Amendment 2, rule 1: difference against mix overall and on both halves of dev).
 
-## 2026-11-14 12:20 PT: analog passes the dev gate; validation query 6 declared before running
+## 2026-11-14 12:13 PT: analog passes the dev gate; validation query 6 declared before running
 
 - Orchestrator re-run (experiments/halves.py): analog {pool all, k 600, drop n14 and sign} dev 0.1987, +0.0296 against mix [+0.009,+0.061], matching the agent. Blend of mix and analog: 0.1999, +0.0307 [+0.017,+0.053]; first half +0.034 [+0.005,+0.070], second half +0.030 [+0.015,+0.056]. Passes rule 1 of Amendment 2. Caveat: with all features the first half alone is -0.063 for analog by itself; the feature drop was chosen on dev, so the blend is the claim, not analog alone.
 - Declared, query 6 on validation headline (first of the 8 in Amendment 2's budget): ens of mix (reference params) and analog {"pool":"all","k":600,"drop":["n14","sign"],"cap":"2026-11-06"}, against mix. The cap is moved from the dev cap only so the neighbour table can hold outcomes up to each validation origin; each origin still uses only situations whose outcome day is on or before it.
