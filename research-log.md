@@ -106,3 +106,9 @@ Query 5 (declared now, before running): ens of mix + gbm + chronos_last, equal w
 - New: calendar (H27, Exa-built calendar of announced dated repricings, checked against the panel, plus the entries that fall in the Sunday window) and fragility (H28, tails placed on the one-offer-out medians).
 - to_human/progress.html: dotted target lines (reference model, the two hindsight bounds) and dotted milestone lines per round.
 - Machine load is 25 on 15 cores with 21 agents; no further CPU-heavy launches until some finish.
+
+## 2026-11-14 12:00 PT: panel and longrun reports
+
+- panel (final): H12 not significant. Simulator alone 0.170 (+0.001 against mix), blend with mix 0.180 (+0.011, CI -0.002 to +0.040), upper tail unchanged. The agent's reason: up-moves over 5% in which a brand-new offer entered are 115 cells and 31% of last-value loss on the panel series; entry cannot be simulated from the panel's own history. Not nominated for validation. Loader src/gpuf/panel.py and its leak test are kept: prov, midstate and fragility build on it.
+- longrun (final): H29 refuted by its own backtest (no-change beats the decay model over one year on 117 weekly-median series and on AWS spot). The write-up is conditional: 2026 is a shortage regime in which every on-demand median rose 15-82% a year, against a multi-year AWS spot decline of 31%/yr (H100) and 9.5%/yr (A100). Older chips rent at a premium per unit of work over B200/B300 (A100 2.30x, H100 1.78x), shrinking. Report: experiments/longrun/results/longrun.md. Not yet reviewed line by line by the orchestrator.
+- Machine: load 87, swap 11.1 of 12.3 GB used. No new launches until agents finish.

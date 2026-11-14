@@ -1,0 +1,38 @@
+{
+ "comp_win1": {
+  "treated_n": 1156,
+  "treated_hit": 118,
+  "treated_rate": 0.1021,
+  "base_n": 25006,
+  "base_hit": 90,
+  "base_rate": 0.0036,
+  "ratio": 28.36
+ },
+ "comp_win3": {
+  "treated_n": 1020,
+  "treated_hit": 109,
+  "treated_rate": 0.1069,
+  "base_n": 23885,
+  "base_hit": 248,
+  "base_rate": 0.0104,
+  "ratio": 10.29
+ },
+ "any_win1": {
+  "treated_n": 4013,
+  "treated_hit": 1728,
+  "treated_rate": 0.4306,
+  "base_n": 22149,
+  "base_hit": 449,
+  "base_rate": 0.0203,
+  "ratio": 21.24
+ },
+ "any_win3": {
+  "treated_n": 3736,
+  "treated_hit": 2208,
+  "treated_rate": 0.591,
+  "base_n": 21169,
+  "base_hit": 976,
+  "base_rate": 0.0461,
+  "ratio": 12.82
+ }
+}
