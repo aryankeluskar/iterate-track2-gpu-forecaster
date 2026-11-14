@@ -52,7 +52,7 @@ def stats(x, y, weeks):
     return b, r
 
 
-def screen(df, name, xcol='x', ycol='y', reps=600, seed=0, null=True, absmode=False):
+def screen(df, name, xcol='x', ycol='y', reps=600, seed=0, null=True, absmode=False, within=True):
     """df columns: sid, t, h, x, y, (week). Reports per horizon slope (through origin on demeaned-free x), spearman,
     90% week-block bootstrap CIs and two nulls: shuffled dates and circular shift of dates."""
     rows = []
@@ -62,9 +62,13 @@ def screen(df, name, xcol='x', ycol='y', reps=600, seed=0, null=True, absmode=Fa
         if len(d) < 25:
             rows.append(dict(signal=name, h=h, n=len(d), note='n<25'))
             continue
-        x = d[xcol].to_numpy(); y = d[ycol].to_numpy(); wk = (d.t.to_numpy() // 7)
+        d = d.copy()
         if absmode:
-            x = np.abs(x); y = np.abs(y)
+            d[xcol] = d[xcol].abs(); d[ycol] = d[ycol].abs()
+        if within:
+            d[xcol] = d[xcol] - d.groupby('sid')[xcol].transform('mean'); d[ycol] = d[ycol] - d.groupby('sid')[ycol].transform('mean')
+        x = d[xcol].to_numpy(); y = d[ycol].to_numpy(); wk = (d.t.to_numpy() // 7)
+        absmode_local = False
         b, r = stats(x, y, wk)
         bs, rs = [], []
         for _ in range(reps):
@@ -78,8 +82,6 @@ def screen(df, name, xcol='x', ycol='y', reps=600, seed=0, null=True, absmode=Fa
         if null:
             piv = d.pivot_table(index='t', columns='sid', values=xcol if not absmode else xcol, aggfunc='first')
             ypv = d.pivot_table(index='t', columns='sid', values=ycol, aggfunc='first')
-            if absmode:
-                piv = piv.abs(); ypv = ypv.abs()
             dates = piv.index.to_numpy(); X = piv.to_numpy(); Y = ypv.reindex(index=piv.index, columns=piv.columns).to_numpy()
             T = len(dates)
             sh, cs = [], []

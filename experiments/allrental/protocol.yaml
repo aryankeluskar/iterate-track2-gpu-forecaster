@@ -1,0 +1,20 @@
+slug: allrental
+failure_mode: >
+  Methods tuned on the 37 headline series are applied to all 357 scored rental series (official default
+  scored set = series in the forecast file). Non-headline series carry 90.6% of rental_all last-value loss;
+  80-96% of their cells have zero baseline loss, and mix is worse than last value on 112/320 non-headline series.
+  Any nonzero interval width on a series that does not move costs pinball loss with no offsetting gain.
+measured_loss_share: non-headline 90.6% of rental_all dev last-value loss; mix worse than LV on 35% of those series.
+mechanism: >
+  Route each (series, origin) to a forecaster using only data <= origin: zero-width last value when the series
+  has been inactive (fewer than m changes in the last n days), otherwise a class-appropriate forecaster
+  (mix variant / drift / pretrained width). Inactive series rarely move within 7 days, so zero width scores
+  exactly the baseline on them and saves the width cost; active series keep a real interval.
+prediction: >
+  On rental_all dev, router beats mix(reference) by +0.02 to +0.06 pooled skill, mostly from hyperscaler_list,
+  neocloud_rate_card and marketplace_ask non-headline series; the share of series worse than LV falls from ~35% to
+  under 15%; headline-37 skill within 0.005 of mix (no harm). Holds on the untouched later half (origins 2026-09-12..2026-10-06).
+refuted_if: >
+  The gated router fails to beat mix on the untouched later half of dev on rental_all (difference interval
+  includes zero or negative), or it lowers headline-37 skill by more than 0.01 versus mix.
+selection: rules chosen on origins 2026-08-18..2026-09-11; reported on 2026-09-12..2026-10-06 untouched.

@@ -191,8 +191,8 @@ def make(grids=(), lo=0.1, hi=0.9, centre="last", scale=1.0):
     if centre == "last":
         q = np.c_[last * np.exp(-dn), last, last * np.exp(up)]
     else:
-        q = np.exp(np.c_[[np.log(np.clip(df[f"{k}{i}"].to_numpy(), 1e-6, None)) for i in range(n)]
-                         for k in "abc"].reshape(3, n, -1).mean(1).T) if n > 1 else df[["a0", "b0", "c0"]].to_numpy()
+        q = np.exp(np.stack([np.log(np.clip(df[[f"a{i}", f"b{i}", f"c{i}"]].to_numpy(), 1e-6, None))
+                             for i in range(n)]).mean(0))
     tab = {(s, int(o), int(h)): tuple(r) for (s, o, h), r in zip(df[K].itertuples(index=False, name=None), q)}
 
     def f(sid, days, vals, origin_day, horizons, ctx):

@@ -1,0 +1,35 @@
+{
+ "n_events": 37,
+ "n_announced_before": 2,
+ "share_events_announced": 0.054,
+ "share_loss_announced_of_selected": 0.013,
+ "selected_cover_of_all_event_score": 0.218,
+ "lower_bound_share_of_all_event_score": 0.003,
+ "n_reported_after": 1,
+ "n_no_trace": 34,
+ "rate_card_events": 12,
+ "rate_card_announced": 2,
+ "rate_card_share_loss_announced": 0.109,
+ "marketplace_events": 23,
+ "median_lead_days": 12.5,
+ "leads": [
+  15.0,
+  10.0
+ ],
+ "v2_fired_on_events": 21,
+ "v2_true_among_fired": 2,
+ "control_pairs": 10,
+ "control_false_alarms_v2": 4,
+ "control_false_alarm_rate": 0.4,
+ "control_ci90": [
+  0.19,
+  0.65
+ ],
+ "control_fired_ids": [
+  3,
+  4,
+  7,
+  9
+ ],
+ "spend_usd": 1.564
+}

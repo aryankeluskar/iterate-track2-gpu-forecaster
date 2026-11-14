@@ -1,0 +1,24 @@
+slug: tabpfn
+failure_mode_targeted: >
+  Interval width/shape at h=7 (all current gain is width; upper tail under-covered, 27-33% of truths above q90) and
+  the jump size on the 9% of cells that move >5% and carry 61% of last-value loss.
+hypothesis: >
+  An in-context tabular foundation model (TabPFN) fitted on a few thousand (series-day features -> h-day log change)
+  rows per origin gives better conditional quantiles than pooled LightGBM (gbm, +0.053 over drift on dev, full mode
+  skill 0.142) because this is the small-n regime where TabPFN is reported to beat GBMs, and it returns a full
+  predictive distribution.
+mechanism: >
+  TabPFN approximates a Bayesian posterior predictive over many simple tabular priors; with ~2000 context rows it
+  smooths conditional quantiles across (change frequency, volatility, days since change) without the stepwise,
+  overconfident leaves of boosted trees.
+prediction: >
+  Skill 0.14-0.17 on dev (pooled, vs drift 0.089), i.e. +0.05 to +0.08 over drift, about equal to gbm and below mix
+  (0.169). Gain at h=7 on fastgpu rate cards; centre-forced variant better than raw q50 (every method's q50 equals
+  last-value loss). Blend with mix adds under +0.01.
+refuted_if: >
+  Paired difference to gbm full on the same cells has a 90% interval containing zero (nothing the tree lacks) and the
+  blend with mix does not beat mix by a bootstrap-significant margin. Two-part version expected needed because half of
+  cells are exactly zero change and a smooth predictive distribution puts little mass at 0; refuted if the raw model
+  already places >=45% mass within +-0.2% on quiet series.
+model: TabPFN v2 regressor checkpoint (tabpfn-v2-regressor.ckpt, Apache-2.0 + attribution); default v3.5 weights need
+  an interactive licence acceptance and TABPFN_TOKEN, unavailable in this session.

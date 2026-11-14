@@ -17,6 +17,7 @@ params
   min_n    below this many candidates fall back to `fallback` pool (then to a flat forecast)
   aws      include the AWS spot ticks table in the pool
   cap      last date the table may hold (ISO). Dev runs must keep the default.
+  excl     collectors whose series are not donors in the class and all pools (own series always stay)
   table    a prebuilt AnalogTable (tests)
 """
 from __future__ import annotations
@@ -153,11 +154,11 @@ class AnalogTable:
             self._sd[p] = np.where(s > 1e-9, s, 1.0)
         return self._sd[p]
 
-    def pool(self, kind, sid, h):
+    def pool(self, kind, sid, h, excl=()):
         """Arrays (day, F, out, mad30) of candidate situations with a known h-day outcome, day-sorted."""
         c, cl = self.meta[sid]
         key = {"self": sid, "cc": (c, cl), "class": cl, "all": None}[kind]
-        ck = (kind, key, h)
+        ck = (kind, key, h, excl)
         if ck not in self._pools:
             if kind == "self":
                 m = self.sid_code == self.sids.index(sid)
@@ -167,6 +168,8 @@ class AnalogTable:
                 m = np.array([self.meta[s][1] == cl for s in self.sids])[self.sid_code]
             else:
                 m = np.ones(len(self.day), bool)
+            if excl and kind in ("class", "all"):
+                m = m & ~np.array([self.meta[s][0] in excl and s != sid for s in self.sids])[self.sid_code]
             m = m & np.isfinite(self.out[h])
             self._pools[ck] = (self.day[m], self.F[m], self.out[h][m])
         return self._pools[ck]
@@ -192,7 +195,8 @@ def load_table(cap=DEV_CAP, aws=False):
 
 @register("analog")
 def make(pool="cc", k=100, kern="tricube", hl=0.0, centre="median", scale=1.0, rescale=False, drop=(), min_n=10,
-         fallback="cc", aws=False, cap=DEV_CAP, table=None, lo=0.1, hi=0.9, w=None):
+         fallback="cc", aws=False, cap=DEV_CAP, table=None, lo=0.1, hi=0.9, w=None, excl=()):
+    excl = tuple(excl)
     wt = np.ones(NF)
     for g in drop:
         wt[GROUPS[g]] = 0.0
@@ -201,7 +205,7 @@ def make(pool="cc", k=100, kern="tricube", hl=0.0, centre="median", scale=1.0, r
     tab = [table]
 
     def neigh(T, sid, f, origin_day, h, kind):
-        d, F, out = T.pool(kind, sid, h)
+        d, F, out = T.pool(kind, sid, h, excl)
         p = int(np.searchsorted(d, origin_day - h, side="right"))
         if p < min_n:
             return None

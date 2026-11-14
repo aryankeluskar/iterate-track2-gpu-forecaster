@@ -31,4 +31,24 @@ if __name__ == "__main__":
             for k in (30, 100, 300):
                 for ce in ("median", "last"):
                     line(f"{pool} k={k} centre={ce}", *A(pool=pool, k=k, centre=ce))
+    if stage == "refine":
+        for pool in ("cc", "all"):
+            for k in (300, 600, 1500):
+                line(f"{pool} k={k}", *A(pool=pool, k=k))
+            line(f"{pool} k=300 uniform", *A(pool=pool, k=300, kern="uniform"))
+            line(f"{pool} k=300 hl=30", *A(pool=pool, k=300, hl=30))
+            line(f"{pool} k=300 rescale", *A(pool=pool, k=300, rescale=True))
+            line(f"{pool} k=300 scale=1.2", *A(pool=pool, k=300, scale=1.2))
+            line(f"{pool} k=300 scale=0.8", *A(pool=pool, k=300, scale=0.8))
+            line(f"{pool} k=300 centre=0.5", *A(pool=pool, k=300, centre=0.5))
+    if stage == "abl":
+        for pool in ("cc", "all"):
+            line(f"{pool} k=600 full", *A(pool=pool, k=600))
+            for g in ("since", "n7", "n14", "mad7", "mad30", "size", "sign", "nprov", "pos"):
+                line(f"{pool} k=600 drop {g}", *A(pool=pool, k=600, drop=[g]))
+            line(f"{pool} k=600 no state (all off)", *A(pool=pool, k=600, drop=list(["since","n7","n14","mad7","mad30","size","sign","nprov","pos"])))
+    if stage == "borrow":
+        for pool, ex in (("cc", ()), ("class", ()), ("all", ()), ("all", ("afhubbard",)), ("all", ("fastgpu_daily","gpurentalprices")),
+                         ("class", ("afhubbard",)), ("all", ("afhubbard","tanod")), ("all", ("tanod",))):
+            line(f"{pool} excl={ex} k=600", *A(pool=pool, k=600, excl=list(ex)))
     print("time", round(time.time() - t0, 1))

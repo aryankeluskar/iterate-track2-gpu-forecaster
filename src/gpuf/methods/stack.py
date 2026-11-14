@@ -102,7 +102,7 @@ def weights(d, C, comb="ewa", key="h", tsep=False, eta=20.0, gamma=1.0, alpha=0.
                 win = td > d - window
                 if win.sum() < nmin:
                     continue
-                x = np.log(np.clip(np.exp(lq[:, m, :][:, win, :]), 1e-9, None))
+                x = lq[:, m, :][:, win, :]
                 ly = np.log(y[m][win])
                 p = y[m][win]
                 W = np.zeros((3, E))
@@ -110,10 +110,6 @@ def weights(d, C, comb="ewa", key="h", tsep=False, eta=20.0, gamma=1.0, alpha=0.
                     for t in range(3):
                         W[t] = _lp(x[:, :, t], ly, p, TAUS[t], E)
                 else:
-                    xs = np.concatenate([x[:, :, t] for t in range(3)], axis=1)
-                    lys = np.tile(ly, 3)
-                    ps = np.concatenate([p * w3 for w3 in (1.0, 1.0, 1.0)])
-                    # shared weights: sum of the three pinball losses, one LP with stacked cells and tau-specific costs
                     W[:] = _lp3(x, ly, p, E)
                 W = (1 - lam) * W + lam / E
             else:
@@ -127,10 +123,8 @@ def _lp3(x, ly, p, E):
     n = x.shape[1]
     nv = E + 6 * n
     c = np.zeros(nv)
-    rows, b = [], []
     A = np.zeros((3 * n + 1, nv))
     for t, tau in enumerate(TAUS):
-        sl = slice(E + 2 * n * t, E + 2 * n * (t + 1))
         c[E + 2 * n * t: E + 2 * n * t + n] = tau * p
         c[E + 2 * n * t + n: E + 2 * n * (t + 1)] = (1 - tau) * p
         A[t * n:(t + 1) * n, :E] = x[:, :, t].T
