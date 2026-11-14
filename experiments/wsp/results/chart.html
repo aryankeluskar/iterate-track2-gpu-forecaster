@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<style>
+body { font: 14px var(--font-sans); color:var(--foreground); margin:0; }
+.sub { color:var(--muted-foreground); line-height:1.5; margin:0 0 18px; }
+.row { display:grid; grid-template-columns:165px 1fr 76px; gap:12px; align-items:center; margin:13px 0; }
+.track { height:20px; border-left:1px solid var(--border); }
+.bar { height:20px; background:var(--chart-2); border-radius:0 3px 3px 0; }
+.hand { background:var(--chart-1); }
+.weak { background:var(--chart-3); }
+.number { font:13px var(--font-mono); text-align:right; }
+.note { line-height:1.5; margin-top:22px; color:var(--muted-foreground); }
+@media(max-width:480px) { .row { grid-template-columns:123px 1fr 67px; gap:7px; font-size:12px; } }
+</style>
+<p class="sub">Held-out pooled skill · September 12–October 6, 2026 · 2,775 cells<br>Higher is better; every bar starts at zero.</p>
+<div role="img" aria-label="Held-out skill: hand-written weights 0.174409, mix 0.168500, zero-initialized Adam 0.168500, random search 0.152788, drift 0.086847, trainable Adam 0.079924.">
+<div class="row"><span>Hand-written weights</span><div class="track"><div class="bar hand" style="width:87.2045%"></div></div><span class="number">0.174409</span></div>
+<div class="row"><span>Reference mix</span><div class="track"><div class="bar" style="width:84.25%"></div></div><span class="number">0.168500</span></div>
+<div class="row"><span>Adam · all zero</span><div class="track"><div class="bar" style="width:84.25%"></div></div><span class="number">0.168500</span></div>
+<div class="row"><span>Random search · 40</span><div class="track"><div class="bar" style="width:76.394%"></div></div><span class="number">0.152788</span></div>
+<div class="row"><span>Drift</span><div class="track"><div class="bar weak" style="width:43.4235%"></div></div><span class="number">0.086847</span></div>
+<div class="row"><span>Adam · trainable</span><div class="track"><div class="bar weak" style="width:39.962%"></div></div><span class="number">0.079924</span></div>
+</div>
+<p class="note"><strong>Hand − mix: +0.005909</strong>, 90% paired interval [−0.000684, +0.007466].<br>The improvement over mix remains uncertain. “Trainable” Adam uses a random hidden layer and zero output layer, starting with exactly the base forecasts. Literal all-zero Adam selected epoch 0.</p>
+</html>

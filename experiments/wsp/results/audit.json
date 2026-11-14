@@ -1,0 +1,48 @@
+{
+  "patch_reconstruction": {
+    "01_recent_lower": "exact reconstruction",
+    "02_dormant_shrink": "exact reconstruction",
+    "03_panel_upper_headroom": "exact reconstruction",
+    "04_short_upper_shrink": "exact reconstruction",
+    "05_spot_lower": "exact reconstruction",
+    "06_panel_lower_headroom": "exact reconstruction",
+    "07_quiet_relative_to_peers": "exact reconstruction",
+    "08_recent_upper": "exact reconstruction"
+  },
+  "practice_cache_registered_method_parity": true,
+  "hand_calls": 17,
+  "random_calls": 50,
+  "heldout_tolerance_coverage": {
+    "mix": {
+      "below_q10": 0.0936936936936937,
+      "above_q90": 0.21585585585585584,
+      "within_q10_q90": 0.6904504504504505
+    },
+    "hand": {
+      "below_q10": 0.09441441441441441,
+      "above_q90": 0.2064864864864865,
+      "within_q10_q90": 0.6990990990990991
+    },
+    "blend": {
+      "below_q10": 0.09477477477477478,
+      "above_q90": 0.20792792792792794,
+      "within_q10_q90": 0.6972972972972973
+    },
+    "adam_zero": {
+      "below_q10": 0.0936936936936937,
+      "above_q90": 0.21585585585585584,
+      "within_q10_q90": 0.6904504504504505
+    },
+    "adam_function_zero": {
+      "below_q10": 0.09657657657657658,
+      "above_q90": 0.3409009009009009,
+      "within_q10_q90": 0.5625225225225226
+    },
+    "random40": {
+      "below_q10": 0.12324324324324325,
+      "above_q90": 0.23855855855855856,
+      "within_q10_q90": 0.6381981981981982
+    }
+  },
+  "tolerance_note": "Diagnostic on saved forecasts only; absolute and relative tolerance 1e-12. Official strict coverage remains primary. No new held-out forecasts."
+}
