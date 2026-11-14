@@ -237,3 +237,9 @@ Audit (experiments/audit/results/audit.md, an independent agent told to break th
 - Still done by hand in an iteration: writing a new hypothesis or forecaster, choosing what to gate, declaring and running validation queries, checking calendar lines the scout adds, and this log.
 - The loop's gate added a ledger row (L3-frag-b20) that repeats H28; relabelled as a re-run, not a hypothesis. Ledger counts quoted to the team should use 37 hypotheses, not 38.
 - reproduce rerun after the calendar file gained its ninth entry: same file hashes (the calendar switch is off in the submission).
+
+## 2026-11-14 13:15 PT: demo page built; sent back for corrections
+
+- demo (agent report; orchestrator rebuilt it and ran its 5 tests): `python -m gpuf.demo` writes demo/index.html, one self-contained 275 KB file with a panel explorer for the 37 scored series, the loss-by-cause chart, the validation table, the ledger, the Exa calendar, the memory matrices, the long-run section and the reproduce command. Pitch script in experiments/demo/pitch.md.
+- Orchestrator check of the built page: its headline still calls the validation ranges 90% intervals and describes the headline weeks as untuned, it has no caveats section, it counts the loop's re-run row as a hypothesis (38), and it uses the project's technical wording. Sent back to the same agent with the audit's corrections, a "what to keep in mind" section, the 37-hypothesis count and the plain wording from experiments/plain_ledger.json. Not to be shown as it stands.
+- to_human/track2_feasibility.md and to_human/progress.html were rewritten in plain language at the team's request (wording only).
