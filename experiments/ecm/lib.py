@@ -95,13 +95,13 @@ def screen(df, name, xcol='x', ycol='y', reps=600, seed=0, null=True, absmode=Fa
                         Xp = np.roll(X, int(rng.integers(5, T - 5)), axis=0)
                     m = np.isfinite(Xp) & np.isfinite(Y)
                     if m.sum() > 10 and np.ptp(Xp[m]) > 0:
-                        out.append(spearmanr(Xp[m], Y[m])[0])
+                        out.append((Xp[m] * Y[m]).sum() / (Xp[m] ** 2).sum())
             if sh:
-                rec['rho_null_shuf_lo'], rec['rho_null_shuf_hi'] = np.percentile(sh, [2.5, 97.5])
-                rec['p_shuf'] = float((np.abs(sh) >= abs(r)).mean())
+                rec['b_null_shuf_lo'], rec['b_null_shuf_hi'] = np.percentile(sh, [2.5, 97.5])
+                rec['p_shuf'] = float((np.abs(sh) >= abs(b)).mean())
             if cs:
-                rec['rho_null_circ_lo'], rec['rho_null_circ_hi'] = np.percentile(cs, [2.5, 97.5])
-                rec['p_circ'] = float((np.abs(cs) >= abs(r)).mean())
+                rec['b_null_circ_lo'], rec['b_null_circ_hi'] = np.percentile(cs, [2.5, 97.5])
+                rec['p_circ'] = float((np.abs(cs) >= abs(b)).mean())
         rows.append(rec)
     return rows
 
@@ -114,9 +114,9 @@ def fmt(rows):
             continue
         s = (f"{r['signal']:42s} h={r['h']} n={r['n']:5d} ser={r['n_series']:2d} dates={r['n_dates']:2d} wk={r['n_weeks']:2d} "
              f"slope={r['slope']:+.3f} [{r['slope_lo']:+.3f},{r['slope_hi']:+.3f}] rho={r['rho']:+.3f} [{r['rho_lo']:+.3f},{r['rho_hi']:+.3f}]")
-        if 'rho_null_shuf_lo' in r:
-            s += f" | null shuf [{r['rho_null_shuf_lo']:+.2f},{r['rho_null_shuf_hi']:+.2f}] p={r['p_shuf']:.2f}"
-        if 'rho_null_circ_lo' in r:
-            s += f" circ [{r['rho_null_circ_lo']:+.2f},{r['rho_null_circ_hi']:+.2f}] p={r['p_circ']:.2f}"
+        if 'b_null_shuf_lo' in r:
+            s += f" | slope-null shuf [{r['b_null_shuf_lo']:+.3f},{r['b_null_shuf_hi']:+.3f}] p={r['p_shuf']:.2f}"
+        if 'b_null_circ_lo' in r:
+            s += f" circ [{r['b_null_circ_lo']:+.3f},{r['b_null_circ_hi']:+.3f}] p={r['p_circ']:.2f}"
         out.append(s)
     return '\n'.join(out)

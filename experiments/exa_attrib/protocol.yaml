@@ -25,3 +25,6 @@ prediction:
   snapshot: "Probably usable only for pages Exa crawled within the 5-month window and limited to 100 requests on pay-as-you-go; may be refused on this plan."
 verdict_if: "A search step before each forecast is worth building only if announced-before covers at least about 40% of the loss AND the false-alarm rate of the rule is below about 25%. Otherwise it is a finding about how GPU rate cards are repriced: silently, on the pricing page, without notice."
 budget_usd: 8
+# --- results (2026-11-14), see results/headline.json
+result: "2 of 37 events (5%) ANNOUNCED_BEFORE (Nebius B300 15 d, Jarvislabs RTX PRO 6000 10 d), 4% of loss weight; 2 of 12 rate-card events (37% of rate-card loss weight); 23 of 37 are market-priced asks with nothing to announce. Rule v2 false-alarm rate on controls 4/10. Prediction (10-25% of events) was too high on events, right on rate-card loss share. Snapshot refused: free plan (403 SNAPSHOT_NOT_ON_PLAN). Spend $1.56."
+rule_history: "v0 and v1 fired on 10/10 controls (funding news and price lists match any price+change words); v2 was written after seeing that, so its 4/10 is not a clean pre-registered number."

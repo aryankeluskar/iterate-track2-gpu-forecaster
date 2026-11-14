@@ -1,0 +1,39 @@
+{
+  "created_at": "2026-11-14T19:49:29.714173+00:00",
+  "origins": [
+    "2026-08-18",
+    "2026-09-11"
+  ],
+  "features": [
+    "horizon",
+    "age",
+    "changes3",
+    "changes7",
+    "changes14",
+    "vol",
+    "peer_vol",
+    "last_sign",
+    "last_size",
+    "providers",
+    "median_position",
+    "panel_spread",
+    "fastgpu",
+    "gpurentalprices",
+    "afhubbard",
+    "rate_card",
+    "neocloud_spot",
+    "hyperscaler_spot",
+    "marketplace_ask",
+    "history"
+  ],
+  "n_cells": 1503,
+  "cache_sha256": "2446624d3adb223be12f16d8fdfeef8ac976b914428ffe1e599b79f2cb95864a",
+  "feature_sha256": "0dc022d2e478d3c51c82d689c26445f95323d682a78a58b1f11a1e366c64ea39",
+  "loss_shares": {
+    "1_to_5pct": 0.3017075950476822,
+    "down_over_5pct": 0.2483919253710505,
+    "no_change": 0.0,
+    "under_1pct": 0.10154654406010803,
+    "up_over_5pct": 0.3483539355211591
+  }
+}

@@ -45,3 +45,16 @@ The Universe, Metric, Baseline, Leakage and Reference sections stand. The Origin
 - Test: the organisers' Sunday scoring (origin 2026-11-06, targets 7, 9 and 13 November). The pack is too short to hold out a third period, so no internal test set exists. This is stated in the findings.
 
 Secondary check for any accepted change: it must not lower pooled skill on the all-tier rental universe on validation, and its result on the four long-history afhubbard series over the old dev period (May to August) is reported as a robustness check.
+
+## Amendment 2 (14 November 2026, about 11:55 PT): gate for round 2 and 3 directions
+
+Written before any round 2 or round 3 direction was scored on validation. State of the validation period at this point: five method queries on the headline universe (research-log.md, 12:10 entry), none on the non-headline series.
+
+Why a new rule: about fifteen directions are being tried at once on dev. Sending each to validation and keeping the winners would overfit 18 origins. Dev and validation already disagreed on the rank order of methods once.
+
+1. Dev gate (agents, free to look). A direction is nominated only if, on dev headline, the blend of it with the reference `mix` beats `mix` alone with the 90% week-bootstrap interval above zero, and the gain is positive in both halves of dev (origins up to 2026-09-11, and from 2026-09-12). A direction that fails is recorded in the ledger as refuted or not significant and is not sent to validation.
+2. Validation budget. At most 8 further queries on validation headline, one per nominated direction, each with frozen params, each testing "blend of the direction with mix, against mix". Reported for each: the paired difference with its 90% interval and the one-sided Diebold-Mariano p-value (Newey-West, 6 lags, over origin days).
+3. Error control. The false discovery rate over these queries is held at 10% with the Benjamini-Hochberg procedure on the one-sided p-values. Directions that pass are "kept".
+4. The submitted forecaster is fixed by rule, not by picking the best validation number: the equal-weight blend (mean of log quantiles) of the members already validated (mix, gbm, Chronos width) and every kept direction. Its validation score is reported once and labelled optimistic, because its members were chosen on that period.
+5. Cleaner check. The non-headline posted rental series on the validation origins have not been queried. The all-series router gets one query there, and the final forecaster is reported there too. That number is the least contaminated estimate we have.
+6. Every query is appended to data_out/val_query_log.jsonl by the harness. Agents never run validation.

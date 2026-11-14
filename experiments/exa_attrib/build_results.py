@@ -7,7 +7,7 @@ sel = pd.read_csv(f"{ROOT}/runs/exa_attrib/selected.csv").set_index("id")
 merged = pd.read_csv(f"{ROOT}/runs/exa_attrib/events_merged.csv")
 tot_score = merged.score.sum()
 # an event seen by two collectors on two days keeps the earlier date and adds the later one's score
-merged["k"] = merged.provider + merged.gpu + merged.old.round(2).astype(str) + merged.new.round(2).astype(str)
+merged["k"] = merged.provider + merged.gpu + merged.old.map("{:.2f}".format) + merged.new.map("{:.2f}".format)
 w = {i: merged[merged.k == (e.provider + e.gpu + f"{e.old:.2f}" + f"{e.new:.2f}")].score.sum() for i, e in sel.iterrows()}
 S = json.load(open(f"{ROOT}/runs/exa_attrib/search_events.json"))
 by = {}
