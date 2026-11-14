@@ -2,7 +2,7 @@ project: track2-gpu-price-forecaster
 question: >
   Can a hypothesis-testing loop produce q10/q50/q90 forecasts of posted GPU rental prices at 1, 3 and 7 days that beat the drift baseline on origins the loop never saw, and what does it learn about what moves those prices?
 phase: inner_loop   # bootstrap -> inner_loop -> outer_loop -> conclude
-updated: "2026-11-14T10:50-08:00"
+updated: "2026-11-14T11:50-08:00"
 decision_due: "2026-11-14T15:00-08:00"
 
 evaluation:   # LOCKED in EVAL_PROTOCOL.md before any hypothesis is run
@@ -30,20 +30,24 @@ hypotheses:   # status: untested | running | supported | refuted
   H5: {status: untestable (single data vintage), claim: "The trailing day of some collectors is provisional and gets revised.", prediction: "Using the day before the origin as the anchor beats the origin-day value for those collectors."}
   H6: {status: untested, claim: "Pretrained time-series models (Chronos) carry no usable signal on step-like administered prices.", prediction: "Zero-shot Chronos quantiles lose to drift. A negative result worth reporting."}
   H7: {status: "weak evidence against (EDA screen, 19 series)", claim: "Other collectors' series for the same GPU lead a given series.", prediction: "Cross-series lagged changes add skill at h=3 and h=7."}
+  H7b: {status: refuted on dev, claim: "Collector-wide breadth of recent changes predicts how far each series moves next.", prediction: "Width scaling by breadth gains +0.005 to +0.02."}
+  H8: {status: refuted on dev, claim: "gpurentalprices leads fastgpu by a day for the same GPU.", prediction: "Shifting the centre by the partner's last change helps h=1 and h=3."}
+  H9: {status: refuted on dev, claim: "A >5% one-day move partly reverts within 7 days.", prediction: "Centre shift against the jump helps h=7."}
+  H10: {status: "not significant on dev (+0.0096, CI -0.004..+0.015, one episode)", claim: "A burst of dated price-increase headlines (Exa) precedes upward jumps.", prediction: "Widening q90 on a burst gains +0.005 to +0.02 at h=7."}
+  H11: {status: running (agent autopsy), claim: "Every median jump is either a repriced offer near the middle or a change in panel membership; composition jumps revert and repricing jumps persist.", prediction: "Composition share of jumps is material and its reversal slope is clearly negative; repricing slope near zero."}
+  H12: {status: running (agent panel), claim: "Simulating the offer panel and recomputing the median beats scaling the last value by empirical log changes.", prediction: "First method with q50 loss below last value; better upper-tail coverage at h=7."}
+  H13: {status: running (agent exa_attrib), claim: "Large provider repricings are announced in public before they appear in the price data.", prediction: "Unknown; either answer is a finding. If yes, a search step before each forecast is justified."}
 
 trajectory_file: data_out/trajectory.jsonl
-agents_running:   # dev split only; brief in experiments/AGENT_BRIEF.md
-  harness-builder: finishing acceptance checks (ticket 01)
-  m-hazard: state-dependent hurdle mixture (H2)
-  m-gbm: pooled LightGBM quantile regression (H3)
-  m-calib: online interval recalibration of drift
-  m-foundation: TimesFM and Chronos zero-shot (H6)
-  m-decision: up/flat/down classifier + weight-space programming feasibility
-  m-hedge: online aggregation of experts under pinball loss
-  m-centre: momentum / reversion of the centre (H1 remnant)
-  m-panel: provider-level panel under the median (H4)
-  m-cross: cross-collector coupling (H7)
+agents_running:   # round 2, brief in experiments/AGENT_BRIEF_R2.md, dev only
+  autopsy: cause of every median change from the offer panel; failure taxonomy (H11)
+  panel: structural forecaster simulating the offer panel (H12)
+  exa_attrib: Exa search for public announcements before the largest repricings (H13)
+  memory: past.dev client and memory plan; no data sent until the owner approves
+  longrun: 2 to 3 year rental and resale view (capability ladder, decay, income approach)
 next_actions:
-  - collect agent reports; for each nominated method run ONE validation query (orchestrator only), gate = paired difference vs drift with error budget split across queries
-  - plug surviving methods into m-hedge's aggregator as experts
-  - outer-loop reflection, progress report in to_human/, then the go/no-go
+  - collect round 2 reports; write failure taxonomy and verdicts to findings.md
+  - past.dev: show the owner the plan, get approval, run the small test, then wire writers and readers
+  - build the loop (autopsy -> scout -> proposer -> experimenter -> gate) around the surviving pieces
+  - one validation query per nominated method (orchestrator only), query count logged
+  - Sunday forecast file for origin 2026-11-06, reproduce.sh, findings, demo

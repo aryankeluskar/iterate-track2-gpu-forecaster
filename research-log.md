@@ -73,3 +73,13 @@ Dev blends (headline / rental_all): mix+chronos_last +0.088 / +0.042; mix+gbm+ch
 Width diagnostic (dev, drift-live cells): q50 loss is the same for every method (0.333 of baseline); all gain is in q10/q90. Upper tail is under-covered at h=7 by every method (27–33% of truths above q90).
 
 Query 5 (declared now, before running): ens of mix + gbm + chronos_last, equal weights. Caveat recorded up front: this query was added after seeing queries 1–4, and its members are the ones that did well there, so its validation number is optimistic and is not a clean test. It is run to pick the submission candidate, not as evidence.
+
+## 2026-11-14 11:50 PT: session resumed in T3 Code, turn to failure-driven research
+
+- Correction: the previous entry's header says 12:10 PT. The validation queries it reports ran 10:57 to 11:17 PT (val_query_log.jsonl, UTC stamps).
+- Recorded from the interrupted session (dev headline, base mix +0.0805 over drift): H7 collector-wide breadth as a width signal, H8 gpurentalprices leading fastgpu, H9 reversal after a >5% move: every variant at or below the base, all refuted (runs/failure/sig_round1.txt). H10 Exa dated-headline burst widening q90: +0.0096 skill against the base, 90% interval [-0.004, +0.015], gain from one episode (runs/failure/news_vs_base.txt). Not significant; not sent to validation.
+- Failure decomposition (runs/failure/decomp.txt): 52% of dev cells have no change; moves above 5% are 9% of cells and 61% of last-value loss; 10 of 50 origin days carry 56%. Hindsight bounds for the blend (0.182): knowing whether the price moves 0.219, direction 0.226, both 0.262. What remains is jump size.
+- Direction set by the team: study the failure modes and aim changes at them, not sweep for skill.
+- Verified by the orchestrator: the scored daily median is reproduced exactly from rental_observations (fastgpu 2,770 of 2,770 series-days to 6 Oct; gpurentalprices 99.94% of 7,193, misses are .5 rounding). Each jump therefore has an observable cause in the offer panel (a repriced offer near the middle, or offers entering or leaving).
+- Round 2 launched, five agents, brief in experiments/AGENT_BRIEF_R2.md, dev only: autopsy (cause of every median change; failure taxonomy), panel (structural forecaster that simulates the offer panel), exa_attrib (were the repricings behind the largest misses announced in public before they hit the data), memory (past.dev client and plan; no data sent until the owner approves), longrun (2 to 3 year rental and resale view).
+- wayfinder skill is not installed for this harness; the map in .scratch/ is maintained by hand.
