@@ -1,0 +1,8 @@
+{'lo': 0.15, 'hi': 0.9} first=+0.2427 second=+0.1316 all=+0.1509 h7_above_q90=0.287 h7_below_q10=0.130
+{'lo': 0.15, 'hi': 0.85} first=+0.2402 second=+0.1218 all=+0.1423 h7_above_q90=0.323 h7_below_q10=0.130
+{'lo': 0.1, 'hi': 0.9} first=+0.2391 second=+0.1247 all=+0.1446 h7_above_q90=0.287 h7_below_q10=0.116
+{'lo': 0.1, 'hi': 0.85} first=+0.2366 second=+0.1148 all=+0.1360 h7_above_q90=0.323 h7_below_q10=0.116
+{'lo': 0.05, 'hi': 0.9} first=+0.2191 second=+0.1085 all=+0.1277 h7_above_q90=0.287 h7_below_q10=0.095
+{'lo': 0.05, 'hi': 0.85} first=+0.2166 second=+0.0986 all=+0.1191 h7_above_q90=0.323 h7_below_q10=0.095
+{'lo': 0.1, 'hi': 0.9} first=+0.2391 second=+0.1247 all=+0.1446 h7_above_q90=0.287 h7_below_q10=0.116
+CHOSEN on first half: {'lo': 0.15, 'hi': 0.9} second half +0.1316 vs default +0.1247 (diff +0.0069)

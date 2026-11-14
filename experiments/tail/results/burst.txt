@@ -1,0 +1,46 @@
+
+===== base=mix, h=7: 1426 cells, 50 origin days; overall above-q90 rate 0.252, below-q10 0.157
+ drop top 3 origin days by exceedance count: they hold 0.14 of exceedances; remaining rate 0.237
+ drop top 5 origin days by exceedance count: they hold 0.23 of exceedances; remaining rate 0.225
+ drop top 10 origin days by exceedance count: they hold 0.42 of exceedances; remaining rate 0.196
+ share of days with rate>0.10: 0.68; days with zero exceedance: 0.14
+ first half: above-q90 rate 0.110, below-q10 0.226
+ second half: above-q90 rate 0.330, below-q10 0.120
+ weekly above-q90 rate: [0.134, 0.017, 0.084, 0.236, 0.375, 0.375, 0.286, 0.081]
+ per-day rate: lag-1 autocorr 0.93, lag-7 0.47, std 0.150 (binomial-iid std would be 0.056, cells overlap so expect higher)
+ q90 pinball loss: top 5 origin days hold 0.40, top 10 hold 0.61 of 50
+source_id  afhubbard  fastgpu_daily  gpurentalprices
+rate           0.087          0.278             0.28
+n            196.000        580.000           650.00
+                                                                    rate   n  q90loss  share
+series_id                                                                                   
+fastgpu_daily.neocloud_rate_card.B300.on_demand.median             0.724  29    8.263  0.169
+gpurentalprices.neocloud_rate_card.B300.on_demand.median           0.380  50    6.439  0.132
+gpurentalprices.neocloud_rate_card.A100_40GB.on_demand.median      0.320  50    4.382  0.090
+fastgpu_daily.neocloud_rate_card.B200.on_demand.median             0.552  29    4.318  0.088
+gpurentalprices.marketplace_ask.H100_80GB.spot.median              0.080  50    3.557  0.073
+gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median  0.500  50    2.540  0.052
+ rate excluding top 3 series by q90 loss: 0.234
+
+===== base=ens3, h=7: 1426 cells, 50 origin days; overall above-q90 rate 0.189, below-q10 0.134
+ drop top 3 origin days by exceedance count: they hold 0.17 of exceedances; remaining rate 0.171
+ drop top 5 origin days by exceedance count: they hold 0.27 of exceedances; remaining rate 0.160
+ drop top 10 origin days by exceedance count: they hold 0.46 of exceedances; remaining rate 0.137
+ share of days with rate>0.10: 0.70; days with zero exceedance: 0.12
+ first half: above-q90 rate 0.104, below-q10 0.184
+ second half: above-q90 rate 0.236, below-q10 0.107
+ weekly above-q90 rate: [0.134, 0.035, 0.05, 0.189, 0.158, 0.317, 0.263, 0.108]
+ per-day rate: lag-1 autocorr 0.89, lag-7 0.22, std 0.114 (binomial-iid std would be 0.056, cells overlap so expect higher)
+ q90 pinball loss: top 5 origin days hold 0.42, top 10 hold 0.63 of 50
+source_id  afhubbard  fastgpu_daily  gpurentalprices
+rate           0.071          0.229            0.189
+n            196.000        580.000          650.000
+                                                                    rate   n  q90loss  share
+series_id                                                                                   
+fastgpu_daily.neocloud_rate_card.B300.on_demand.median             0.552  29    7.548  0.170
+gpurentalprices.neocloud_rate_card.B300.on_demand.median           0.260  50    5.484  0.123
+gpurentalprices.neocloud_rate_card.A100_40GB.on_demand.median      0.180  50    4.302  0.097
+fastgpu_daily.neocloud_rate_card.B200.on_demand.median             0.483  29    3.981  0.089
+gpurentalprices.marketplace_ask.H100_80GB.spot.median              0.060  50    3.369  0.076
+gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median  0.300  50    2.104  0.047
+ rate excluding top 3 series by q90 loss: 0.179

@@ -1,0 +1,36 @@
+slug: prov
+written_before_first_scored_run: true
+failure_mode: >
+  Every method so far has the last value's q50 loss (panel's blend with mix: 0.98) and under-covers the
+  upper tail at h=7 (25-33% of truths above q90). Up-moves above 5% carry 46% of last-value loss on dev.
+measured_before_scoring:
+  repricing_concentration: >
+    (orchestrator, runs/orch/prov.py, rows <= 2026-10-13) verda makes 84% of fastgpu reprices with 14% of
+    offer-days; scaleway + verda 81% on gpurentalprices; 97% of verda reprices are increases; its weekly mean
+    daily log change rose 0.08 -> 0.93%/day. Median moves on 76% of days when the middle provider is dynamic
+    (>50% trailing reprice rate) vs 6% when static; Spearman(middle provider trailing drift, next h change)
+    0.29-0.36.
+  provider_policy: >
+    (experiments/prov/results/provider_policy.txt) on a day verda reprices, a median 92% of its observed cards
+    reprice too (fastgpu 24 cards, gpurentalprices 12); pairwise correlation of daily change across cards
+    0.60 / 0.68; same-day size CV across cards 0.23. scaleway: all 5 cards move identically (CV 0.01).
+    verda on gpurentalprices was static for 5 weeks then began its uptrend (a regime start inside the data).
+    So estimating dynamics at provider level across all GPUs of the collector is justified.
+mechanism: >
+  The scored value is the median of a small offer panel. A provider that creeps its whole rate card up drags
+  the median only while one of its offers is at the middle; once it passes a static neighbour the median
+  sits on the neighbour. Simulating every offer with its own provider's recent signed daily changes
+  (resampled in blocks of recent provider-days, keeping trend and autocorrelation), static offers fixed,
+  and reading quantiles of the simulated medians lets the order statistics cap the drift, which a
+  centre shift (drift x h) cannot.
+prediction: >
+  On cells whose middle provider is dynamic, q50 loss falls to 0.85-0.95 of the last value's and the upper
+  tail at h=7 is better covered; overall q50 ratio 0.95-0.99. Alone it is narrow on static panels (no
+  composition / rare-reprice mass), so it should lose to mix overall unless gated; gated (prov where a
+  dynamic provider is near the middle, mix elsewhere) or blended with mix, expect +0.005 to +0.02 skill
+  over mix, mostly fastgpu B200/B300/H100 rate cards and gpurentalprices verda-heavy panels, at h=3 and h=7.
+  Signed sizes should beat symmetric sizes on the dynamic cells. Gain should be larger in the second half
+  of dev (the uptrend strengthens) and the method should hurt briefly around a drift sign change.
+refuted_if: >
+  The gated/blended variant's paired skill interval against mix lies at or below 0, or the q50 loss ratio
+  on dynamic-middle cells is >= 1.0, or signed sizes do no better than symmetric sizes on dynamic cells.

@@ -1,0 +1,5 @@
+[["pos skew1 fit30", {"feats":["pos"],"skew":1.0,"fit_days":30}],
+ ["pos skew1 fit60", {"feats":["pos"],"skew":1.0,"fit_days":60}],
+ ["pos skew1 fit90", {"feats":["pos"],"skew":1.0,"fit_days":90}],
+ ["pos skew1 win14", {"feats":["pos"],"skew":1.0,"win":14,"minper":7}],
+ ["pos skew1 + dev skew", {"feats":["pos","dev"],"skew":1.0}]]

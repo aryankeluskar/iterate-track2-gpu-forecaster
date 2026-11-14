@@ -1,0 +1,36 @@
+slug: calendar
+written_before_first_search: true
+question: >
+  Can Exa build a calendar of announced, dated GPU price changes by the providers in our offer panels
+  (announcements published 2026-08-01..2026-11-06), and does applying an announced change to the origin-day
+  panel on its effective date remove last-value error on dev?
+failure_mode_targeted: >
+  Large rate-card repricings (up-moves carry 46% of dev last-value loss). The exa_attrib study found 2 of 12
+  rate-card events announced ahead with an effective date (Nebius 10-01, Jarvislabs 10-05), carrying 37% of
+  rate-card event loss weight. Measured share of total dev last-value loss is computed in Part B.
+mechanism: >
+  The scored value is the median of a small offer panel. An announced repricing with an effective date fixes
+  one offer's future price; setting that offer to the announced price on the effective date and recomputing
+  the median gives the centre the panel will have, if nothing else changes.
+search_design:
+  providers: all providers seen in the fastgpu_daily and gpurentalprices panels of universe rental_all (55)
+  windows: [2026-08-01..2026-08-31, 2026-09-01..2026-09-30, 2026-10-01..2026-11-06]   # end dates never past 2026-11-06
+  per_provider_queries: [press/news query, includeDomains query on the provider's own domains]
+  generic_queries: weekly windows, press coverage of neocloud GPU price increases or cuts with an effective date
+  leak_guards:
+    - every request endPublishedDate <= 2026-11-06; results with no publishedDate or publishedDate past the window end are dropped
+    - known live price-tracker / comparison domains passed in excludeDomains; tracker-like titles dropped before any contents fetch
+    - full text fetched with contents.snapshotAsOf = 2026-11-06 (stored copy at the cutoff, never live); a second snapshot at published+2d is compared to flag post-publication edits
+  budget_usd: 6.0
+predictions:
+  announced_dated_changes_found: 8          # rough range 4..15 calendar lines across all panel providers
+  providers_with_any_announcement: 5
+  hit_rate_panel_matches_announcement: 0.6  # for entries effective <= 2026-10-13 whose provider/GPU is in a panel
+  median_date_error_days: 0..1              # UTC vs local-time effective dates
+  share_of_dev_last_value_loss_on_affected_cells: 0.02..0.06
+  error_removed_on_affected_cells: 0.3..0.7 # fraction of last-value pinball/abs error removed on those cells
+  sunday_window_entries_effective_2026-11-01..20: 0..2
+refutation:
+  - fewer than 3 dated announcements found beyond the two already known -> the calendar is too sparse to matter
+  - hit rate below 0.4 -> announced prices do not map onto panel offers (tier/region/currency mismatch)
+  - calendar-adjusted centre removes under 10% of last-value error on affected cells -> other panel moves swamp it

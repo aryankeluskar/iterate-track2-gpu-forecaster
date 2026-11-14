@@ -1,0 +1,95 @@
+        method    part  half  n_cells  skill  coverage worse_than_lv  better_than_lv                d_vs_drift                  d_vs_mix
+         drift     all  full    40338 0.0960     0.855        52/357              95                       NaN                       NaN
+         drift     all early    16241 0.0886     0.905        47/301              37                       NaN                       NaN
+         drift     all  late    24097 0.0991     0.821        54/357              93                       NaN                       NaN
+         drift nonhead  full    36060 0.0967     0.882        47/320              67                       NaN                       NaN
+         drift nonhead early    14738 0.0881     0.921        44/264              29                       NaN                       NaN
+         drift nonhead  late    21322 0.1006     0.855        49/320              65                       NaN                       NaN
+         drift    head  full     4278 0.0886     0.625          5/37              28                       NaN                       NaN
+         drift    head early     1503 0.0972     0.744          3/37               8                       NaN                       NaN
+         drift    head  late     2775 0.0868     0.561          5/37              28                       NaN                       NaN
+           mix     all  full    40338 0.1368     0.898       116/357             108                       NaN                       NaN
+           mix     all early    16241 0.1290     0.919        68/301              45                       NaN                       NaN
+           mix     all  late    24097 0.1402     0.884        97/357             108                       NaN                       NaN
+           mix nonhead  full    36060 0.1335     0.919       112/320              75                       NaN                       NaN
+           mix nonhead early    14738 0.1265     0.932        64/264              36                       NaN                       NaN
+           mix nonhead  late    21322 0.1366     0.909        93/320              75                       NaN                       NaN
+           mix    head  full     4278 0.1691     0.725          4/37              33                       NaN                       NaN
+           mix    head early     1503 0.1720     0.788          4/37               9                       NaN                       NaN
+           mix    head  late     2775 0.1685     0.690          4/37              33                       NaN                       NaN
+allrental_mctg     all  full    40338 0.1528     0.869       125/357             115 +0.0569 [+0.0334,+0.0934] +0.0160 [-0.0024,+0.0440]
+allrental_mctg     all early    16241 0.1795     0.907        47/301              48 +0.0909 [+0.0228,+0.1677] +0.0505 [+0.0308,+0.0716]
+allrental_mctg     all  late    24097 0.1413     0.844       115/357             112 +0.0422 [+0.0207,+0.0691] +0.0011 [-0.0162,+0.0338]
+allrental_mctg nonhead  full    36060 0.1502     0.885       122/320              81 +0.0535 [+0.0280,+0.0914] +0.0168 [-0.0024,+0.0447]
+allrental_mctg nonhead early    14738 0.1771     0.914        44/264              38 +0.0889 [+0.0194,+0.1656] +0.0506 [+0.0304,+0.0714]
+allrental_mctg nonhead  late    21322 0.1380     0.866       112/320              78 +0.0373 [+0.0129,+0.0679] +0.0013 [-0.0172,+0.0353]
+allrental_mctg    head  full     4278 0.1774     0.734          3/37              34 +0.0888 [+0.0729,+0.1096] +0.0083 [-0.0026,+0.0325]
+allrental_mctg    head early     1503 0.2222     0.838          3/37              10 +0.1250 [+0.0695,+0.2079] +0.0502 [+0.0261,+0.0716]
+allrental_mctg    head  late     2775 0.1680     0.678          3/37              34 +0.0812 [+0.0545,+0.0914] -0.0005 [-0.0095,+0.0196]
+allrental_3mix     all  full    40338 0.1512     0.850       118/357             109 +0.0552 [+0.0350,+0.0824] +0.0144 [+0.0078,+0.0260]
+allrental_3mix     all early    16241 0.1590     0.884        64/301              52 +0.0703 [+0.0120,+0.1407] +0.0300 [+0.0161,+0.0442]
+allrental_3mix     all  late    24097 0.1478     0.827       108/357             107 +0.0487 [+0.0328,+0.0643] +0.0076 [+0.0022,+0.0161]
+allrental_3mix nonhead  full    36060 0.1490     0.867       114/320              76 +0.0523 [+0.0314,+0.0816] +0.0155 [+0.0083,+0.0281]
+allrental_3mix nonhead early    14738 0.1586     0.896        54/264              42 +0.0705 [+0.0108,+0.1417] +0.0321 [+0.0170,+0.0467]
+allrental_3mix nonhead  late    21322 0.1446     0.847       104/320              74 +0.0439 [+0.0282,+0.0625] +0.0079 [+0.0022,+0.0165]
+allrental_3mix    head  full     4278 0.1721     0.708          4/37              33 +0.0834 [+0.0610,+0.0941] +0.0030 [-0.0027,+0.0070]
+allrental_3mix    head early     1503 0.1643     0.765         10/37              10 +0.0671 [+0.0345,+0.1188] -0.0077 [-0.0229,+0.0024]
+allrental_3mix    head  late     2775 0.1737     0.677          4/37              33 +0.0869 [+0.0639,+0.0937] +0.0052 [+0.0024,+0.0106]
+      mix_gate     all  full    40338 0.1446     0.857       100/357             109 +0.0486 [+0.0273,+0.0756] +0.0077 [+0.0029,+0.0166]
+      mix_gate     all early    16241 0.1488     0.889        50/301              43 +0.0602 [+0.0036,+0.1309] +0.0198 [+0.0079,+0.0336]
+      mix_gate     all  late    24097 0.1427     0.836        90/357             107 +0.0436 [+0.0253,+0.0605] +0.0025 [+0.0001,+0.0059]
+      mix_gate nonhead  full    36060 0.1422     0.875        96/320              76 +0.0455 [+0.0226,+0.0751] +0.0087 [+0.0034,+0.0179]
+      mix_gate nonhead early    14738 0.1473     0.901        46/264              34 +0.0592 [+0.0018,+0.1304] +0.0208 [+0.0082,+0.0351]
+      mix_gate nonhead  late    21322 0.1398     0.857        86/320              74 +0.0392 [+0.0188,+0.0591] +0.0032 [+0.0001,+0.0071]
+      mix_gate    head  full     4278 0.1676     0.704          4/37              33 +0.0789 [+0.0583,+0.0913] -0.0015 [-0.0046,+0.0015]
+      mix_gate    head early     1503 0.1755     0.766          4/37               9 +0.0783 [+0.0374,+0.1416] +0.0035 [+0.0000,+0.0073]
+      mix_gate    head  late     2775 0.1659     0.670          4/37              33 +0.0791 [+0.0523,+0.0861] -0.0026 [-0.0067,+0.0001]
+method                     allrental_3mix  allrental_mctg  drift    mix  mix_gate
+class               half                                                         
+aggregator_cheapest early          -0.025           0.046 -1.183 -0.449    -0.022
+                    full            0.238           0.270 -0.261  0.080     0.189
+                    late            0.325           0.345  0.046  0.256     0.260
+hyperscaler_list    early           0.014           0.001  0.055  0.017     0.017
+                    full           -0.027          -0.020 -0.001 -0.037    -0.029
+                    late           -0.041          -0.027 -0.020 -0.055    -0.045
+hyperscaler_spot    early           0.166           0.166  0.158  0.152     0.154
+                    full            0.153           0.169  0.104  0.148     0.148
+                    late            0.146           0.171  0.079  0.146     0.144
+marketplace_ask     early           0.223           0.257  0.150  0.206     0.206
+                    full            0.217           0.245  0.184  0.207     0.207
+                    late            0.212           0.234  0.213  0.208     0.207
+neocloud_rate_card  early          -0.068          -0.079 -0.098 -0.070    -0.049
+                    full            0.096           0.059  0.030  0.088     0.094
+                    late            0.112           0.072  0.042  0.103     0.107
+neocloud_spot       early          -0.081          -0.073 -0.319 -0.563    -0.065
+                    full            0.324           0.233  0.110  0.261     0.326
+                    late            0.386           0.279  0.176  0.387     0.385
+tier      status    
+extended  interval      310
+          stale          21
+          zero_width    224
+headline  interval       33
+          zero_width      4
+dtype: int64
+                                                           series_id     tier status  days_since_last  changes_14d  history_days
+                      afhubbard.marketplace_ask.H200_NVL.spot.median extended  stale                7            0             8
+                afhubbard.marketplace_ask.RTX_A5000.on_demand.median extended  stale                7            0             8
+                            afhubbard.marketplace_ask.T4.spot.median extended  stale                8            0             8
+                   afhubbard.neocloud_rate_card.A16.on_demand.median extended  stale               36            0           298
+                afhubbard.neocloud_rate_card.MI300X.on_demand.median extended  stale              295            0           298
+             afhubbard.neocloud_rate_card.RTX_A5000.on_demand.median extended  stale              274            0           298
+                fastgpu_daily.hyperscaler_list.P100.on_demand.median extended  stale                8            0            59
+                     fastgpu_daily.hyperscaler_spot.P100.spot.median extended  stale                8            0            59
+                 fastgpu_daily.marketplace_ask.P100.on_demand.median extended  stale               18            0            25
+                  fastgpu_daily.marketplace_ask.RTX_3070.spot.median extended  stale               25            0            25
+         fastgpu_daily.marketplace_ask.RTX_4000_Ada.on_demand.median extended  stale                6            0             8
+            fastgpu_daily.marketplace_ask.RTX_A4500.on_demand.median extended  stale                7            0             8
+              fastgpu_daily.marketplace_ask.RTX_PRO_5000.spot.median extended  stale                6            0             6
+     gpurentalprices.marketplace_ask.H100_PCIe_80GB.on_demand.median extended  stale                4            1            33
+           gpurentalprices.marketplace_ask.H200_NVL.on_demand.median extended  stale                4            6            21
+               gpurentalprices.marketplace_ask.RTX_A4500.spot.median extended  stale                4            0             4
+gpurentalprices.neocloud_rate_card.GB300.reserved_unspecified.median extended  stale               31            0            33
+     gpurentalprices_cheapest.aggregator_cheapest.MI325X.spot.median extended  stale              110            0           111
+     gpurentalprices_cheapest.aggregator_cheapest.MI355X.spot.median extended  stale               33            0           111
+  gpurentalprices_cheapest.aggregator_cheapest.RTX_A4500.spot.median extended  stale                4            0             4
+   gpurentalprices_cheapest.aggregator_cheapest.T4.serverless.median extended  stale              110            0           111

@@ -16,6 +16,8 @@ params
   k         stage-2 prior strength of the pooled samples (own samples weigh 1 each)
   volscale  rescale stage-2 samples by (series EWMA |change| now) / (EWMA |change| at sample start)
   pmult     multiply P(move) by this before reading quantiles (diagnostic; 1 = as fitted)
+  train     "all" (every daily_statistics series) | "active" (series that changed on >= 10% of days up to origin)
+  dirsrc    "clf" (P(up | move) from the classifier) | "pool" (recency-weighted up share of the stage-2 samples)
   collapse  "mixture" (exact mixture quantiles) | "none" (ignore p0: quantiles of the signed move mixture)
 """
 from __future__ import annotations
@@ -29,7 +31,7 @@ from gpuf.data import PACK
 from gpuf.methods import register
 
 NUM = ["ltsl", "n3", "n7", "n14", "ewm", "peer_ewm", "last_sign", "last_size", "pos30", "lnprov", "dprov7",
-       "provchg3", "p25rel", "p75rel", "spread"]
+       "provchg3", "p25rel", "p75rel", "spread", "frac30", "frac_all"]
 CAT = ["collector", "iclass", "family"]
 _PANEL: dict | None = None
 
@@ -84,6 +86,8 @@ def series_frame(days, vals, pan, origin):
     f = {"ltsl": np.log1p(np.minimum(tsl, 90))}
     for w in (3, 7, 14):
         f["n%d" % w] = cs - np.r_[np.zeros(w), cs[:-w]] if n > w else cs.astype(float)
+    f["frac30"] = pd.Series(ch.astype(float)).rolling(30, min_periods=1).mean().to_numpy()
+    f["frac_all"] = cs / (idx + 1.0)
     f["ewm"] = pd.Series(np.abs(dl)).ewm(halflife=7).mean().to_numpy()
     lsz = pd.Series(np.where(ch, dl, np.nan)).ffill().fillna(0).to_numpy()
     f["last_sign"] = np.sign(lsz); f["last_size"] = np.abs(lsz)
@@ -200,7 +204,7 @@ def wquantile(x, w, q):
 
 
 @register("hazard")
-def make(clf="lr", refit=7, hl=30.0, k=20.0, volscale=False, pmult=1.0, collapse="mixture", clf_hl=0.0,
+def make(clf="lr", refit=7, train="all", dirsrc="clf", hl=30.0, k=20.0, volscale=False, pmult=1.0, collapse="mixture", clf_hl=0.0,
          horizons_fit=(1, 3, 7)):
     st = {"origin": None, "fr": None, "T": {}, "clf": {}, "base": {}, "fit_at": None}
     log = []
@@ -212,6 +216,9 @@ def make(clf="lr", refit=7, hl=30.0, k=20.0, volscale=False, pmult=1.0, collapse
         if st["fit_at"] is None or origin - st["fit_at"] >= refit:
             st["fit_at"] = origin
             for h, T in st["T"].items():
+                if train == "active":
+                    act = T.groupby("sid")["frac_all"].transform("last") >= 0.10
+                    T = T[act]
                 st["clf"][h] = fit_clf(clf, T, clf_hl, origin)
                 st["base"][h] = fit_clf("base", T)
 
@@ -247,16 +254,18 @@ def make(clf="lr", refit=7, hl=30.0, k=20.0, volscale=False, pmult=1.0, collapse
             T = st["T"][h]
             p = st["clf"][h](row)[0]
             pb = st["base"][h](row)[0]
-            log.append((sid, origin_day, h, *p, *pb))
-            pm = min(1.0, (p[1] + p[2]) * pmult)
-            tot = max(p[1] + p[2], 1e-9)
-            pu, pdn = pm * p[1] / tot, pm * p[2] / tot
-            p0 = 1 - pu - pdn
-            if collapse == "none":
-                p0, pu, pdn = 0.0, pu / max(pm, 1e-9), pdn / max(pm, 1e-9)
             ewm_now = float(row["ewm"].iloc[0])
             ru, wu = size_samples(T, sid, row["grp"].iloc[0], 1, origin_day, ewm_now)
             rd, wd = size_samples(T, sid, row["grp"].iloc[0], 2, origin_day, ewm_now)
+            own = np.bincount(T.loc[T["sid"].to_numpy() == sid, "y"], minlength=3) + 1.0
+            log.append((sid, origin_day, h, *p, *pb, *(own / own.sum())))
+            pm = min(1.0, (p[1] + p[2]) * pmult)
+            tot = max(p[1] + p[2], 1e-9)
+            fu = p[1] / tot if dirsrc == "clf" else wu.sum() / max(wu.sum() + wd.sum(), 1e-12)
+            pu, pdn = pm * fu, pm * (1 - fu)
+            p0 = 1 - pu - pdn
+            if collapse == "none":
+                p0, pu, pdn = 0.0, fu, 1 - fu
 
             def q(a):
                 if a < pdn and len(rd):

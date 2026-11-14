@@ -1,0 +1,54 @@
+slug: policy
+written: 2026-11-14, before any Exa call; measured table written to results/measured_rates.csv by measure.py and not displayed (only provider names and row counts were printed)
+hypothesis: >
+  A provider's published pricing policy, found by dated web search before the forecast origin, separates providers
+  that reprice often from providers that do not, and is a usable prior for a provider with little price history.
+mechanism: >
+  Providers that state prices follow demand (market price, auction, bidding, spot) reprice their posted offers
+  continuously; providers with a published rate card change prices rarely, in discrete announced steps.
+prediction:
+  direction: DYNAMIC mean reprice rate well above FIXED mean rate (>=3x), AUC of DYNAMIC vs rate>=15% around 0.75 or better
+  where: strongest on neocloud_spot / marketplace_ask offers and on verda/scaleway-type rate cards; weakest on hyperscaler lists
+  usefulness: leave-one-out label mean beats the pooled collector-class rate in absolute error for providers with <14 days of data
+refutes: >
+  AUC under 0.65 with an interval containing 0.5; or most high-rate providers labelled FIXED/UNKNOWN; or the label mean
+  does not beat the pooled rate in the early-history test.
+data_cut: offer rows dated on or before 2026-10-13 (CUT in measure.py). Reprice = offer-level price differs from the same offer's price the previous day.
+measured_rate_definition:
+  unit: provider x collector x instrument_class
+  p_rep: changed offer-days / consecutive offer-day pairs
+  up_share: increases / changes
+  high_rate_threshold: 0.15
+search:
+  endpoint: POST https://api.exa.ai/search, type auto, numResults 8, contents.highlights true
+  end_published_date: 2026-08-17T23:59:59Z (day before first dev origin 2026-08-18); start none
+  snapshot: contents.maxAgeHours -1 on every call (stored versions only, never live fetch)
+  queries_per_provider: (1) own pricing and docs pages, (2) news and announcements about pricing model
+  discard: any result with missing publishedDate, publishedDate after 2026-08-17, or published date unparsable
+  never_read: price-tracker or price-comparison sites (domain blocklist in search.py); their text is dropped at ingest and never cached
+  contents_fetch: only for results that are dated <= end date and either the provider's own domain or about the provider; max chars 6000; maxAgeHours -1
+  cache: every response saved under runs/policy/cache/ keyed by sha256 of endpoint+request; reruns are offline
+  budget_usd: 4; cost field costDollars.total summed from cache
+rubric:
+  unit_of_label: provider x instrument slot. Slot RATE (neocloud_rate_card, hyperscaler_list) and slot SPOT (neocloud_spot, hyperscaler_spot, marketplace_ask).
+  admissible_source: dated <= 2026-08-17, not a tracker, and the provider name appears in title, URL or the quoted sentence.
+  DYNAMIC: an admissible source sentence states that the provider's prices (for that slot) change with demand, supply, market price,
+    auction, bidding, or are spot / preemptible / interruptible / marketplace-set. SPOT slot is DYNAMIC if the provider
+    offers spot, bidding, auction or a peer marketplace (sentence required). RATE slot is DYNAMIC only on a sentence about
+    dynamic, market-based, demand-based or daily-changing prices that is not specific to spot.
+  FIXED: no DYNAMIC sentence, and at least one admissible source states a published per-hour or per-month rate, "pay as you go", reserved
+    commitment price, or "fixed price" for the slot.
+  UNKNOWN: no admissible source for the slot.
+  conflict: if both DYNAMIC and FIXED evidence exist for a slot, DYNAMIC wins only when its sentence is the more recent or explicitly about the slot; a later source saying dynamic pricing is ended or phased out turns it into FIXED. Conflicts are listed in the md.
+  labeller: regex pre-filter extracts candidate sentences from highlights; label assigned by rule in label.py; manual overrides are allowed only before scoring and are listed in results/overrides.json with reason.
+  blindness_caveat: the task statement gave the labeller measured rates for verda, scaleway, spheron, sfcompute, aws spot, nebius, digitalocean, crusoe, lambdalabs, hyperstack, coreweave. Labelling is therefore not blind for these; scoring is reported for all providers and for the others only.
+scoring:
+  - reprice rate by label with Wilson-style or bootstrap intervals (resampling providers)
+  - AUC of DYNAMIC vs measured rate>=0.15 (provider-class units, UNKNOWN reported separately and excluded from AUC), bootstrap 90% interval
+  - confusion table label x rate>=0.15; each miss explained by the source dates and quotes
+  - Verda: list every dated Verda/DataCrunch source, including any phase-out statement
+usefulness_test:
+  early_history: origins in dev (2026-08-18..2026-10-06) where a provider-class unit has under 14 days of history (days since its first observation)
+  priors: (a) pooled collector-class rate from other providers observed by the origin (b) label mean rate from other providers only (leave the provider out)
+  truth: provider's measured rate over days after the origin up to 2026-10-13
+  metric: absolute error of each prior against truth, offer-day weighted; report units and n

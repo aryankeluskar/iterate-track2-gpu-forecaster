@@ -1,0 +1,9 @@
+slug: midstate
+written: before the first scored run (dev only)
+failure_mode: interval width is set by the series' own history state (changed in last 3 days); the panel median's mover is the middle provider.
+measured_loss_share: orchestrator measured mean |log change| at h=7 of 1.4% (static middle provider) vs 8.3% (dynamic), a factor ~6; moves >5% carry 61% of last-value loss.
+mechanism: median can only move when an offer near the middle reprices or the panel changes; middle provider's trailing reprice rate sees this on the day the middle changes hands.
+hypothesis: conditioning pooled h-day changes on the middle provider's reprice bucket (alone or crossed with mix's own state) sharpens q10/q90 vs mix's chgk state.
+prediction: +0.01 to +0.03 pooled skill over mix on fastgpu_daily and gpurentalprices, mostly h=3 and h=7; blend with mix adds a bit; q50 centre stays at last value (ratio ~1).
+refuted_if: paired difference vs mix has 90% interval including zero and negative on both dev halves, or blend with mix does not beat mix.
+variants: state mid|midchg; w 7/14/21; bucket bounds; centre median|last; tail sign on drift; gap clip.

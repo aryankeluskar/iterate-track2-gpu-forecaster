@@ -1,0 +1,20 @@
+slug: fragility
+method: fragility (src/gpuf/methods/fragility.py)
+failure_mode: >
+  Composition changes (offers entering or leaving the panel behind a daily median) are 10% of one-day median
+  changes but 32% of the blend's loss; with mixed cells 54%. Jumps do not revert; their size equals the panel's
+  one-offer fragility (corr 0.88). Composition cells run at 0.88 of last-value loss.
+hypothesis: >
+  Shaping q10/q90 by where the median can jump (one-offer-out, provider-out, one-offer-in medians of the origin-day
+  panel), with probability from the composition hazard, covers composition cells better than a smooth scaling.
+mechanism: >
+  Median over 3-17 offers moves by composition to a neighbouring order statistic. A mixture
+  (1-p) base + p reachable values puts tail mass where jumps land; a soft variant pulls q10/q90 toward the
+  reachable value in proportion to p.
+prediction: >
+  Composition and mixed cells improve by 0.03-0.08 of their last-value loss; no-move cells lose a little
+  (wider tails); pooled net skill vs base +0.000 to +0.010, mostly fastgpu h=3,7 upper tail. Provider clustering:
+  P(event on another series within 1-3 days | provider event today) about 2-4x base rate.
+refuted_if: >
+  Pooled paired difference vs base has a 90% interval straddling zero with a point estimate below +0.003, or the
+  gain on composition cells is offset by the loss on no-move cells, or the cluster test shows a ratio below 1.3.

@@ -19,7 +19,12 @@ def png(fig):
 
 
 dev = [r for r in rows if r["split"] == "dev" and r["universe"] == "rental_headline" and r.get("n_cells") == 4278]
-fig, ax = plt.subplots(figsize=(8.5, 3.6))
+TARGETS = [(0.169, "reference model (mix)", "#57606a"), (0.219, "hindsight: knowing whether the price moves", "#1a7f37"),
+           (0.262, "hindsight: knowing whether and which way it moves", "#1a7f37")]
+MILESTONES = [("1042", "round 1: nine methods"), ("1118", "failure analysis"), ("1140", "round 2: offer panel"),
+              ("1147", "round 3: breadth swarm"), ("1153", "round 4: providers")]
+ax_top = 0.285
+fig, ax = plt.subplots(figsize=(9.5, 4.4))
 best, xs, ys, bx, by, lab = -9, [], [], [], [], []
 for i, r in enumerate(dev):
     xs.append(i); ys.append(r["pooled_skill"])
@@ -30,9 +35,21 @@ ax.step(bx + [len(dev)], by + [by[-1]], where="post", color="#1f6feb", lw=2, lab
 for x, y, l in zip(bx, by, lab):
     ax.annotate(l, (x, y), textcoords="offset points", xytext=(3, 5), fontsize=7)
 drift = next(r["pooled_skill"] for r in dev if r["method"] == "drift")
-ax.axhline(drift, color="#d1242f", ls="--", lw=1); ax.text(0, drift + 0.004, "drift baseline", color="#d1242f", fontsize=8)
+ax.axhline(drift, color="#d1242f", ls="--", lw=1); ax.text(len(dev) * 0.30, drift + 0.003, "drift baseline (the bar to beat)", color="#d1242f", fontsize=7.5)
+# Targets: dotted horizontal lines. Hindsight bounds come from runs/failure/decomp.txt (the blend with perfect knowledge).
+for y, name, col in TARGETS:
+    ax.axhline(y, color=col, ls=":", lw=1.2); ax.text(len(dev) * 0.30, y + 0.003, name, color=col, fontsize=7.5, ha="left")
+# Milestones: dotted vertical lines at the first run logged after each round started (local time in the run id).
+marks = {}
+for hhmm, name in MILESTONES:
+    i = next((k for k, r in enumerate(dev) if r["experiment_id"][9:13] >= hhmm), len(dev))
+    marks.setdefault(i, []).append(name)
+for i, names in marks.items():
+    ax.axvline(i - 0.5, color="#8250df", ls=":", lw=1)
+    ax.text(i - 0.2, 0.03, "\n".join(names), color="#8250df", fontsize=7, rotation=90, va="bottom", ha="left", linespacing=1.1)
+ax.set_xlim(-3, len(dev) + 8)
 ax.set_xlabel("scored run on the development period (in order)"); ax.set_ylabel("pooled skill against last value")
-ax.set_ylim(min(0.0, min(ys)) - 0.01, max(ys) + 0.03); ax.legend(frameon=False, fontsize=8, loc="lower right")
+ax.set_ylim(0.0, ax_top); ax.legend(frameon=False, fontsize=8, loc="lower center")
 traj = png(fig)
 
 counts = {}
