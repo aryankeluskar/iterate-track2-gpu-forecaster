@@ -1,0 +1,30 @@
+# Written before the first run of `sig` (2026-11-14). Dev only.
+source: experiments/failure/decomp.py and events.py (dev period): 9% of cells (moves >5%) carry 61% of last-value loss; 10 of 50 origin days carry 56%.
+H7_breadth:
+  claim: the share of a collector's series that changed in the last b days predicts how much each of its series moves next, beyond the series' own recent-change state.
+  test: sig(base=mix chgk3 hl30, alpha>0) vs the same base, paired on dev headline.
+  prediction: gain +0.005 to +0.02 pooled skill, mostly h=7 and fastgpu_daily.
+  refuted_if: no alpha in {0.25,0.5,1.0} with b in {3,7} has a 90% CI above zero against the base.
+H8_lead:
+  claim: gpurentalprices moves about a day before fastgpu_daily for the same GPU and class, so the partner's latest change shifts the centre.
+  test: sig(base, beta>0) vs base; direction "g2f" (only fastgpu series shifted) and "both".
+  prediction: small gain (+0.003 to +0.01) concentrated in fastgpu_daily h=1 and h=3; q50 loss falls below 0.333 of baseline for the first time.
+  refuted_if: no beta in {0.15,0.3,0.5} has a 90% CI above zero against the base.
+H9_reversal:
+  claim: after a 1-day move above 5% the price gives back part of the jump within 7 days.
+  test: sig(base, rev>0): centre shifted by -rev * (last 1-day log change) when |change|>5%, h=7 only.
+  prediction: weak; about 69 jumps in dev. Expect CI to include zero.
+  refuted_if: CI excludes zero on the negative side for every rev in {0.15,0.3}.
+# --- results of H7-H9 (dev headline, base mix +0.0805 vs drift): every variant scored at or below the base. All three refuted.
+# --- added 2026-11-14 before the first `news` run
+H10_news:
+  source: Exa searches restricted to one published day each (src/gpuf/scout.py). On dev, the 7-day count of hits with an
+    "increase" word in the title has Spearman 0.58 with the next 7-day mean |log change| and 0.53 with the share of truths
+    above the blend's q90 (28% when the count is >=20, 14% otherwise).
+  claim: a burst of price-increase news raises the chance of an upward jump over the next week, so the upper tail should widen.
+  test: news(base=mix, g>0) vs base, paired on dev headline. z = count(7d) / median count over the previous 42 days.
+    q90 log offset *= 1 + g*clip(z-1, 0, zmax). Symmetric variant uses "decrease" titles for q10.
+  prediction: +0.005 to +0.02 pooled skill, nearly all at h=7.
+  refuted_if: no g in {0.25,0.5,1.0} has a 90% CI above zero against the base.
+  caveat_written_first: the dev period holds ONE news burst (from 17 Sep, ahead of the 1 Oct Nebius repricing). Fifty
+    autocorrelated days around one episode are closer to one observation than fifty. A pass on dev is weak evidence.
