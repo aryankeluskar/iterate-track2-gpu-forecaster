@@ -1,58 +1,63 @@
-# Track 2 feasibility, for the team's track decision
+# Can we do Track 2? Yes.
 
-Written Saturday 14 November, about 13:05 PT, after the independent audit reported. Every number is in `research-log.md`, `data_out/ledger.jsonl` or `data_out/val_gate.jsonl`.
+Saturday 14 November, early afternoon. This is for the team's choice between Track 2 and Track 5.
 
-## Verdict
+## The short answer
 
-Track 2 is feasible. A forecaster that beats the organisers' baseline on dates it was not built on exists, rebuilds from one command, and already has a valid submission file. What is left is packaging, not research.
+We have a working GPU price forecaster. It beats the organisers' baseline on weeks of data it was never built on, it rebuilds from one command in 25 seconds, and the file we would submit already exists. The research is done. What is left is writing it up and presenting it.
 
-## What is established
+## How good is it?
 
-| Period | Our blend | Drift (the baseline to beat) | Gain, 90% interval |
-|---|---|---|---|
-| Unseen weeks (13 to 30 Oct), 37 headline series | 0.214 | 0.084 | +0.130 (+0.098 to +0.152) |
-| Unseen weeks, all other posted rental series, never used for any choice | 0.228 | 0.102 | +0.126 (+0.115 to +0.134) |
-| Development period, 37 headline series | 0.208 | 0.089 | +0.119 (+0.102 to +0.144) |
+The score says how much better we are than simply assuming every price stays where it is. Zero means no better. Higher is better.
 
-Scores are pooled skill against the last value, the organisers' headline metric. Interval coverage on the unseen weeks is 80% against a target of 80%.
+| Tested on | Us | Organisers' baseline |
+|---|---|---|
+| Three held-back weeks, the 37 series that get scored | 0.214 | 0.084 |
+| Three held-back weeks, every other series (we never tuned anything on these) | 0.228 | 0.102 |
+| The practice dates we built on, the 37 scored series | 0.208 | 0.089 |
 
-- **The idea.** A posted price median is the middle of a small panel of provider offers. It moves when a provider near the middle reprices or an offer enters or leaves. The system found this by analysing its own forecast failures, then forecast the panel instead of the series.
-- **The research record.** 36 hypotheses logged with verdicts: 13 supported, 14 refuted, 7 not significant, 2 untestable. Each validation query was written down and committed before it ran.
-- **Reproducibility.** `bash reproduce.sh final` takes 25 seconds and gives byte-identical files across runs.
-- **Sponsors.** Exa built a calendar of announced repricings (17 of 17 checked offers moved to the announced price). past.dev is live with three writer agents and date-bounded reads.
-- **Economic insight and the 2 to 3 year view.** Both are written; neither has been reviewed line by line.
+We also give a price range for each forecast. On the held-back weeks, 80% of real prices landed inside it. The target is 80%.
 
-## What is not established
+## The idea
 
-- **Sunday is one forecast date.** On the 50 development dates the blend beat drift on 46 and scored below the last value on 2. The dates overlap, so this is weaker than 46 independent wins. A bad week is possible.
-- **Which series Pacific scores.** The scorer scores whatever is in the file unless they restrict it to the 37 headline series. We submit all 592, so either way is covered, but the answer changes which number matters.
-- **Two of the four new members rest on thinner evidence.** An independent audit found the significance test used on the 18 unseen dates is too generous (it rejects 10 to 18% of the time at a nominal 5%). Under a stricter test the provider simulator and the short-context Chronos width hold (p about 0.005); the fragility tails are borderline (0.05 to 0.08) and the analogs are not significant alone (0.13 to 0.16). Both stay in the blend on development-period evidence, and the findings will say so.
-- **The ranges on the unseen weeks are not true 90% intervals.** That period has only three calendar weeks, so the bootstrap behind them has ten distinct resamples.
-- **The 37 series were chosen with hindsight.** They are the headline set as of 6 November. Under the organisers' rule applied date by date, most of them did not qualify until October; on the cells that did, the reference model's margin over drift is +0.033, against +0.080 on the fixed 37. The margins in the table above are optimistic for that reason.
-- **One small leak, found by the audit and fixed.** In the analog member a young series' later rows could change a scaling constant. Largest effect on forecasts actually used: 0.00002 in log price; none possible at the scored date. A test that would have caught it now exists. Every other member passed deletion and corruption of all later data.
-- **Two bookkeeping lapses, now corrected in the log.** One early validation query was committed 32 seconds after its result, not before, and its result was missing from the log.
-- **Long-run section.** It gives ranges with stated scenario probabilities. No method beat "no change" at one to two years on any backtest, and it says so.
-- **The brief says leaderboard position alone will not win.** The case rests on the method, the negative results and the insight, which a judge has to read.
+A published GPU price is not really one price. It is the middle of a short list of offers from different providers. It moves when a provider near the middle changes its price, or when a provider joins or leaves the list. We found this by looking at where our own forecasts went wrong. Then we forecast the list instead of the price, and that is what worked.
 
-## What is left to do for a Track 2 submission
+## What else we have
 
-- README and findings, including the audit's caveats.
-- Demo page and pitch script (an agent is building them).
-- The research loop as commands (an agent is building it); this is what the "autonomy" criterion looks at.
-- By the team: public repo and push, platform registration by Sunday 12:00, a 2-minute video.
+- **A full record.** 37 ideas tried: 13 worked, 15 did not, 7 made no clear difference, 2 could not be tested. Every check on held-back data was written down before we ran it, with one early exception listed below.
+- **Exa.** We used it to build a calendar of announced price changes. All 17 announced prices we could check showed up in the data exactly as announced.
+- **past.dev.** It is live. Three agents write to it and others read from it.
+- **The business angle and the 2 to 3 year outlook.** Both are written. I have not read either one line by line yet.
 
-## Track 2 against Track 5: what the hackathon page says
+## What could go wrong
 
-Read from the Resources, Teams and Projects tabs on Saturday afternoon; details and quotes in `experiments/submission/track_choice.md`.
+- **Sunday is a single date.** On 50 practice dates we beat the baseline on 46 and did worse than "no change" on 2. Those dates overlap, so this is weaker than it sounds. One bad week is possible.
+- **Two of our four new methods are on shakier ground.** An outside check found that my test on the held-back weeks was too easy to pass. Under a stricter test, the provider simulation and the short-memory Chronos model still clearly hold. The other two might be luck: about a 1 in 15 chance for one and 1 in 7 for the other. We kept them because they helped throughout the practice dates.
+- **The ranges I quoted for the held-back weeks are rough.** That period is only three weeks long, which is too little to put firm error bars on.
+- **We picked the 37 series with hindsight.** They are the ones that qualify on 6 November. Most did not qualify until October. On the ones that did qualify earlier, our lead over the baseline is smaller. So the numbers above flatter us somewhat.
+- **We found and fixed one small leak.** One method could be nudged by data from after the forecast date. The effect was at most 0.002% on a price, and it cannot affect Sunday. Every other method passed a test where we deleted or scrambled all later data.
+- **One early check was logged in the wrong order.** It was committed 32 seconds after its result, not before, and its score was missing from the log. Both are now corrected.
+- **The 2 to 3 year outlook gives ranges, not proven forecasts.** Nothing beat "assume no change" when tested on the past. It says so.
+- **A good score alone will not win.** The brief says so. Judges have to read the method and the findings.
 
-- **Track 5 is open-ended.** "Your idea doesn't fit tracks 1-4? Build whatever you want. Same rules ... same judging criteria." It names no question, benchmark, sponsor or judges.
-- **Only Track 2 has its own prize** ($5K in compute: $3K, $1.5K, $500), stacked on the overall top 3. Track 5 has none.
-- **Finals:** "The top 2 of each track go to the finals." The page does not say whether Track 5 sends teams on the same terms.
-- **The submission form's track list has Tracks 1 to 4 only.** Ask the organisers on Discord how a Track 5 project is submitted before committing to it.
-- **Sponsor challenges** (Exa, past.dev, Modal) are open to both tracks.
-- **Not on the page:** how many teams chose each track, Track 5's judges, and the overall cash amounts.
-- **past.dev wording differs between two places.** The submission form says "prove better accuracy, latency gains and cost reduction than the common existing approaches"; the Resources tab says you do not have to prove the memory improves results. We have not measured what the memory adds.
+## What is left for a Track 2 entry
+
+- README and findings (being written now).
+- Demo page and a 3-minute pitch (being built now).
+- From the team: make the repo public and push it, register on the platform by Sunday noon, record a 2-minute video.
+
+## Track 2 or Track 5: what the hackathon page says
+
+- **Track 5 is "build whatever you want".** Same rules and same judging. No set question and no sponsor.
+- **Only Track 2 has its own prize:** $5K in compute, on top of the overall top 3. Track 5 has none.
+- **The top 2 of each track go to the finals.** The page does not say whether that includes Track 5.
+- **The submission form only lists Tracks 1 to 4.** Ask the organisers on Discord how Track 5 is submitted before picking it.
+- **Exa, past.dev and Modal prizes are open to both.**
+- **Not shown anywhere:** how many teams picked each track.
+- **One catch for past.dev.** The submission form asks you to prove the memory makes things more accurate, faster and cheaper. The resources page says you do not have to. We have not measured what the memory adds.
 
 ## What this does not tell you
 
-Nothing here compares the two prototypes. I have not seen the Track 5 one.
+It does not compare the two prototypes. I have not seen the Track 5 one.
+
+The detailed version of everything here, with sources, is in `research-log.md`, `experiments/audit/results/audit.md` and `experiments/submission/track_choice.md`.
