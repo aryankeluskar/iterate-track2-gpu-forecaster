@@ -1,0 +1,55 @@
+slug: longrun
+version: 2
+written: 2026-11-14, after reading insight.md, autopsy failure_modes.json, prov/results, repricing_calendar.jsonl, the memory
+  briefing and a first batch of Exa evidence searches; BEFORE computing the panel decomposition, the scenario paths or any backtest.
+memory_items_that_changed_the_plan:
+  - exp-H29 (my v1 result: decay failed the one-year backtest) -> regime made explicit as scenarios instead of one decay rate.
+  - autopsy-mode-composition_entry_exit and autopsy-mode-repricing_verda_staircase -> the within-chip trend is re-measured on
+    static rate-card offers present on both dates, and posted-median rises are treated as an upper bound.
+  - scout-03849b87 / scout-f4c32699 (Nebius +20% from 1 Oct) -> the 2026 static rise is a handful of dated steps, not a drift.
+
+instrument_v2:
+  panel_robust: neocloud_rate_card on_demand offers in rental_observations (gpurentalprices 2026-08-04..2026-11-06,
+    fastgpu_daily 2026-09-08..2026-11-06) via gpuf.panel; offers present on both end dates; static = provider reprice
+    rate < 0.02 over its sample. Statistic = mean log change of those offers; level = median of static offers on 2026-11-06.
+  headline_for_continuity: GetDeploying weekly on-demand median (cannot be decomposed; its 2026 rise is an upper bound).
+
+scenarios:   # annual log-rate paths from the Nov 2026 panel-robust level; probabilities sum to 1
+  S1_shortage_persists_through_2027:
+    p: 0.35
+    path: "year 1: H100 +10%/yr (q10 -5, q90 +30); A100 0%/yr (-10, +15). After Nov 2027: S2 trend."
+    evidence: "memory supply tight through 2027 (TrendForce 2026-08-04, 2026-09-29); NVIDIA sees memory bottleneck into early
+      2028 (Seoul Economic Daily 2026-08-27); static rate cards +5..+10% Aug-Nov 2026 on H100 (insight.md); AWS p5 at a flat
+      ~8.6 USD/GPU-h through the 2023 H2 tight period (pack)."
+  S2_eases_to_multiyear_trend:
+    p: 0.40
+    path: "H100 -20%/yr (q10 -31, q90 -12); A100 -10%/yr (-15, -3), from month 0."
+    evidence: "AWS spot segA multi-year within-chip rates p5 -31%/yr, p4d -9.5%/yr (pack, v1); CCIR posted-rate fits H100
+      -15.3%/yr 2023-2026, V100 -15.3%/yr over 6.8 years, A100 no clear trend (CCIR 2026-07-08)."
+  S3_successor_glut:
+    p: 0.25
+    path: "year 1 as S2; months 12-30 glut: H100 -45%/yr (-60, -30), A100 -40%/yr (-55, -25); then S2 trend."
+    evidence: "Rubin 'fastest product ramp in Nvidia's history' (Tom's Hardware 2026-08-27, NVIDIA CFO); 2028 capacity boom and
+      price-collapse view (Bitget/Goldberg 2026-09-10); historical analogues in the pack: p4d -42 to -48%/yr in the 12-month
+      windows from Jun and Dec 2022 (H100 volume ramp), p5 -66%/yr from Dec 2023 (H100 glut, 'from $8 to $2', Latent Space 2024-10-11)."
+  why_these_probabilities: >
+    The nearest-term supply evidence (memory, CoWoS, NVIDIA's own 'tight until early 2028') makes a persisting shortage
+    through 2027 more likely than in a normal year, but CCIR's nine-year record shows the two earlier demand-over-supply
+    episodes ended and rates resumed falling; the trend is the modal outcome. A glut needs Rubin volume to arrive on time
+    and demand to slow; KeyBanc's Rubin cut (Magica 2026-10-12) argues for a later, smaller glut, hence 0.25.
+  within_scenario_level_noise: "0.25 log per sqrt(year) on the panel-robust level (to be checked by backtest c)."
+
+predictions:
+  D1_panel_decomposition: "share of the Aug-Nov 2026 posted-median rise that is panel effect: H100 40-60%; H200/B200/B300 30-60%;
+    A100 ~100% (static flat). GetDeploying rise over the same weeks larger than the static mean."
+  B_a_mixture_one_year: "origin Nov 2025, realised Oct/Nov 2026 aggregator weeks (5 chips x 4 modes): >= 60% inside q10-q90;
+    misses on the upper side, concentrated in B200/B300. NOTE: probabilities were set with 2026 hindsight; this is not out-of-sample."
+  B_b_premium_decay: "fit log premium trend (per-unit price / B200) on Nov 2025-Apr 2026, predict Oct 2026; beats no-change
+    premium on absolute log error in >= 60% of 12 series (A100/H100/H200 x 4 modes)."
+  B_c_aws_rolling: "origins Dec 2023, Dec 2024, Dec 2025; horizons 12 and 24 months (24 only where data exist); V100 p3,
+    A100 p4d, H100 p5. Mixture 80% coverage 50-80%; MAE not better than no-change (2024 glut and 2026 shortage both occur)."
+  R_resale: "H100 income value today 12-25k USD (q10-q90), A100 5-12k; +24 months H100 4-12k."
+  L_lender: "q10-path LTV for a 24-month H100 loan 40-60% of the ~20k market price; 36-month 30-50%; i.e. at or below the
+    60-70% advance rates."
+  Dep: "H100 economic depreciation faster than 6-year straight-line in years 1-3, close to 4-year straight-line."
+refutation_policy: every prediction reported as held / failed with its number.

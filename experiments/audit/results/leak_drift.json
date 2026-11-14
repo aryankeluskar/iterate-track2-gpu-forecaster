@@ -1,0 +1,59 @@
+{
+ "method": "drift",
+ "spec": [
+  "drift",
+  {}
+ ],
+ "n_sids": 97,
+ "origins": [
+  "2026-08-20",
+  "2026-10-21"
+ ],
+ "perturbation": {
+  "2026-08-20|del": {
+   "rows": 114,
+   "rows_only_one_side": 0,
+   "cells_not_bit_identical": 0,
+   "max_abs_log_diff": 0.0,
+   "series_differing": []
+  },
+  "2026-08-20|wild": {
+   "rows": 114,
+   "rows_only_one_side": 0,
+   "cells_not_bit_identical": 0,
+   "max_abs_log_diff": 0.0,
+   "series_differing": []
+  },
+  "2026-10-21|del": {
+   "rows": 267,
+   "rows_only_one_side": 0,
+   "cells_not_bit_identical": 0,
+   "max_abs_log_diff": 0.0,
+   "series_differing": []
+  },
+  "2026-10-21|wild": {
+   "rows": 267,
+   "rows_only_one_side": 0,
+   "cells_not_bit_identical": 0,
+   "max_abs_log_diff": 0.0,
+   "series_differing": []
+  }
+ },
+ "order": {
+  "forward": {
+   "rows": 381,
+   "rows_only_one_side": 0,
+   "cells_not_bit_identical": 0,
+   "max_abs_log_diff": 0.0,
+   "series_differing": []
+  },
+  "reverse": {
+   "rows": 381,
+   "rows_only_one_side": 0,
+   "cells_not_bit_identical": 0,
+   "max_abs_log_diff": 0.0,
+   "series_differing": []
+  }
+ },
+ "wall_s": 3
+}

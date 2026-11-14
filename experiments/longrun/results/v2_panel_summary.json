@@ -1,0 +1,108 @@
+{
+ "getdeploying": {
+  "A100": {
+   "aug03_to_oct26_dlog": 0.0,
+   "sep07_to_oct26_dlog": 0.11221199060692799,
+   "nov03_2025_to_oct26_2026_dlog": 0.11221199060692799
+  },
+  "H100": {
+   "aug03_to_oct26_dlog": 0.16941815195804674,
+   "sep07_to_oct26_dlog": 0.184922338494012,
+   "nov03_2025_to_oct26_2026_dlog": 0.25614984778237976
+  },
+  "H200": {
+   "aug03_to_oct26_dlog": 0.1844027229977791,
+   "sep07_to_oct26_dlog": 0.1361841507273047,
+   "nov03_2025_to_oct26_2026_dlog": 0.31793411562230167
+  },
+  "B200": {
+   "aug03_to_oct26_dlog": 0.2745712904451733,
+   "sep07_to_oct26_dlog": 0.16691593096521634,
+   "nov03_2025_to_oct26_2026_dlog": 0.373417125081806
+  },
+  "B300": {
+   "aug03_to_oct26_dlog": 0.1011055836996026,
+   "sep07_to_oct26_dlog": 0.13051671362574616,
+   "nov03_2025_to_oct26_2026_dlog": 0.5866749360494286
+  }
+ },
+ "levels": [
+  {
+   "chip": "A100",
+   "n_static_providers": 20,
+   "static_median_usd": 2.3485,
+   "ci90": [
+    1.4825,
+    2.7
+   ],
+   "all_providers_median_usd": 2.2965,
+   "n_all_providers": 24,
+   "usd_per_unit_static": 2.3485,
+   "premium_vs_frontier_static": 2.9504,
+   "premium_vs_frontier_all": 2.7169
+  },
+  {
+   "chip": "H100",
+   "n_static_providers": 31,
+   "static_median_usd": 3.49,
+   "ci90": [
+    3.2,
+    3.95
+   ],
+   "all_providers_median_usd": 3.87,
+   "n_all_providers": 35,
+   "usd_per_unit_static": 1.4158,
+   "premium_vs_frontier_static": 1.7787,
+   "premium_vs_frontier_all": 1.8574
+  },
+  {
+   "chip": "H200",
+   "n_static_providers": 22,
+   "static_median_usd": 4.54,
+   "ci90": [
+    4.38,
+    5.402249999999999
+   ],
+   "all_providers_median_usd": 4.565,
+   "n_all_providers": 26,
+   "usd_per_unit_static": 1.6715,
+   "premium_vs_frontier_static": 2.0999,
+   "premium_vs_frontier_all": 1.9883
+  },
+  {
+   "chip": "B200",
+   "n_static_providers": 17,
+   "static_median_usd": 6.3,
+   "ci90": [
+    6.0,
+    8.19
+   ],
+   "all_providers_median_usd": 6.69,
+   "n_all_providers": 19,
+   "usd_per_unit_static": 0.796,
+   "premium_vs_frontier_static": 1.0,
+   "premium_vs_frontier_all": 1.0
+  },
+  {
+   "chip": "B300",
+   "n_static_providers": 15,
+   "static_median_usd": 8.96,
+   "ci90": [
+    7.4,
+    9.99
+   ],
+   "all_providers_median_usd": 9.23,
+   "n_all_providers": 18,
+   "usd_per_unit_static": 1.022,
+   "premium_vs_frontier_static": 1.2839,
+   "premium_vs_frontier_all": 1.2455
+  }
+ ],
+ "n_providers_by_kind": {
+  "fastgpu_daily|dynamic": 1,
+  "fastgpu_daily|intermediate": 3,
+  "fastgpu_daily|static": 26,
+  "gpurentalprices|dynamic": 3,
+  "gpurentalprices|static": 19
+ }
+}
