@@ -52,3 +52,9 @@ usefulness_test:
   priors: (a) pooled collector-class rate from other providers observed by the origin (b) label mean rate from other providers only (leave the provider out)
   truth: provider's measured rate over days after the origin up to 2026-10-13
   metric: absolute error of each prior against truth, offer-day weighted; report units and n
+addenda_before_scoring:
+  - fixed-discount spot (sentence says always/N% below on-demand) is labelled FIXED in the SPOT slot (OCI preemptible, Hyperstack spot).
+  - sources whose highlight text names a date after 2026-08-17 are dropped from labelling (late-dated text inside an early-dated page).
+  - a sentence about input costs or other providers is not evidence for the provider (overrides listed in final.py: modal, cerebrium, hetzner, digitalocean spot-only).
+  - snapshotAsOf is not on the free plan (403); calls use maxAgeHours -1 (cache) instead; no /contents calls were made, only search highlights.
+  - labelling strength: strong = sentence states how the price is set or moves; weak = spot or marketplace offered, or a published per-hour price only.

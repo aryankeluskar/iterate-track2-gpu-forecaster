@@ -1,0 +1,360 @@
+## Unit table (provider x collector x class), pairs >= 14: 85 units; 45 providers
+       provider             src                cls   label strength  offer_days  pairs  n_rep  p_rep  up_share
+      sfcompute gpurentalprices    marketplace_ask DYNAMIC   strong          55     54     48  0.889     0.542
+       scaleway gpurentalprices neocloud_rate_card UNKNOWN        -          71    341    229  0.672     0.341
+          clore   fastgpu_daily    marketplace_ask DYNAMIC   strong           2     36     23  0.639     0.739
+            aws   fastgpu_daily   hyperscaler_spot DYNAMIC   strong          36    420    257  0.612     0.420
+          verda   fastgpu_daily neocloud_rate_card   FIXED   strong          36    420    250  0.595     0.964
+          verda   fastgpu_daily      neocloud_spot DYNAMIC     weak          36    420    247  0.588     0.968
+        spheron gpurentalprices    marketplace_ask UNKNOWN        -          71   1137    509  0.448     0.528
+           lium   fastgpu_daily    marketplace_ask UNKNOWN        -           2     21      8  0.381     0.500
+          verda gpurentalprices neocloud_rate_card   FIXED   strong          71    840    265  0.315     0.970
+           lium gpurentalprices    marketplace_ask UNKNOWN        -          10    239     40  0.167     0.250
+impossiblecloud   fastgpu_daily neocloud_rate_card UNKNOWN        -           4     18      3  0.167     0.333
+            gcp   fastgpu_daily   hyperscaler_spot DYNAMIC   strong          36    301     33  0.110     0.333
+    quantacloud   fastgpu_daily neocloud_rate_card UNKNOWN        -           8     56      6  0.107     0.500
+            gcp gpurentalprices   hyperscaler_spot DYNAMIC   strong          71    630     40  0.063     0.550
+            gmi   fastgpu_daily neocloud_rate_card   FIXED     weak          36    140      3  0.021     1.000
+            fal   fastgpu_daily neocloud_rate_card UNKNOWN        -          36    187      4  0.021     1.000
+         nebius   fastgpu_daily neocloud_rate_card UNKNOWN        -          36    210      4  0.019     1.000
+      fireworks gpurentalprices neocloud_rate_card   FIXED     weak          71    345      5  0.014     1.000
+      cloudrift   fastgpu_daily neocloud_rate_card   FIXED     weak          36     71      1  0.014     1.000
+        daytona gpurentalprices neocloud_rate_card UNKNOWN        -          10     72      1  0.014     1.000
+     jarvislabs   fastgpu_daily neocloud_rate_card   FIXED     weak          36    245      3  0.012     1.000
+            fal gpurentalprices neocloud_rate_card UNKNOWN        -          71    361      4  0.011     1.000
+            gmi gpurentalprices neocloud_rate_card   FIXED     weak          71    280      3  0.011     1.000
+          salad gpurentalprices    marketplace_ask DYNAMIC     weak          71    582      6  0.010     0.000
+         nebius gpurentalprices neocloud_rate_card UNKNOWN        -          71    420      4  0.010     1.000
+impossiblecloud gpurentalprices neocloud_rate_card UNKNOWN        -          10    125      1  0.008     1.000
+ thundercompute gpurentalprices neocloud_rate_card   FIXED     weak          71    279      2  0.007     1.000
+     jarvislabs gpurentalprices neocloud_rate_card   FIXED     weak          71    420      3  0.007     1.000
+            gcp   fastgpu_daily   hyperscaler_list UNKNOWN        -          36    301      2  0.007     1.000
+          azure gpurentalprices   hyperscaler_spot DYNAMIC   strong          71    405      2  0.005     0.000
+  massedcompute gpurentalprices neocloud_rate_card UNKNOWN        -          71    970      4  0.004     0.750
+          koyeb gpurentalprices neocloud_rate_card   FIXED     weak          71    630      0  0.000       NaN
+         crusoe gpurentalprices neocloud_rate_card UNKNOWN        -          71    420      0  0.000       NaN
+       together gpurentalprices      neocloud_spot UNKNOWN        -          41    138      0  0.000       NaN
+     tensordock gpurentalprices    marketplace_ask UNKNOWN        -          71    770      0  0.000       NaN
+        daytona gpurentalprices      neocloud_spot UNKNOWN        -          10     72      0  0.000       NaN
+          vultr gpurentalprices neocloud_rate_card   FIXED     weak          71    210      0  0.000       NaN
+    voltagepark gpurentalprices neocloud_rate_card   FIXED     weak          71     70      0  0.000       NaN
+        baseten gpurentalprices neocloud_rate_card   FIXED     weak          71    420      0  0.000       NaN
+      cerebrium gpurentalprices neocloud_rate_card   FIXED     weak          71    700      0  0.000       NaN
+      coreweave gpurentalprices neocloud_rate_card UNKNOWN        -          71    560      0  0.000       NaN
+       together gpurentalprices neocloud_rate_card UNKNOWN        -          41    127      0  0.000       NaN
+     lambdalabs gpurentalprices neocloud_rate_card   FIXED     weak          71    810      0  0.000       NaN
+         synteq gpurentalprices neocloud_rate_card UNKNOWN        -          10     18      0  0.000       NaN
+   digitalocean gpurentalprices neocloud_rate_card UNKNOWN        -          71    612      0  0.000       NaN
+      replicate gpurentalprices neocloud_rate_card   FIXED     weak          71    346      0  0.000       NaN
+       ovhcloud gpurentalprices neocloud_rate_card UNKNOWN        -          71    560      0  0.000       NaN
+          modal gpurentalprices neocloud_rate_card UNKNOWN        -          71    769      0  0.000       NaN
+       hotaisle gpurentalprices neocloud_rate_card UNKNOWN        -          71     70      0  0.000       NaN
+     hyperstack gpurentalprices neocloud_rate_card   FIXED     weak          71    870      0  0.000       NaN
+       latitude gpurentalprices neocloud_rate_card UNKNOWN        -          71    267      0  0.000       NaN
+            aws   fastgpu_daily   hyperscaler_list   FIXED     weak          36    420      0  0.000       NaN
+            aws gpurentalprices   hyperscaler_list   FIXED     weak          16    112      0  0.000       NaN
+ primeintellect gpurentalprices    marketplace_ask DYNAMIC     weak          71    350      0  0.000       NaN
+            aws gpurentalprices   hyperscaler_spot DYNAMIC   strong          16     56      0  0.000       NaN
+            oci   fastgpu_daily   hyperscaler_list   FIXED     weak          36    415      0  0.000       NaN
+          azure   fastgpu_daily   hyperscaler_spot DYNAMIC   strong          36    245      0  0.000       NaN
+            oci   fastgpu_daily   hyperscaler_spot   FIXED   strong          36     70      0  0.000       NaN
+     tensordock   fastgpu_daily    marketplace_ask UNKNOWN        -          36    173      0  0.000       NaN
+        baseten   fastgpu_daily neocloud_rate_card   FIXED     weak          36    210      0  0.000       NaN
+      coreweave   fastgpu_daily neocloud_rate_card UNKNOWN        -          36    315      0  0.000       NaN
+         crusoe   fastgpu_daily neocloud_rate_card UNKNOWN        -          36    175      0  0.000       NaN
+           cudo   fastgpu_daily neocloud_rate_card   FIXED     weak          27     78      0  0.000       NaN
+        daytona   fastgpu_daily neocloud_rate_card UNKNOWN        -          15     98      0  0.000       NaN
+      deepinfra   fastgpu_daily neocloud_rate_card UNKNOWN        -          36    175      0  0.000       NaN
+     hyperstack   fastgpu_daily neocloud_rate_card   FIXED     weak          36    615      0  0.000       NaN
+     lambdalabs   fastgpu_daily neocloud_rate_card   FIXED     weak          36    290      0  0.000       NaN
+          modal   fastgpu_daily neocloud_rate_card UNKNOWN        -          34    352      0  0.000       NaN
+     paperspace   fastgpu_daily neocloud_rate_card   FIXED     weak          36    525      0  0.000       NaN
+      replicate   fastgpu_daily neocloud_rate_card   FIXED     weak          36    175      0  0.000       NaN
+     tensorwave   fastgpu_daily neocloud_rate_card   FIXED     weak          36    105      0  0.000       NaN
+ thundercompute   fastgpu_daily neocloud_rate_card   FIXED     weak          36    140      0  0.000       NaN
+       together   fastgpu_daily neocloud_rate_card UNKNOWN        -          11     40      0  0.000       NaN
+    voltagepark   fastgpu_daily neocloud_rate_card   FIXED     weak          34     32      0  0.000       NaN
+          vultr   fastgpu_daily neocloud_rate_card   FIXED     weak          36    106      0  0.000       NaN
+      coreweave   fastgpu_daily      neocloud_spot DYNAMIC     weak          36    280      0  0.000       NaN
+        daytona   fastgpu_daily      neocloud_spot UNKNOWN        -          15     98      0  0.000       NaN
+     hyperstack   fastgpu_daily      neocloud_spot   FIXED   strong          36    175      0  0.000       NaN
+         nebius   fastgpu_daily      neocloud_spot UNKNOWN        -          36    165      0  0.000       NaN
+       together   fastgpu_daily      neocloud_spot UNKNOWN        -          36    124      0  0.000       NaN
+          vultr   fastgpu_daily      neocloud_spot DYNAMIC     weak          36    140      0  0.000       NaN
+          azure   fastgpu_daily   hyperscaler_list   FIXED     weak          36    245      0  0.000       NaN
+          azure gpurentalprices   hyperscaler_list   FIXED     weak          71    405      0  0.000       NaN
+            gcp gpurentalprices   hyperscaler_list UNKNOWN        -          71    630      0  0.000       NaN
+          vultr gpurentalprices      neocloud_spot DYNAMIC     weak          71    280      0  0.000       NaN
+
+## ALL provider-slot units: provider x slot units = 56
+DYNAMIC  n_units=10 pairs=  4199 pooled_rate=0.156 [0.042,0.303] unit_mean=0.275 median=0.044 share_hi=0.40 up_share_pooled=0.64
+FIXED    n_units=22 pairs= 11214 pooled_rate=0.048 [0.001,0.118] unit_mean=0.021 median=0.000 share_hi=0.05 up_share_pooled=0.97
+UNKNOWN  n_units=24 pairs= 11186 pooled_rate=0.073 [0.006,0.156] unit_mean=0.062 median=0.000 share_hi=0.12 up_share_pooled=0.47
+AUC DYNAMIC vs rate>=15%: 0.789 90% cluster-bootstrap [0.66,0.931] on 32 units (5 high-rate, 27 low-rate)
+confusion (rows label, cols rate>=15%):
+hi       high  low
+label             
+DYNAMIC     4    6
+FIXED       1   21
+UNKNOWN     3   21
+
+## NOT briefed providers (labeller was not told their rates): provider x slot units = 40
+DYNAMIC  n_units= 6 pairs=  2969 pooled_rate=0.035 [0.005,0.067] unit_mean=0.122 median=0.007 share_hi=0.17 up_share_pooled=0.48
+FIXED    n_units=17 pairs=  6662 pooled_rate=0.003 [0.001,0.006] unit_mean=0.003 median=0.000 share_hi=0.00 up_share_pooled=1.00
+UNKNOWN  n_units=17 pairs=  6831 pooled_rate=0.011 [0.002,0.026] unit_mean=0.020 median=0.000 share_hi=0.06 up_share_pooled=0.45
+AUC DYNAMIC vs rate>=15%: 0.886 90% cluster-bootstrap [0.818,0.952] on 23 units (1 high-rate, 22 low-rate)
+confusion (rows label, cols rate>=15%):
+hi       high  low
+label             
+DYNAMIC     1    5
+FIXED       0   17
+UNKNOWN     1   16
+
+## STRONG-evidence labels only (plus UNKNOWN): provider x slot units = 32
+DYNAMIC  n_units= 5 pairs=  2147 pooled_rate=0.188 [0.054,0.564] unit_mean=0.430 median=0.540 share_hi=0.60 up_share_pooled=0.46
+FIXED    n_units= 3 pairs=  1505 pooled_rate=0.342 [0.0,0.398] unit_mean=0.136 median=0.000 share_hi=0.33 up_share_pooled=0.97
+UNKNOWN  n_units=24 pairs= 11186 pooled_rate=0.073 [0.007,0.154] unit_mean=0.062 median=0.000 share_hi=0.12 up_share_pooled=0.47
+AUC DYNAMIC vs rate>=15%: 0.625 90% cluster-bootstrap [0.333,0.917] on 8 units (4 high-rate, 4 low-rate)
+confusion (rows label, cols rate>=15%):
+hi       high  low
+label             
+DYNAMIC     3    2
+FIXED       1    2
+UNKNOWN     3   21
+
+## slot RATE: provider x slot units = 38
+FIXED    n_units=20 pairs= 10969 pooled_rate=0.049 [0.001,0.129] unit_mean=0.023 median=0.000 share_hi=0.05 up_share_pooled=0.97
+UNKNOWN  n_units=18 pairs=  8249 pooled_rate=0.032 [0.003,0.089] unit_mean=0.047 median=0.000 share_hi=0.06 up_share_pooled=0.40
+AUC DYNAMIC vs rate>=15%: 0.500 90% cluster-bootstrap [0.5,0.5] on 20 units (1 high-rate, 19 low-rate)
+confusion (rows label, cols rate>=15%):
+hi       high  low
+label             
+FIXED       1   19
+UNKNOWN     1   17
+
+## slot SPOT: provider x slot units = 18
+DYNAMIC  n_units=10 pairs=  4199 pooled_rate=0.156 [0.046,0.309] unit_mean=0.275 median=0.044 share_hi=0.40 up_share_pooled=0.64
+FIXED    n_units= 2 pairs=   245 pooled_rate=0.000 [0.0,0.0] unit_mean=0.000 median=0.000 share_hi=0.00 up_share_pooled=0.00
+UNKNOWN  n_units= 6 pairs=  2937 pooled_rate=0.190 [0.0,0.352] unit_mean=0.105 median=0.000 share_hi=0.33 up_share_pooled=0.51
+AUC DYNAMIC vs rate>=15%: 0.625 90% cluster-bootstrap [0.5,0.765] on 12 units (4 high-rate, 8 low-rate)
+confusion (rows label, cols rate>=15%):
+hi       high  low
+label             
+DYNAMIC     4    6
+FIXED       0    2
+UNKNOWN     2    4
+
+## provider x slot table
+       provider slot   label  pairs  n_rep  n_up  rate  up_share    hi
+      sfcompute SPOT DYNAMIC     54     48    26 0.889     0.542  True
+       scaleway RATE UNKNOWN    341    229    78 0.672     0.341  True
+          clore SPOT DYNAMIC     36     23    17 0.639     0.739  True
+          verda SPOT DYNAMIC    420    247   239 0.588     0.968  True
+            aws SPOT DYNAMIC    476    257   108 0.540     0.420  True
+        spheron SPOT UNKNOWN   1137    509   269 0.448     0.528  True
+          verda RATE   FIXED   1260    515   498 0.409     0.967  True
+           lium SPOT UNKNOWN    260     48    14 0.185     0.292  True
+    quantacloud RATE UNKNOWN     56      6     3 0.107     0.500 False
+            gcp SPOT DYNAMIC    931     73    33 0.078     0.452 False
+impossiblecloud RATE UNKNOWN    143      4     2 0.028     0.500 False
+            fal RATE UNKNOWN    548      8     8 0.015     1.000 False
+      fireworks RATE   FIXED    345      5     5 0.014     1.000 False
+            gmi RATE   FIXED    420      6     6 0.014     1.000 False
+      cloudrift RATE   FIXED     71      1     1 0.014     1.000 False
+         nebius RATE UNKNOWN    630      8     8 0.013     1.000 False
+          salad SPOT DYNAMIC    582      6     0 0.010     0.000 False
+     jarvislabs RATE   FIXED    665      6     6 0.009     1.000 False
+        daytona RATE UNKNOWN    170      1     1 0.006     1.000 False
+ thundercompute RATE   FIXED    419      2     2 0.005     1.000 False
+  massedcompute RATE UNKNOWN    970      4     3 0.004     0.750 False
+          azure SPOT DYNAMIC    650      2     0 0.003     0.000 False
+            gcp RATE UNKNOWN    931      2     2 0.002     1.000 False
+      replicate RATE   FIXED    521      0     0 0.000       NaN False
+ primeintellect SPOT DYNAMIC    350      0     0 0.000       NaN False
+            aws RATE   FIXED    532      0     0 0.000       NaN False
+       ovhcloud RATE UNKNOWN    560      0     0 0.000       NaN False
+         synteq RATE UNKNOWN     18      0     0 0.000       NaN False
+     tensordock SPOT UNKNOWN    943      0     0 0.000       NaN False
+     tensorwave RATE   FIXED    105      0     0 0.000       NaN False
+       together RATE UNKNOWN    167      0     0 0.000       NaN False
+       together SPOT UNKNOWN    262      0     0 0.000       NaN False
+    voltagepark RATE   FIXED    102      0     0 0.000       NaN False
+          vultr RATE   FIXED    316      0     0 0.000       NaN False
+     paperspace RATE   FIXED    525      0     0 0.000       NaN False
+       latitude RATE UNKNOWN    267      0     0 0.000       NaN False
+            oci SPOT   FIXED     70      0     0 0.000       NaN False
+            oci RATE   FIXED    415      0     0 0.000       NaN False
+          azure RATE   FIXED    650      0     0 0.000       NaN False
+        baseten RATE   FIXED    630      0     0 0.000       NaN False
+      cerebrium RATE   FIXED    700      0     0 0.000       NaN False
+      coreweave RATE UNKNOWN    875      0     0 0.000       NaN False
+      coreweave SPOT DYNAMIC    280      0     0 0.000       NaN False
+         crusoe RATE UNKNOWN    595      0     0 0.000       NaN False
+           cudo RATE   FIXED     78      0     0 0.000       NaN False
+        daytona SPOT UNKNOWN    170      0     0 0.000       NaN False
+      deepinfra RATE UNKNOWN    175      0     0 0.000       NaN False
+   digitalocean RATE UNKNOWN    612      0     0 0.000       NaN False
+       hotaisle RATE UNKNOWN     70      0     0 0.000       NaN False
+     hyperstack RATE   FIXED   1485      0     0 0.000       NaN False
+     hyperstack SPOT   FIXED    175      0     0 0.000       NaN False
+          koyeb RATE   FIXED    630      0     0 0.000       NaN False
+     lambdalabs RATE   FIXED   1100      0     0 0.000       NaN False
+          modal RATE UNKNOWN   1121      0     0 0.000       NaN False
+         nebius SPOT UNKNOWN    165      0     0 0.000       NaN False
+          vultr SPOT DYNAMIC    420      0     0 0.000       NaN False
+
+## misses: label DYNAMIC & low, or FIXED & high
+      provider slot   label  pairs  n_rep  n_up  rate  up_share    hi
+     coreweave SPOT DYNAMIC    280      0     0 0.000       NaN False
+primeintellect SPOT DYNAMIC    350      0     0 0.000       NaN False
+         vultr SPOT DYNAMIC    420      0     0 0.000       NaN False
+         azure SPOT DYNAMIC    650      2     0 0.003     0.000 False
+         salad SPOT DYNAMIC    582      6     0 0.010     0.000 False
+           gcp SPOT DYNAMIC    931     73    33 0.078     0.452 False
+         verda RATE   FIXED   1260    515   498 0.409     0.967  True
+
+## Verda units
+            src                cls   label  offer_days  pairs  n_rep  p_rep  up_share
+  fastgpu_daily neocloud_rate_card   FIXED          36    420    250  0.595     0.964
+  fastgpu_daily      neocloud_spot DYNAMIC          36    420    247  0.588     0.968
+gpurentalprices neocloud_rate_card   FIXED          71    840    265  0.315     0.970
+
+## Early-history test: cases (unit x history length), n = 119 units = 45
+history=3: n=45  MAE pooled=0.058  label(to origin)=0.059  label(all other)=0.097  | const-zero=0.051 mean truth
+    DYNAMIC  n= 7 truth=0.197 pooled=0.032 lab_to_origin=0.061 lab_all=0.146
+    FIXED    n=20 truth=0.034 pooled=0.004 lab_to_origin=0.003 lab_all=0.043
+    UNKNOWN  n=18 truth=0.013 pooled=0.032 lab_to_origin=0.032 lab_all=0.077
+history=7: n=39  MAE pooled=0.092  label(to origin)=0.072  label(all other)=0.108  | const-zero=0.057 mean truth
+    DYNAMIC  n= 7 truth=0.201 pooled=0.127 lab_to_origin=0.088 lab_all=0.146
+    FIXED    n=20 truth=0.037 pooled=0.027 lab_to_origin=0.007 lab_all=0.043
+    UNKNOWN  n=12 truth=0.005 pooled=0.034 lab_to_origin=0.034 lab_all=0.083
+history=13: n=35  MAE pooled=0.115  label(to origin)=0.082  label(all other)=0.110  | const-zero=0.066 mean truth
+    DYNAMIC  n= 6 truth=0.240 pooled=0.173 lab_to_origin=0.111 lab_all=0.153
+    FIXED    n=19 truth=0.042 pooled=0.044 lab_to_origin=0.016 lab_all=0.043
+    UNKNOWN  n=10 truth=0.007 pooled=0.041 lab_to_origin=0.041 lab_all=0.075
+history=all: n=119  MAE pooled=0.086  label(to origin)=0.070  label(all other)=0.104  | const-zero=0.057 mean truth
+    DYNAMIC  n=20 truth=0.211 pooled=0.107 lab_to_origin=0.086 lab_all=0.148
+    FIXED    n=59 truth=0.038 pooled=0.024 lab_to_origin=0.009 lab_all=0.043
+    UNKNOWN  n=40 truth=0.009 pooled=0.035 lab_to_origin=0.035 lab_all=0.078
+paired error difference pooled - label(to origin), mean 0.0157 90% provider-bootstrap [0.0039 0.0274]
+paired error difference pooled - label(all other data), mean -0.0186 90% provider-bootstrap [-0.0347 -0.0016]
+            src                cls        provider   label  hist_days     origin  truth  truth_pairs  pooled  label_prior_to_origin  label_prior_all_other_data  err_pooled  err_label_prior_to_origin  err_label_prior_all_other_data
+  fastgpu_daily   hyperscaler_list             aws   FIXED          3 2026-09-10  0.000          396   0.000                  0.002                       0.051       0.000                      0.002                           0.051
+  fastgpu_daily   hyperscaler_list             aws   FIXED          7 2026-09-14  0.000          348   0.000                  0.006                       0.051       0.000                      0.006                           0.051
+  fastgpu_daily   hyperscaler_list             aws   FIXED         13 2026-09-20  0.000          276   0.000                  0.019                       0.051       0.000                      0.019                           0.051
+  fastgpu_daily   hyperscaler_list           azure   FIXED          3 2026-09-10  0.000          231   0.000                  0.002                       0.052       0.000                      0.002                           0.052
+  fastgpu_daily   hyperscaler_list           azure   FIXED          7 2026-09-14  0.000          203   0.000                  0.007                       0.052       0.000                      0.007                           0.052
+  fastgpu_daily   hyperscaler_list           azure   FIXED         13 2026-09-20  0.000          161   0.000                  0.019                       0.052       0.000                      0.019                           0.052
+  fastgpu_daily   hyperscaler_list             gcp UNKNOWN          3 2026-09-10  0.007          283   0.000                  0.000                       0.000       0.007                      0.007                           0.007
+  fastgpu_daily   hyperscaler_list             gcp UNKNOWN          7 2026-09-14  0.008          247   0.000                  0.000                       0.000       0.008                      0.008                           0.008
+  fastgpu_daily   hyperscaler_list             gcp UNKNOWN         13 2026-09-20  0.010          193   0.000                  0.000                       0.000       0.010                      0.010                           0.010
+  fastgpu_daily   hyperscaler_list             oci   FIXED          3 2026-09-10  0.000          395   0.000                  0.002                       0.051       0.000                      0.002                           0.051
+  fastgpu_daily   hyperscaler_list             oci   FIXED          7 2026-09-14  0.000          355   0.000                  0.006                       0.051       0.000                      0.006                           0.051
+  fastgpu_daily   hyperscaler_list             oci   FIXED         13 2026-09-20  0.000          295   0.000                  0.019                       0.051       0.000                      0.019                           0.051
+  fastgpu_daily   hyperscaler_spot             aws DYNAMIC          3 2026-09-10  0.639          396   0.000                  0.051                       0.107       0.639                      0.588                           0.532
+  fastgpu_daily   hyperscaler_spot             aws DYNAMIC          7 2026-09-14  0.612          348   0.037                  0.060                       0.107       0.575                      0.552                           0.505
+  fastgpu_daily   hyperscaler_spot             aws DYNAMIC         13 2026-09-20  0.572          276   0.032                  0.067                       0.107       0.540                      0.505                           0.465
+  fastgpu_daily   hyperscaler_spot           azure DYNAMIC          3 2026-09-10  0.000          231   0.087                  0.062                       0.184       0.087                      0.062                           0.184
+  fastgpu_daily   hyperscaler_spot           azure DYNAMIC          7 2026-09-14  0.000          203   0.348                  0.102                       0.184       0.348                      0.102                           0.184
+  fastgpu_daily   hyperscaler_spot           azure DYNAMIC         13 2026-09-20  0.000          161   0.384                  0.131                       0.184       0.384                      0.131                           0.184
+  fastgpu_daily   hyperscaler_spot             gcp DYNAMIC          3 2026-09-10  0.117          283   0.095                  0.057                       0.178       0.021                      0.060                           0.062
+  fastgpu_daily   hyperscaler_spot             gcp DYNAMIC          7 2026-09-14  0.117          247   0.349                  0.095                       0.178       0.232                      0.023                           0.061
+  fastgpu_daily   hyperscaler_spot             gcp DYNAMIC         13 2026-09-20  0.135          193   0.393                  0.130                       0.178       0.258                      0.005                           0.043
+  fastgpu_daily   hyperscaler_spot             oci   FIXED          3 2026-09-10  0.000           66   0.071                  0.000                       0.000       0.071                      0.000                           0.000
+  fastgpu_daily   hyperscaler_spot             oci   FIXED          7 2026-09-14  0.000           58   0.286                  0.000                       0.000       0.286                      0.000                           0.000
+  fastgpu_daily   hyperscaler_spot             oci   FIXED         13 2026-09-20  0.000           46   0.315                  0.000                       0.000       0.315                      0.000                           0.000
+  fastgpu_daily neocloud_rate_card         baseten   FIXED          3 2026-09-10  0.000          198   0.000                  0.002                       0.052       0.000                      0.002                           0.052
+  fastgpu_daily neocloud_rate_card         baseten   FIXED          7 2026-09-14  0.000          174   0.015                  0.007                       0.052       0.015                      0.007                           0.052
+  fastgpu_daily neocloud_rate_card         baseten   FIXED         13 2026-09-20  0.000          138   0.032                  0.020                       0.052       0.032                      0.020                           0.052
+  fastgpu_daily neocloud_rate_card       cloudrift   FIXED          3 2026-09-10  0.014           69   0.000                  0.002                       0.049       0.014                      0.013                           0.034
+  fastgpu_daily neocloud_rate_card       cloudrift   FIXED          7 2026-09-14  0.015           65   0.014                  0.006                       0.049       0.001                      0.009                           0.034
+  fastgpu_daily neocloud_rate_card       cloudrift   FIXED         13 2026-09-20  0.017           59   0.030                  0.018                       0.049       0.013                      0.001                           0.032
+  fastgpu_daily neocloud_rate_card       coreweave UNKNOWN          3 2026-09-10  0.000          297   0.000                  0.000                       0.061       0.000                      0.000                           0.061
+  fastgpu_daily neocloud_rate_card       coreweave UNKNOWN          7 2026-09-14  0.000          261   0.015                  0.015                       0.061       0.015                      0.015                           0.061
+  fastgpu_daily neocloud_rate_card       coreweave UNKNOWN         13 2026-09-20  0.000          207   0.032                  0.032                       0.061       0.032                      0.032                           0.061
+  fastgpu_daily neocloud_rate_card          crusoe UNKNOWN          3 2026-09-10  0.000          165   0.000                  0.000                       0.059       0.000                      0.000                           0.059
+  fastgpu_daily neocloud_rate_card          crusoe UNKNOWN          7 2026-09-14  0.000          145   0.015                  0.015                       0.059       0.015                      0.015                           0.059
+  fastgpu_daily neocloud_rate_card          crusoe UNKNOWN         13 2026-09-20  0.000          115   0.031                  0.031                       0.059       0.031                      0.031                           0.059
+  fastgpu_daily neocloud_rate_card            cudo   FIXED          3 2026-09-10  0.000           72   0.000                  0.002                       0.049       0.000                      0.002                           0.049
+  fastgpu_daily neocloud_rate_card            cudo   FIXED          7 2026-09-14  0.000           60   0.014                  0.006                       0.049       0.014                      0.006                           0.049
+  fastgpu_daily neocloud_rate_card            cudo   FIXED         13 2026-09-20  0.000           42   0.031                  0.018                       0.049       0.031                      0.018                           0.049
+  fastgpu_daily neocloud_rate_card         daytona UNKNOWN          3 2026-10-01  0.000           84   0.046                  0.046                       0.058       0.046                      0.046                           0.058
+  fastgpu_daily neocloud_rate_card         daytona UNKNOWN          7 2026-10-05  0.000           56   0.051                  0.051                       0.058       0.051                      0.051                           0.058
+  fastgpu_daily neocloud_rate_card       deepinfra UNKNOWN          3 2026-09-10  0.000          165   0.000                  0.000                       0.059       0.000                      0.000                           0.059
+  fastgpu_daily neocloud_rate_card       deepinfra UNKNOWN          7 2026-09-14  0.000          145   0.015                  0.015                       0.059       0.015                      0.015                           0.059
+  fastgpu_daily neocloud_rate_card       deepinfra UNKNOWN         13 2026-09-20  0.000          115   0.031                  0.031                       0.059       0.031                      0.031                           0.059
+  fastgpu_daily neocloud_rate_card             fal UNKNOWN          3 2026-09-10  0.023          177   0.000                  0.000                       0.058       0.023                      0.023                           0.036
+  fastgpu_daily neocloud_rate_card             fal UNKNOWN          7 2026-09-14  0.025          157   0.015                  0.015                       0.058       0.011                      0.011                           0.033
+  fastgpu_daily neocloud_rate_card             fal UNKNOWN         13 2026-09-20  0.031          127   0.031                  0.031                       0.058       0.000                      0.000                           0.027
+  fastgpu_daily neocloud_rate_card             gmi   FIXED          3 2026-09-10  0.023          132   0.000                  0.002                       0.050       0.023                      0.021                           0.027
+  fastgpu_daily neocloud_rate_card             gmi   FIXED          7 2026-09-14  0.026          116   0.015                  0.007                       0.050       0.011                      0.019                           0.024
+  fastgpu_daily neocloud_rate_card             gmi   FIXED         13 2026-09-20  0.033           92   0.031                  0.019                       0.050       0.001                      0.014                           0.017
+  fastgpu_daily neocloud_rate_card      hyperstack   FIXED          3 2026-09-10  0.000          581   0.000                  0.002                       0.056       0.000                      0.002                           0.056
+  fastgpu_daily neocloud_rate_card      hyperstack   FIXED          7 2026-09-14  0.000          513   0.016                  0.007                       0.056       0.016                      0.007                           0.056
+  fastgpu_daily neocloud_rate_card      hyperstack   FIXED         13 2026-09-20  0.000          411   0.035                  0.021                       0.056       0.035                      0.021                           0.056
+  fastgpu_daily neocloud_rate_card      jarvislabs   FIXED          3 2026-09-10  0.013          231   0.000                  0.002                       0.051       0.013                      0.011                           0.038
+  fastgpu_daily neocloud_rate_card      jarvislabs   FIXED          7 2026-09-14  0.015          203   0.015                  0.007                       0.051       0.000                      0.008                           0.036
+  fastgpu_daily neocloud_rate_card      jarvislabs   FIXED         13 2026-09-20  0.019          161   0.032                  0.020                       0.051       0.013                      0.001                           0.033
+  fastgpu_daily neocloud_rate_card      lambdalabs   FIXED          3 2026-09-10  0.000          274   0.000                  0.002                       0.054       0.000                      0.002                           0.054
+  fastgpu_daily neocloud_rate_card      lambdalabs   FIXED          7 2026-09-14  0.000          242   0.015                  0.007                       0.054       0.015                      0.007                           0.054
+  fastgpu_daily neocloud_rate_card      lambdalabs   FIXED         13 2026-09-20  0.000          194   0.032                  0.020                       0.054       0.032                      0.020                           0.054
+  fastgpu_daily neocloud_rate_card           modal UNKNOWN          3 2026-09-10  0.000          330   0.000                  0.000                       0.062       0.000                      0.000                           0.062
+  fastgpu_daily neocloud_rate_card           modal UNKNOWN          7 2026-09-14  0.000          286   0.015                  0.015                       0.062       0.015                      0.015                           0.062
+  fastgpu_daily neocloud_rate_card           modal UNKNOWN         13 2026-09-20  0.000          220   0.033                  0.033                       0.062       0.033                      0.033                           0.062
+  fastgpu_daily neocloud_rate_card          nebius UNKNOWN          3 2026-09-10  0.020          198   0.000                  0.000                       0.059       0.020                      0.020                           0.039
+  fastgpu_daily neocloud_rate_card          nebius UNKNOWN          7 2026-09-14  0.023          174   0.015                  0.015                       0.059       0.008                      0.008                           0.036
+  fastgpu_daily neocloud_rate_card          nebius UNKNOWN         13 2026-09-20  0.029          138   0.032                  0.032                       0.059       0.003                      0.003                           0.030
+  fastgpu_daily neocloud_rate_card      paperspace   FIXED          3 2026-09-10  0.000          495   0.000                  0.002                       0.051       0.000                      0.002                           0.051
+  fastgpu_daily neocloud_rate_card      paperspace   FIXED          7 2026-09-14  0.000          435   0.016                  0.006                       0.051       0.016                      0.006                           0.051
+  fastgpu_daily neocloud_rate_card      paperspace   FIXED         13 2026-09-20  0.000          345   0.034                  0.019                       0.051       0.034                      0.019                           0.051
+  fastgpu_daily neocloud_rate_card       replicate   FIXED          3 2026-09-10  0.000          165   0.000                  0.002                       0.051       0.000                      0.002                           0.051
+  fastgpu_daily neocloud_rate_card       replicate   FIXED          7 2026-09-14  0.000          145   0.015                  0.007                       0.051       0.015                      0.007                           0.051
+  fastgpu_daily neocloud_rate_card       replicate   FIXED         13 2026-09-20  0.000          115   0.031                  0.019                       0.051       0.031                      0.019                           0.051
+  fastgpu_daily neocloud_rate_card      tensorwave   FIXED          3 2026-09-10  0.000           99   0.000                  0.002                       0.049       0.000                      0.002                           0.049
+  fastgpu_daily neocloud_rate_card      tensorwave   FIXED          7 2026-09-14  0.000           87   0.014                  0.006                       0.049       0.014                      0.006                           0.049
+  fastgpu_daily neocloud_rate_card      tensorwave   FIXED         13 2026-09-20  0.000           69   0.031                  0.018                       0.049       0.031                      0.018                           0.049
+  fastgpu_daily neocloud_rate_card  thundercompute   FIXED          3 2026-09-10  0.000          132   0.000                  0.001                       0.050       0.000                      0.001                           0.050
+  fastgpu_daily neocloud_rate_card  thundercompute   FIXED          7 2026-09-14  0.000          116   0.015                  0.006                       0.050       0.015                      0.006                           0.050
+  fastgpu_daily neocloud_rate_card  thundercompute   FIXED         13 2026-09-20  0.000           92   0.031                  0.019                       0.050       0.031                      0.019                           0.050
+  fastgpu_daily neocloud_rate_card        together UNKNOWN          3 2026-10-05  0.000           32   0.051                  0.051                       0.057       0.051                      0.051                           0.057
+  fastgpu_daily neocloud_rate_card           verda   FIXED          3 2026-09-10  0.631          396   0.000                  0.002                       0.002       0.631                      0.629                           0.629
+  fastgpu_daily neocloud_rate_card           verda   FIXED          7 2026-09-14  0.687          348   0.000                  0.002                       0.002       0.687                      0.685                           0.685
+  fastgpu_daily neocloud_rate_card           verda   FIXED         13 2026-09-20  0.736          276   0.000                  0.001                       0.002       0.736                      0.734                           0.733
+  fastgpu_daily neocloud_rate_card     voltagepark   FIXED          3 2026-09-10  0.000           30   0.000                  0.002                       0.049       0.000                      0.002                           0.049
+  fastgpu_daily neocloud_rate_card     voltagepark   FIXED          7 2026-09-14  0.000           26   0.014                  0.006                       0.049       0.014                      0.006                           0.049
+  fastgpu_daily neocloud_rate_card     voltagepark   FIXED         13 2026-09-20  0.000           23   0.030                  0.018                       0.049       0.030                      0.018                           0.049
+  fastgpu_daily neocloud_rate_card           vultr   FIXED          3 2026-09-10  0.000          100   0.000                  0.002                       0.050       0.000                      0.002                           0.050
+  fastgpu_daily neocloud_rate_card           vultr   FIXED          7 2026-09-14  0.000           88   0.014                  0.007                       0.050       0.014                      0.007                           0.050
+  fastgpu_daily neocloud_rate_card           vultr   FIXED         13 2026-09-20  0.000           70   0.031                  0.019                       0.050       0.031                      0.019                           0.050
+  fastgpu_daily      neocloud_spot       coreweave DYNAMIC          3 2026-09-10  0.000          264   0.000                  0.054                       0.167       0.000                      0.054                           0.167
+  fastgpu_daily      neocloud_spot       coreweave DYNAMIC          7 2026-09-14  0.000          232   0.061                  0.089                       0.167       0.061                      0.089                           0.167
+  fastgpu_daily      neocloud_spot       coreweave DYNAMIC         13 2026-09-20  0.000          184   0.122                  0.117                       0.167       0.122                      0.117                           0.167
+  fastgpu_daily      neocloud_spot         daytona UNKNOWN          3 2026-10-01  0.000           84   0.152                  0.152                       0.189       0.152                      0.152                           0.189
+  fastgpu_daily      neocloud_spot         daytona UNKNOWN          7 2026-10-05  0.000           56   0.159                  0.159                       0.189       0.159                      0.159                           0.189
+  fastgpu_daily      neocloud_spot      hyperstack   FIXED          3 2026-09-10  0.000          165   0.000                  0.000                       0.000       0.000                      0.000                           0.000
+  fastgpu_daily      neocloud_spot      hyperstack   FIXED          7 2026-09-14  0.000          145   0.056                  0.000                       0.000       0.056                      0.000                           0.000
+  fastgpu_daily      neocloud_spot      hyperstack   FIXED         13 2026-09-20  0.000          115   0.111                  0.000                       0.000       0.111                      0.000                           0.000
+  fastgpu_daily      neocloud_spot          nebius UNKNOWN          3 2026-09-10  0.000          153   0.000                  0.000                       0.200       0.000                      0.000                           0.200
+  fastgpu_daily      neocloud_spot          nebius UNKNOWN          7 2026-09-14  0.000          129   0.057                  0.057                       0.200       0.057                      0.057                           0.200
+  fastgpu_daily      neocloud_spot          nebius UNKNOWN         13 2026-09-20  0.000           93   0.115                  0.115                       0.200       0.115                      0.115                           0.200
+  fastgpu_daily      neocloud_spot        together UNKNOWN          3 2026-09-10  0.000          118   0.000                  0.000                       0.193       0.000                      0.000                           0.193
+  fastgpu_daily      neocloud_spot        together UNKNOWN          7 2026-09-14  0.000          106   0.052                  0.052                       0.193       0.052                      0.052                           0.193
+  fastgpu_daily      neocloud_spot        together UNKNOWN         13 2026-09-20  0.000           88   0.105                  0.105                       0.193       0.105                      0.105                           0.193
+  fastgpu_daily      neocloud_spot           verda DYNAMIC          3 2026-09-10  0.624          396   0.000                  0.055                       0.108       0.624                      0.569                           0.516
+  fastgpu_daily      neocloud_spot           verda DYNAMIC          7 2026-09-14  0.678          348   0.000                  0.083                       0.108       0.678                      0.595                           0.570
+  fastgpu_daily      neocloud_spot           verda DYNAMIC         13 2026-09-20  0.736          276   0.000                  0.096                       0.108       0.736                      0.639                           0.627
+  fastgpu_daily      neocloud_spot           vultr DYNAMIC          3 2026-09-10  0.000          132   0.000                  0.062                       0.173       0.000                      0.062                           0.173
+  fastgpu_daily      neocloud_spot           vultr DYNAMIC          7 2026-09-14  0.000          116   0.054                  0.099                       0.173       0.054                      0.099                           0.173
+  fastgpu_daily      neocloud_spot           vultr DYNAMIC         13 2026-09-20  0.000           92   0.108                  0.126                       0.173       0.108                      0.126                           0.173
+gpurentalprices   hyperscaler_list             aws   FIXED          3 2026-09-30  0.000           96   0.000                  0.036                       0.051       0.000                      0.036                           0.051
+gpurentalprices   hyperscaler_list             aws   FIXED          7 2026-10-04  0.000           72   0.000                  0.040                       0.051       0.000                      0.040                           0.051
+gpurentalprices   hyperscaler_spot             aws DYNAMIC          3 2026-09-30  0.000           48   0.040                  0.087                       0.107       0.040                      0.087                           0.107
+gpurentalprices   hyperscaler_spot             aws DYNAMIC          7 2026-10-04  0.000           36   0.037                  0.088                       0.107       0.037                      0.088                           0.107
+gpurentalprices    marketplace_ask            lium UNKNOWN          3 2026-10-06  0.163          178   0.203                  0.203                       0.195       0.040                      0.040                           0.032
+gpurentalprices neocloud_rate_card         daytona UNKNOWN          3 2026-10-06  0.018           56   0.040                  0.040                       0.044       0.022                      0.022                           0.026
+gpurentalprices neocloud_rate_card impossiblecloud UNKNOWN          3 2026-10-06  0.000           79   0.040                  0.040                       0.044       0.040                      0.040                           0.044
+gpurentalprices neocloud_rate_card          synteq UNKNOWN          3 2026-10-06  0.000           14   0.039                  0.039                       0.044       0.039                      0.039                           0.044
+gpurentalprices      neocloud_spot         daytona UNKNOWN          3 2026-10-06  0.000           56   0.000                  0.000                       0.000       0.000                      0.000                           0.000
+gpurentalprices      neocloud_spot        together UNKNOWN          3 2026-09-05  0.000          132   0.000                  0.000                       0.000       0.000                      0.000                           0.000
+gpurentalprices      neocloud_spot        together UNKNOWN          7 2026-09-09  0.000          120   0.000                  0.000                       0.000       0.000                      0.000                           0.000
+gpurentalprices      neocloud_spot        together UNKNOWN         13 2026-09-15  0.000          102   0.000                  0.000                       0.000       0.000                      0.000                           0.000

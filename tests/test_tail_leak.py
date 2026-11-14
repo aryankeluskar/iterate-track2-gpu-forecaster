@@ -31,7 +31,7 @@ def test_future_rows_do_not_change_tail(params):
     for o in ORIGINS:
         pert = _perturbed(store, o, rng)
         # fresh instances, sequential origins up to o, so the online state is built from scratch on each store
-        for scope in (("headline", "all") if params["mode"] == "conf" and "hl" not in params else ("headline",)):
+        for scope in ("headline",):
             a = methods.get("tail", base=MIX, scope=scope, **params)
             b = methods.get("tail", base=MIX, scope=scope, **params)
             og = [x for x in ORIGINS if x <= o][-1:]

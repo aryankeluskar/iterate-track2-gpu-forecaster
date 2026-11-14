@@ -1,0 +1,131 @@
+== drift sign changes (7-day trailing mean daily log change, provider reprice rate > 15%, |drift| > 0.1%/day both sides)
+fastgpu_daily aws flip on 2026-09-30 drift7 before -0.57%/d after(+7d) +0.22%/d, 2 series
+   pre[-7,0) n=42 skill: mix -0.024, L1_W7 +0.078, L1 +0.125, L1_W21 +0.146, L1_W21_gdyn +0.146
+   post[0,+7) n=42 skill: mix -0.076, L1_W7 +0.227, L1 +0.244, L1_W21 +0.207, L1_W21_gdyn +0.207
+gpurentalprices scaleway flip on 2026-09-17 drift7 before +0.09%/d after(+7d) -0.16%/d, 5 series
+   pre[-7,0) n=105 skill: mix +0.276, L1_W7 +0.290, L1 +0.306, L1_W21 +0.330, L1_W21_gdyn +0.329
+   post[0,+7) n=105 skill: mix +0.238, L1_W7 +0.535, L1 +0.451, L1_W21 +0.426, L1_W21_gdyn +0.425
+   post[+7,+14) n=105 skill: mix +0.135, L1_W7 +0.149, L1 +0.137, L1_W21 +0.127, L1_W21_gdyn +0.129
+gpurentalprices sfcompute flip on 2026-08-20 drift7 before -7.99%/d after(+7d) +3.78%/d, 1 series
+   pre[-7,0) n=6 skill: mix +0.261, L1_W7 +0.214, L1 +0.218, L1_W21 +0.204, L1_W21_gdyn +0.204
+   post[0,+7) n=21 skill: mix +0.197, L1_W7 +0.055, L1 +0.277, L1_W21 +0.247, L1_W21_gdyn +0.247
+   post[+7,+14) n=21 skill: mix +0.298, L1_W7 +0.220, L1 +0.183, L1_W21 +0.313, L1_W21_gdyn +0.313
+gpurentalprices sfcompute flip on 2026-08-29 drift7 before +7.24%/d after(+7d) -3.99%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.104, L1_W7 -0.212, L1 +0.077, L1_W21 +0.193, L1_W21_gdyn +0.193
+   post[0,+7) n=21 skill: mix +0.331, L1_W7 +0.288, L1 +0.289, L1_W21 +0.335, L1_W21_gdyn +0.335
+   post[+7,+14) n=21 skill: mix +0.325, L1_W7 +0.322, L1 +0.286, L1_W21 +0.340, L1_W21_gdyn +0.340
+gpurentalprices sfcompute flip on 2026-09-06 drift7 before -0.70%/d after(+7d) +1.08%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.361, L1_W7 +0.282, L1 +0.297, L1_W21 +0.338, L1_W21_gdyn +0.338
+   post[0,+7) n=21 skill: mix +0.240, L1_W7 +0.308, L1 +0.276, L1_W21 +0.291, L1_W21_gdyn +0.291
+   post[+7,+14) n=21 skill: mix +0.329, L1_W7 +0.322, L1 +0.388, L1_W21 +0.385, L1_W21_gdyn +0.385
+gpurentalprices sfcompute flip on 2026-09-07 drift7 before -2.82%/d after(+7d) +1.90%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.362, L1_W7 +0.302, L1 +0.312, L1_W21 +0.360, L1_W21_gdyn +0.360
+   post[0,+7) n=21 skill: mix +0.262, L1_W7 +0.330, L1 +0.299, L1_W21 +0.309, L1_W21_gdyn +0.309
+   post[+7,+14) n=21 skill: mix +0.366, L1_W7 +0.297, L1 +0.392, L1_W21 +0.391, L1_W21_gdyn +0.391
+gpurentalprices sfcompute flip on 2026-09-09 drift7 before -4.70%/d after(+7d) +0.65%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.410, L1_W7 +0.343, L1 +0.364, L1_W21 +0.404, L1_W21_gdyn +0.404
+   post[0,+7) n=21 skill: mix +0.211, L1_W7 +0.289, L1 +0.279, L1_W21 +0.293, L1_W21_gdyn +0.293
+   post[+7,+14) n=21 skill: mix +0.338, L1_W7 +0.289, L1 +0.368, L1_W21 +0.360, L1_W21_gdyn +0.360
+gpurentalprices sfcompute flip on 2026-09-18 drift7 before +3.90%/d after(+7d) +2.94%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.211, L1_W7 +0.277, L1 +0.303, L1_W21 +0.305, L1_W21_gdyn +0.305
+   post[0,+7) n=21 skill: mix +0.338, L1_W7 +0.278, L1 +0.359, L1_W21 +0.348, L1_W21_gdyn +0.348
+   post[+7,+14) n=21 skill: mix +0.024, L1_W7 -0.387, L1 -0.075, L1_W21 -0.095, L1_W21_gdyn -0.095
+gpurentalprices sfcompute flip on 2026-09-21 drift7 before +1.90%/d after(+7d) +nan%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.366, L1_W7 +0.297, L1 +0.392, L1_W21 +0.391, L1_W21_gdyn +0.391
+   post[0,+7) n=21 skill: mix +0.170, L1_W7 +0.253, L1 +0.364, L1_W21 +0.345, L1_W21_gdyn +0.345
+   post[+7,+14) n=21 skill: mix -1.544, L1_W7 -9.608, L1 -7.537, L1_W21 -7.576, L1_W21_gdyn -7.576
+gpurentalprices sfcompute flip on 2026-09-22 drift7 before +3.15%/d after(+7d) +nan%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.339, L1_W7 +0.284, L1 +0.378, L1_W21 +0.372, L1_W21_gdyn +0.372
+   post[0,+7) n=21 skill: mix +0.115, L1_W7 +0.118, L1 +0.263, L1_W21 +0.243, L1_W21_gdyn +0.243
+   post[+7,+14) n=21 skill: mix -0.653, L1_W7 -5.527, L1 -4.305, L1_W21 -4.332, L1_W21_gdyn -4.332
+gpurentalprices sfcompute flip on 2026-09-23 drift7 before +0.65%/d after(+7d) +nan%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.338, L1_W7 +0.289, L1 +0.368, L1_W21 +0.360, L1_W21_gdyn +0.360
+   post[0,+7) n=21 skill: mix +0.087, L1_W7 +0.039, L1 +0.207, L1_W21 +0.185, L1_W21_gdyn +0.185
+   post[+7,+14) n=21 skill: mix -0.114, L1_W7 -3.014, L1 -2.318, L1_W21 -2.327, L1_W21_gdyn -2.327
+gpurentalprices spheron flip on 2026-08-16 drift7 before +1.07%/d after(+7d) -0.33%/d, 1 series
+   post[0,+7) n=15 skill: mix +0.292, L1_W7 +0.273, L1 +0.285, L1_W21 +0.267, L1_W21_gdyn +0.267
+   post[+7,+14) n=21 skill: mix +0.155, L1_W7 -0.050, L1 +0.094, L1_W21 +0.262, L1_W21_gdyn +0.262
+gpurentalprices spheron flip on 2026-08-18 drift7 before +0.17%/d after(+7d) -0.46%/d, 1 series
+   post[0,+7) n=21 skill: mix +0.246, L1_W7 +0.168, L1 +0.252, L1_W21 +0.237, L1_W21_gdyn +0.237
+   post[+7,+14) n=21 skill: mix +0.223, L1_W7 +0.090, L1 +0.134, L1_W21 +0.273, L1_W21_gdyn +0.273
+gpurentalprices spheron flip on 2026-08-20 drift7 before +0.02%/d after(+7d) +0.67%/d, 1 series
+   pre[-7,0) n=6 skill: mix +0.261, L1_W7 +0.214, L1 +0.218, L1_W21 +0.204, L1_W21_gdyn +0.204
+   post[0,+7) n=21 skill: mix +0.197, L1_W7 +0.055, L1 +0.277, L1_W21 +0.247, L1_W21_gdyn +0.247
+   post[+7,+14) n=21 skill: mix +0.298, L1_W7 +0.220, L1 +0.183, L1_W21 +0.313, L1_W21_gdyn +0.313
+gpurentalprices spheron flip on 2026-08-24 drift7 before -0.40%/d after(+7d) -0.07%/d, 1 series
+   pre[-7,0) n=18 skill: mix +0.254, L1_W7 +0.229, L1 +0.253, L1_W21 +0.233, L1_W21_gdyn +0.233
+   post[0,+7) n=21 skill: mix +0.216, L1_W7 +0.032, L1 +0.144, L1_W21 +0.284, L1_W21_gdyn +0.284
+   post[+7,+14) n=21 skill: mix +0.362, L1_W7 +0.302, L1 +0.312, L1_W21 +0.360, L1_W21_gdyn +0.360
+gpurentalprices spheron flip on 2026-08-25 drift7 before +0.42%/d after(+7d) +0.03%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.246, L1_W7 +0.168, L1 +0.252, L1_W21 +0.237, L1_W21_gdyn +0.237
+   post[0,+7) n=21 skill: mix +0.223, L1_W7 +0.090, L1 +0.134, L1_W21 +0.273, L1_W21_gdyn +0.273
+   post[+7,+14) n=21 skill: mix +0.371, L1_W7 +0.326, L1 +0.325, L1_W21 +0.371, L1_W21_gdyn +0.371
+gpurentalprices spheron flip on 2026-08-27 drift7 before -0.11%/d after(+7d) -0.49%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.197, L1_W7 +0.055, L1 +0.277, L1_W21 +0.247, L1_W21_gdyn +0.247
+   post[0,+7) n=21 skill: mix +0.298, L1_W7 +0.220, L1 +0.183, L1_W21 +0.313, L1_W21_gdyn +0.313
+   post[+7,+14) n=21 skill: mix +0.373, L1_W7 +0.357, L1 +0.342, L1_W21 +0.385, L1_W21_gdyn +0.385
+gpurentalprices spheron flip on 2026-08-28 drift7 before -0.44%/d after(+7d) +0.59%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.120, L1_W7 -0.102, L1 +0.193, L1_W21 +0.209, L1_W21_gdyn +0.209
+   post[0,+7) n=21 skill: mix +0.332, L1_W7 +0.268, L1 +0.237, L1_W21 +0.333, L1_W21_gdyn +0.333
+   post[+7,+14) n=21 skill: mix +0.350, L1_W7 +0.338, L1 +0.315, L1_W21 +0.364, L1_W21_gdyn +0.364
+gpurentalprices spheron flip on 2026-08-30 drift7 before -0.33%/d after(+7d) +0.78%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.155, L1_W7 -0.050, L1 +0.094, L1_W21 +0.262, L1_W21_gdyn +0.262
+   post[0,+7) n=21 skill: mix +0.361, L1_W7 +0.282, L1 +0.297, L1_W21 +0.338, L1_W21_gdyn +0.338
+   post[+7,+14) n=21 skill: mix +0.240, L1_W7 +0.308, L1 +0.276, L1_W21 +0.291, L1_W21_gdyn +0.291
+gpurentalprices spheron flip on 2026-09-03 drift7 before +0.67%/d after(+7d) -0.38%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.298, L1_W7 +0.220, L1 +0.183, L1_W21 +0.313, L1_W21_gdyn +0.313
+   post[0,+7) n=21 skill: mix +0.373, L1_W7 +0.357, L1 +0.342, L1_W21 +0.385, L1_W21_gdyn +0.385
+   post[+7,+14) n=21 skill: mix +0.201, L1_W7 +0.279, L1 +0.283, L1_W21 +0.293, L1_W21_gdyn +0.293
+gpurentalprices spheron flip on 2026-09-04 drift7 before -0.30%/d after(+7d) +0.27%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.332, L1_W7 +0.268, L1 +0.237, L1_W21 +0.333, L1_W21_gdyn +0.333
+   post[0,+7) n=21 skill: mix +0.350, L1_W7 +0.338, L1 +0.315, L1_W21 +0.364, L1_W21_gdyn +0.364
+   post[+7,+14) n=21 skill: mix +0.211, L1_W7 +0.277, L1 +0.303, L1_W21 +0.305, L1_W21_gdyn +0.305
+gpurentalprices spheron flip on 2026-09-07 drift7 before -0.07%/d after(+7d) +0.04%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.362, L1_W7 +0.302, L1 +0.312, L1_W21 +0.360, L1_W21_gdyn +0.360
+   post[0,+7) n=21 skill: mix +0.262, L1_W7 +0.330, L1 +0.299, L1_W21 +0.309, L1_W21_gdyn +0.309
+   post[+7,+14) n=21 skill: mix +0.366, L1_W7 +0.297, L1 +0.392, L1_W21 +0.391, L1_W21_gdyn +0.391
+gpurentalprices spheron flip on 2026-09-08 drift7 before +0.03%/d after(+7d) -1.07%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.371, L1_W7 +0.326, L1 +0.325, L1_W21 +0.371, L1_W21_gdyn +0.371
+   post[0,+7) n=21 skill: mix +0.287, L1_W7 +0.348, L1 +0.326, L1_W21 +0.339, L1_W21_gdyn +0.339
+   post[+7,+14) n=21 skill: mix +0.339, L1_W7 +0.284, L1 +0.378, L1_W21 +0.372, L1_W21_gdyn +0.372
+gpurentalprices spheron flip on 2026-09-10 drift7 before -0.49%/d after(+7d) +0.32%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.373, L1_W7 +0.357, L1 +0.342, L1_W21 +0.385, L1_W21_gdyn +0.385
+   post[0,+7) n=21 skill: mix +0.201, L1_W7 +0.279, L1 +0.283, L1_W21 +0.293, L1_W21_gdyn +0.293
+   post[+7,+14) n=21 skill: mix +0.352, L1_W7 +0.293, L1 +0.373, L1_W21 +0.363, L1_W21_gdyn +0.363
+gpurentalprices spheron flip on 2026-09-11 drift7 before +0.59%/d after(+7d) -0.57%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.350, L1_W7 +0.338, L1 +0.315, L1_W21 +0.364, L1_W21_gdyn +0.364
+   post[0,+7) n=21 skill: mix +0.211, L1_W7 +0.277, L1 +0.303, L1_W21 +0.305, L1_W21_gdyn +0.305
+   post[+7,+14) n=21 skill: mix +0.338, L1_W7 +0.278, L1 +0.359, L1_W21 +0.348, L1_W21_gdyn +0.348
+gpurentalprices spheron flip on 2026-09-12 drift7 before +0.18%/d after(+7d) +0.57%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.325, L1_W7 +0.322, L1 +0.286, L1_W21 +0.340, L1_W21_gdyn +0.340
+   post[0,+7) n=21 skill: mix +0.295, L1_W7 +0.304, L1 +0.367, L1_W21 +0.366, L1_W21_gdyn +0.366
+   post[+7,+14) n=21 skill: mix +0.296, L1_W7 +0.285, L1 +0.333, L1_W21 +0.324, L1_W21_gdyn +0.324
+gpurentalprices spheron flip on 2026-09-16 drift7 before +0.03%/d after(+7d) +0.18%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.211, L1_W7 +0.289, L1 +0.279, L1_W21 +0.293, L1_W21_gdyn +0.293
+   post[0,+7) n=21 skill: mix +0.338, L1_W7 +0.289, L1 +0.368, L1_W21 +0.360, L1_W21_gdyn +0.360
+   post[+7,+14) n=21 skill: mix +0.087, L1_W7 +0.039, L1 +0.207, L1_W21 +0.185, L1_W21_gdyn +0.185
+gpurentalprices spheron flip on 2026-09-18 drift7 before +0.27%/d after(+7d) -0.33%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.211, L1_W7 +0.277, L1 +0.303, L1_W21 +0.305, L1_W21_gdyn +0.305
+   post[0,+7) n=21 skill: mix +0.338, L1_W7 +0.278, L1 +0.359, L1_W21 +0.348, L1_W21_gdyn +0.348
+   post[+7,+14) n=21 skill: mix +0.024, L1_W7 -0.387, L1 -0.075, L1_W21 -0.095, L1_W21_gdyn -0.095
+gpurentalprices spheron flip on 2026-09-19 drift7 before -0.44%/d after(+7d) -0.05%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.295, L1_W7 +0.304, L1 +0.367, L1_W21 +0.366, L1_W21_gdyn +0.366
+   post[0,+7) n=21 skill: mix +0.296, L1_W7 +0.285, L1 +0.333, L1_W21 +0.324, L1_W21_gdyn +0.324
+   post[+7,+14) n=21 skill: mix -0.100, L1_W7 -0.968, L1 -0.465, L1_W21 -0.490, L1_W21_gdyn -0.490
+gpurentalprices spheron flip on 2026-09-24 drift7 before +0.32%/d after(+7d) -0.35%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.352, L1_W7 +0.293, L1 +0.373, L1_W21 +0.363, L1_W21_gdyn +0.363
+   post[0,+7) n=21 skill: mix +0.027, L1_W7 -0.149, L1 +0.083, L1_W21 +0.064, L1_W21_gdyn +0.064
+   post[+7,+14) n=18 skill: mix +0.129, L1_W7 -2.338, L1 -1.808, L1_W21 -1.806, L1_W21_gdyn -1.806
+gpurentalprices spheron flip on 2026-10-02 drift7 before -0.33%/d after(+7d) +0.43%/d, 1 series
+   pre[-7,0) n=21 skill: mix +0.024, L1_W7 -0.387, L1 -0.075, L1_W21 -0.095, L1_W21_gdyn -0.095
+   post[0,+7) n=15 skill: mix +0.129, L1_W7 -1.640, L1 -1.299, L1_W21 -1.296, L1_W21_gdyn -1.296
+gpurentalprices spheron flip on 2026-10-12 drift7 before +0.79%/d after(+7d) +nan%/d, 1 series
+   pre[-7,0) n=6 skill: mix +0.186, L1_W7 -0.090, L1 -0.062, L1_W21 -0.091, L1_W21_gdyn -0.091
+
+== adaptation to the verda regime start on gpurentalprices
+first verda reprice on gpurentalprices: 2026-09-14
+L1_W7 weeks since start: {-2: [210, np.float64(-0.006), np.float64(0.0), np.float64(0.11)], -1: [210, np.float64(0.023), np.float64(-0.01), np.float64(0.36)], 0: [210, np.float64(0.49), np.float64(0.156), np.float64(0.49)], 1: [210, np.float64(0.391), np.float64(0.212), np.float64(0.3)], 2: [210, np.float64(0.19), np.float64(0.149), np.float64(0.39)], 3: [60, np.float64(0.504), np.float64(0.211), np.float64(0.15)]}
+L1 weeks since start: {-2: [210, np.float64(0.007), np.float64(0.0), np.float64(0.09)], -1: [210, np.float64(0.035), np.float64(-0.01), np.float64(0.36)], 0: [210, np.float64(0.398), np.float64(0.156), np.float64(0.6)], 1: [210, np.float64(0.363), np.float64(0.212), np.float64(0.37)], 2: [210, np.float64(0.191), np.float64(0.149), np.float64(0.43)], 3: [60, np.float64(0.544), np.float64(0.211), np.float64(0.1)]}
+L1_W21 weeks since start: {-2: [210, np.float64(0.01), np.float64(0.0), np.float64(0.09)], -1: [210, np.float64(0.039), np.float64(-0.01), np.float64(0.36)], 0: [210, np.float64(0.375), np.float64(0.156), np.float64(0.6)], 1: [210, np.float64(0.343), np.float64(0.212), np.float64(0.4)], 2: [210, np.float64(0.188), np.float64(0.149), np.float64(0.43)], 3: [60, np.float64(0.547), np.float64(0.211), np.float64(0.15)]}
+L1_W21_gdyn weeks since start: {-2: [210, np.float64(-0.002), np.float64(0.0), np.float64(0.09)], -1: [210, np.float64(-0.007), np.float64(-0.01), np.float64(0.36)], 0: [210, np.float64(0.349), np.float64(0.156), np.float64(0.63)], 1: [210, np.float64(0.341), np.float64(0.212), np.float64(0.4)], 2: [210, np.float64(0.189), np.float64(0.149), np.float64(0.43)], 3: [60, np.float64(0.416), np.float64(0.211), np.float64(0.15)]}
+(cols: n cells, prov skill, mix skill, share of h=7 truths above q90)

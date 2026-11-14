@@ -290,6 +290,17 @@ def usage() -> dict:
     return _http("GET", "/api/v1/usage")
 
 
+def ledger_item(e: dict) -> dict:
+    """One ledger entry (data_out/ledger.jsonl) as one data point for gpuf-experiments, authored by `experimenter`."""
+    g = lambda k, d="not recorded": e.get(k) or d
+    txt = (f"Hypothesis ledger entry {e['id']}, status {e['status']}, updated {e['updated_utc']} (written by experimenter; run by agent {g('agent', 'unknown')})\n"
+           f"Hypothesis id: {e['id']}\nClaim: {g('claim')}\nFailure mode targeted: {g('failure_mode')}\nPrediction: {g('prediction')}\n"
+           f"Refuted if: {g('refuted_if')}\nStatus: {e['status']}\nResult: {g('result', 'not recorded yet')}\nEvidence path: {g('evidence')}")
+    return {"id": f"exp-{e['id']}", "audience": "gpuf-experiments", "identity": "experimenter", "timestamp": e["updated_utc"],
+            "label": f"Experiment: {e['id']}", "metadata": {"agent": "experimenter", "kind": "experiment", "hypothesis": e["id"],
+                                                             "status": e["status"], "ledger_agent": e.get("agent")}, "content": txt}
+
+
 def _cli(argv: list[str]) -> int:
     if argv[:1] == ["usage"]:
         print(json.dumps(usage(), indent=2))

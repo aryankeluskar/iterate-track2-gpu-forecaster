@@ -25,5 +25,5 @@ def one(name):
     return name
 if __name__ == "__main__":
     names = sys.argv[1:] or list(V)
-    with ProcessPoolExecutor(max_workers=6) as ex:
+    with ProcessPoolExecutor(max_workers=3) as ex:
         for n in ex.map(one, names): print("done", n, flush=True)

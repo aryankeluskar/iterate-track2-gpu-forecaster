@@ -153,8 +153,9 @@ def main():
 
 def report(df, tr, te):
     key = ["series_id", "origin_day", "horizon_days"]
-    ztr = pd.read_parquet(f"{OUT}/laya_zs_train.parquet").merge(df, on=key)
-    zte = pd.read_parquet(f"{OUT}/laya_zs_test.parquet").merge(df.reset_index(), on=key)
+    tag = os.environ.get("LAYA_TAG", "zs")
+    ztr = pd.read_parquet(f"{OUT}/laya_{tag}_train.parquet").merge(df, on=key)
+    zte = pd.read_parquet(f"{OUT}/laya_{tag}_test.parquet").merge(df.reset_index(), on=key)
     b = np.load(f"{OUT}/baseline_probs.npz", allow_pickle=True)
     rowpos = pd.Series(np.arange(len(b["index"])), index=b["index"])
     ix = rowpos.loc[zte["index"]].to_numpy()
@@ -177,7 +178,7 @@ def report(df, tr, te):
               "mean raw probs test:", softmax(Zte).mean(0).round(3), "std of P(flat) test:", round(softmax(Zte)[:, FLAT[yk]].std(), 4))
     r = pd.DataFrame(rows).round(4)
     print(r.to_string())
-    r.to_csv("experiments/decision/results_zeroshot.csv", index=False)
+    r.to_csv(f"experiments/decision/results/{tag}.csv", index=False)
 
 
 if __name__ == "__main__":

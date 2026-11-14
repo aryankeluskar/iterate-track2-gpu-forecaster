@@ -26,6 +26,7 @@ QL = np.array([0.01, 0.02, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5
                0.85, 0.9, 0.95, 0.98, 0.99])
 I10, I50, I90 = (int(np.argmin(abs(QL - a))) for a in (0.1, 0.5, 0.9))
 CATS = [FEATS.index(c) for c in ("collector", "iclass", "family")]
+ANCHOR = 739846
 HOR = FEATS.index("horizon")
 
 
@@ -146,8 +147,9 @@ def make(kind="full", mode="hfeat", scope="pref", n=1500, hl=30.0, refit=7, est=
         return float((w[sel] @ mv[sel] + k * p0) / (ws + k))
 
     def predict_origin(ctx, o, sids):
-        if state["fit"] is None or o - state["fit"] >= refit:
-            state["rows"], state["fit"], state["models"] = build(ctx, o), o, {}
+        fo = ANCHOR + ((o - ANCHOR) // refit) * refit
+        if state["fit"] != fo:
+            state["rows"], state["fit"], state["models"] = build(ctx, fo), fo, {}
         qrows = {}
         for sid in sids:
             days, vals = ctx.history(sid)

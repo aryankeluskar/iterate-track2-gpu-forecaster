@@ -1,0 +1,51 @@
+provider,eff,gpu,ann_tier,series,headline,n_offers_panel
+salad,2026-11-01,RTX 5090,high,fastgpu_daily.marketplace_ask.RTX_5090.community.median,False,1
+salad,2026-11-01,RTX 5090,high,fastgpu_daily.marketplace_ask.RTX_5090.spot.median,False,2
+salad,2026-11-01,RTX 5090,high,gpurentalprices.marketplace_ask.RTX_5090.community.median,False,1
+salad,2026-11-01,RTX 4090,high,fastgpu_daily.marketplace_ask.RTX_4090.community.median,False,1
+salad,2026-11-01,RTX 4090,high,fastgpu_daily.marketplace_ask.RTX_4090.spot.median,False,2
+salad,2026-11-01,RTX 4090,high,gpurentalprices.marketplace_ask.RTX_4090.community.median,False,1
+salad,2026-11-01,RTX 5080,high,fastgpu_daily.marketplace_ask.RTX_5080.community.median,False,1
+salad,2026-11-01,RTX 5080,high,fastgpu_daily.marketplace_ask.RTX_5080.spot.median,False,2
+salad,2026-11-01,RTX 5080,high,gpurentalprices.marketplace_ask.RTX_5080.community.median,False,1
+salad,2026-11-01,RTX 5070 Ti,high,fastgpu_daily.marketplace_ask.RTX_5070_Ti.community.median,False,1
+salad,2026-11-01,RTX 5070 Ti,high,fastgpu_daily.marketplace_ask.RTX_5070_Ti.spot.median,False,2
+salad,2026-11-01,RTX 5070 Ti,high,gpurentalprices.marketplace_ask.RTX_5070_Ti.community.median,False,1
+salad,2026-11-01,RTX 4080,high,fastgpu_daily.marketplace_ask.RTX_4080.community.median,False,1
+salad,2026-11-01,RTX 4080,high,fastgpu_daily.marketplace_ask.RTX_4080.spot.median,False,1
+salad,2026-11-01,RTX 4080,high,gpurentalprices.marketplace_ask.RTX_4080.community.median,False,1
+salad,2026-11-01,RTX 4070 Ti Super,high,fastgpu_daily.marketplace_ask.RTX_4070_Ti_Super.community.median,False,1
+salad,2026-11-01,RTX 4070 Ti Super,high,fastgpu_daily.marketplace_ask.RTX_4070_Ti_Super.spot.median,False,1
+salad,2026-11-01,RTX 4070 Ti Super,high,gpurentalprices.marketplace_ask.RTX_4070_Ti_Super.community.median,False,1
+salad,2026-11-01,RTX 3090 Ti,high,fastgpu_daily.marketplace_ask.RTX_3090_Ti.community.median,False,1
+salad,2026-11-01,RTX 3090 Ti,high,fastgpu_daily.marketplace_ask.RTX_3090_Ti.spot.median,False,1
+salad,2026-11-01,RTX 3090 Ti,high,gpurentalprices.marketplace_ask.RTX_3090_Ti.community.median,False,1
+salad,2026-11-01,RTX 3090,high,fastgpu_daily.marketplace_ask.RTX_3090.community.median,False,1
+salad,2026-11-01,RTX 3090,high,fastgpu_daily.marketplace_ask.RTX_3090.spot.median,False,2
+salad,2026-11-01,RTX 3090,high,gpurentalprices.marketplace_ask.RTX_3090.community.median,False,1
+salad,2026-11-01,RTX 5070,high,fastgpu_daily.marketplace_ask.RTX_5070.community.median,False,1
+salad,2026-11-01,RTX 5070,high,fastgpu_daily.marketplace_ask.RTX_5070.spot.median,False,1
+salad,2026-11-01,RTX 5070,high,gpurentalprices.marketplace_ask.RTX_5070.community.median,False,1
+salad,2026-11-01,RTX 3080 Ti,high,fastgpu_daily.marketplace_ask.RTX_3080_Ti.community.median,False,1
+salad,2026-11-01,RTX 3080 Ti,high,fastgpu_daily.marketplace_ask.RTX_3080_Ti.spot.median,False,2
+salad,2026-11-01,RTX 3080 Ti,high,gpurentalprices.marketplace_ask.RTX_3080_Ti.community.median,False,1
+salad,2026-11-01,RTX 4070,high,fastgpu_daily.marketplace_ask.RTX_4070.community.median,False,1
+salad,2026-11-01,RTX 4070,high,fastgpu_daily.marketplace_ask.RTX_4070.spot.median,False,1
+salad,2026-11-01,RTX 4070,high,gpurentalprices.marketplace_ask.RTX_4070.community.median,False,1
+salad,2026-11-01,RTX 5060 Ti,high,fastgpu_daily.marketplace_ask.RTX_5060_Ti.community.median,False,1
+salad,2026-11-01,RTX 5060 Ti,high,fastgpu_daily.marketplace_ask.RTX_5060_Ti.spot.median,False,3
+salad,2026-11-01,RTX 5060 Ti,high,gpurentalprices.marketplace_ask.RTX_5060_Ti.community.median,False,1
+salad,2026-11-01,RTX 3080,high,fastgpu_daily.marketplace_ask.RTX_3080.community.median,False,1
+salad,2026-11-01,RTX 3080,high,fastgpu_daily.marketplace_ask.RTX_3080.spot.median,False,1
+salad,2026-11-01,RTX 3080,high,gpurentalprices.marketplace_ask.RTX_3080.community.median,False,1
+salad,2026-11-01,RTX 5060,high,fastgpu_daily.marketplace_ask.RTX_5060.community.median,False,1
+salad,2026-11-01,RTX 5060,high,fastgpu_daily.marketplace_ask.RTX_5060.spot.median,False,1
+salad,2026-11-01,RTX 5060,high,gpurentalprices.marketplace_ask.RTX_5060.community.median,False,1
+lambdalabs,2026-11-16,B200,on_demand,fastgpu_daily.neocloud_rate_card.B200.on_demand.median,True,11
+lambdalabs,2026-11-16,B200,on_demand,gpurentalprices.neocloud_rate_card.B200.on_demand.median,True,11
+lambdalabs,2026-11-16,H100 SXM,on_demand,fastgpu_daily.neocloud_rate_card.H100_SXM_80GB.on_demand.median,True,17
+lambdalabs,2026-11-16,H100 SXM,on_demand,gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median,True,9
+lambdalabs,2026-11-16,A100 80GB,on_demand,fastgpu_daily.neocloud_rate_card.A100_80GB.on_demand.median,True,13
+lambdalabs,2026-11-16,A100 80GB,on_demand,gpurentalprices.neocloud_rate_card.A100_80GB.on_demand.median,False,9
+lambdalabs,2026-11-16,A100 40GB,on_demand,fastgpu_daily.neocloud_rate_card.A100_40GB.on_demand.median,True,4
+lambdalabs,2026-11-16,A100 40GB,on_demand,gpurentalprices.neocloud_rate_card.A100_40GB.on_demand.median,True,7

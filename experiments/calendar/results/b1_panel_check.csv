@@ -1,0 +1,57 @@
+provider,eff,gpu,ann_tier,src,gpu_panel,tier,status,pre,old,new,post_nearest,price_err,change_day,date_err,first_post_day
+digitalocean,2026-08-01,H100,on_demand,gpurentalprices,H100 80GB,on_demand,no_panel_data_before,,,,,,,,
+digitalocean,2026-08-01,H200,on_demand,gpurentalprices,H200,on_demand,no_panel_data_before,,,,,,,,
+fireworks,2026-09-01,H100 80GB,on_demand_deployment,gpurentalprices,H100 80GB,serverless,hit,7.0,7.0,8.0,8.0,0.0,2026-09-01,0.0,2026-09-01
+fireworks,2026-09-01,H200,on_demand_deployment,gpurentalprices,H200,serverless,hit,7.0,7.0,8.0,8.0,0.0,2026-09-01,0.0,2026-09-01
+fireworks,2026-09-01,B200,on_demand_deployment,gpurentalprices,B200,serverless,hit,10.0,10.0,13.0,13.0,0.0,2026-09-01,0.0,2026-09-01
+salad,2026-09-12,RTX 5090,high,gpurentalprices,RTX 5090,community,old_price_not_in_panel,0.25,0.45,0.5,,,,,
+salad,2026-09-12,RTX 5090,medium,gpurentalprices,RTX 5090,community,old_price_not_in_panel,0.25,0.38,0.417,,,,,
+salad,2026-09-12,RTX 5090,low,gpurentalprices,RTX 5090,community,old_price_not_in_panel,0.25,0.31,0.333,,,,,
+salad,2026-09-12,RTX 4090,high,gpurentalprices,RTX 4090,community,old_price_not_in_panel,0.16,0.3,0.33,,,,,
+salad,2026-09-12,RTX 4090,medium,gpurentalprices,RTX 4090,community,old_price_not_in_panel,0.16,0.253,0.273,,,,,
+salad,2026-09-12,RTX 4090,low,gpurentalprices,RTX 4090,community,old_price_not_in_panel,0.16,0.207,0.217,,,,,
+salad,2026-09-12,RTX 5080,high,gpurentalprices,RTX 5080,community,old_price_not_in_panel,0.15,0.42,0.26,,,,,
+salad,2026-09-12,RTX 5080,medium,gpurentalprices,RTX 5080,community,old_price_not_in_panel,0.15,0.335,0.223,,,,,
+salad,2026-09-12,RTX 5080,low,gpurentalprices,RTX 5080,community,old_price_not_in_panel,0.15,0.25,0.187,,,,,
+salad,2026-09-12,RTX 5080,lowest,gpurentalprices,RTX 5080,community,old_price_not_in_panel,0.15,0.18,0.15,,,,,
+salad,2026-09-12,RTX 5070 Ti,high,gpurentalprices,RTX 5070 Ti,community,no_panel_data_before,,,,,,,,
+salad,2026-09-12,RTX 5070 Ti,medium,gpurentalprices,RTX 5070 Ti,community,no_panel_data_before,,,,,,,,
+salad,2026-09-12,RTX 5070 Ti,low,gpurentalprices,RTX 5070 Ti,community,no_panel_data_before,,,,,,,,
+salad,2026-09-12,RTX 5070,high,gpurentalprices,RTX 5070,community,no_panel_data_before,,,,,,,,
+salad,2026-09-12,RTX 5070,medium,gpurentalprices,RTX 5070,community,no_panel_data_before,,,,,,,,
+salad,2026-09-12,RTX 5070,low,gpurentalprices,RTX 5070,community,no_panel_data_before,,,,,,,,
+salad,2026-09-12,RTX 5060 Ti,high,gpurentalprices,RTX 5060 Ti,community,no_panel_data_before,,,,,,,,
+salad,2026-09-12,RTX 5060 Ti,medium,gpurentalprices,RTX 5060 Ti,community,no_panel_data_before,,,,,,,,
+salad,2026-09-12,RTX 5060 Ti,low,gpurentalprices,RTX 5060 Ti,community,no_panel_data_before,,,,,,,,
+salad,2026-09-12,RTX 5060,high,gpurentalprices,RTX 5060,community,no_panel_data_before,,,,,,,,
+salad,2026-09-12,RTX 5060,medium,gpurentalprices,RTX 5060,community,no_panel_data_before,,,,,,,,
+salad,2026-09-12,RTX 5060,low,gpurentalprices,RTX 5060,community,no_panel_data_before,,,,,,,,
+salad,2026-09-12,RTX 4070 Ti Super,high,gpurentalprices,RTX 4070 Ti Super,community,no_panel_data_before,,,,,,,,
+salad,2026-09-12,RTX 4070 Ti Super,medium,gpurentalprices,RTX 4070 Ti Super,community,no_panel_data_before,,,,,,,,
+salad,2026-09-12,RTX 4070 Ti Super,low,gpurentalprices,RTX 4070 Ti Super,community,no_panel_data_before,,,,,,,,
+salad,2026-09-12,RTX 4070,high,gpurentalprices,RTX 4070,community,no_panel_data_before,,,,,,,,
+salad,2026-09-12,RTX 4070,medium,gpurentalprices,RTX 4070,community,no_panel_data_before,,,,,,,,
+salad,2026-09-12,RTX 4070,low,gpurentalprices,RTX 4070,community,no_panel_data_before,,,,,,,,
+salad,2026-09-12,RTX 4060 Ti,high,gpurentalprices,RTX 4060 Ti,community,no_panel_data_before,,,,,,,,
+salad,2026-09-12,RTX 4060 Ti,medium,gpurentalprices,RTX 4060 Ti,community,no_panel_data_before,,,,,,,,
+salad,2026-09-12,RTX 4060 Ti,low,gpurentalprices,RTX 4060 Ti,community,no_panel_data_before,,,,,,,,
+salad,2026-09-12,RTX 3090 Ti,high,gpurentalprices,RTX 3090 Ti,community,old_price_not_in_panel,0.1,0.28,0.19,,,,,
+salad,2026-09-12,RTX 3090 Ti,medium,gpurentalprices,RTX 3090 Ti,community,old_price_not_in_panel,0.1,0.22,0.16,,,,,
+salad,2026-09-12,RTX 3090 Ti,low,gpurentalprices,RTX 3090 Ti,community,old_price_not_in_panel,0.1,0.16,0.13,,,,,
+salad,2026-09-12,RTX 3090,high,gpurentalprices,RTX 3090,community,old_price_not_in_panel,0.09,0.25,0.17,,,,,
+salad,2026-09-12,RTX 3090,medium,gpurentalprices,RTX 3090,community,old_price_not_in_panel,0.09,0.197,0.143,,,,,
+salad,2026-09-12,RTX 3090,low,gpurentalprices,RTX 3090,community,old_price_not_in_panel,0.09,0.143,0.117,,,,,
+nebius,2026-10-01,H100,on_demand,fastgpu_daily,H100 SXM 80GB,on_demand,hit,3.85,3.85,4.5,4.5,0.0,2026-10-02,1.0,2026-10-01
+nebius,2026-10-01,H100,on_demand,gpurentalprices,H100 80GB,on_demand,hit,3.85,3.85,4.5,4.5,0.0,2026-10-01,0.0,2026-10-01
+nebius,2026-10-01,H200,on_demand,fastgpu_daily,H200,on_demand,hit,4.5,4.5,5.4,5.4,0.0,2026-10-02,1.0,2026-10-01
+nebius,2026-10-01,H200,on_demand,gpurentalprices,H200,on_demand,hit,4.5,4.5,5.4,5.4,0.0,2026-10-01,0.0,2026-10-01
+nebius,2026-10-01,B200,on_demand,fastgpu_daily,B200,on_demand,hit,7.15,7.15,8.5,8.5,0.0,2026-10-02,1.0,2026-10-01
+nebius,2026-10-01,B200,on_demand,gpurentalprices,B200,on_demand,hit,7.15,7.15,8.5,8.5,0.0,2026-10-01,0.0,2026-10-01
+nebius,2026-10-01,B300,on_demand,fastgpu_daily,B300,on_demand,hit,7.85,7.85,9.5,9.5,0.0,2026-10-02,1.0,2026-10-01
+nebius,2026-10-01,B300,on_demand,gpurentalprices,B300,on_demand,hit,7.85,7.85,9.5,9.5,0.0,2026-10-01,0.0,2026-10-01
+jarvislabs,2026-10-05,H200,on_demand,fastgpu_daily,H200,on_demand,hit,3.99,3.99,4.59,4.59,0.0,2026-10-05,1.0,2026-10-04
+jarvislabs,2026-10-05,H200,on_demand,gpurentalprices,H200,on_demand,hit,3.99,3.99,4.59,4.59,0.0,2026-10-04,0.0,2026-10-04
+jarvislabs,2026-10-05,H100 SXM,on_demand,fastgpu_daily,H100 SXM 80GB,on_demand,hit,2.69,2.69,3.49,3.49,0.0,2026-10-05,1.0,2026-10-04
+jarvislabs,2026-10-05,H100 SXM,on_demand,gpurentalprices,H100 SXM 80GB,on_demand,hit,2.69,2.69,3.49,3.49,0.0,2026-10-04,0.0,2026-10-04
+jarvislabs,2026-10-05,RTX PRO 6000,on_demand,fastgpu_daily,RTX PRO 6000,on_demand,hit,1.89,1.89,2.19,2.19,0.0,2026-10-05,1.0,2026-10-04
+jarvislabs,2026-10-05,RTX PRO 6000,on_demand,gpurentalprices,RTX PRO 6000,on_demand,hit,1.89,1.89,2.19,2.19,0.0,2026-10-04,0.0,2026-10-04

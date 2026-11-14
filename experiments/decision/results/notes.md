@@ -17,6 +17,10 @@ Laya 8 log-probs -> logistic     0.635 / 0.341 / 0.754 / 0.845   (readout recove
 Full test (14,615): base 0.769, logistic 0.576, LightGBM 0.514. Headline subset (1,665): 1.569 / 1.280 / 1.202.
 5-level: base 0.920, logistic 0.768, LightGBM 0.742, Laya temp 1.596, Laya temp+bias 0.939, Laya readout 0.815.
 
+Fine-tune: not completed. laya.train.finetune ran (frozen encoder, 1,500 rows = 2,700 items, 1 epoch, 245 s), but the
+process grew to 7.2 GB while scoring the test cells and the orchestrator killed it. ps RSS had shown about 0.1 GB, because MPS
+unified memory is not counted in RSS. No fine-tuned number exists.
+
 ## Step 4: method `decision` (LightGBM probabilities + pooled up/down move sizes), rental_headline, test origins, 1,665 cells
 drift 0.0795, mix 0.1653, decision 0.0987, ens(mix, decision) 0.1561.
 decision - drift +0.019 [+0.011, +0.025]; decision - mix -0.067 [-0.070, -0.058]; ens - mix -0.009 [-0.013, +0.005].

@@ -1,0 +1,399 @@
+{
+ "recalls": [
+  {
+   "id": "Q1",
+   "identity": "proposer",
+   "as_of": null,
+   "query": "Which hypotheses on failure modes of the median have been refuted, and what was the evidence?",
+   "seconds": 1.31,
+   "n_results": 20,
+   "sources": {
+    "exp-H7": [
+     1,
+     "source",
+     "2026-11-14T19:49:16Z",
+     "Experiment: H7",
+     "experimenter"
+    ],
+    "exp-H7b": [
+     2,
+     "source",
+     "2026-11-14T19:49:16Z",
+     "Experiment: H7b",
+     "experimenter"
+    ],
+    "exp-H9": [
+     4,
+     "source",
+     "2026-11-14T19:49:16Z",
+     "Experiment: H9",
+     "experimenter"
+    ],
+    "exp-H10": [
+     7,
+     "source",
+     "2026-11-14T19:49:16Z",
+     "Experiment: H10",
+     "experimenter"
+    ],
+    "autopsy-gpurentalprices.marketplace_ask.H100_80GB.spot.median-2026-10-06": [
+     10,
+     "source",
+     "2026-10-06T23:59:59Z",
+     "Autopsy: gpurentalprices.marketplace_ask.H100_80GB.spot.median",
+     "autopsy"
+    ],
+    "autopsy-fastgpu_daily.neocloud_rate_card.B300.on_demand.median-2026-10-06": [
+     11,
+     "claim",
+     "2026-10-06T23:59:59Z",
+     "Autopsy: fastgpu_daily.neocloud_rate_card.B300.on_demand.median",
+     "autopsy"
+    ],
+    "autopsy-all-2026-10-04": [
+     12,
+     "source",
+     "2026-10-04T23:59:59Z",
+     "Autopsy: all series, busiest day",
+     "autopsy"
+    ],
+    "scout-12d5cf4c": [
+     19,
+     "source",
+     "2026-09-02T23:59:59Z",
+     "Evidence: linkedin.com",
+     "scout"
+    ],
+    "autopsy-gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median-2026-10-03": [
+     20,
+     "claim",
+     "2026-10-03T23:59:59Z",
+     "Autopsy: gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median",
+     "autopsy"
+    ]
+   },
+   "pass": true,
+   "late_sources": [],
+   "offline_replay_identical": true,
+   "pending": null
+  },
+  {
+   "id": "Q2",
+   "identity": "proposer",
+   "as_of": null,
+   "query": "What is the largest unexplained source of last-value loss?",
+   "seconds": 0.81,
+   "n_results": 20,
+   "sources": {
+    "autopsy-fastgpu_daily.neocloud_rate_card.B300.on_demand.median-2026-10-06": [
+     1,
+     "claim",
+     "2026-10-06T23:59:59Z",
+     "Autopsy: fastgpu_daily.neocloud_rate_card.B300.on_demand.median",
+     "autopsy"
+    ],
+    "autopsy-gpurentalprices.marketplace_ask.H100_80GB.spot.median-2026-10-06": [
+     2,
+     "source",
+     "2026-10-06T23:59:59Z",
+     "Autopsy: gpurentalprices.marketplace_ask.H100_80GB.spot.median",
+     "autopsy"
+    ],
+    "exp-H7": [
+     9,
+     "mention",
+     "2026-11-14T19:49:16Z",
+     "Experiment: H7",
+     "experimenter"
+    ],
+    "autopsy-all-2026-10-04": [
+     12,
+     "source",
+     "2026-10-04T23:59:59Z",
+     "Autopsy: all series, busiest day",
+     "autopsy"
+    ],
+    "exp-H7b": [
+     13,
+     "source",
+     "2026-11-14T19:49:16Z",
+     "Experiment: H7b",
+     "experimenter"
+    ],
+    "exp-H9": [
+     15,
+     "source",
+     "2026-11-14T19:49:16Z",
+     "Experiment: H9",
+     "experimenter"
+    ],
+    "exp-H10": [
+     20,
+     "source",
+     "2026-11-14T19:49:16Z",
+     "Experiment: H10",
+     "experimenter"
+    ]
+   },
+   "pass": true,
+   "late_sources": [],
+   "offline_replay_identical": true,
+   "pending": null
+  },
+  {
+   "id": "Q3",
+   "identity": "forecaster",
+   "as_of": "2026-10-06",
+   "query": "Which providers announced price increases before this date?",
+   "seconds": 0.94,
+   "n_results": 20,
+   "sources": {
+    "autopsy-gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median-2026-10-03": [
+     1,
+     "membership",
+     "2026-10-03T23:59:59Z",
+     "Autopsy: gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median",
+     "autopsy"
+    ],
+    "scout-3d7d1259": [
+     3,
+     "claim",
+     "2026-09-01T23:29:16Z",
+     "Evidence: blog.salad.com",
+     "scout"
+    ],
+    "scout-c520a7d6": [
+     4,
+     "source",
+     "2026-09-01T10:35:30Z",
+     "Evidence: theweightedaverage.com",
+     "scout"
+    ],
+    "scout-12d5cf4c": [
+     7,
+     "source",
+     "2026-09-02T23:59:59Z",
+     "Evidence: linkedin.com",
+     "scout"
+    ]
+   },
+   "pass": true,
+   "late_sources": [],
+   "offline_replay_identical": true,
+   "pending": null
+  },
+  {
+   "id": "Q4",
+   "identity": "forecaster",
+   "as_of": "2026-10-31",
+   "query": "Nebius H100 on-demand price change",
+   "seconds": 1.0,
+   "n_results": 20,
+   "sources": {
+    "scout-f4c32699": [
+     1,
+     "claim",
+     "2026-10-18T23:59:59Z",
+     "Evidence: askgpu.com",
+     "scout"
+    ],
+    "autopsy-gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median-2026-10-03": [
+     5,
+     "claim",
+     "2026-10-03T23:59:59Z",
+     "Autopsy: gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median",
+     "autopsy"
+    ],
+    "scout-c520a7d6": [
+     7,
+     "claim",
+     "2026-09-01T10:35:30Z",
+     "Evidence: theweightedaverage.com",
+     "scout"
+    ],
+    "scout-3d7d1259": [
+     17,
+     "claim",
+     "2026-09-01T23:29:16Z",
+     "Evidence: blog.salad.com",
+     "scout"
+    ]
+   },
+   "pass": true,
+   "late_sources": [],
+   "offline_replay_identical": true,
+   "pending": null
+  },
+  {
+   "id": "Q5",
+   "identity": "scout",
+   "as_of": null,
+   "query": "Which dates and providers had big median moves that still lack a news explanation?",
+   "seconds": 0.97,
+   "n_results": 20,
+   "sources": {
+    "autopsy-gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median-2026-10-03": [
+     1,
+     "source",
+     "2026-10-03T23:59:59Z",
+     "Autopsy: gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median",
+     "autopsy"
+    ],
+    "autopsy-gpurentalprices.marketplace_ask.H100_80GB.spot.median-2026-10-06": [
+     2,
+     "source",
+     "2026-10-06T23:59:59Z",
+     "Autopsy: gpurentalprices.marketplace_ask.H100_80GB.spot.median",
+     "autopsy"
+    ],
+    "autopsy-all-2026-10-04": [
+     3,
+     "claim",
+     "2026-10-04T23:59:59Z",
+     "Autopsy: all series, busiest day",
+     "autopsy"
+    ],
+    "autopsy-fastgpu_daily.neocloud_rate_card.B300.on_demand.median-2026-10-06": [
+     17,
+     "claim",
+     "2026-10-06T23:59:59Z",
+     "Autopsy: fastgpu_daily.neocloud_rate_card.B300.on_demand.median",
+     "autopsy"
+    ],
+    "scout-3d7d1259": [
+     20,
+     "source",
+     "2026-09-01T23:29:16Z",
+     "Evidence: blog.salad.com",
+     "scout"
+    ]
+   },
+   "pass": true,
+   "late_sources": [],
+   "offline_replay_identical": true,
+   "pending": null
+  },
+  {
+   "id": "Q6",
+   "identity": "forecaster",
+   "as_of": null,
+   "query": "What did the experiments conclude about breadth?",
+   "seconds": 1.47,
+   "n_results": 20,
+   "sources": {
+    "autopsy-all-2026-10-04": [
+     1,
+     "source",
+     "2026-10-04T23:59:59Z",
+     "Autopsy: all series, busiest day",
+     "autopsy"
+    ],
+    "autopsy-fastgpu_daily.neocloud_rate_card.B300.on_demand.median-2026-10-06": [
+     2,
+     "source",
+     "2026-10-06T23:59:59Z",
+     "Autopsy: fastgpu_daily.neocloud_rate_card.B300.on_demand.median",
+     "autopsy"
+    ],
+    "autopsy-gpurentalprices.marketplace_ask.H100_80GB.spot.median-2026-10-06": [
+     4,
+     "source",
+     "2026-10-06T23:59:59Z",
+     "Autopsy: gpurentalprices.marketplace_ask.H100_80GB.spot.median",
+     "autopsy"
+    ],
+    "autopsy-gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median-2026-10-03": [
+     6,
+     "membership",
+     "2026-10-03T23:59:59Z",
+     "Autopsy: gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median",
+     "autopsy"
+    ],
+    "scout-12d5cf4c": [
+     8,
+     "source",
+     "2026-09-02T23:59:59Z",
+     "Evidence: linkedin.com",
+     "scout"
+    ],
+    "scout-f4c32699": [
+     10,
+     "source",
+     "2026-10-18T23:59:59Z",
+     "Evidence: askgpu.com",
+     "scout"
+    ],
+    "scout-3d7d1259": [
+     11,
+     "source",
+     "2026-09-01T23:29:16Z",
+     "Evidence: blog.salad.com",
+     "scout"
+    ],
+    "scout-c520a7d6": [
+     13,
+     "source",
+     "2026-09-01T10:35:30Z",
+     "Evidence: theweightedaverage.com",
+     "scout"
+    ]
+   },
+   "pass": true,
+   "late_sources": [],
+   "offline_replay_identical": true,
+   "pending": null
+  }
+ ],
+ "usage_before_recalls": {
+  "status": 200,
+  "month": {
+   "from": "2026-11-01T00:00:00Z",
+   "to": "2026-11-14T20:03:08.0542985Z",
+   "resetsAt": null
+  },
+  "balance": {
+   "left": 549974.0,
+   "included": 50000,
+   "bought": 499974.0,
+   "rolledOver": 0,
+   "spent": 26.0
+  },
+  "project": {
+   "slug": "default-project",
+   "credits": 26.0,
+   "ingestions": 4,
+   "recalls": 1,
+   "creditCap": null,
+   "creditCapLeft": null,
+   "ingestionCap": null,
+   "ingestionCapLeft": null
+  },
+  "metered": true
+ },
+ "usage_after": {
+  "status": 200,
+  "month": {
+   "from": "2026-11-01T00:00:00Z",
+   "to": "2026-11-14T20:03:16.1508038Z",
+   "resetsAt": null
+  },
+  "balance": {
+   "left": 549968.0,
+   "included": 50000,
+   "bought": 499968.0,
+   "rolledOver": 0,
+   "spent": 32.0
+  },
+  "project": {
+   "slug": "default-project",
+   "credits": 32.0,
+   "ingestions": 4,
+   "recalls": 7,
+   "creditCap": null,
+   "creditCapLeft": null,
+   "ingestionCap": null,
+   "ingestionCapLeft": null
+  },
+  "metered": true
+ }
+}

@@ -1,0 +1,89 @@
+{
+ "autopsy": {
+  "ingestionId": "9cae6683-7b87-465b-891e-4995dcb34461",
+  "n": 4,
+  "accept_s": 0.98,
+  "complete_s": 33.41,
+  "per_item_s": 8.35,
+  "receipt": {
+   "status": "queued",
+   "unchanged": null
+  },
+  "final": {
+   "status": "completed",
+   "settled": true,
+   "readiness": {
+    "raw": 0,
+    "comprehension": 0,
+    "consolidation": 0,
+    "failed": 0
+   },
+   "failure": null
+  },
+  "error": null,
+  "ids": [
+   "autopsy-gpurentalprices.marketplace_ask.H100_80GB.spot.median-2026-10-06",
+   "autopsy-fastgpu_daily.neocloud_rate_card.B300.on_demand.median-2026-10-06",
+   "autopsy-all-2026-10-04",
+   "autopsy-gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median-2026-10-03"
+  ]
+ },
+ "scout": {
+  "ingestionId": "ff08d256-1c8d-4f6d-8ba4-d2b75bce8d19",
+  "n": 4,
+  "accept_s": 0.55,
+  "complete_s": 23.22,
+  "per_item_s": 5.81,
+  "receipt": {
+   "status": "queued",
+   "unchanged": null
+  },
+  "final": {
+   "status": "completed",
+   "settled": true,
+   "readiness": {
+    "raw": 0,
+    "comprehension": 0,
+    "consolidation": 0,
+    "failed": 0
+   },
+   "failure": null
+  },
+  "error": null,
+  "ids": [
+   "scout-f4c32699",
+   "scout-3d7d1259",
+   "scout-c520a7d6",
+   "scout-12d5cf4c"
+  ]
+ },
+ "experimenter": {
+  "ingestionId": "6a52a219-8f1b-461e-a016-060e0fd8364b",
+  "n": 4,
+  "accept_s": 1.17,
+  "complete_s": 24.0,
+  "per_item_s": 6.0,
+  "receipt": {
+   "status": "queued",
+   "unchanged": null
+  },
+  "final": {
+   "status": "completed",
+   "settled": true,
+   "readiness": {
+    "raw": 0,
+    "comprehension": 0,
+    "consolidation": 0,
+    "failed": 0
+   },
+   "failure": null
+  },
+  "error": null,
+  "ids": [
+   "exp-H7b",
+   "exp-H7",
+   "exp-H9",
+   "exp-H10"
+  ]
+ }
+}

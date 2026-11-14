@@ -1,0 +1,44 @@
+{
+ "b1_rows": 56,
+ "b1_hits": 17,
+ "b1_checkable": 17,
+ "events": [
+  {
+   "event": "jarvislabs 2026-10-05",
+   "cells": 66,
+   "lv_loss": 5.192300000000002,
+   "adj_loss": 2.3503749999999988,
+   "adj0_loss": 2.1988749999999984,
+   "moved": 57,
+   "removed": 0.5473345145696517,
+   "removed_nolag": 0.576512335573831,
+   "share_total_dev_lv_loss": 0.05863070436339905,
+   "loss_removed_share_of_total": 0.03209060811161778
+  },
+  {
+   "event": "nebius 2026-10-01",
+   "cells": 88,
+   "lv_loss": 14.78325,
+   "adj_loss": 10.015174999999997,
+   "adj0_loss": 10.686924999999999,
+   "moved": 76,
+   "removed": 0.32253225779175776,
+   "removed_nolag": 0.2770923173185871,
+   "share_total_dev_lv_loss": 0.16693033150631104,
+   "loss_removed_share_of_total": 0.05384041671465709
+  },
+  {
+   "event": "ALL",
+   "cells": 154,
+   "lv_loss": 19.975550000000002,
+   "adj_loss": 12.365549999999995,
+   "adj0_loss": 12.885799999999996,
+   "moved": 133,
+   "removed": 0.38096573060566574,
+   "removed_nolag": 0.354921391400988,
+   "share_total_dev_lv_loss": 0.22556103586971007,
+   "loss_removed_share_of_total": 0.08593102482627488
+  }
+ ],
+ "total_dev_lv_loss": 88.5594
+}
