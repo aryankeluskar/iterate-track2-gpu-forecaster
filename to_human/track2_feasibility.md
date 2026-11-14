@@ -1,6 +1,6 @@
 # Track 2 feasibility, for the team's track decision
 
-Written Saturday 14 November, about 13:00 PT. Every number is in `research-log.md`, `data_out/ledger.jsonl` or `data_out/val_gate.jsonl`.
+Written Saturday 14 November, about 13:05 PT, after the independent audit reported. Every number is in `research-log.md`, `data_out/ledger.jsonl` or `data_out/val_gate.jsonl`.
 
 ## Verdict
 
@@ -26,8 +26,11 @@ Scores are pooled skill against the last value, the organisers' headline metric.
 
 - **Sunday is one forecast date.** On the 50 development dates the blend beat drift on 46 and scored below the last value on 2. The dates overlap, so this is weaker than 46 independent wins. A bad week is possible.
 - **Which series Pacific scores.** The scorer scores whatever is in the file unless they restrict it to the 37 headline series. We submit all 592, so either way is covered, but the answer changes which number matters.
-- **Two of the four new members rest on thinner evidence.** An independent audit, still running, finds the significance test used on the 18 unseen dates is too generous. Under a stricter test the provider simulator and the short-context Chronos width hold (p about 0.005); the fragility tails are borderline (0.05 to 0.08) and the analogs are not significant alone (0.13 to 0.16).
-- **One small leak, found by the audit.** In the analog member a series' later rows could change a scaling constant. Largest effect 0.00002 in log price; none at the scored date. A fix is ready and not yet applied.
+- **Two of the four new members rest on thinner evidence.** An independent audit found the significance test used on the 18 unseen dates is too generous (it rejects 10 to 18% of the time at a nominal 5%). Under a stricter test the provider simulator and the short-context Chronos width hold (p about 0.005); the fragility tails are borderline (0.05 to 0.08) and the analogs are not significant alone (0.13 to 0.16). Both stay in the blend on development-period evidence, and the findings will say so.
+- **The ranges on the unseen weeks are not true 90% intervals.** That period has only three calendar weeks, so the bootstrap behind them has ten distinct resamples.
+- **The 37 series were chosen with hindsight.** They are the headline set as of 6 November. Under the organisers' rule applied date by date, most of them did not qualify until October; on the cells that did, the reference model's margin over drift is +0.033, against +0.080 on the fixed 37. The margins in the table above are optimistic for that reason.
+- **One small leak, found by the audit and fixed.** In the analog member a young series' later rows could change a scaling constant. Largest effect on forecasts actually used: 0.00002 in log price; none possible at the scored date. A test that would have caught it now exists. Every other member passed deletion and corruption of all later data.
+- **Two bookkeeping lapses, now corrected in the log.** One early validation query was committed 32 seconds after its result, not before, and its result was missing from the log.
 - **Long-run section.** It gives ranges with stated scenario probabilities. No method beat "no change" at one to two years on any backtest, and it says so.
 - **The brief says leaderboard position alone will not win.** The case rests on the method, the negative results and the insight, which a judge has to read.
 
@@ -36,7 +39,6 @@ Scores are pooled skill against the last value, the organisers' headline metric.
 - README and findings, including the audit's caveats.
 - Demo page and pitch script (an agent is building them).
 - The research loop as commands (an agent is building it); this is what the "autonomy" criterion looks at.
-- Apply the analog fix, rerun the reproduce command, record the new file hashes.
 - By the team: public repo and push, platform registration by Sunday 12:00, a 2-minute video.
 
 ## What this does not tell you

@@ -205,6 +205,10 @@ def sgn(x: float, d: int = 3) -> str:
     return f"{x:+.{d}f}".replace("-", "−")
 
 
+def pv(p: float) -> str:
+    return "<0.001" if p < 0.001 else f"{p:.3f}"
+
+
 def ci(c: list[float], d: int = 3) -> str:
     return f"{sgn(c[0], d)} to {sgn(c[1], d)}"
 
@@ -289,7 +293,7 @@ def explorer_data() -> dict:
                 g = o[o.key == k].set_index("day").price
                 prov = k.split("|")[0]
                 parts = [x for x in k.split("#")[0].split("|")[1:] if x]
-                label = prov if nprov[prov] == 1 else f"{prov} ({', '.join(parts) or k.split('#')[1]})"
+                label = prov if nprov[prov] == 1 else f"{prov} ({', '.join(parts) or 'offer ' + str(int(k.split('#')[1]) + 1)})"
                 if nprov[prov] > 1 and len(label) > 40:
                     label = label[:39] + "…"
                 rt = rate21.get((src, prov))
@@ -349,7 +353,8 @@ def val_section(gate: list[dict], log: list[dict], nhead: int) -> tuple[str, dic
 
     def label(method, params):
         if method == "ens":
-            names = [mm[0] for mm in params["members"]]
+            alias = {"replay": "Chronos width", "chronos": "Chronos width"}
+            names = [alias.get(mm[0], mm[0]) for mm in params["members"]]
             parts = []
             for n in dict.fromkeys(names):
                 parts.append(f"{names.count(n)} variants of {n}" if names.count(n) > 1 else n)
@@ -370,13 +375,13 @@ def val_section(gate: list[dict], log: list[dict], nhead: int) -> tuple[str, dic
     for r in keep:
         q = r["name"].split("_")[0]
         rows.append(f"<tr><td class=n>{q[1:]}</td><td>{esc(names[q])}</td><td class=n>{f3(r['skill'])}</td><td>reference</td>"
-                    f"<td class=n>{sgn(r['d_vs_ref'])}</td><td class=n>{ci(r['ci90'])}</td><td class=n>{r['p_one_sided']:.3f}</td>"
+                    f"<td class=n>{sgn(r['d_vs_ref'])}</td><td class=n>{ci(r['ci90'])}</td><td class=n>{esc(pv(r['p_one_sided']))}</td>"
                     f"<td>{'kept' if r['name'] in passed else 'not kept'}</td></tr>")
     fh, fn = g["q10_final_headline"], g["q11_final_nonhead"]
     nn = next(int(re.search(r"\d+", x["universe"]).group()) for x in log if x["universe"].startswith("custom") and x["split"] == "val")
     for q, r, what in (("10", fh, f"final blend, {nhead} headline series (optimistic)"), ("11", fn, f"final blend, {nn} other posted rental series")):
         rows.append(f"<tr class=final><td class=n>{q}</td><td>{esc(what)}</td><td class=n>{f3(r['skill'])}</td><td>drift</td>"
-                    f"<td class=n>{sgn(r['d_vs_drift'])}</td><td class=n>{ci(r['ci90_vs_drift'])}</td><td class=n>{r['p_one_sided']:.0e}</td><td>submitted</td></tr>")
+                    f"<td class=n>{sgn(r['d_vs_drift'])}</td><td class=n>{ci(r['ci90_vs_drift'])}</td><td class=n>{esc(pv(r['p_one_sided']))}</td><td>submitted</td></tr>")
     nval = sum(1 for x in log if x["split"] == "val" and x["method"] not in ("drift", "mix") and "role" not in x["params"])
     table = ("<div class=tw><table class=val><caption>Validation results, 13 to 30 October 2026 (origins the methods were not tuned on). "
              "Skill is pooled over cells; differences are paired, with 90% week-block bootstrap intervals.</caption><thead><tr><th>Query</th><th>Candidate</th>"
@@ -446,7 +451,8 @@ def ledger_section(led: list[dict]) -> tuple[str, dict]:
                      f'<p class=claim>{inline(r.get("claim", ""))}</p><p class=res>{inline(r.get("result", "") or "No result recorded.")}</p>'
                      f'<p class=ev>Evidence: {inline(r.get("evidence", "") or "–")}</p></li>')
     html_ = (f'<div class=filters role=group aria-label="Filter hypotheses by verdict">{"".join(btns)}</div>'
-             f'<p class=muted id=ledger-count aria-live=polite>Showing all {len(led)} hypotheses.</p><ol class=ledger id=ledger>{"".join(items)}</ol>')
+             f'<p class=muted id=ledger-count aria-live=polite>Showing all {len(led)} hypotheses.</p>'
+             f'<div class=scroll tabindex=0 role=region aria-label="Hypothesis list"><ol class=ledger id=ledger>{"".join(items)}</ol></div>')
     return html_, {"ledger_total": len(led), **{f"ledger_{k}": v for k, v in counts.items()}, "ledger_other": other}
 
 
@@ -478,10 +484,11 @@ def calendar_section(cal: list[dict], check: dict, exa: dict, led: dict) -> tupl
            + "".join(parts) + "</svg>")
     trs = []
     for r in cal:
-        ch = "; ".join(f"{c['gpu']} {('%.2f → ' % c['old']) if c.get('old') is not None else ''}{c['new']:.2f}"
-                       + (f" ({c['pct'] * 100:+.0f}%)" if c.get("pct") is not None else "") for c in r["changes"] if c.get("new") is not None) or "–"
+        chs = [f"{c['gpu']} {('%.2f → ' % c['old']) if c.get('old') is not None else ''}{c['new']:.2f}"
+               + (f" ({c['pct'] * 100:+.0f}%)" if c.get("pct") is not None else "") for c in r["changes"] if c.get("new") is not None]
+        ch = "; ".join(chs[:4]) + (f"; and {len(chs) - 4} more GPU classes" if len(chs) > 4 else "") if chs else "–"
         lead = r.get("lead_days")
-        lead_s = (f"{lead} days ahead" if lead and lead > 0 else "same day" if lead == 0 else f"{-lead} day after" if lead is not None else "–")
+        lead_s = (f"{lead} days ahead" if lead and lead > 0 else "same day" if lead == 0 else f"{-lead} day{'s' if lead < -1 else ''} after" if lead is not None else "–")
         also = "".join(f'<br><a href="{esc(a["url"])}">also, {esc(a.get("published", ""))}</a>' for a in r.get("also", []) if a.get("url"))
         note = f'<br><span class=muted>{inline(r["edit_note"])}</span>' if r.get("edit_note") else ""
         trs.append(f"<tr><td class=n>{esc(r['published'])}</td><td class=n>{esc(r['effective_date'])}</td><td>{esc(r['provider'])}</td>"
@@ -766,6 +773,7 @@ The final blend's members were fixed on development data by a rule written befor
 <p>The scout agent searched the web through Exa for dated provider price announcements, keeping only pages published on or before each forecast origin and never opening price-tracker pages.
 The calendar below is what it kept: {cfacts['cal_entries']} entries, {cfacts['cal_ahead']} of them published before the effective date. Exa is called in <code>src/gpuf/scout.py</code> (lines {lines}); every response is cached in <code>data_out/exa_cache/</code>.</p>
 {cal_svg}
+<p class=muted>Hollow dot: date the source was published. Filled dot: date the new price took effect. Blue: published before the effective date. Grey: published on or after it.</p>
 <p class=check><b>Check against the panel:</b> {cfacts['cal_hits']} of {cfacts['cal_checkable']} offers that could be checked moved to exactly the announced price (<code>experiments/calendar/results/partb_summary.json</code>).</p>
 {cal_table}
 <h3>Honest negatives</h3>
@@ -853,7 +861,7 @@ tr.final td{font-weight:600}
 table.cal td.q{min-width:260px}table.cal td{font-size:13px}
 .mx{width:auto;min-width:46%}.mx td.n{min-width:44px}.two{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start}
 .filters{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}.filters .n{font-variant-numeric:tabular-nums;opacity:.8}
-ol.ledger{list-style:none;padding:0;margin:0}ol.ledger li{border-bottom:1px solid var(--line);padding:10px 0}
+ol.ledger{list-style:none;padding:0 12px 0 0;margin:0}.scroll{max-height:640px;overflow-y:auto;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}ol.ledger li{border-bottom:1px solid var(--line);padding:10px 0}
 .lh{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}.claim{margin:4px 0;font-weight:500}.res{margin:4px 0;font-size:14px}.ev{margin:2px 0;font-size:13px;color:var(--muted)}
 .badge{font-size:12px;font-weight:600;padding:1px 7px;border-radius:10px;border:1.5px solid}
 .b-supported{color:var(--a2);border-color:var(--a2)}.b-refuted{color:var(--a1);border-color:var(--a1)}.b-not_significant{color:var(--muted);border-color:var(--muted);border-style:dashed}
@@ -890,12 +898,16 @@ function jumps(p){const n=p.length;if(n<2)return [null,null];
 function domain(s){let lo=Infinity,hi=-Infinity;
   const up=v=>{if(v!=null){lo=Math.min(lo,v);hi=Math.max(hi,v);}};
   if(s.kind==='panel')s.offers.forEach(o=>o.v.forEach(up));else{s.groups.forEach(g=>{up(g.q[0]);up(g.q[2]);});s.med.forEach(up);}
-  s.fc.forEach(f=>{up(f[1]);up(f[3]);});const pad=(hi-lo)*0.06||0.1;return [Math.max(0,lo-pad),hi+pad];}
+  s.fc.forEach(f=>{up(f[1]);up(f[3]);});
+  const core=s.med.filter(v=>v!=null).concat(s.fc.flatMap(f=>[f[1],f[3]]));
+  lo=Math.max(lo,Math.min(...core)/1.4);hi=Math.min(hi,Math.max(...core)*1.4);
+  const pad=(hi-lo)*0.06||0.1;return [Math.max(0,lo-pad),hi+pad];}
+const clamp=(v,a,b)=>Math.min(Math.max(v,a),b);
 function today(s,i){if(s.kind!=='panel')return null;
   const o=s.offers.filter(o=>o.v[i]!=null).map(o=>({l:o.l,p:o.p,c:o.c,r:o.r,v:o.v[i]})).sort((a,b)=>a.v-b.v||a.l.localeCompare(b.l));
   return o;}
 function drawStrip(){const s=cur,[d0,d1]=domain(s),W=720,L=215,R=105,RH=20,top=26;
-  const X=v=>L+(v-d0)/(d1-d0)*(W-L-R);let rows,h,out=[];
+  const X=v=>L+(clamp(v,d0,d1)-d0)/(d1-d0)*(W-L-R),off=v=>v<d0||v>d1;let rows,h,out=[];
   if(s.kind==='panel'){
     const o=today(s,idx),n=o.length,p=o.map(x=>x.v),m=n?median(p):null,[jd,ju]=jumps(p),lo=(n-1)>>1,hi=n>>1;
     rows=s.maxn;h=top+(rows+4.4)*RH+34;
@@ -903,8 +915,8 @@ function drawStrip(){const s=cur,[d0,d1]=domain(s),W=720,L=215,R=105,RH=20,top=2
       if(isMid)out.push(`<rect x="0" y="${y-RH/2}" width="${W-R+10}" height="${RH}" class="midrow"/>`);
       out.push(`<text x="${L-12}" y="${y+4}" text-anchor="end" class="${isMid?'labb':'lab'}">${e(x.l)}</text>`);
       out.push(`<line x1="${L}" x2="${X(x.v)}" y1="${y}" y2="${y}" class="grid" stroke-dasharray="1 3"/>`);
-      out.push(`<g>${sym(x.c,X(x.v),y)}<title>${e(x.l)}: ${f2(x.v)} USD per GPU-hour; ${CLS[x.c]}${x.r!=null?' ('+Math.round(x.r*100)+'% of days in the 21 days to 6 Nov)':''}</title></g>`);
-      out.push(`<text x="${X(x.v)+10}" y="${y+4}" class="tick">${f2(x.v)}</text>`);});
+      out.push(`<g>${off(x.v)?`<text x="${X(x.v)+(x.v>d1?3:-3)}" y="${y+4}" text-anchor="${x.v>d1?'start':'end'}" class="labb">${x.v>d1?'›':'‹'}</text>`:''}${sym(x.c,X(x.v),y)}<title>${e(x.l)}: ${f2(x.v)} USD per GPU-hour; ${CLS[x.c]}${x.r!=null?' ('+Math.round(x.r*100)+'% of days in the 21 days to 6 Nov)':''}</title></g>`);
+      out.push(`<text x="${X(x.v)+(off(x.v)&&x.v>d1?16:10)}" y="${y+4}" class="tick">${f2(x.v)}${off(x.v)?' (off scale)':''}</text>`);});
     const yb=top+rows*RH;
     if(m!=null){out.push(`<line x1="${X(m)}" x2="${X(m)}" y1="${top-8}" y2="${yb}" stroke="var(--fg)" stroke-width="2.5"/>`);
       out.push(`<text x="${X(m)}" y="${top-12}" text-anchor="middle" class="labb">median ${f2(m)}</text>`);}
@@ -927,17 +939,19 @@ function drawStrip(){const s=cur,[d0,d1]=domain(s),W=720,L=215,R=105,RH=20,top=2
     out.push(`<text x="${X(f[3])+8}" y="${y+4}" class="num">${f2(f[1])} | ${f2(f[2])} | ${f2(f[3])}</text>`);});
   const ya=h-30;out.push(`<line x1="${L}" x2="${W-R}" y1="${ya}" y2="${ya}" stroke="var(--line)"/>`);
   ticks(d0,d1,7).forEach(t=>out.push(`<line x1="${X(t)}" x2="${X(t)}" y1="${ya}" y2="${ya+5}" stroke="var(--line)"/><text x="${X(t)}" y="${ya+18}" text-anchor="middle" class="tick">${t.toFixed(2)}</text>`));
-  out.push(`<text x="${W-R}" y="${ya-6}" text-anchor="end" class="tick">USD per GPU-hour</text>`);
+  out.push(`<text x="${L-12}" y="${ya+18}" text-anchor="end" class="tick">USD per GPU-hour</text>`);
   strip.innerHTML=`<svg viewBox="0 0 ${W} ${h}" role="img" aria-label="Offers on ${e(D.days[idx])} along the price axis with the median and the forecast">${out.join('')}</svg>`;}
-function path(vals,X,Y,i0){let d='',pen=false;vals.forEach((v,i)=>{if(v==null){pen=false;return;}d+=(pen?'L':'M')+X(i+i0).toFixed(1)+' '+Y(v).toFixed(1);pen=true;});return d;}
+function path(vals,X,Y,med){let d='',pen=false;vals.forEach((v,i)=>{if(med[i]==null)return;if(v==null){pen=false;return;}d+=(pen?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1);pen=true;});return d;}
 function drawHist(){const s=cur,[d0,d1]=domain(s),W=960,H=300,L=60,R=30,T=16,B=40,xmax=N-1+8;
-  const X=i=>L+i/xmax*(W-L-R),Y=v=>T+(1-(v-d0)/(d1-d0))*(H-T-B),out=[];
+  const X=i=>L+i/xmax*(W-L-R),Y=v=>T+(1-(v-d0)/(d1-d0))*(H-T-B),out=[],lines=[];
   out.push(`<rect x="${X(N-0.5)}" y="${T}" width="${X(xmax)-X(N-0.5)}" height="${H-T-B}" fill="var(--soft)"/><text x="${X(N+3)}" y="${T+14}" text-anchor="middle" class="tick">forecast</text>`);
   ticks(d0,d1,6).forEach(t=>out.push(`<line x1="${L}" x2="${W-R}" y1="${Y(t)}" y2="${Y(t)}" class="grid"/><text x="${L-6}" y="${Y(t)+4}" text-anchor="end" class="tick">${t.toFixed(2)}</text>`));
   for(let i=N-1;i>=0;i-=7)out.push(`<text x="${X(i)}" y="${H-B+16}" text-anchor="middle" class="tick">${e(D.labels[i])}</text><line x1="${X(i)}" x2="${X(i)}" y1="${H-B}" y2="${H-B+4}" stroke="var(--line)"/>`);
   out.push(`<text x="${L}" y="${H-4}" class="tick">USD per GPU-hour, daily, ${e(D.labels[0])} to ${e(D.labels[N-1])} 2026</text>`);
-  if(s.kind==='panel')s.offers.forEach(o=>{const d=path(o.v,X,Y,0);if(d)out.push(`<path d="${d}" fill="none" stroke="${COL[o.c]}" stroke-width="1.6" opacity="0.6"><title>${e(o.l)}</title></path>`);});
-  out.push(`<path d="${path(s.med,X,Y,0)}" fill="none" stroke="var(--fg)" stroke-width="2.6"><title>median</title></path>`);
+  if(s.kind==='panel')s.offers.forEach(o=>{const d=path(o.v,X,Y,s.med);if(d)lines.push(`<path d="${d}" fill="none" stroke="${COL[o.c]}" stroke-width="1.6" opacity="0.6"><title>${e(o.l)}</title></path>`);});
+  lines.push(`<path d="${path(s.med,X,Y,s.med)}" fill="none" stroke="var(--fg)" stroke-width="2.6"><title>median</title></path>`);
+  out.push(`<clipPath id="hclip"><rect x="${L}" y="${T}" width="${W-L-R}" height="${H-T-B}"/></clipPath><g clip-path="url(#hclip)">${lines.join('')}</g>`);
+  if(s.med.some(v=>v==null))out.push(`<text x="${W-R}" y="${H-4}" text-anchor="end" class="tick">lines are joined across days the collector did not publish</text>`);
   s.fc.forEach(f=>{const x=X(N-1+f[0]);out.push(`<line x1="${x}" x2="${x}" y1="${Y(f[1])}" y2="${Y(f[3])}" stroke="var(--fg)" stroke-width="6" opacity="0.3"/><circle cx="${x}" cy="${Y(f[2])}" r="4" fill="var(--fg)"><title>+${f[0]} days: ${f2(f[1])} to ${f2(f[3])}, median ${f2(f[2])}</title></circle>`);});
   if(s.kind==='panel')out.push(`<line x1="${X(idx)}" x2="${X(idx)}" y1="${T}" y2="${H-B}" stroke="var(--fg)" stroke-dasharray="2 3"/>`);
   hist.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Offers and median over the previous ${N} days with the forecast">${out.join('')}</svg>`;}
@@ -966,8 +980,13 @@ function draw(){drawStrip();drawHist();drawFacts();drawReadout();
 D.series.forEach(s=>{const op=document.createElement('option');op.value=s.id;op.textContent=s.name;sel.appendChild(op);});
 const pz=document.getElementById('presets');D.presets.forEach(p=>{const b=document.createElement('button');b.type='button';b.dataset.sid=p[0];b.textContent=byId[p[0]].name.split(' (')[0];b.title=p[1];
   b.addEventListener('click',()=>{cur=byId[p[0]];sel.value=cur.id;idx=N-1;day.value=idx;draw();});pz.appendChild(b);});
-sel.value=cur.id;sel.addEventListener('change',()=>{cur=byId[sel.value];idx=N-1;day.value=idx;draw();});
-day.addEventListener('input',()=>{idx=+day.value;drawStrip();drawReadout();drawHist();});
+const hp=new URLSearchParams(location.hash.slice(1));
+if(byId[hp.get('s')])cur=byId[hp.get('s')];
+if(hp.has('d')&&+hp.get('d')>=0&&+hp.get('d')<N){idx=+hp.get('d');day.value=idx;}
+const keep=()=>{try{history.replaceState(null,'','#s='+encodeURIComponent(cur.id)+'&d='+idx);}catch(err){}};
+sel.value=cur.id;sel.addEventListener('change',()=>{cur=byId[sel.value];idx=N-1;day.value=idx;draw();keep();});
+day.addEventListener('input',()=>{idx=+day.value;drawStrip();drawReadout();drawHist();keep();});
+pz.addEventListener('click',keep);
 draw();
 const items=[...document.querySelectorAll('#ledger li')],cnt=document.getElementById('ledger-count');
 document.querySelectorAll('.flt').forEach(b=>b.addEventListener('click',()=>{const f=b.dataset.f;
