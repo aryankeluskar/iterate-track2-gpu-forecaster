@@ -1,0 +1,36 @@
+checked_at 2026-11-14T13:22:40.013820-08:00
+mode: saved artifacts and source only; no scoring, no network
+hypotheses 37 {'refuted': 15, 'supported': 13, 'untestable': 2, 'not_significant': 7}
+other_ledger_rows ['L3-frag-b20']
+forecast_final_all.csv sha256 7b49870ea47622fc9cb1375bdf8a43c047d5254a6a6dc944c8d06bc2f1e93809
+forecast_final_headline.csv sha256 90330d1ea2a90a957e41839ca91d3c0b67234277a7b042f6b967a82a18247123
+artifact data_out/ledger.jsonl exists True tracked True
+artifact data_out/memory_journal.jsonl exists True tracked True
+artifact data_out/loop_journal.jsonl exists True tracked True
+artifact data_out/repricing_calendar.jsonl exists True tracked True
+artifact experiments/loop/cause_labels.parquet exists True tracked True
+artifact demo/index.html exists True tracked True
+declared_dependencies ['duckdb', 'pandas', 'numpy', 'pyarrow']
+pitch_phrase 'never been tuned on' False
+pitch_phrase '555 series nobody had looked at' False
+pitch_phrase 'declared each validation query before running it' False
+pitch_phrase 'Four directions passed' False
+pitch_phrase '38 hypotheses' False
+pitch_phrase '555 price series we never used for any decision' True
+demo_phrase 'What to keep in mind' True
+demo_phrase 'departure from our original rule' True
+demo_phrase '555 price series we never used for any choice' True
+source experiments/longrun/code/panel_v2.py:61: pp = last.groupby(["src", "provider"]).price.median()
+source experiments/longrun/code/panel_v2.py:62: allp = df[(df.day == D1) & df.gpu.isin(models)].groupby(["src", "provider"]).price.median()
+source src/gpuf/loop.py:603: if not k["eff"] or EVERGREEN.search(k["title"]) or sid in mem_ids or len(ev) >= a.max_evidence:
+source src/gpuf/loop.py:609: ev.append({"id": sid, "audience": "gpuf-evidence", "identity": "scout", "timestamp": f"{k['published']}T23:59:59Z", "label": f"Evidence: {dom}",
+source src/gpuf/loop.py:657: end = "2026-11-06T23:59:59Z"
+source src/gpuf/loop.py:710: led = ledger.load()
+source src/gpuf/loop.py:749: "note": "Rule-based: it lists where the loss is and what has been tried; it does not invent hypotheses. "
+source src/gpuf/loop.py:860: led = ledger.load()
+saved_result {'name': 'q10_final_headline', 'universe': 'rental_headline', 'n_cells': 1816, 'skill': 0.2141221415746758, 'ref_skill': 0.11207010664844097}
+saved_result {'name': 'q11_final_nonhead', 'universe': 'rental_nonhead', 'n_cells': 22390, 'skill': 0.22757811604091316, 'ref_skill': 0.17766857122709945}
+doc README.md inode 41570181
+doc FINDINGS.md inode 41382966
+doc findings.md inode 41382966
+peak_rss_bytes_macos 22052864
