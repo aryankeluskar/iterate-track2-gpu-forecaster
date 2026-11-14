@@ -104,7 +104,7 @@ def halves_line(name, c, ref, ref_name):
 
 
 def sub(c, uni):
-    return c[c.series_id.isin(HEAD)] if uni == "headline" else c
+    return c[c.series_id.isin(HEAD)] if uni == "headline" else c[~c.series_id.isin(HEAD)] if uni == "nonhead" else c
 
 
 for uni in ("headline", "all"):
@@ -157,4 +157,54 @@ if len(hl):
 use = pd.Series({k: "+".join(v) for k, v in ((k, tuple(m for m in MEMBERS if f.outs[k][m])) for k in f.outs)})
 print("\n## members available per (series, origin) on dev rental_all")
 print(use.value_counts().to_string())
+
+
+def halves(c):
+    return sk(c[c.origin_day <= CUT]), sk(c[c.origin_day > CUT])
+
+
+UNIS = ("headline", "all")
+print("\n## Amendment 3 rule 1: drop a member iff leaving it out raises pooled skill in both halves on both universes")
+print(f"{'member':<11} " + "  ".join(f"d(loo-final) {u}/{hf}" for u in UNIS for hf in ("first", "second")) + "  drop")
+drop = []
+for m in MEMBERS:
+    ds = [halves(sub(C[f"loo_-{m}"], u))[i] - halves(sub(C["final"], u))[i] for u in UNIS for i in (0, 1)]
+    if all(d > 0 for d in ds):
+        drop.append(m)
+    print(f"{m:<11} " + "  ".join(f"{d:+.4f}".rjust(len(f"d(loo-final) {u}/{hf}")) for d, (u, hf) in
+                                  zip(ds, [(u, hf) for u in UNIS for hf in ("first", "second")])) + f"  {m in drop}")
+chosen = tuple(m for m in MEMBERS if m not in drop)
+print(f"chosen members: {list(chosen)}")
+C["chosen"] = reblend(chosen)[0]
+print("\n## Amendment 3 rule 2: activity gate [14,1] on the chosen set, d = gated - ungated, per half")
+gate_ok = {}
+for scope in ("all", "nonhead"):
+    C[f"chosen_gate_{scope}"] = reblend(chosen, (14, 1), scope)[0]
+    ds = {u: [halves(sub(C[f"chosen_gate_{scope}"], u))[i] - halves(sub(C["chosen"], u))[i] for i in (0, 1)]
+          for u in UNIS + ("nonhead",)}
+    gate_ok[scope] = ds
+    print(f"gate scope {scope:<8} " + "  ".join(f"{u} {a:+.4f}/{b:+.4f}" for u, (a, b) in ds.items()))
+if all(d > 0 for u in UNIS for d in gate_ok["all"][u]):
+    gate_choice = "all"
+elif all(d > 0 for d in gate_ok["nonhead"]["all"]) and all(d == 0 for d in gate_ok["nonhead"]["headline"]):
+    gate_choice = "nonhead"  # headline identical by construction, rental_all raised in both halves
+else:
+    gate_choice = "off"
+print(f"gate choice: {gate_choice}")
+sel = "chosen" if gate_choice == "off" else f"chosen_gate_{gate_choice}"
+print("\n## the chosen configuration against mix and against the seven-member blend")
+for u in UNIS + ("nonhead",):
+    print(f"[{u}] " + halves_line(sel, sub(C[sel], u), sub(C["mix"], u), "mix"))
+    print(f"[{u}] " + halves_line(sel + " vs final7", sub(C[sel], u), sub(C["final"], u), "final"))
+    print(f"[{u}] " + halves_line(sel + " vs drift", sub(C[sel], u), sub(C["drift"], u), "drift"))
+print("\n## information only: leave-one-out on the chosen set (ungated), d = loo - chosen per half")
+for m in chosen:
+    c2 = reblend(tuple(x for x in chosen if x != m))[0]
+    ds = [halves(sub(c2, u))[i] - halves(sub(C["chosen"], u))[i] for u in UNIS for i in (0, 1)]
+    print(f"{m:<11} " + "  ".join(f"{d:+.4f}" for d in ds))
+print("\n## rental_all by class, chosen configuration vs mix / final7 (full, first, second)")
+for cls, g in C[sel].groupby("instrument_class"):
+    r = [g, C["mix"][C["mix"].instrument_class == cls], C["final"][C["final"].instrument_class == cls]]
+    print(f"{cls:<20} n {len(g):5d}  " + "  ".join(f"{lab} {sk(x):+.3f} ({halves(x)[0]:+.3f}/{halves(x)[1]:+.3f})"
+                                                  for lab, x in zip(("chosen", "mix", "final7"), r)))
 print(f"\n# total {time.time() - t0:.0f}s")

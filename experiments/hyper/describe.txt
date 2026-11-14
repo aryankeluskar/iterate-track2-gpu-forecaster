@@ -1,0 +1,85 @@
+rows 3,108,989; duplicate (ser,day,snap,key) share 0.0000; snapshots/day {2: 104, 1: 69, 3: 37}
+
+== offer-day reprice rate, share up, median |size| (dev) by class x provider ==
+                                    n    rate      up  med_abs  p90_abs  share_of_reprices
+cls                pname                                                                  
+hyperscaler_list   aws          52636  0.0000     NaN      NaN      NaN             0.0000
+                   azure        31544  0.0001  0.0000   0.2071   0.2071             1.0000
+                   gcp         129344  0.0000     NaN      NaN      NaN             0.0000
+                   oci          46244  0.0000     NaN      NaN      NaN             0.0000
+hyperscaler_spot   aws          34364  0.9144  0.4679   0.0128   0.0510             0.6845
+                   azure        30364  0.0110  0.1617   0.0953   0.2232             0.0073
+                   gcp         134624  0.1051  0.5636   0.0488   0.0793             0.3082
+                   oci          10912  0.0000     NaN      NaN      NaN             0.0000
+neocloud_rate_card cloudrift      661  0.0121  1.0000   0.0916   0.0916             0.0028
+                   daytona        728  0.0000     NaN      NaN      NaN             0.0000
+                   lambdalabs   24508  0.0000     NaN      NaN      NaN             0.0000
+                   nebius        1914  0.0094  1.0000   0.1823   0.1908             0.0062
+                   verda         7998  0.3571  0.9685   0.0099   0.0110             0.9910
+                   vultr          177  0.0000     NaN      NaN      NaN             0.0000
+neocloud_spot      daytona        728  0.0000     NaN      NaN      NaN             0.0000
+                   nebius        1914  0.0533  0.4902   0.5447   1.3710             0.0345
+                   verda         7998  0.3571  0.9685   0.0099   0.0110             0.9655
+
+== provider-day wave stats (dev): wave = provider-day with >=1 reprice ==
+                               days  wave_freq  share_med  share_p90  big_wave_freq(share>.2)  mixed_sign  p(wave|wave yday)  mean_r_med_abs
+cls                pname                                                                                                                    
+hyperscaler_list   aws         62.0      0.000        NaN        NaN                    0.000         NaN              0.000             NaN
+                   azure       62.0      0.016      0.006      0.006                    0.000        0.00              0.000           0.207
+                   gcp         62.0      0.000        NaN        NaN                    0.000         NaN              0.000             NaN
+                   oci         62.0      0.000        NaN        NaN                    0.000         NaN              0.000             NaN
+hyperscaler_spot   aws         62.0      1.000      0.907      0.942                    1.000        1.00              1.000           0.002
+                   azure       62.0      0.065      0.137      0.306                    0.016        0.75              0.250           0.081
+                   gcp         62.0      0.129      0.802      0.879                    0.129        1.00              0.000           0.019
+                   oci         62.0      0.000        NaN        NaN                    0.000         NaN              0.000             NaN
+neocloud_rate_card cloudrift   62.0      0.016      0.615      0.615                    0.016        0.00              0.000           0.092
+                   daytona     13.0      0.000        NaN        NaN                    0.000         NaN              0.000             NaN
+                   lambdalabs  62.0      0.000        NaN        NaN                    0.000         NaN              0.000             NaN
+                   nebius      62.0      0.016      0.500      0.500                    0.016        0.00              0.000           0.180
+                   verda       62.0      0.403      0.907      1.000                    0.403        0.20              0.792           0.009
+                   vultr       46.0      0.000        NaN        NaN                    0.000         NaN              0.000             NaN
+neocloud_spot      daytona     13.0      0.000        NaN        NaN                    0.000         NaN              0.000             NaN
+                   nebius      62.0      0.097      0.444      0.583                    0.097        1.00              1.000           0.188
+                   verda       62.0      0.403      0.907      1.000                    0.403        0.20              0.792           0.009
+
+== provider-day wave stats (Jan-Oct13): wave = provider-day with >=1 reprice ==
+                                days  wave_freq  share_med  share_p90  big_wave_freq(share>.2)  mixed_sign  p(wave|wave yday)  mean_r_med_abs
+cls                pname                                                                                                                     
+hyperscaler_list   aws         204.0      0.005      0.001      0.001                    0.000       0.000              0.000           0.161
+                   azure       204.0      0.005      0.006      0.006                    0.000       0.000              0.000           0.207
+                   gcp         204.0      0.015      0.006      0.015                    0.000       0.000              0.000           0.142
+                   oci         204.0      0.000        NaN        NaN                    0.000         NaN              0.000             NaN
+hyperscaler_spot   aws         204.0      0.770      0.939      0.953                    0.770       1.000              0.974           0.002
+                   azure       204.0      0.064      0.094      0.219                    0.010       0.462              0.154           0.112
+                   gcp         204.0      0.088      0.849      0.915                    0.088       1.000              0.056           0.023
+                   oci         204.0      0.000        NaN        NaN                    0.000         NaN              0.000             NaN
+neocloud_rate_card cloudrift   204.0      0.010      0.502      0.593                    0.010       0.000              0.000           0.115
+                   cudo        109.0      0.009      0.100      0.100                    0.000       0.000              0.000           0.017
+                   daytona      13.0      0.000        NaN        NaN                    0.000         NaN              0.000             NaN
+                   lambdalabs  204.0      0.005      0.043      0.043                    0.000       0.000              0.000           0.289
+                   nebius      204.0      0.010      0.500      0.500                    0.010       0.000              0.000           0.219
+                   verda       204.0      0.132      0.907      1.000                    0.132       0.185              0.769           0.009
+                   vultr       188.0      0.000        NaN        NaN                    0.000         NaN              0.000             NaN
+neocloud_spot      daytona      13.0      0.000        NaN        NaN                    0.000         NaN              0.000             NaN
+                   nebius      204.0      0.034      0.444      0.578                    0.034       0.857              0.833           0.222
+                   verda       204.0      0.147      0.907      1.000                    0.142       0.200              0.690           0.009
+
+== P(other provider/class waves | gcp spot waves) dev: {('hyperscaler_list', 'aws'): 0.0, ('hyperscaler_list', 'azure'): 0.0, ('hyperscaler_list', 'gcp'): 0.0, ('hyperscaler_list', 'oci'): 0.0, ('hyperscaler_spot', 'aws'): 1.0, ('hyperscaler_spot', 'azure'): 0.0, ('hyperscaler_spot', 'gcp'): 1.0, ('hyperscaler_spot', 'oci'): 0.0, ('neocloud_rate_card', 'cloudrift'): 0.0, ('neocloud_rate_card', 'daytona'): 0.0, ('neocloud_rate_card', 'lambdalabs'): 0.0, ('neocloud_rate_card', 'nebius'): 0.0, ('neocloud_rate_card', 'verda'): 0.62, ('neocloud_rate_card', 'vultr'): 0.0, ('neocloud_spot', 'daytona'): 0.0, ('neocloud_spot', 'nebius'): 0.12, ('neocloud_spot', 'verda'): 0.62}
+
+== aws spot reprices (dev): n=31424, |r| quantiles {0.1: 0.001, 0.5: 0.0128, 0.9: 0.051}, up share 0.47
+   aws spot offer: corr of consecutive nonzero changes 0.24 (n=71873), sign agree 0.71
+
+== daily median moves (dev, afhubbard series): share of series-days moving and their cause, by class ==
+                    series_days  move_rate  abs_move_med  abs_move_p90  repricing_only  composition_only  share_offers_changed_on_move_days  share_offers_changed_on_still_days  loss_weight_share_of_top10pct_moves
+cls                                                                                                                                                                                                                 
+hyperscaler_list         1152.0      0.012         0.021         0.223           0.000             1.000                              0.000                                 0.0                                0.412
+hyperscaler_spot         1054.0      0.373         0.009         0.041           0.351             0.033                              0.879                                 0.0                                0.452
+neocloud_rate_card       1163.0      0.122         0.010         0.020           0.563             0.049                              0.667                                 0.0                                0.797
+neocloud_spot             734.0      0.377         0.010         0.011           0.545             0.004                              0.857                                 0.0                                0.262
+
+== hyperscaler_list: 1152 series-days, 14 moves; per series moves/day 0.012
+   move days and #series moving that day: {'2026-08-13': 1, '2026-08-27': 1, '2026-08-28': 2, '2026-08-29': 1, '2026-09-04': 1, '2026-09-22': 2, '2026-09-23': 1, '2026-09-24': 1, '2026-10-01': 1, '2026-10-08': 1, '2026-10-09': 1, '2026-10-13': 1}
+   hyperscaler_list provider-day reprice:  {'aws': 'wave days 0/62, median share on wave days nan', 'azure': 'wave days 1/62, median share on wave days 0.006', 'gcp': 'wave days 0/62, median share on wave days nan', 'oci': 'wave days 0/62, median share on wave days nan'}
+   P(any list-provider reprice in prior 3 days | series move day) 0.00 vs | no-move day 0.06
+
+maxrss 1.68 GB

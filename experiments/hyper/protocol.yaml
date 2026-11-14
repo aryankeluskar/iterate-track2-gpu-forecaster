@@ -1,0 +1,38 @@
+slug: hyper
+date: 2026-11-14
+memory_briefing: >
+  brief "afhubbard hyperscaler spot and list panel provider-wide repricing waves". Items that shaped the plan:
+  autopsy-mode-repricing_hyperscaler_spot (hyperscaler spot repricing = 8.1% of last-value loss on the headline set,
+  gcp+aws do the reprices) -> model surviving-offer repricing per provider, not composition, for spot;
+  exp-H4 (composition jumps do not revert) -> for hyperscaler_list, where every median move is composition, no
+  reversion model; exp-H19 (AWS spot no usable level signal) -> no centre shift. No item covered afhubbard list.
+failure_mode: >
+  afhubbard series fall back to mix. afhubbard carries 22% of last-value loss of non-headline rental series on dev
+  (hyperscaler_spot 15%, hyperscaler_list 12%); every method is below last value on hyperscaler_list (mix -0.037).
+measured_before_modelling (experiments/hyper/describe.txt, rows <= 2026-10-13, dev window from 2026-08-11):
+  reproduction: daily median = median over all rows (all 1-3 snapshots) of the day; 100% of 13,188 series-days
+    within the 4-decimal rounding (exact under round-half-up except float ties).
+  hyperscaler_spot: aws reprices 91% of its offers every day (median |change| 1.3%, 47% up, consecutive changes of
+    an offer corr 0.24); gcp waves on 13% of days, a wave reprices a median 80% of gcp offers, no persistence day to
+    day; azure 6.5% of days, 14% of offers; oci never. Median moves on 37% of series-days, median |move| 0.9%;
+    move days are repricing (88% of offers changed), composition-only 3%.
+  hyperscaler_list: list prices are never repriced on dev (1 azure provider-day of 248); the median moved on 14 of
+    1,152 series-days (1.2%) and every move was composition (offers entering or leaving). No list reprice in the 3
+    days before any move.
+  neocloud (afhubbard): verda reprices ~90% of its offers on 40% of days by ~1% (97% up), persistent (0.79).
+hypothesis: >
+  H-hyper-1 (spot/neocloud): simulating each offer forward with its provider's own recent provider-day repricing
+  (share of offers moved, sizes drawn from that day's changes, block-bootstrapped) gives better-calibrated widths
+  than mix on afhubbard spot/neocloud series, because those medians move by many small provider-wide repricings.
+  H-hyper-2 (list): a zero-width forecast (last value, no interval) beats mix on hyperscaler_list, because the
+  median moves on ~1% of days and only by composition, so any width is paid on 99% of cells.
+prediction:
+  hyperscaler_spot: hyper beats mix by +0.02 to +0.10 skill on that class (afhubbard rental_all), sign same on both
+    dev halves; blend with mix also >= mix.
+  hyperscaler_list: zero-width gate beats mix by about +0.04 (lifts mix's -0.037 to roughly 0, since last value
+    is the baseline); cannot exceed 0 by much.
+  neocloud afhubbard: small, sign uncertain (verda drift is trend-like, the sim keeps sign via signed sizes).
+  dev_old: same signs as dev.
+refutation: >
+  hyper below mix on hyperscaler_spot with the 90% interval excluding 0, or opposite signs on the two dev halves /
+  dev_old. For list: zero-width below mix (interval excluding 0) refutes H-hyper-2.
