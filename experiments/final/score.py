@@ -147,7 +147,7 @@ if len(hl):
         zero = ((xg.q10 == xg.q90)).mean()
         print(f"{s:<70} n {len(x):4d} final {sk(x):+.3f} gated {sk(xg):+.3f} mix {sk(C['mix'][C['mix'].series_id == s]):+.3f} zero-width {zero:.2f}")
 
-use = pd.Series({k: "+".join(v) for k, v in ((k, tuple(m for m in MEMBERS if f.outs[k][m] is not None)) for k in f.outs)})
+use = pd.Series({k: "+".join(v) for k, v in ((k, tuple(m for m in MEMBERS if f.outs[k][m])) for k in f.outs)})
 print("\n## members available per (series, origin) on dev rental_all")
 print(use.value_counts().to_string())
 print(f"\n# total {time.time() - t0:.0f}s")

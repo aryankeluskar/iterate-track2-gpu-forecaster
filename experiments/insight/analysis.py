@@ -151,7 +151,7 @@ def indices(sid):
     prov_of = o.drop_duplicates("key").set_index("key").provider
     static_keys = [k for k in W.columns if PCLASS.get((src, prov_of[k]), "static") == "static"]
     raw = np.log(W.median(axis=1))
-    bal, rep, stat = [0.0], [0.0], [0.0]
+    bal, rep, stat, smean = [0.0], [0.0], [0.0], [0.0]
     for i in range(1, len(days)):
         a, b = W.iloc[i - 1], W.iloc[i]
         both = a.notna() & b.notna()
@@ -159,9 +159,10 @@ def indices(sid):
         rep.append(rep[-1] + (np.log(b[both] / a[both]).median() if both.any() else 0.0))
         sb = both & W.columns.isin(static_keys)
         stat.append(stat[-1] + (np.log(b[sb].median() / a[sb].median()) if sb.any() else 0.0))
+        smean.append(smean[-1] + (np.log(b[sb] / a[sb]).mean() if sb.any() else 0.0))
     raw = raw.ffill().bfill()
     raw = raw - raw.iloc[0]
-    return pd.DataFrame({"median": raw.values, "balanced_median": bal, "median_offer_change": rep, "static_balanced": stat}, index=days)
+    return pd.DataFrame({"median": raw.values, "balanced_median": bal, "median_offer_change": rep, "static_balanced": stat, "static_mean": smean}, index=days)
 
 
 Q2rows, Q2paths = [], {}
@@ -184,7 +185,7 @@ Q2.to_csv(OUT / "t2_cross_collector.csv", index=False)
 weeks = np.arange(START2 + 7, CUTOFF + 1)
 wk = (weeks - weeks[0]) // 7
 gaps = {}
-for stat in ["median", "balanced_median", "median_offer_change", "static_balanced"]:
+for stat in ["median", "balanced_median", "median_offer_change", "static_balanced", "static_mean"]:
     M = []
     for k, P in Q2paths.items():
         M.append((P["fastgpu"][stat].diff(7) - P["gpurentalprices"][stat].diff(7)).reindex(weeks).abs().values)
@@ -360,12 +361,13 @@ D5c = pd.DataFrame(ov)
 D5b.to_csv(OUT / "t5b_dispersion_last4w.csv")
 D5c.to_csv(OUT / "t5c_per_unit_overlap.csv", index=False)
 
+pd.to_pickle(last4, Path("runs/insight/last4.pkl"))
 pd.to_pickle(dict(paths3=paths3, Q2paths=Q2paths, boot=boot), Path("runs/insight/paths.pkl"))
 json.dump(dict(boot=boot), open(OUT / "summary.json", "w"), indent=1)
 pd.set_option("display.width", 250, "display.max_columns", 30, "display.max_colwidth", 60)
 print(card[["series_id", "n_offers", "n_providers", "mid_providers", "mid_rate21", "fragility_pct", "provider_fragility_pct", "max_pass_through", "pass_through_provider", "neighbour_gap_pct", "iqr_spread_pct", "move_share_60d", "do_not_use_alone"]].round(3).to_string())
 print(Q2sum.round(4).to_string()); print(json.dumps(boot, indent=1))
-print(Q2[Q2.stat == "median"].round(3).to_string()); print(Q2[Q2.stat == "static_balanced"].round(3).to_string())
+print(Q2[Q2.stat == "median"].round(3).to_string()); print(Q2[Q2.stat == "static_balanced"].round(3).to_string()); print(Q2[Q2.stat == "static_mean"].round(3).to_string())
 print(B3.round(2).to_string())
 print(steps.drop(columns="day").round(3).to_string())
 print(ev_pf.to_string()); print(T4.to_string()); print(T4c.round(3).to_string())

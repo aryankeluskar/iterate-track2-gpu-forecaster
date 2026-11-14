@@ -1,0 +1,195 @@
+{
+ "description": "Iteration 2: ranked failure modes of the current blend S3 on dev, by physical cause of the move in the posted-offer median. Each entry stands alone.",
+ "modes": [
+  {
+   "rank": 1,
+   "id": "entry",
+   "name": "Offer enters the panel",
+   "definition": "The median moves because a provider's offer appears near the middle of the panel and composition outweighs repricing.",
+   "n_cells": 236,
+   "share_of_S3_loss": 0.294,
+   "share_of_last_value_loss": 0.278,
+   "S3_loss_over_last_value_loss": 0.841,
+   "S2_loss_over_last_value_loss": 0.854,
+   "S2_to_S3_drop_points_of_last_value_loss": 0.0036,
+   "h7_share_above_q90": 0.537,
+   "h7_share_below_q10": 0.264,
+   "top_providers_by_S3_loss_share": {
+    "lambdalabs": 0.0889,
+    "daytona": 0.0559,
+    "quantacloud": 0.0423
+   },
+   "visible_in_panel_at_origin": "Partly. A provider listing the same GPU and tier on the other collector but absent here raises the chance of an entry cell from 0.041 to 0.090 (lift 2.2; fires on 47% of panel cells). A calendar announcement for any provider in the panel lifts it 3.9x (entries cluster in the Nebius repricing week). A thin panel (one-offer-out fragility > 5%) does not lift it (0.69x).",
+   "dated_examples": [
+    "2026-10-02 h=1 gpurentalprices.neocloud_rate_card.A100_40GB.on_demand: 3-offer panel, lambdalabs adds listings, median 1.294 -> 1.990; S3 q50 1.296, q90 1.302.",
+    "2026-09-30 h=3 fastgpu_daily.neocloud_rate_card.B300.on_demand: together enters while nebius, fal and verda raise prices, median 7.625 -> 9.148; S3 q90 7.790."
+   ],
+   "scope": "Scope: 37 rental_headline series, dev cells (origins 2026-08-18..2026-10-06, h=1,3,7, n=4,278), offer panel rows <= 2026-10-13. S3 = ens of mix, gbm, chronos_last replay, fm2 bs16, analog k600, prov L1 W21 dyn (dev skill 0.2036). Cause of an h-day move from the origin->target panel decomposition of experiments/autopsy (Shapley split for mixed cells); dynamic = pivotal provider repriced on >15% of its observed days in the 21 days to the origin (headline offers on that collector); announced = calendar entry for that provider and GPU published <= origin with effective day (+collector lag) in (origin, target]."
+  },
+  {
+   "rank": 2,
+   "id": "dynamic_reprice",
+   "name": "Repricing by a dynamic provider",
+   "definition": "The pivotal provider reprices often (>15% of days in the trailing 21) and the move is mostly repricing of surviving offers.",
+   "n_cells": 1027,
+   "share_of_S3_loss": 0.157,
+   "share_of_last_value_loss": 0.205,
+   "S3_loss_over_last_value_loss": 0.612,
+   "S2_loss_over_last_value_loss": 0.672,
+   "S2_to_S3_drop_points_of_last_value_loss": 0.0122,
+   "h7_share_above_q90": 0.314,
+   "h7_share_below_q10": 0.079,
+   "top_providers_by_S3_loss_share": {
+    "verda": 0.1291,
+    "scaleway": 0.0154,
+    "gcp": 0.0108
+   },
+   "visible_in_panel_at_origin": "Yes: the provider's own trailing reprice rate and signed drift, which prov already uses. This is the cause iteration 2 fixed most.",
+   "dated_examples": [
+    "2026-09-13 h=7 fastgpu_daily.neocloud_rate_card.B300.on_demand: verda staircase, 7.50 -> 7.85; S3 q10=q50=q90=7.50 (prov gate closed, every member flat).",
+    "2026-09-21 h=7 gpurentalprices.neocloud_rate_card.B300.on_demand: verda up, scaleway down, 8.239 -> 8.502; S3 q90 8.297."
+   ],
+   "scope": "Scope: 37 rental_headline series, dev cells (origins 2026-08-18..2026-10-06, h=1,3,7, n=4,278), offer panel rows <= 2026-10-13. S3 = ens of mix, gbm, chronos_last replay, fm2 bs16, analog k600, prov L1 W21 dyn (dev skill 0.2036). Cause of an h-day move from the origin->target panel decomposition of experiments/autopsy (Shapley split for mixed cells); dynamic = pivotal provider repriced on >15% of its observed days in the 21 days to the origin (headline offers on that collector); announced = calendar entry for that provider and GPU published <= origin with effective day (+collector lag) in (origin, target]."
+  },
+  {
+   "rank": 3,
+   "id": "announced_oneoff",
+   "name": "Announced one-off repricing by a static provider",
+   "definition": "A provider that rarely reprices raises a price on a date published in the repricing calendar before the origin.",
+   "n_cells": 52,
+   "share_of_S3_loss": 0.136,
+   "share_of_last_value_loss": 0.127,
+   "S3_loss_over_last_value_loss": 0.854,
+   "S2_loss_over_last_value_loss": 0.868,
+   "S2_to_S3_drop_points_of_last_value_loss": 0.0018,
+   "h7_share_above_q90": 0.788,
+   "h7_share_below_q10": 0.0,
+   "top_providers_by_S3_loss_share": {
+    "nebius": 0.1222,
+    "jarvislabs": 0.014
+   },
+   "visible_in_panel_at_origin": "Yes, fully: date and size are in data_out/repricing_calendar.jsonl. The calendar fires on 3.8% of panel cells with 47% precision for an up-move >5% (base rate 6.3%), and flags 54% of S3's up-move loss. S3 does not use it.",
+   "dated_examples": [
+    "2026-10-01 h=7 fastgpu_daily.neocloud_rate_card.B300.on_demand: nebius +21% effective 2026-10-01 (published 2026-09-16), median 7.625 -> 9.153; S3 q90 7.920.",
+    "2026-09-27 h=7 gpurentalprices.neocloud_rate_card.B300.on_demand: same nebius change, 8.460 -> 9.500; S3 q90 8.683."
+   ],
+   "scope": "Scope: 37 rental_headline series, dev cells (origins 2026-08-18..2026-10-06, h=1,3,7, n=4,278), offer panel rows <= 2026-10-13. S3 = ens of mix, gbm, chronos_last replay, fm2 bs16, analog k600, prov L1 W21 dyn (dev skill 0.2036). Cause of an h-day move from the origin->target panel decomposition of experiments/autopsy (Shapley split for mixed cells); dynamic = pivotal provider repriced on >15% of its observed days in the 21 days to the origin (headline offers on that collector); announced = calendar entry for that provider and GPU published <= origin with effective day (+collector lag) in (origin, target]."
+  },
+  {
+   "rank": 4,
+   "id": "marketplace_ask",
+   "name": "Marketplace ask noise",
+   "definition": "The single marketplace ask series (gpurentalprices H100_80GB spot: sfcompute, spheron) moves daily.",
+   "n_cells": 124,
+   "share_of_S3_loss": 0.106,
+   "share_of_last_value_loss": 0.136,
+   "S3_loss_over_last_value_loss": 0.621,
+   "S2_loss_over_last_value_loss": 0.624,
+   "S2_to_S3_drop_points_of_last_value_loss": 0.0005,
+   "h7_share_above_q90": 0.093,
+   "h7_share_below_q10": 0.07,
+   "top_providers_by_S3_loss_share": {
+    "sfcompute": 0.103,
+    "spheron": 0.0029
+   },
+   "visible_in_panel_at_origin": "Volatility yes (recent volatility; fm2 and chronos track it), direction no. S1 -> S2 fixed most of it (0.71 -> 0.62); S3 adds nothing.",
+   "dated_examples": [
+    "2026-08-18 h=7 gpurentalprices.marketplace_ask.H100_80GB.spot: sfcompute ask up, 1.090 -> 1.760; S3 q90 1.516.",
+    "2026-10-05 h=1 gpurentalprices.marketplace_ask.H100_80GB.spot: spheron up, 1.570 -> 1.685; S3 q90 1.625."
+   ],
+   "scope": "Scope: 37 rental_headline series, dev cells (origins 2026-08-18..2026-10-06, h=1,3,7, n=4,278), offer panel rows <= 2026-10-13. S3 = ens of mix, gbm, chronos_last replay, fm2 bs16, analog k600, prov L1 W21 dyn (dev skill 0.2036). Cause of an h-day move from the origin->target panel decomposition of experiments/autopsy (Shapley split for mixed cells); dynamic = pivotal provider repriced on >15% of its observed days in the 21 days to the origin (headline offers on that collector); announced = calendar entry for that provider and GPU published <= origin with effective day (+collector lag) in (origin, target]."
+  },
+  {
+   "rank": 5,
+   "id": "exit",
+   "name": "Offer leaves the panel",
+   "definition": "The median moves because a provider's offer disappears from the panel and composition outweighs repricing.",
+   "n_cells": 125,
+   "share_of_S3_loss": 0.104,
+   "share_of_last_value_loss": 0.087,
+   "S3_loss_over_last_value_loss": 0.943,
+   "S2_loss_over_last_value_loss": 0.938,
+   "S2_to_S3_drop_points_of_last_value_loss": -0.0004,
+   "h7_share_above_q90": 0.167,
+   "h7_share_below_q10": 0.667,
+   "top_providers_by_S3_loss_share": {
+    "together": 0.0313,
+    "thundercompute": 0.0259,
+    "nebius": 0.0206
+   },
+   "visible_in_panel_at_origin": "Size yes (the one-offer-out median of the origin panel), timing no. No system improved it: loss/last value 0.97 (S0) to 0.94 (S3). At h=7, 67% of exit cells fall below S3's q10.",
+   "dated_examples": [
+    "2026-09-29 h=7 fastgpu_daily.neocloud_rate_card.H100_PCIe_80GB.on_demand: thundercompute leaves (quantacloud enters lower), 3.20 -> 2.59; S3 q10=q90=3.20.",
+    "2026-10-01 h=1 fastgpu_daily.neocloud_rate_card.A100_40GB.on_demand: modal leaves a 4-offer panel, 1.642 -> 1.294; S3 q10 1.639."
+   ],
+   "scope": "Scope: 37 rental_headline series, dev cells (origins 2026-08-18..2026-10-06, h=1,3,7, n=4,278), offer panel rows <= 2026-10-13. S3 = ens of mix, gbm, chronos_last replay, fm2 bs16, analog k600, prov L1 W21 dyn (dev skill 0.2036). Cause of an h-day move from the origin->target panel decomposition of experiments/autopsy (Shapley split for mixed cells); dynamic = pivotal provider repriced on >15% of its observed days in the 21 days to the origin (headline offers on that collector); announced = calendar entry for that provider and GPU published <= origin with effective day (+collector lag) in (origin, target]."
+  },
+  {
+   "rank": 6,
+   "id": "unannounced_oneoff",
+   "name": "Unannounced one-off repricing",
+   "definition": "A provider that was static in the trailing 21 days reprices without a calendar entry.",
+   "n_cells": 195,
+   "share_of_S3_loss": 0.102,
+   "share_of_last_value_loss": 0.098,
+   "S3_loss_over_last_value_loss": 0.826,
+   "S2_loss_over_last_value_loss": 0.84,
+   "S2_to_S3_drop_points_of_last_value_loss": 0.0014,
+   "h7_share_above_q90": 0.549,
+   "h7_share_below_q10": 0.239,
+   "top_providers_by_S3_loss_share": {
+    "fal": 0.0492,
+    "verda": 0.0399,
+    "together": 0.0057
+   },
+   "visible_in_panel_at_origin": "Weakly. 61% of the up-move cells in this class sit in panels where another provider has an announced change (the 2026-10-01 B200/B300 week: fal, verda, gmi move with nebius). The provider having raised this GPU on the other collector in the last 7 days has precision 0.38 but fires on 0.6% of cells. Verda's staircase after a 3-week pause lands here (rate21 = 0).",
+   "dated_examples": [
+    "2026-09-30 h=3 fastgpu_daily.neocloud_rate_card.B200.on_demand: fal raises with nebius and verda in the same week, 6.470 -> 7.522; S3 q90 6.544.",
+    "2026-09-12 h=7 fastgpu_daily.neocloud_rate_card.B300.on_demand: verda resumes its staircase after no reprice in 21 days, 7.50 -> 7.85; S3 interval zero width."
+   ],
+   "scope": "Scope: 37 rental_headline series, dev cells (origins 2026-08-18..2026-10-06, h=1,3,7, n=4,278), offer panel rows <= 2026-10-13. S3 = ens of mix, gbm, chronos_last replay, fm2 bs16, analog k600, prov L1 W21 dyn (dev skill 0.2036). Cause of an h-day move from the origin->target panel decomposition of experiments/autopsy (Shapley split for mixed cells); dynamic = pivotal provider repriced on >15% of its observed days in the 21 days to the origin (headline offers on that collector); announced = calendar entry for that provider and GPU published <= origin with effective day (+collector lag) in (origin, target]."
+  },
+  {
+   "rank": 7,
+   "id": "hyperscaler_spot",
+   "name": "Hyperscaler spot (afhubbard)",
+   "definition": "Moves in the four afhubbard spot series (aws, azure, gcp, oci regional spot snapshots).",
+   "n_cells": 308,
+   "share_of_S3_loss": 0.06,
+   "share_of_last_value_loss": 0.068,
+   "S3_loss_over_last_value_loss": 0.695,
+   "S2_loss_over_last_value_loss": 0.682,
+   "S2_to_S3_drop_points_of_last_value_loss": -0.0009,
+   "h7_share_above_q90": 0.152,
+   "h7_share_below_q10": 0.182,
+   "top_providers_by_S3_loss_share": {},
+   "visible_in_panel_at_origin": "Little. Changes cluster in time (afhubbard EDA) but no member exploits it beyond that; S3 is slightly worse than S2 here (0.695 vs 0.682).",
+   "dated_examples": [
+    "2026-09-03 h=7 afhubbard.hyperscaler_spot.A100_40GB.spot: aws and gcp regional spot moves, 2.248 -> 2.135; S3 q10 2.235.",
+    "2026-09-28 h=1 afhubbard.hyperscaler_spot.V100.spot: gcp spot up, 1.375 -> 1.475; S3 q90 1.388."
+   ],
+   "scope": "Scope: 37 rental_headline series, dev cells (origins 2026-08-18..2026-10-06, h=1,3,7, n=4,278), offer panel rows <= 2026-10-13. S3 = ens of mix, gbm, chronos_last replay, fm2 bs16, analog k600, prov L1 W21 dyn (dev skill 0.2036). Cause of an h-day move from the origin->target panel decomposition of experiments/autopsy (Shapley split for mixed cells); dynamic = pivotal provider repriced on >15% of its observed days in the 21 days to the origin (headline offers on that collector); announced = calendar entry for that provider and GPU published <= origin with effective day (+collector lag) in (origin, target]."
+  },
+  {
+   "rank": 8,
+   "id": "none",
+   "name": "Width cost on cells that did not move",
+   "definition": "Loss on cells whose value is unchanged at the target; all of it is interval width.",
+   "n_cells": 2211,
+   "share_of_S3_loss": 0.042,
+   "share_of_last_value_loss": 0.0,
+   "S3_loss_over_last_value_loss": null,
+   "S2_loss_over_last_value_loss": null,
+   "S2_to_S3_drop_points_of_last_value_loss": 0.0036,
+   "h7_share_above_q90": 0.0,
+   "h7_share_below_q10": 0.0,
+   "top_providers_by_S3_loss_share": {},
+   "visible_in_panel_at_origin": "Partly: whether a series moves is predictable (AUC 0.83, H16), and prov's gate already zeroes width on static panels.",
+   "dated_examples": [
+    "2026-08-18 h=7 afhubbard.hyperscaler_spot.A100_40GB.spot: unchanged at 2.248, S3 interval 2.17-2.38.",
+    "dev-wide: 2,211 no-move cells carry 4.2% of S3 loss (2.5% at h=7)."
+   ],
+   "scope": "Scope: 37 rental_headline series, dev cells (origins 2026-08-18..2026-10-06, h=1,3,7, n=4,278), offer panel rows <= 2026-10-13. S3 = ens of mix, gbm, chronos_last replay, fm2 bs16, analog k600, prov L1 W21 dyn (dev skill 0.2036). Cause of an h-day move from the origin->target panel decomposition of experiments/autopsy (Shapley split for mixed cells); dynamic = pivotal provider repriced on >15% of its observed days in the 21 days to the origin (headline offers on that collector); announced = calendar entry for that provider and GPU published <= origin with effective day (+collector lag) in (origin, target]."
+  }
+ ]
+}

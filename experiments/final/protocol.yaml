@@ -1,0 +1,28 @@
+slug: final
+purpose: >
+  Build and check the submitted forecaster fixed by EVAL_PROTOCOL.md Amendment 2 rule 4: the equal-weight
+  blend (mean of log quantiles) of the validated members (mix, gbm, Chronos width) and every kept direction
+  (prov, fm2, analog, fragility). No member or weight is chosen here; dev numbers are diagnostics.
+members:
+  mix: {"pool":"cc","k":20,"state":"chgk","sk":3,"hl":30}
+  gbm: {"mode":"full","train":"all","save_importance":false}
+  chronos: {"centre":"last"}  # Chronos-Bolt-small, default context, from runs/final
+  analog: {"pool":"all","k":600,"drop":["n14","sign"]}  # cap = latest origin date
+  prov: {"L":1,"W":21,"gate":"dyn"}
+  fm2: Chronos-Bolt-small ctx 16, centre last, lo 0.15  # grid from runs/final
+  fragility: {"mode":"mix","boost":20,"bkind":"any"}
+questions:
+  - Does the seven-member blend beat mix on dev headline and on dev rental_all, in both halves?
+  - Leave-one-out on both universes: does any member lower pooled skill on rental_all in both halves of dev?
+    (prov, analog, fragility were only scored on headline.)
+  - Activity gate [14,1] (zero width when no change in 14 days): on for all, non-headline only, or off?
+  - hyperscaler_list: below last value for every method so far; does the blend or the gate fix it?
+predictions:
+  - final beats mix on headline by about +0.04 (orchestrator measured 0.216 vs 0.169 for 5 members).
+  - on rental_all the gain is smaller; the gate helps non-headline classes with rare changes
+    (hyperscaler_list, stale cards) and hurts or is neutral on headline.
+decision_rule: >
+  Submitted configuration stays the equal-weight seven-member blend unless a member lowers rental_all pooled
+  skill in both halves of dev (leave-one-out d < 0 in both halves); then both versions are reported.
+  Gate recommendation from the gate-minus-ungated difference on headline and on non-headline, both halves.
+refuted_if: final does not beat mix on dev headline (would contradict the orchestrator's measurement).

@@ -143,7 +143,7 @@ out["S0_to_S3_drop_points_of_lv"] = {c: float((base[base.cause2 == c].S0_loss.su
 
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 cols = dict(zip(ORDER, ["#bbbbbb", "#1f77b4", "#2ca02c", "#d62728", "#ff7f0e", "#ffbb78", "#9467bd", "#8c564b"]))
-fig, ax = plt.subplots(figsize=(8, 5))
+fig, ax = plt.subplots(figsize=(10, 5))
 names = {"S0": "S0 drift", "S1": "S1 mix", "S2": "S2 mix+gbm+chronos", "S3": "S3 +fm2+analog+prov"}
 for i, s in enumerate(SYS):
     b = 0
@@ -155,7 +155,7 @@ for i, s in enumerate(SYS):
 ax.axhline(1, color="k", ls=":", lw=1); ax.text(3.4, 1.0, "last value", va="bottom", ha="right", fontsize=8)
 ax.set_xticks(range(4)); ax.set_xticklabels([names[s] for s in SYS], fontsize=9)
 ax.set_ylabel("pinball loss / last-value loss (dev headline, 4,278 cells)"); ax.set_ylim(0, 1.08)
-ax.legend(fontsize=8, loc="upper right", bbox_to_anchor=(1.0, 0.93)); ax.set_title("Dev loss by cause of the move, per system")
+ax.legend(fontsize=8, loc="upper left", bbox_to_anchor=(1.01, 1.0)); ax.set_title("Dev loss by cause of the move, per system")
 fig.tight_layout(); fig.savefig(f"{R}/loss_by_cause.png", dpi=130)
 
 # ---------- signals at the origin, for every panel cell ----------
