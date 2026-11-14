@@ -139,3 +139,8 @@ Query 5 (declared now, before running): ens of mix + gbm + chronos_last, equal w
   - Query 7, mix + prov: 0.1845, +0.0724 [+0.0589,+0.0868], one-sided DM p<0.001. h=1 +0.005, h=3 +0.017, h=7 +0.051; fastgpu +0.047, gpurentalprices +0.026.
   - Query 8, mix + fm2: 0.1698, +0.0577 [+0.0391,+0.0795], p<0.001. h=1 -0.005, h=3 +0.011, h=7 +0.052; fastgpu +0.052, gpurentalprices +0.007.
   - With query 6 (p=0.031) all three pass Benjamini-Hochberg at 10%. Kept so far: analog, prov, fm2. Budget used: 3 of 8.
+
+## 2026-11-14 12:32 PT: round 5 launched
+
+- hazard (H16 refuted: whether a price moves is predictable, AUC 0.83; direction is not, AUC 0.54; the hurdle forecaster loses to mix) and midstate (H25 not significant: the middle-provider state as a lookup key ties mix; the same information simulated, as in prov, wins).
+- Round 5, six agents at most at once after the thrashing incident: prov follow-up (Exa calendar inside the simulator, marketplace fixes, synthetic trend-reversal stress test); final (the rule-based blend for every posted rental series behind one command, leave-one-out on rental_all, gate decision); autopsy2 (iteration 2 failure analysis: loss by cause across drift, mix, the earlier blend and the current blend; H31); entry (H30); insight (economic section: index quality per series, robust statistics, announced changes). Still running from before: fragility, memory go-live.

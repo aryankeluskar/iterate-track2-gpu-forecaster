@@ -23,11 +23,20 @@ params
   w        weight of prov in a log-quantile blend with base where prov applies (1 = prov only)
   base     [name, params] fallback (afhubbard, no panel, gated-off cells)
   n_paths, seed
+  cal      apply announced repricings (experiments/calendar/calendar_lib.py, entries published on or before the
+           origin, confidence A/B): for origins before the effective day E, matching offers jump to the announced
+           price on arrival day A = E (+ collector lag if `cal_lag`), moved a day early/late with probability
+           `cal_pe` each (never before E or the origin), and stay there. The gate opens for horizons reaching E.
+  ret_mkt  allow absent offers to return on marketplace_ask panels
+  mkt      "prov" or "base": use base for marketplace_ask series
+  bidir    [lo, hi] or None: providers whose share of up-moves over the window lies in [lo, hi] get symmetric sizes
 """
 from __future__ import annotations
 
+import sys
 import warnings
 import zlib
+from pathlib import Path
 
 import numpy as np
 
@@ -85,10 +94,17 @@ def _prep():
 
 @register("prov")
 def make(W=14, L=7, hl=7.0, a=3.0, sizes="signed", comp=True, centre="sim", gate="none", nb=1, dthr=0.15,
-         w=1.0, base=None, n_paths=1000, seed=0):
+         w=1.0, base=None, n_paths=1000, seed=0, cal=False, cal_lag=True, cal_pe=0.1, ret_mkt=True, mkt="prov",
+         bidir=None):
     base_spec = base or DEFAULT_BASE
     base_f = get(base_spec[0], **base_spec[1])
     st = {}
+    CL = None
+    if cal:
+        cdir = str(Path(__file__).resolve().parents[3] / "experiments" / "calendar")
+        if cdir not in sys.path:
+            sys.path.insert(0, cdir)
+        import calendar_lib as CL
 
     def window(src, pv, o):
         x = st["prov"].get((src, pv))
@@ -110,12 +126,31 @@ def make(W=14, L=7, hl=7.0, a=3.0, sizes="signed", comp=True, centre="sim", gate
         return {"p_exit": rate("ex", "ex_d"), "p_ret": rate("rt", "rt_d"),
                 "lam": float(e["en_n"][s].sum() / max(e["en_p"][s].sum(), 1.0)), "rel": rel if len(rel) else np.zeros(1)}
 
-    def simulate(src, cls, o, keys, M, provs, H, rng):
+    def cal_events(src, cls, gpu, tier, o, provs, px):
+        """[(slot mask over keys, new price, arrival day A, effective day E)] for usable entries with E > origin."""
+        out = []
+        for e in CL.scheduled_changes(o):
+            E = CL.effective_day(e)
+            if E <= o:
+                continue
+            A = E + (CL.COLLECTOR_LAG[src] if cal_lag else 0)
+            for c in e["changes"]:
+                if gpu in c["panel_gpus"] and tier in CL.TIER_MAP.get(c["tier"], set()) and c["new"] is not None:
+                    m = provs == e["provider"]
+                    if c["old"] is not None:
+                        m &= np.isclose(px, c["old"], rtol=0.03)
+                    if m.any():
+                        out.append((m, float(c["new"]), A, E))
+        return out
+
+    def simulate(src, cls, o, keys, M, provs, H, rng, cev=(), day0=None, crng=None):
         last_seen_i = np.array([np.nonzero(~np.isnan(M[:, j]))[0][-1] for j in range(len(keys))])
         last_px = M[last_seen_i, np.arange(len(keys))]
         cur = ~np.isnan(M[-1])
         pool = pooled(src, cls, o) if comp else None
         ret = np.nonzero(~cur & (len(M) - 1 - last_seen_i <= RET_WINDOW))[0] if comp else np.zeros(0, int)
+        if cls == "marketplace_ask" and not ret_mkt:
+            ret = np.zeros(0, int)
         idx = np.r_[np.nonzero(cur)[0], ret]
         m0, S, N = len(idx), (3 if comp else 0), n_paths
         R = np.zeros((N, m0, H))
@@ -127,7 +162,9 @@ def make(W=14, L=7, hl=7.0, a=3.0, sizes="signed", comp=True, centre="sim", gate
             nd = len(d)
             share = k / n
             dyn = rng.random(N) < nd / (nd + a)
-            if sizes == "sym":
+            nzu = mr[k > 0]
+            bi = bidir is not None and len(nzu) and bidir[0] <= (nzu > 0).mean() <= bidir[1]
+            if sizes == "sym" or bi:
                 pi = rng.integers(0, nd, (N, H))
                 sgn = np.where(rng.random((N, H)) < 0.5, -1.0, 1.0)
                 step = np.abs(mr[pi]) * sgn
@@ -142,6 +179,13 @@ def make(W=14, L=7, hl=7.0, a=3.0, sizes="signed", comp=True, centre="sim", gate
                 R[:, c, :] = np.where(mv & dyn[:, None], step, 0.0)
         px0 = last_px[idx]
         cum = px0[None, :, None] * np.exp(np.cumsum(R, axis=2))
+        steps = day0 + 1 + np.arange(H)
+        for mk, new, A, E in cev:
+            dl = crng.choice([-1, 0, 1], size=N, p=[cal_pe, 1 - 2 * cal_pe, cal_pe])
+            arr = np.maximum(np.maximum(A + dl, E), o + 1)
+            on = steps[None, :] >= arr[:, None]
+            for c in np.nonzero(mk[idx])[0]:
+                cum[:, c, :] = np.where(on, new, cum[:, c, :])
         present = np.zeros((N, m0 + S), bool)
         present[:, :int(cur.sum())] = True
         eligible = np.zeros((N, m0 + S), bool)
@@ -189,26 +233,36 @@ def make(W=14, L=7, hl=7.0, a=3.0, sizes="signed", comp=True, centre="sim", gate
     def f(sid, days, vals, origin_day, horizons, ctx):
         if not st:
             st["prov"], st["comp"] = _prep()
-        if not P.supported(sid):
+        if not P.supported(sid) or (mkt == "base" and "marketplace_ask" in sid):
             return base_f(sid, days, vals, origin_day, horizons, ctx)
         o_rows = P.offers(sid, origin_day)
         if len(o_rows) == 0:
             return base_f(sid, days, vals, origin_day, horizons, ctx)
         last = float(vals[-1])
-        src, cls, _, _ = P.parse_sid(sid)
+        src, cls, gpu, tier = P.parse_sid(sid)
         pdays, keys, M = _pivot(o_rows)
         kp = o_rows.drop_duplicates("key").set_index("key")["provider"]
         provs = kp.reindex(keys).to_numpy()
         cur = ~np.isnan(M[-1])
         ms = mid_state(src, origin_day, M[-1][cur], provs[cur])
         f.state[(sid, origin_day)] = ms
+        cev = []
+        if cal:
+            lp = np.array([M[np.nonzero(~np.isnan(M[:, j]))[0][-1], j] for j in range(len(keys))])
+            cev = cal_events(src, cls, gpu, tier, origin_day, provs, lp)
+        Emin = min((e[3] for e in cev), default=None)
         if gate == "dyn" and not ms["dyn_near"]:
-            return base_f(sid, days, vals, origin_day, horizons, ctx)
+            if not cev:
+                return base_f(sid, days, vals, origin_day, horizons, ctx)
+            off = [h for h in horizons if origin_day + h < Emin]
+        else:
+            off = []
         gap = int(origin_day - pdays[-1])
         rng = np.random.default_rng(zlib.crc32(f"{sid}|{origin_day}".encode()) + int(seed))
+        crng = np.random.default_rng(zlib.crc32(f"cal|{sid}|{origin_day}".encode()) + int(seed))
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", RuntimeWarning)
-            meds = simulate(src, cls, origin_day, keys, M, provs, max(horizons) + gap, rng)
+            meds = simulate(src, cls, origin_day, keys, M, provs, max(horizons) + gap, rng, cev, int(pdays[-1]), crng)
         scale = last / float(np.median(M[-1][cur]))
         res = {}
         for h in horizons:
@@ -220,6 +274,9 @@ def make(W=14, L=7, hl=7.0, a=3.0, sizes="signed", comp=True, centre="sim", gate
             b = base_f(sid, days, vals, origin_day, horizons, ctx)
             res = {h: tuple(float(np.exp(w * np.log(res[h][i]) + (1 - w) * np.log(b[h][i]))) for i in range(3))
                    for h in horizons}
+        if off:
+            b = base_f(sid, days, vals, origin_day, horizons, ctx)
+            res.update({h: b[h] for h in off})
         return res
 
     f.state = {}
