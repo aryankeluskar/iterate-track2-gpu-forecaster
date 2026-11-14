@@ -59,7 +59,7 @@ Why a new rule: about fifteen directions are being tried at once on dev. Sending
 5. Cleaner check. The non-headline posted rental series on the validation origins have not been queried. The all-series router gets one query there, and the final forecaster is reported there too. That number is the least contaminated estimate we have.
 6. Every query is appended to data_out/val_query_log.jsonl by the harness. Agents never run validation.
 
-## Amendment 3 (14 November 2026, about 12:40 PT): membership of the submitted blend
+## Amendment 3 (14 November 2026, about 12:37 PT): membership of the submitted blend
 
 Written before the submitted blend, or any blend of more than two members that includes a round 2 to 4 direction, was scored on validation. Validation state: queries 1 to 9 as logged; four directions kept (analog, prov, fm2, fragility).
 
