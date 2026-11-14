@@ -1,0 +1,64 @@
+slug: exatrace
+written_before_any_result: true
+written_utc: 2026-11-14 (before the first scoring run of this task)
+question: >
+  What does Exa search change in the forecasts, checked cell by cell on cached practice episodes? Which dated announcements
+  found by search change a provider-simulator forecast, which correctly change nothing and why, and does the effect vanish
+  when the source is deleted or made available too late?
+scope:
+  origins: 2026-09-16 .. 2026-10-06 (dev, 21 origins), horizons 1/3/7, universe rental_headline (37 series); targets <= 2026-10-13
+  no validation origins; nothing written to data_out/trajectory.jsonl or data_out/ledger.jsonl (harness.evaluate called directly, like --no-log)
+  method: prov with the submitted configuration {L 1, W 21, gate dyn} (gpuf.loop.PRV), every other prov parameter at its default
+  calendar: data_out/repricing_calendar.jsonl as of the start of this task (9 lines), read through experiments/calendar/calendar_lib
+            (usable at origin o only if published <= o and confidence A/B). Substituted in memory per arm; the file is not edited for task 1.
+  network: none. Every source fact in the trace is read from data_out/exa_cache (LOOP_OFFLINE=1).
+arms:
+  i_off:        cal false
+  ii_valid:     cal true, cal_lag false (collector lag fixed at 0, the transparent first control). PRIMARY.
+  ii_lag:       cal true, cal_lag true (fastgpu +1 day, read off these same two episodes). Reported separately, labelled IN-SAMPLE.
+  iii_nopair:   cal true, lag 0, every change keeps its GPU and tier but old and new price are set to null (announcement known, size not)
+  iii_zero:     cal true, lag 0, new price set equal to the old price (date known, size zero): isolates the gate opening from the price
+  iv_deferred:  cal true, lag 0, every entry's published date moved to its effective date + 8 days (after any target it could affect)
+  minus_<event> for each event that changes a forecast in ii_valid: ii_valid with that event's entry deleted
+  minus_source  for the earliest source of each such event: ii_valid with the entry rebuilt from its remaining sources only
+                (each remaining source's cached text run through gpuf.loop.extract_announcement; usable from that source's date)
+acceptance (fixed now, not changed after results):
+  A1: iv_deferred is bit-identical to i_off on every cell (q10, q50, q90 exactly equal). Fail -> stop: the switch leaks.
+  A2: every cell where ii_valid differs from i_off has an entry usable at its origin with effective day in (origin, target]. Fail -> stop.
+  A3: minus_<event> is bit-identical to i_off on every cell that only that event touches. Fail -> report "deleting the source does not remove its effect".
+  A4: iii_nopair is bit-identical to i_off (prov cannot use an announcement without a price). Expected structurally; reported either way.
+  A5: each event that changes a forecast has a cached source whose text contains its old and new price for the matched GPU.
+      Fail -> that event's causal claim is dropped.
+  reported, no threshold: pooled skill (1 - loss/last-value loss) of each arm on all cells and on the affected cells (origin in
+  [usable date, effective day), target >= effective day, provider has an offer in the panel); one-event-removed sensitivity;
+  share of the ii_valid gain that iii_zero already gives (gate opening alone).
+drop_the_causal_search_claim_if:
+  - deleting the source does not change any forecast, or
+  - iv_deferred differs from i_off, or
+  - the cached source text cannot justify the provider / GPU / old -> new price mapping.
+not_claimed: >
+  Two events (Nebius 2026-10-01, Jarvislabs 2026-10-05) cannot establish that the calendar works in general. This is a
+  retrospective mechanism demonstration on practice dates, not a validation of H27. The calendar stays off in the submission.
+  Exa's publishedDate is not a historical snapshot: a cached page could carry text edited later; this is mitigated (later-date
+  check) and stated, not ruled out.
+trace_rows: >
+  one row per calendar entry (and per extra source): URL, title, publication date (from the cache), the quoted sentence and whether
+  it is found in the cached text, provider, GPU, old/new price, effective date, matched offer rows per collector (first day the new
+  price is observed), whether the provider's offer is at or next to the middle of a scored list at the origin, forecast q50 before
+  and after (ii_valid vs i_off), outcome, and for entries that change nothing the reason: too late, wrong contract, already
+  reflected in the collector, no pass-through to the median, outside the origin window.
+fixes:
+  F1 scout memory write: evidence records pass the same eligibility as calendar lines (evergreen, no dated price passage,
+     no panel provider, a later date in the text after --as-of) and carry published, latest_date_in_text, effective_date and
+     first_observed fields. Fixture test: early publication date with later-dated content is rejected for an earlier as-of.
+  F2 prior --as-of (default 2026-11-06, never later): bounds the Exa endPublishedDate and the memory recall. Default output identical.
+forward_search (task 4, the scored week):
+  providers: every provider holding the middle offer, or an offer adjacent to the middle, of any of the 37 scored series on 2026-11-06
+             (gpuf.panel rows of 2026-11-06 only)
+  search: the scout's dated search bodies (experiments/calendar/search.py body(), trackers excluded, undated results dropped),
+          windows ending 2026-11-06; one extra query per provider for changes effective 7..13 November; cache first
+  extraction: gpuf.loop eligibility (same rules as the scout); a hit counts only if its effective date is in 2026-11-07..2026-11-13
+  per hit: source, quote, provider, prices, effective date, whether the new price is already in the 6 Nov offer rows, and the
+           pass-through: the scored median if only that offer changed
+  budget: at most 1.50 USD of new Exa requests for the whole task
+  no forecast is changed. "No announcement found" is a valid result.

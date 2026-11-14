@@ -112,6 +112,10 @@ Also refuted on dev without a ledger entry: signed state, pooling a whole collec
 
 Exa supplied the dated public record the price data lacks: a calendar of announced repricings with effective dates (9 entries, `data_out/repricing_calendar.jsonl`) from 463 searches with end published dates on or before 6 November, price trackers discarded unopened. On dev, all 17 checkable offers moved to the announced price. Inside prov the calendar lifts dev skill from 0.2089 to 0.2827, all from two events (Nebius, Jarvislabs) whose collector lag was fitted on the same events: an in-sample upper bound that validation cannot check. The switch is off in the submission (the one entry in the Sunday window, Lambda, takes effect after the last target), so the submitted forecast does not depend on Exa. Exa also refuted three ideas (H10, H13, H26) and supplied the dated news for the long-run scenarios. A published date does not prove a page is unedited. Spend: $7.62.
 
+**A controlled trace** (`experiments/exatrace/results/trace.md`). On the two practice episodes with dated announcements (Nebius, effective 1 October; Jarvislabs, 5 October; origins 16 September to 6 October, 2,331 cells), with the collector lag fixed at zero instead of fitted, the provider simulator scores 0.2160 without the calendar and 0.3083 with it; on the 142 cells between an announcement and its effect, 0.1539 and 0.4756. Removing the announced prices from the entries, or making the sources available only after the target date, gives forecasts bit-identical to no calendar, and deleting either event restores the no-calendar forecast on the cells only it touches. On these episodes the gain traces to the announced price in a dated source. It is still two events on practice dates, so the switch stays off. The trace also lists the entries that correctly do nothing, each with its reason: reported too late, a contract that is not in any scored list, already in the collector's rows, or a provider too far from the middle to move the median.
+
+**The scored week.** A search of the 29 providers that hold the middle offer, or one next to it, of the 37 scored lists found no announcement published on or before 6 November of a price change taking effect from 7 to 13 November. Lambda's rise (effective 16 November) is already in one collector's 6 November rows and does not reach the middle of any list on the other.
+
 | date | title | link |
 |---|---|---|
 | 2024-08-02 | DataCrunch.io Introduces Dynamic Pricing to Democratize GPU Computing for AI (DataCrunch is now Verda) | https://www.prweb.com/releases/datacrunchio-introduces-dynamic-pricing-to-democratize-gpu-computing-for-ai-302212007.html |
@@ -182,6 +186,7 @@ Scenario probabilities are judgement, frozen before computing: shortage persists
 | decisions and corrections | `research-log.md`, `EVAL_PROTOCOL.md` |
 | loss by cause | `experiments/autopsy/results/failure_modes.json`, `experiments/autopsy2/results/loss_by_cause.csv` |
 | calendar and attribution | `data_out/repricing_calendar.jsonl`, `experiments/exa_attrib/results/attribution.md`, `experiments/prov/results/cal_summary.json` |
+| search: controlled trace, forward search for the scored week | `experiments/exatrace/results/trace.md`, `arms_summary.json`, `forward.json` |
 | economic insight | `experiments/insight/results/insight_v2.md` (corrected copy of `insight.md`) |
 | provider-balanced index | `experiments/index/results/index.md`, `experiments/index/results/acceptance.json`, `data_out/balanced_index.csv` |
 | long-run view | `experiments/longrun/results/longrun_v3.md` (versions 1 and 2 kept beside it) |

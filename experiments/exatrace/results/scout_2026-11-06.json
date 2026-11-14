@@ -1,0 +1,393 @@
+{
+ "as_of": "2026-11-06",
+ "failure_cases_recalled": 60,
+ "recall_error": null,
+ "cases_with_dated_explanation": 3,
+ "cases_without": 107,
+ "providers_searched": [
+  "aws",
+  "azure",
+  "cudo",
+  "daytona",
+  "digitalocean",
+  "fal",
+  "gcp",
+  "lambdalabs",
+  "latitude",
+  "modal",
+  "nebius",
+  "northflank",
+  "oci",
+  "ovhcloud",
+  "quantacloud",
+  "scaleway",
+  "sfcompute",
+  "spheron",
+  "thundercompute",
+  "together",
+  "verda"
+ ],
+ "searches": 126,
+ "cache_hits": {
+  "search": 126,
+  "contents": 10
+ },
+ "new_calls": {
+  "search": 0,
+  "contents": 0
+ },
+ "skipped_over_budget": {
+  "search": 0,
+  "contents": 0
+ },
+ "skipped_offline_uncached": {
+  "search": 0,
+  "contents": 0
+ },
+ "api_errors": 0,
+ "cost_usd_this_run": 0.0,
+ "cap_usd": 1.0,
+ "contents_fetches": 10,
+ "dropped": {
+  "tracker": 205,
+  "not_a_price_change_by_provider": 619
+ },
+ "kept_sources": 222,
+ "kept_with_effective_date_language": 133,
+ "new_calendar_entries": [
+  {
+   "provider": "verda",
+   "effective_date": "2026-10-01",
+   "effective_utc": "2026-10-01T00:00Z",
+   "published": "2026-10-29",
+   "url": "https://gpujournal.ai/guide/verda-six-rises-october-2026",
+   "title": "Six rises in seven days: what Verda's October says about GPU demand | GPUJournal",
+   "quote": "Small daily rises compound fast at 24/7 usage. And Verda was not alone in October: Nebius raised across the board on Oct 1 — an announced rise, with the post-rise rates (H100 $4.50/hr, H200 $5.40/hr, B200 $8.50/hr, B300 $9.50/hr) verified Oct 19 and re-read unchanged on Oct 26, 27 and 28 — and RunPod Secure rose on Oct 14 (RTX 4090 $0.74 → $0.89/hr, ▲ 20%; H200 $4.59 → $5.29/hr, ▲ 15%; both re-rea",
+   "quote_states_effective_date": true,
+   "source_type": "auto-extracted by gpuf.loop scout from Exa search highlights",
+   "also": [],
+   "changes": [
+    {
+     "gpu": "RTX 4090",
+     "panel_gpus": [
+      "RTX 4090"
+     ],
+     "tier": "on_demand",
+     "old": 0.74,
+     "new": 0.89,
+     "pct": 0.2027
+    },
+    {
+     "gpu": "H200",
+     "panel_gpus": [
+      "H200"
+     ],
+     "tier": "on_demand",
+     "old": 4.59,
+     "new": 5.29,
+     "pct": 0.1525
+    }
+   ],
+   "confidence": "C",
+   "edited_after_published": false,
+   "edit_note": "",
+   "announced_before_effective": false,
+   "lead_days": -28,
+   "usable_from": "2026-10-29",
+   "auto": true,
+   "found_by": "gpuf.loop scout --as-of 2026-11-06"
+  },
+  {
+   "provider": "verda",
+   "effective_date": "2026-11-02",
+   "effective_utc": "2026-11-02T00:00Z",
+   "published": "2026-11-02",
+   "url": "https://gpujournal.ai/story/verda-eighth-rise-nov-2",
+   "title": "Verda raises prices again — all nine GPUs up about 1%, the eighth rise since Oct 23 | GPUJournal",
+   "quote": "What changed, read on verda.com/pricing on Nov 2, 2026 (unrounded page figures in brackets): GB300 $13.05 → $13.18 [$13.18], B300 $11.35 → $11.46 [$11.46], B200 $8.87 → $8.96 [$8.958], H200 $6.25 → $6.31 [$6.313], H100 SXM $4.79 → $4.84 [$4.841], A100 80GB $2.25 → $2.27 [$2.270], A100 40GB $1.61 → $1.63 [$1.625], RTX PRO 6000 $2.65 → $2.67 [$2.671] and L40S $1.90 → $1.92 [$1.920]. Each move is wit",
+   "quote_states_effective_date": true,
+   "source_type": "auto-extracted by gpuf.loop scout from Exa search highlights",
+   "also": [],
+   "changes": [
+    {
+     "gpu": "B300",
+     "panel_gpus": [
+      "B300"
+     ],
+     "tier": "on_demand",
+     "old": 13.05,
+     "new": 13.18,
+     "pct": 0.01
+    },
+    {
+     "gpu": "B300",
+     "panel_gpus": [
+      "B300"
+     ],
+     "tier": "on_demand",
+     "old": 11.35,
+     "new": 11.46,
+     "pct": 0.0097
+    },
+    {
+     "gpu": "B200",
+     "panel_gpus": [
+      "B200"
+     ],
+     "tier": "on_demand",
+     "old": 8.87,
+     "new": 8.96,
+     "pct": 0.0101
+    },
+    {
+     "gpu": "H200",
+     "panel_gpus": [
+      "H200"
+     ],
+     "tier": "on_demand",
+     "old": 6.25,
+     "new": 6.31,
+     "pct": 0.0096
+    },
+    {
+     "gpu": "H100",
+     "panel_gpus": [
+      "H100 SXM 80GB",
+      "H100 80GB"
+     ],
+     "tier": "on_demand",
+     "old": 4.79,
+     "new": 4.84,
+     "pct": 0.0104
+    },
+    {
+     "gpu": "A100 80GB",
+     "panel_gpus": [
+      "A100 SXM 80GB",
+      "A100 80GB"
+     ],
+     "tier": "on_demand",
+     "old": 2.25,
+     "new": 2.27,
+     "pct": 0.0089
+    },
+    {
+     "gpu": "A100 40GB",
+     "panel_gpus": [
+      "A100 40GB"
+     ],
+     "tier": "on_demand",
+     "old": 1.61,
+     "new": 1.63,
+     "pct": 0.0124
+    },
+    {
+     "gpu": "RTX PRO 6000",
+     "panel_gpus": [
+      "RTX PRO 6000"
+     ],
+     "tier": "on_demand",
+     "old": 2.65,
+     "new": 2.67,
+     "pct": 0.0075
+    },
+    {
+     "gpu": "L40S",
+     "panel_gpus": [
+      "L40S"
+     ],
+     "tier": "on_demand",
+     "old": 1.9,
+     "new": 1.92,
+     "pct": 0.0105
+    }
+   ],
+   "confidence": "B",
+   "edited_after_published": false,
+   "edit_note": "",
+   "announced_before_effective": false,
+   "lead_days": 0,
+   "usable_from": "2026-11-02",
+   "auto": true,
+   "found_by": "gpuf.loop scout --as-of 2026-11-06"
+  }
+ ],
+ "rejected_candidates": [
+  {
+   "url": "https://tech-insider.org/aws-ec2-capacity-blocks-price-hike-2026/",
+   "provider": "aws",
+   "published": "2026-08-01",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://www.linkedin.com/posts/compute-credit-index-research_the-committed-side-of-gpu-rental-is-repricing-activity-7489770212179800064-PtdH",
+   "provider": "azure",
+   "published": "2026-08-02",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://datastorage.com/articles/aws-raised-gpu-prices-twice-in-six-months-what-it-signals-and-what-to-do-about-it/",
+   "provider": "aws",
+   "published": "2026-08-03",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://aethir.com/blog-posts/gpu-cloud-pricing-in-2026-why-ai-compute-costs-keep-rising",
+   "provider": "aws",
+   "published": "2026-08-03",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://ecosystem.aethir.com/blog-posts/gpu-cloud-pricing-in-2026-why-ai-compute-costs-keep-rising",
+   "provider": "aws",
+   "published": "2026-08-03",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://aws.amazon.com/blogs/containers/run-gpu-batch-inference-on-amazon-ecs-managed-instances-with-scale-to-zero/",
+   "provider": "aws",
+   "published": "2026-08-03",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://in.linkedin.com/company/spheron",
+   "provider": "spheron",
+   "published": "2026-08-03",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://daily.dev/posts/why-spiky-inference-traffic-breaks-the-dedicated-gpu-math-mgjqedm2a",
+   "provider": "digitalocean",
+   "published": "2026-08-04",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://ggecho.com/posts/2026-08-04-0201-nvidia-gpu-market-rental-rates-fluctuate-prices-surge/",
+   "provider": "thundercompute",
+   "published": "2026-08-04",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://dev.to/rishi_kora/gpu-leases-are-rising-while-model-prices-fall-5376",
+   "provider": "aws",
+   "published": "2026-08-05",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://www.thundercompute.com/blog/kimi-k3",
+   "provider": "thundercompute",
+   "published": "2026-08-05",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://www.upendrasengar.com/blog/two-aws-gpu-price-hikes-in-six-months",
+   "provider": "aws",
+   "published": "2026-08-06",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://www.linkedin.com/posts/spheron_aws-charges-1424hr-for-a-b200-gpu-on-its-activity-7490989398520623104-Zbl5",
+   "provider": "spheron",
+   "published": "2026-08-06",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://www.thundercompute.com/blog/nvidia-b300-pricing",
+   "provider": "thundercompute",
+   "published": "2026-08-07",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://www.thundercompute.com/blog/oracle-cloud-oci-gpu-pricing",
+   "provider": "oci",
+   "published": "2026-08-10",
+   "why": "evergreen pricing guide (edited in place)"
+  },
+  {
+   "url": "https://sepahsalar.org/research/azure-gpu-cpu-costs/",
+   "provider": "azure",
+   "published": "2026-08-11",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://edelbridge.substack.com/p/nebius-q2-earnings-preview-and-livestream",
+   "provider": "nebius",
+   "published": "2026-08-11",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://caleta.io/blog/azure-gpu-spot-report-july-2026/",
+   "provider": "azure",
+   "published": "2026-08-12",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://northflank.com/blog/best-platforms-for-high-concurrency-sandbox-environments",
+   "provider": "northflank",
+   "published": "2026-08-13",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://andreinutas.substack.com/p/eu-sovereign-cloud-providers-pay",
+   "provider": "ovhcloud",
+   "published": "2026-08-14",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://voidsyntax.com/blog/together-ai-revenue-business-model/",
+   "provider": "together",
+   "published": "2026-08-14",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://spendark.com/blog/gcp-pricing-changes-2026/",
+   "provider": "gcp",
+   "published": "2026-08-16",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://europeanstack.com/software/verda",
+   "provider": "verda",
+   "published": "2026-08-16",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://blog.ovhcloud.com/en/posts/dedicated-servers-pricing-update-h2-2026/",
+   "provider": "ovhcloud",
+   "published": "2026-08-17",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://www.itechguides.com/aws-cuts-prices-of-some-ec2-nvidia-gpu-accelerated-instances-by-up-to-45/",
+   "provider": "aws",
+   "published": "2026-08-18",
+   "why": "no passage with effective date, change verb and old -> new price"
+  }
+ ],
+ "n_rejected": 126,
+ "rejected_by_reason": {
+  "already in calendar": 11,
+  "evergreen pricing guide": 6,
+  "no passage with effective date, change verb and old -> new price": 93,
+  "passage names no panel provider": 15,
+  "text carries a date after 2026-11-06": 1
+ },
+ "calendar_entries_now": 9,
+ "dry_run": true,
+ "evidence_rejected_by_reason": {
+  "no passage with effective date, change verb and old -> new price": 96,
+  "evergreen pricing guide": 6,
+  "text carries a date after 2026-11-06": 1,
+  "passage names no panel provider": 15
+ },
+ "evidence_written": {
+  "sent": 0
+ },
+ "exa_spend_usd": {
+  "attr": 1.564,
+  "cal": 2.827,
+  "day_scout": 2.982,
+  "loop": 0.248,
+  "total": 7.621
+ }
+}

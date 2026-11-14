@@ -1,0 +1,240 @@
+[
+ {
+  "event": "digitalocean 2026-08-01",
+  "provider": "digitalocean",
+  "effective_date": "2026-08-01",
+  "effective_utc": "2026-08-01T00:00Z",
+  "published_usable_from": "2026-08-02",
+  "confidence": "C",
+  "lead_days": -1,
+  "changes": [
+   "H100 [on_demand] 3.39->4.41",
+   "H200 [on_demand] 3.44->4.47"
+  ],
+  "n_changes": 2,
+  "first_observed_new_price": {
+   "fastgpu_daily": null,
+   "gpurentalprices": "2026-08-04"
+  },
+  "first_observed_rows_up_to": "2026-08-11",
+  "n_sources": 1,
+  "scored_series_touched": 5,
+  "affected_cells": 0,
+  "usable_in_window": false,
+  "does_nothing_because": "too late: confidence C (published 2026-08-02, effective 2026-08-01: reported after the change)"
+ },
+ {
+  "event": "fireworks 2026-09-01",
+  "provider": "fireworks",
+  "effective_date": "2026-09-01",
+  "effective_utc": "2026-09-01T00:00Z",
+  "published_usable_from": "2026-08-13",
+  "confidence": "B",
+  "lead_days": 19,
+  "changes": [
+   "H100 80GB [on_demand_deployment] 7.0->8.0",
+   "H200 [on_demand_deployment] 7.0->8.0",
+   "B200 [on_demand_deployment] 10.0->13.0"
+  ],
+  "n_changes": 3,
+  "first_observed_new_price": {
+   "fastgpu_daily": null,
+   "gpurentalprices": "2026-09-01"
+  },
+  "first_observed_rows_up_to": "2026-09-11",
+  "n_sources": 3,
+  "scored_series_touched": 5,
+  "affected_cells": 0,
+  "usable_in_window": false,
+  "does_nothing_because": "outside the origin window: effective 2026-09-01 before the first origin 2026-09-16"
+ },
+ {
+  "event": "salad 2026-09-12",
+  "provider": "salad",
+  "effective_date": "2026-09-12",
+  "effective_utc": "2026-09-12T00:00Z",
+  "published_usable_from": "2026-09-01",
+  "confidence": "A",
+  "lead_days": 11,
+  "changes": [
+   "RTX 5090 [high] 0.45->0.5",
+   "RTX 5090 [medium] 0.38->0.417",
+   "RTX 5090 [low] 0.31->0.333",
+   "RTX 4090 [high] 0.3->0.33",
+   "RTX 4090 [medium] 0.253->0.273",
+   "RTX 4090 [low] 0.207->0.217",
+   "RTX 5080 [high] 0.42->0.26",
+   "RTX 5080 [medium] 0.335->0.223"
+  ],
+  "n_changes": 52,
+  "first_observed_new_price": {
+   "fastgpu_daily": null,
+   "gpurentalprices": "2026-09-10"
+  },
+  "first_observed_rows_up_to": "2026-09-22",
+  "n_sources": 1,
+  "scored_series_touched": 0,
+  "affected_cells": 0,
+  "usable_in_window": false,
+  "does_nothing_because": "wrong contract: no scored series has an announced GPU in a matching tier (announced tiers ['high', 'low', 'lowest', 'medium']; calendar_lib.TIER_MAP)"
+ },
+ {
+  "event": "nebius 2026-10-01",
+  "provider": "nebius",
+  "effective_date": "2026-10-01",
+  "effective_utc": "2026-10-01T00:00Z",
+  "published_usable_from": "2026-09-16",
+  "confidence": "A",
+  "lead_days": 15,
+  "changes": [
+   "H100 [on_demand] 3.85->4.5",
+   "H200 [on_demand] 4.5->5.4",
+   "B200 [on_demand] 7.15->8.5",
+   "B300 [on_demand] 7.85->9.5"
+  ],
+  "n_changes": 4,
+  "first_observed_new_price": {
+   "fastgpu_daily": "2026-10-02",
+   "gpurentalprices": "2026-10-01"
+  },
+  "first_observed_rows_up_to": "2026-10-11",
+  "n_sources": 4,
+  "scored_series_touched": 9,
+  "affected_cells": 88,
+  "usable_in_window": true,
+  "does_nothing_because": null
+ },
+ {
+  "event": "jarvislabs 2026-10-05",
+  "provider": "jarvislabs",
+  "effective_date": "2026-10-05",
+  "effective_utc": "2026-10-04T18:30Z",
+  "published_usable_from": "2026-09-24",
+  "confidence": "A",
+  "lead_days": 11,
+  "changes": [
+   "H200 [on_demand] 3.99->4.59",
+   "H100 SXM [on_demand] 2.69->3.49",
+   "RTX PRO 6000 [on_demand] 1.89->2.19"
+  ],
+  "n_changes": 3,
+  "first_observed_new_price": {
+   "fastgpu_daily": "2026-10-05",
+   "gpurentalprices": "2026-10-04"
+  },
+  "first_observed_rows_up_to": "2026-10-13",
+  "n_sources": 1,
+  "scored_series_touched": 6,
+  "affected_cells": 66,
+  "usable_in_window": true,
+  "does_nothing_because": null
+ },
+ {
+  "event": "aws 2026-10-07",
+  "provider": "aws",
+  "effective_date": "2026-10-07",
+  "effective_utc": "2026-10-07T00:00Z",
+  "published_usable_from": "2026-09-30",
+  "confidence": "B",
+  "lead_days": 7,
+  "changes": [
+   "B300 [capacity_block] None->16.146",
+   "B200 [capacity_block] None->14.208",
+   "H200 (P5en) [capacity_block] None->7.895",
+   "H100 (P5) [capacity_block] None->5.97",
+   "A100 80GB (P4de) [capacity_block] None->2.546",
+   "A100 40GB (P4d) [capacity_block] None->1.696"
+  ],
+  "n_changes": 6,
+  "first_observed_new_price": {
+   "fastgpu_daily": null,
+   "gpurentalprices": null
+  },
+  "first_observed_rows_up_to": "2026-10-13",
+  "n_sources": 2,
+  "scored_series_touched": 0,
+  "affected_cells": 0,
+  "usable_in_window": true,
+  "does_nothing_because": "wrong contract: no scored series has an announced GPU in a matching tier (announced tiers ['capacity_block']; calendar_lib.TIER_MAP)"
+ },
+ {
+  "event": "salad 2026-11-01",
+  "provider": "salad",
+  "effective_date": "2026-11-01",
+  "effective_utc": "2026-11-01T00:00Z",
+  "published_usable_from": "2026-11-01",
+  "confidence": "A",
+  "lead_days": 0,
+  "changes": [
+   "RTX 5090 [high] 0.5->0.6",
+   "RTX 5090 [medium] 0.417->0.483",
+   "RTX 5090 [low] 0.333->0.367",
+   "RTX 4090 [high] 0.33->0.44",
+   "RTX 4090 [medium] 0.273->0.347",
+   "RTX 4090 [low] 0.217->0.253",
+   "RTX 5080 [high] 0.26->0.32",
+   "RTX 5080 [medium] 0.223->0.263"
+  ],
+  "n_changes": 63,
+  "first_observed_new_price": {
+   "fastgpu_daily": "2026-10-28",
+   "gpurentalprices": null
+  },
+  "first_observed_rows_up_to": "2026-11-06",
+  "n_sources": 1,
+  "scored_series_touched": 0,
+  "affected_cells": 0,
+  "usable_in_window": false,
+  "does_nothing_because": "wrong contract: no scored series has an announced GPU in a matching tier (announced tiers ['high', 'low', 'medium']; calendar_lib.TIER_MAP)"
+ },
+ {
+  "event": "lambdalabs 2026-11-16",
+  "provider": "lambdalabs",
+  "effective_date": "2026-11-16",
+  "effective_utc": "2026-11-16T00:00Z",
+  "published_usable_from": "2026-11-06",
+  "confidence": "B",
+  "lead_days": 10,
+  "changes": [
+   "B200 [on_demand] 6.69->7.69",
+   "H100 SXM [on_demand] 3.99->4.59",
+   "A100 80GB [on_demand] 2.79->3.19",
+   "A100 40GB [on_demand] 1.99->1.99"
+  ],
+  "n_changes": 4,
+  "first_observed_new_price": {
+   "fastgpu_daily": null,
+   "gpurentalprices": "2026-11-06"
+  },
+  "first_observed_rows_up_to": "2026-11-06",
+  "n_sources": 1,
+  "scored_series_touched": 8,
+  "affected_cells": 0,
+  "usable_in_window": false,
+  "does_nothing_because": "outside the origin window: published 2026-11-06 after the last practice origin 2026-10-06"
+ },
+ {
+  "event": "nebius 2026-06-01",
+  "provider": "nebius",
+  "effective_date": "2026-06-01",
+  "effective_utc": "2026-06-01T00:00Z",
+  "published_usable_from": "2026-08-22",
+  "confidence": "C",
+  "lead_days": -82,
+  "changes": [
+   "H100 [on_demand] 2.95->3.85",
+   "B200 [on_demand] 5.5->7.15"
+  ],
+  "n_changes": 2,
+  "first_observed_new_price": {
+   "fastgpu_daily": null,
+   "gpurentalprices": "2026-08-04"
+  },
+  "first_observed_rows_up_to": "2026-08-22",
+  "n_sources": 1,
+  "scored_series_touched": 5,
+  "affected_cells": 0,
+  "usable_in_window": false,
+  "does_nothing_because": "too late: confidence C (published 2026-08-22, effective 2026-06-01: reported after the change)"
+ }
+]

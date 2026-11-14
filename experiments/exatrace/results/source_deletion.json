@@ -1,0 +1,167 @@
+{
+ "minus_first_source_jarvislabs 2026-10-05": {
+  "note": "deleted https://jarvislabs.ai/updates/gpu-pricing-october-2026; no remaining source states any (GPU, old, new) of the entry with its effective date",
+  "entries": null
+ },
+ "minus_first_source_nebius 2026-10-01": {
+  "note": "deleted https://www.thefivenines.com/data-ai/nebius-raises-gpu-prices-20-as-supply-tightens; rebuilt: 2026-09-16 ['H100', 'H200', 'B200', 'B300'] from ['https://longbridge.com/en/topics/100000000903151']",
+  "entries": [
+   {
+    "provider": "nebius",
+    "effective_date": "2026-10-01",
+    "effective_utc": "2026-10-01T00:00Z",
+    "published": "2026-09-16",
+    "url": "https://longbridge.com/en/topics/100000000903151",
+    "title": "$Nebius(NBIS.US) INCREASE ON-DEMAND GPU RATES EFFECTIVE OCTOBER 1 | Longbridge",
+    "quote": "$Nebius(NBIS.US) INCREASE ON-DEMAND GPU RATES EFFECTIVE OCTOBER 1. H100: $3.85 per GPU-hour -> $4.50 H200: $4.50 per GPU-hour -> $5.40 B200: $7.15 per GPU-hour -> $8.50 B300: $7.85 per GPU-hour -> $9.50",
+    "quote_states_effective_date": true,
+    "source_type": "relay of customer notice (social post), corroborated by press",
+    "also": [],
+    "changes": [
+     {
+      "gpu": "H100",
+      "panel_gpus": [
+       "H100 SXM 80GB",
+       "H100 80GB"
+      ],
+      "tier": "on_demand",
+      "old": 3.85,
+      "new": 4.5,
+      "pct": 0.1688
+     },
+     {
+      "gpu": "H200",
+      "panel_gpus": [
+       "H200"
+      ],
+      "tier": "on_demand",
+      "old": 4.5,
+      "new": 5.4,
+      "pct": 0.2
+     },
+     {
+      "gpu": "B200",
+      "panel_gpus": [
+       "B200"
+      ],
+      "tier": "on_demand",
+      "old": 7.15,
+      "new": 8.5,
+      "pct": 0.1888
+     },
+     {
+      "gpu": "B300",
+      "panel_gpus": [
+       "B300"
+      ],
+      "tier": "on_demand",
+      "old": 7.85,
+      "new": 9.5,
+      "pct": 0.2102
+     }
+    ],
+    "confidence": "A",
+    "edited_after_published": false,
+    "edit_note": "",
+    "announced_before_effective": true,
+    "lead_days": 15,
+    "usable_from": "2026-09-16",
+    "rebuilt_from": [
+     "https://longbridge.com/en/topics/100000000903151"
+    ]
+   }
+  ]
+ },
+ "minus_primary_source_nebius 2026-10-01": {
+  "note": "deleted https://longbridge.com/en/topics/100000000903151; rebuilt: 2026-09-16 ['B300'] from ['https://www.thefivenines.com/data-ai/nebius-raises-gpu-prices-20-as-supply-tightens']; 2026-09-28 ['H100', 'H200', 'B200'] from ['https://gpucloudadvisors.com/news/nebius-october-gpu-price-increase/']",
+  "entries": [
+   {
+    "provider": "nebius",
+    "effective_date": "2026-10-01",
+    "effective_utc": "2026-10-01T00:00Z",
+    "published": "2026-09-16",
+    "url": "https://www.thefivenines.com/data-ai/nebius-raises-gpu-prices-20-as-supply-tightens",
+    "title": "$Nebius(NBIS.US) INCREASE ON-DEMAND GPU RATES EFFECTIVE OCTOBER 1 | Longbridge",
+    "quote": "$Nebius(NBIS.US) INCREASE ON-DEMAND GPU RATES EFFECTIVE OCTOBER 1. H100: $3.85 per GPU-hour -> $4.50 H200: $4.50 per GPU-hour -> $5.40 B200: $7.15 per GPU-hour -> $8.50 B300: $7.85 per GPU-hour -> $9.50",
+    "quote_states_effective_date": true,
+    "source_type": "relay of customer notice (social post), corroborated by press",
+    "also": [],
+    "changes": [
+     {
+      "gpu": "B300",
+      "panel_gpus": [
+       "B300"
+      ],
+      "tier": "on_demand",
+      "old": 7.85,
+      "new": 9.5,
+      "pct": 0.2102
+     }
+    ],
+    "confidence": "A",
+    "edited_after_published": false,
+    "edit_note": "",
+    "announced_before_effective": true,
+    "lead_days": 15,
+    "usable_from": "2026-09-16",
+    "rebuilt_from": [
+     "https://www.thefivenines.com/data-ai/nebius-raises-gpu-prices-20-as-supply-tightens"
+    ]
+   },
+   {
+    "provider": "nebius",
+    "effective_date": "2026-10-01",
+    "effective_utc": "2026-10-01T00:00Z",
+    "published": "2026-09-28",
+    "url": "https://gpucloudadvisors.com/news/nebius-october-gpu-price-increase/",
+    "title": "$Nebius(NBIS.US) INCREASE ON-DEMAND GPU RATES EFFECTIVE OCTOBER 1 | Longbridge",
+    "quote": "$Nebius(NBIS.US) INCREASE ON-DEMAND GPU RATES EFFECTIVE OCTOBER 1. H100: $3.85 per GPU-hour -> $4.50 H200: $4.50 per GPU-hour -> $5.40 B200: $7.15 per GPU-hour -> $8.50 B300: $7.85 per GPU-hour -> $9.50",
+    "quote_states_effective_date": true,
+    "source_type": "relay of customer notice (social post), corroborated by press",
+    "also": [],
+    "changes": [
+     {
+      "gpu": "H100",
+      "panel_gpus": [
+       "H100 SXM 80GB",
+       "H100 80GB"
+      ],
+      "tier": "on_demand",
+      "old": 3.85,
+      "new": 4.5,
+      "pct": 0.1688
+     },
+     {
+      "gpu": "H200",
+      "panel_gpus": [
+       "H200"
+      ],
+      "tier": "on_demand",
+      "old": 4.5,
+      "new": 5.4,
+      "pct": 0.2
+     },
+     {
+      "gpu": "B200",
+      "panel_gpus": [
+       "B200"
+      ],
+      "tier": "on_demand",
+      "old": 7.15,
+      "new": 8.5,
+      "pct": 0.1888
+     }
+    ],
+    "confidence": "A",
+    "edited_after_published": false,
+    "edit_note": "",
+    "announced_before_effective": true,
+    "lead_days": 15,
+    "usable_from": "2026-09-16",
+    "rebuilt_from": [
+     "https://gpucloudadvisors.com/news/nebius-october-gpu-price-increase/"
+    ]
+   }
+  ]
+ }
+}

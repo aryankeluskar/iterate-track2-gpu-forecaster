@@ -1,0 +1,26 @@
+i_off: 0.2160 (5s)
+ii_valid: 0.3083 (5s)
+ii_lag: 0.3121 (5s)
+iii_nopair: 0.2160 (5s)
+iii_zero: 0.2109 (5s)
+iv_deferred: 0.2160 (5s)
+minus jarvislabs 2026-10-05: 0.2769
+minus nebius 2026-10-01: 0.2436
+{
+ "A1_deferred_bit_identical_to_off": true,
+ "A2_changed_cells_all_inside_affected": true,
+ "A2_changed_cells": 101,
+ "A3_event_removed": {
+  "jarvislabs 2026-10-05": {
+   "cells_only_this_event": 54,
+   "identical_to_off_on_them": true,
+   "cells_changed_by_removal_vs_valid": 53
+  },
+  "nebius 2026-10-01": {
+   "cells_only_this_event": 76,
+   "identical_to_off_on_them": true,
+   "cells_changed_by_removal_vs_valid": 56
+  }
+ },
+ "A4_nopair_bit_identical_to_off": true
+}

@@ -1,0 +1,233 @@
+{
+ "as_of": "2026-10-06",
+ "failure_cases_recalled": 43,
+ "recall_error": null,
+ "cases_with_dated_explanation": 3,
+ "cases_without": 77,
+ "providers_searched": [
+  "aws",
+  "azure",
+  "cudo",
+  "daytona",
+  "digitalocean",
+  "fal",
+  "gcp",
+  "lambdalabs",
+  "latitude",
+  "modal",
+  "nebius",
+  "oci",
+  "scaleway",
+  "sfcompute",
+  "spheron",
+  "thundercompute",
+  "together",
+  "verda"
+ ],
+ "searches": 108,
+ "cache_hits": {
+  "search": 108,
+  "contents": 10
+ },
+ "new_calls": {
+  "search": 0,
+  "contents": 0
+ },
+ "skipped_over_budget": {
+  "search": 0,
+  "contents": 0
+ },
+ "skipped_offline_uncached": {
+  "search": 0,
+  "contents": 0
+ },
+ "api_errors": 0,
+ "cost_usd_this_run": 0.0,
+ "cap_usd": 1.0,
+ "contents_fetches": 10,
+ "dropped": {
+  "tracker": 136,
+  "not_a_price_change_by_provider": 550
+ },
+ "kept_sources": 165,
+ "kept_with_effective_date_language": 106,
+ "new_calendar_entries": [],
+ "rejected_candidates": [
+  {
+   "url": "https://tech-insider.org/aws-ec2-capacity-blocks-price-hike-2026/",
+   "provider": "aws",
+   "published": "2026-08-01",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://www.linkedin.com/posts/compute-credit-index-research_the-committed-side-of-gpu-rental-is-repricing-activity-7489770212179800064-PtdH",
+   "provider": "azure",
+   "published": "2026-08-02",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://datastorage.com/articles/aws-raised-gpu-prices-twice-in-six-months-what-it-signals-and-what-to-do-about-it/",
+   "provider": "aws",
+   "published": "2026-08-03",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://aethir.com/blog-posts/gpu-cloud-pricing-in-2026-why-ai-compute-costs-keep-rising",
+   "provider": "aws",
+   "published": "2026-08-03",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://ecosystem.aethir.com/blog-posts/gpu-cloud-pricing-in-2026-why-ai-compute-costs-keep-rising",
+   "provider": "aws",
+   "published": "2026-08-03",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://aws.amazon.com/blogs/containers/run-gpu-batch-inference-on-amazon-ecs-managed-instances-with-scale-to-zero/",
+   "provider": "aws",
+   "published": "2026-08-03",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://in.linkedin.com/company/spheron",
+   "provider": "spheron",
+   "published": "2026-08-03",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://daily.dev/posts/why-spiky-inference-traffic-breaks-the-dedicated-gpu-math-mgjqedm2a",
+   "provider": "digitalocean",
+   "published": "2026-08-04",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://ggecho.com/posts/2026-08-04-0201-nvidia-gpu-market-rental-rates-fluctuate-prices-surge/",
+   "provider": "thundercompute",
+   "published": "2026-08-04",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://dev.to/rishi_kora/gpu-leases-are-rising-while-model-prices-fall-5376",
+   "provider": "aws",
+   "published": "2026-08-05",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://www.thundercompute.com/blog/kimi-k3",
+   "provider": "thundercompute",
+   "published": "2026-08-05",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://www.upendrasengar.com/blog/two-aws-gpu-price-hikes-in-six-months",
+   "provider": "aws",
+   "published": "2026-08-06",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://www.linkedin.com/posts/spheron_aws-charges-1424hr-for-a-b200-gpu-on-its-activity-7490989398520623104-Zbl5",
+   "provider": "spheron",
+   "published": "2026-08-06",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://www.thundercompute.com/blog/nvidia-b300-pricing",
+   "provider": "thundercompute",
+   "published": "2026-08-07",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://www.thundercompute.com/blog/oracle-cloud-oci-gpu-pricing",
+   "provider": "oci",
+   "published": "2026-08-10",
+   "why": "evergreen pricing guide (edited in place)"
+  },
+  {
+   "url": "https://sepahsalar.org/research/azure-gpu-cpu-costs/",
+   "provider": "azure",
+   "published": "2026-08-11",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://edelbridge.substack.com/p/nebius-q2-earnings-preview-and-livestream",
+   "provider": "nebius",
+   "published": "2026-08-11",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://caleta.io/blog/azure-gpu-spot-report-july-2026/",
+   "provider": "azure",
+   "published": "2026-08-12",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://andreinutas.substack.com/p/eu-sovereign-cloud-providers-pay",
+   "provider": "scaleway",
+   "published": "2026-08-14",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://voidsyntax.com/blog/together-ai-revenue-business-model/",
+   "provider": "together",
+   "published": "2026-08-14",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://spendark.com/blog/gcp-pricing-changes-2026/",
+   "provider": "gcp",
+   "published": "2026-08-16",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://europeanstack.com/software/verda",
+   "provider": "verda",
+   "published": "2026-08-16",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://www.itechguides.com/aws-cuts-prices-of-some-ec2-nvidia-gpu-accelerated-instances-by-up-to-45/",
+   "provider": "aws",
+   "published": "2026-08-18",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://hokai.io/guides/best-generative-ai-infra-2026",
+   "provider": "modal",
+   "published": "2026-08-18",
+   "why": "no passage with effective date, change verb and old -> new price"
+  },
+  {
+   "url": "https://aws.amazon.com/blogs/ibm-redhat/optimize-gpu-workloads-on-amazon-eks-and-rosa-with-ibm-turbonomic/",
+   "provider": "aws",
+   "published": "2026-08-19",
+   "why": "no passage with effective date, change verb and old -> new price"
+  }
+ ],
+ "n_rejected": 102,
+ "rejected_by_reason": {
+  "already in calendar": 8,
+  "evergreen pricing guide": 4,
+  "no passage with effective date, change verb and old -> new price": 80,
+  "passage names no panel provider": 7,
+  "text carries a date after 2026-10-06": 3
+ },
+ "calendar_entries_now": 9,
+ "dry_run": true,
+ "evidence_rejected_by_reason": {
+  "no passage with effective date, change verb and old -> new price": 82,
+  "evergreen pricing guide": 4,
+  "text carries a date after 2026-10-06": 3,
+  "passage names no panel provider": 7
+ },
+ "evidence_written": {
+  "sent": 0
+ },
+ "exa_spend_usd": {
+  "attr": 1.564,
+  "cal": 2.827,
+  "day_scout": 2.982,
+  "loop": 0.248,
+  "total": 7.621
+ }
+}

@@ -75,6 +75,11 @@ Rounding policy for validation numbers taken from val_gate.jsonl (raw values hav
 | 4.4k | §8 | Table B, A100 +24 m frozen q50, highest cell |
 | 15.1k | §8 | Table B, H100 +24 m no change, lowest cell |
 | 49.8k | §8 | Table B, H100 +24 m no change, highest cell |
+| 0.2160 | §6 controlled trace | experiments/exatrace/results/arms_summary.json arms.i_off.skill_all |
+| 0.3083 | §6 controlled trace | same file, arms.ii_valid.skill_all (collector lag 0) |
+| 0.1539 | §6 controlled trace; README | same file, arms.i_off.skill_affected (142 cells) |
+| 0.4756 | §6 controlled trace; README | same file, arms.ii_valid.skill_affected |
+| 0.24 | README Exa spend | experiments/exatrace/results/forward.json, new spend 0.243 USD |
 | 0.033 | §4 dev mix+prov second half; §9 item 3 | log 133 ("+0.033"); audit 51 and log 226 (point-in-time universe, mix minus drift) |
 | 0.034 | §4 dev mix+analog first half | log 124 |
 | 0.0361 | §4 dev submitted blend second half | dev.txt 8 |

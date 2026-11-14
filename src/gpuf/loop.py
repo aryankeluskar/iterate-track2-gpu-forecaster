@@ -2,8 +2,10 @@
 
 autopsy   score a system on dev, attribute its loss to causes, write each cause to past.dev as `autopsy` (gpuf-failures)
 scout     recall failure cases without a dated explanation (as `scout`), search Exa for announcements bounded by --as-of,
-          extract dated changes with the calendar agent's rules, append them to the calendar, write sources (gpuf-evidence)
-prior     before spending compute: memory recall (as `proposer`) and an Exa search for prior work on a claim
+          extract dated changes with the calendar agent's rules, append them to the calendar, write sources (gpuf-evidence);
+          calendar lines and evidence records pass the same eligibility (`assess`)
+prior     before spending compute: memory recall (as `proposer`) and an Exa search for prior work on a claim, bounded by --as-of
+          (default and latest 2026-11-06; an earlier date also bounds the recall and the ledger)
 propose   rank open causes by residual loss share from the latest autopsy and the memory briefing (rule-based)
 gate      the dev gate of EVAL_PROTOCOL.md Amendment 2 rule 1; writes the ledger, syncs it to memory as `experimenter`
 forecast  date-bounded calendar refresh (memory as `forecaster` and the local file), then a forecast file; never scores
@@ -486,6 +488,69 @@ def extract_changes(text: str) -> list[dict]:
     return out
 
 
+def later_dates(text: str, published: dt.date, eff: dt.date | None = None) -> list[dt.date]:
+    """Dates in the text after the publication date (the effective date itself excluded): signs of a later edit."""
+    return sorted({d for d in (_parse_date(x.group(0), published.year) for x in DATE_RX.finditer(text)) if d and d > published and d != eff})
+
+
+def latest_date(text: str, published: dt.date) -> dt.date:
+    """The latest date mentioned in the text, or the publication date if none is later (effective dates included)."""
+    return max([published] + [d for d in (_parse_date(x.group(0), published.year) for x in DATE_RX.finditer(text)) if d])
+
+
+def assess(title: str, text: str, published: dt.date, as_of: dt.date, P: dict, provider: str | None = None,
+           own_domain: bool = False, url: str = "") -> dict:
+    """The one eligibility contract for a search hit, shared by calendar lines and memory evidence (scout).
+    Rejected, in order: an evergreen pricing guide (edited in place); no passage with effective date, change verb and
+    old -> new price; a passage naming no panel provider; any later date in the text after `as_of` (the page was edited
+    after the as-of date: its availability date `known` is the later of the publication date and those dates).
+    Returns the decision and the separate dates: published, latest_date_in_text, effective_date, known (= usable from)."""
+    out = {"url": url, "title": title, "published": str(published), "provider": provider, "own_domain": own_domain, "eligible": False,
+           "why": None, "effective_date": None, "changes": [], "quote": "", "later_dates": [], "latest_date_in_text": None, "known": None}
+    if EVERGREEN.search(title or ""):
+        return {**out, "why": "evergreen pricing guide (edited in place)"}
+    eff, changes, quote = extract_announcement(text, published)
+    later = later_dates(text, published, eff)
+    known = max([published] + later)
+    out.update(effective_date=eff and str(eff), changes=changes, quote=quote, later_dates=[str(x) for x in later],
+               latest_date_in_text=str(latest_date(text, published)), known=str(known))
+    subj = subject_provider(quote, P) if changes else None
+    if subj and subj != provider:   # the passage reports another provider's change (e.g. a Spheron post about Nebius)
+        out.update(provider=subj, own_domain=any(d in url for d in P[subj][1]))
+    why = ("no passage with effective date, change verb and old -> new price" if not changes else
+           "passage names no panel provider" if not subj else
+           f"text carries a date after {as_of} ({known}): edited after the as-of date" if known > as_of else None)
+    return {**out, "why": why, "eligible": why is None}
+
+
+def first_observed(provider: str, changes: list[dict], start: dt.date, as_of: dt.date) -> dict:
+    """Per collector, the first day in [start, as_of] on which the provider's offer rows (gpuf.panel, rows <= as_of) show an
+    announced new price (within 2%) after not showing it the previous observed day; "before <start>" if it already showed it
+    then; None if not seen by as_of."""
+    import numpy as np
+    from . import panel
+    CL, _, _ = _calsys()
+    df = panel.load()
+    df = df[(df.provider == provider) & (df.day <= as_of.toordinal())]
+    out = {}
+    for src in panel.SOURCES:
+        best, already = None, False
+        for c in changes:
+            g = df[(df.src == src) & df.gpu.isin(c["panel_gpus"]) & df.tier.isin(CL.TIER_MAP.get(c["tier"], set()))]
+            if g.empty or c.get("new") is None:
+                continue
+            has = g.assign(n=np.isclose(g.price, c["new"], rtol=0.02)).groupby("day").n.any().sort_index()
+            prev = has.shift(1, fill_value=False)
+            hit = has[has & ~prev & (has.index >= start.toordinal())]
+            if len(hit):
+                d = int(hit.index[0])
+                best = d if best is None else min(best, d)
+            elif has[has.index >= start.toordinal()].any():
+                already = True
+        out[src] = _date(best) if best is not None else f"before {start}" if already else None
+    return out
+
+
 def _case_rows(as_of: str) -> tuple[list[dict], str | None]:
     rows, err = _recall("Dated failure cases of the median forecast: autopsy event, date of the move, pivotal provider, providers that "
                         "raised, cut, entered or left the panel", "scout", as_of=as_of, limit=100)
@@ -502,6 +567,36 @@ def _case_providers(r: dict) -> tuple[set[str], str | None]:
     m = re.search(r"Date of the move: \S+ -> (\d{4}-\d\d-\d\d)", t)
     d = m.group(1) if m else (r.get("metadata") or {}).get("date") or str(r.get("occurred_at"))[:10]
     return prov, d
+
+
+def evidence_items(judged: list[dict], as_of: dt.date, mem_ids: set, max_n: int) -> tuple[list[dict], dict]:
+    """Memory evidence records (gpuf-evidence, as `scout`) for the hits that pass `assess` (the calendar's eligibility).
+    Each record is timed by its availability date (`known`) and carries the publication date, the latest date in the text,
+    the effective date and the first day the new price is observed in the offer rows (per collector, rows <= as_of)."""
+    ev, rej = [], {}
+    for j in judged:
+        sid = "scout-" + hashlib.sha256(j["url"].encode()).hexdigest()[:8]
+        if not j["eligible"]:
+            w = j["why"].split(" (")[0]
+            rej[w] = rej.get(w, 0) + 1
+            continue
+        if sid in mem_ids or len(ev) >= max_n:
+            continue
+        eff = dt.date.fromisoformat(j["effective_date"])
+        fo = first_observed(j["provider"], j["changes"], min(dt.date.fromisoformat(j["published"]), eff) - dt.timedelta(days=7), as_of)
+        dom = re.sub(r"^https?://(www\.)?", "", j["url"]).split("/")[0]
+        pr = "; ".join(f"{c['gpu']} {c['old']} -> {c['new']}" for c in j["changes"])
+        txt = (f"Web evidence from {dom}, published {j['published']} (written by scout via gpuf.loop; passed the calendar's eligibility rules)\n"
+               f"URL: {j['url']}\nTitle: {j['title']}\nPublished: {j['published']}\nLatest date in text: {j['latest_date_in_text']}\n"
+               f"Usable from: {j['known']}\nEffective date: {j['effective_date']}\nProvider: {j['provider']}\nPrices (USD per GPU-hour): {pr}\n"
+               f"First observed in offer rows (as of {as_of}): " + ", ".join(f"{k} {v}" for k, v in fo.items()) + "\n"
+               f"Quoted sentence: \"{j['quote'][:500]}\"\nExplains: provider {j['provider']}; searched for failure cases without a dated "
+               f"explanation: {', '.join(j.get('found_for') or [])}")
+        ev.append({"id": sid, "audience": "gpuf-evidence", "identity": "scout", "timestamp": f"{j['known']}T23:59:59Z", "label": f"Evidence: {dom}",
+                   "content": txt, "metadata": {"agent": "scout", "kind": "web_evidence", "published": j["published"], "url": j["url"],
+                                                "provider": j["provider"], "latest_date_in_text": j["latest_date_in_text"], "usable_from": j["known"],
+                                                "effective_date": j["effective_date"], "first_observed": fo, "source": "gpuf.loop scout"}})
+    return ev, rej
 
 
 def step_scout(a) -> dict:
@@ -553,40 +648,34 @@ def step_scout(a) -> dict:
             k["eff"] |= bool(EFF.search(text))
     known_urls = {e["url"] for e in ents} | {x["url"] for e in ents for x in e.get("also", [])}
     have = {(e["provider"], e["effective_date"]) for e in ents}
-    new_entries, rejected, n_contents = [], [], 0
-    for k in sorted(kept.values(), key=lambda k: k["published"]):
-        if not k["eff"] or k["url"] in known_urls:
-            continue
-        if EVERGREEN.search(k["title"]):
-            rejected.append({"url": k["url"], "provider": k["provider"], "published": k["published"], "why": "evergreen pricing guide (edited in place)"})
-            continue
+    new_entries, rejected, judged, n_contents = [], [], [], 0
+    cands = sorted((k for k in kept.values() if k["eff"]), key=lambda k: k["published"])
+    # calendar candidates first (unchanged order and contents budget), then sources already in the calendar (memory evidence only)
+    for k in [k for k in cands if k["url"] not in known_urls] + [k for k in cands if k["url"] in known_urls]:
         pub = dt.date.fromisoformat(k["published"])
         text = f"{k['title']}. {k['highlight']}"
-        eff, changes, quote = extract_announcement(text, pub)
-        if not changes and n_contents < 10:  # highlights carried no dated price pair: Exa's stored copy, never a live tracker page
-            n_contents += 1
+        j = assess(k["title"], text, pub, as_of, PV.P, k["provider"], k["own_domain"], k["url"])
+        if not j["changes"] and not EVERGREEN.search(k["title"]) and n_contents < 10:
+            n_contents += 1   # highlights carried no dated price pair: Exa's stored copy, never a live tracker page
             r = _exa("contents", {"urls": [k["url"]], "text": {"maxCharacters": 8000}}, budget)
             res = ((r or {}).get("response") or {}).get("results", [])
             if res and res[0].get("text"):
-                text = f"{k['title']}. {res[0]['text']}"
-                eff, changes, quote = extract_announcement(text, pub)
-        later = sorted({d for d in (_parse_date(x.group(0), pub.year) for x in DATE_RX.finditer(text)) if d and d > pub and d != eff})
-        known = max([pub] + later)   # the calendar's timing rule: the later of Exa's date and any later date in the text
-        subj = subject_provider(quote, PV.P) if changes else None
-        if subj and subj != k["provider"]:   # the passage reports another provider's change (e.g. a Spheron post about Nebius)
-            k = {**k, "provider": subj, "own_domain": any(d in k["url"] for d in PV.P[subj][1])}
-        why = ("no passage with effective date, change verb and old -> new price" if not changes else
-               "passage names no panel provider" if not subj else
-               f"text carries a date after {a.as_of} ({known}): edited after the as-of date" if known > as_of else
-               "already in calendar" if any(p == k["provider"] and abs(_day(d) - eff.toordinal()) <= 2 for p, d in have) else None)
-        if why:
-            rejected.append({"url": k["url"], "provider": k["provider"], "published": k["published"], "why": why})
+                j = assess(k["title"], f"{k['title']}. {res[0]['text']}", pub, as_of, PV.P, k["provider"], k["own_domain"], k["url"])
+        j["found_for"] = k["found_for"]
+        judged.append(j)
+        if k["url"] in known_urls:
             continue
-        conf = "C" if known > eff else "A" if k["own_domain"] else "B"   # calendar_lib: A primary, B secondary, C reported after
-        e = {"provider": k["provider"], "effective_date": str(eff), "effective_utc": f"{eff}T00:00Z", "published": str(known), "url": k["url"],
-             "title": k["title"], "quote": quote, "quote_states_effective_date": True,
-             "source_type": "auto-extracted by gpuf.loop scout from Exa search highlights", "also": [], "changes": changes, "confidence": conf,
-             "edited_after_published": bool(later), "edit_note": f"later dates in text: {[str(x) for x in later]}" if later else "",
+        eff, known = (dt.date.fromisoformat(j["effective_date"]) if j["effective_date"] else None), dt.date.fromisoformat(j["known"] or k["published"])
+        why = j["why"] or ("already in calendar" if any(p == j["provider"] and abs(_day(d) - eff.toordinal()) <= 2 for p, d in have) else None)
+        if why:
+            rejected.append({"url": k["url"], "provider": j["provider"], "published": k["published"], "why": why})
+            continue
+        conf = "C" if known > eff else "A" if j["own_domain"] else "B"   # calendar_lib: A primary, B secondary, C reported after
+        later = j["later_dates"]
+        e = {"provider": j["provider"], "effective_date": str(eff), "effective_utc": f"{eff}T00:00Z", "published": str(known), "url": k["url"],
+             "title": k["title"], "quote": j["quote"], "quote_states_effective_date": True,
+             "source_type": "auto-extracted by gpuf.loop scout from Exa search highlights", "also": [], "changes": j["changes"], "confidence": conf,
+             "edited_after_published": bool(later), "edit_note": f"later dates in text: {later}" if later else "",
              "announced_before_effective": known < eff, "lead_days": (eff - known).days, "usable_from": str(known), "auto": True,
              "found_by": f"gpuf.loop scout --as-of {a.as_of}"}
         new_entries.append(e)
@@ -596,19 +685,7 @@ def step_scout(a) -> dict:
             for e in new_entries:
                 f.write(json.dumps(e) + "\n")
         CL.load.cache_clear()
-    mem_ids = set(_mem_items())
-    ev = []
-    for k in sorted(kept.values(), key=lambda k: k["published"]):
-        sid = "scout-" + hashlib.sha256(k["url"].encode()).hexdigest()[:8]
-        if not k["eff"] or EVERGREEN.search(k["title"]) or sid in mem_ids or len(ev) >= a.max_evidence:
-            continue
-        dom = re.sub(r"^https?://(www\.)?", "", k["url"]).split("/")[0]
-        txt = (f"Web evidence from {dom}, published {k['published']} (written by scout via gpuf.loop)\nURL: {k['url']}\nTitle: {k['title']}\n"
-               f"Published: {k['published']}\nQuoted sentence: \"{k['highlight'][:500]}\"\nExplains: provider {k['provider']}; searched for "
-               f"failure cases without a dated explanation: {', '.join(k['found_for'])}")
-        ev.append({"id": sid, "audience": "gpuf-evidence", "identity": "scout", "timestamp": f"{k['published']}T23:59:59Z", "label": f"Evidence: {dom}",
-                   "content": txt, "metadata": {"agent": "scout", "kind": "web_evidence", "published": k["published"], "url": k["url"],
-                                                "provider": k["provider"], "source": "gpuf.loop scout"}})
+    ev, ev_rejected = evidence_items(judged, as_of, set(_mem_items()), a.max_evidence)
     return {"as_of": a.as_of, "failure_cases_recalled": len(cases), "recall_error": err,
             "cases_with_dated_explanation": len(explained), "cases_without": sum(len(v) for v in unexplained.values()),
             "providers_searched": sorted(unexplained), "searches": len(jobs), **budget.report(), "contents_fetches": n_contents,
@@ -616,6 +693,7 @@ def step_scout(a) -> dict:
             "new_calendar_entries": new_entries, "rejected_candidates": rejected[:25], "n_rejected": len(rejected),
             "rejected_by_reason": {w: sum(r["why"].split(" (")[0] == w for r in rejected) for w in sorted({r["why"].split(" (")[0] for r in rejected})},
             "calendar_entries_now": len(cal_entries()), "dry_run": a.dry_run,
+            "evidence_rejected_by_reason": ev_rejected,
             "evidence_written": _write(ev, "scout") if ev and not a.dry_run else {"sent": 0},
             "exa_spend_usd": exa_spend_all()}
 
@@ -636,11 +714,18 @@ def _jac(a: str, b: str) -> float:
 def step_prior(a) -> dict:
     _, PV, SE = _calsys()
     claim = a.claim
-    rows, err = _recall(claim, "proposer", limit=40)
+    as_of = getattr(a, "as_of", None) or str(CUTOFF)
+    if dt.date.fromisoformat(as_of) > CUTOFF:
+        raise SystemExit("error: --as-of must be on or before 2026-11-06 (the data cutoff)")
+    # before the cutoff (a historical replay) memory recall and the ledger are bounded too: research records are timed by when
+    # they were written, so a replay as of an earlier date sees none written later. At the default the recall is unbounded, as before.
+    hist = as_of < str(CUTOFF)
+    rows, err = _recall(claim, "proposer", as_of=dt.date.fromisoformat(as_of) if hist else None, limit=40)   # date: end of that day UTC
     led = {}
     ledger = _ledger()
     for e in ledger.load():
-        led[e["id"]] = e
+        if not hist or str(e.get("updated_utc") or "")[:10] <= as_of:
+            led[e["id"]] = e
     mem = []
     for r in rows:
         md = r.get("metadata") or {}
@@ -654,7 +739,7 @@ def step_prior(a) -> dict:
     lex = sorted(({"hypothesis": e["id"], "verdict": e["status"], "overlap": round(_jac(claim, (e.get("claim") or "") + " " + (e.get("failure_mode") or "")), 3),
                    "claim": e.get("claim")} for e in led.values()), key=lambda x: -x["overlap"])[:3]
     budget = Budget(a.max_usd)
-    end = "2026-11-06T23:59:59Z"
+    end = f"{as_of}T23:59:59Z"
     obj = ("Find prior work that already tested or explained this claim about posted prices; rank empirical studies and methods first; "
            "exclude live price lists and price trackers; pull the finding and its evidence.")
     reqs = {"papers": {"query": f"Research papers and preprints that study: {claim}", "type": "auto", "category": "publication", "numResults": 8,
@@ -668,7 +753,7 @@ def step_prior(a) -> dict:
             dropped[f"{kind}_api_error"] = str(rec.get("status"))
         for x in ((rec or {}).get("response") or {}).get("results", []):
             pub, url, title = (x.get("publishedDate") or "")[:10], x.get("url") or "", x.get("title") or ""
-            why = "no_date" if not pub else "after_cutoff" if pub > str(CUTOFF) else \
+            why = "no_date" if not pub else "after_cutoff" if pub > as_of else \
                   "tracker" if any(t in url for t in PV.TRACKERS) or SE.TRACKER_TITLE.search(title) else None
             if why:
                 dropped[why] = dropped.get(why, 0) + 1
@@ -688,7 +773,8 @@ def step_prior(a) -> dict:
         rec = f"already known in the literature ({lit[0]['title'][:80]}, {lit[0]['date']}): cite it and test only what is new here"
     else:
         rec = "untested: no near neighbour in memory or the ledger, and no close source found"
-    return {"claim": claim, "memory_hits": mem, "memory_error": err, "ledger_nearest": lex, "sources": sources[:a.top], "dropped": dropped,
+    return {"claim": claim, "as_of": as_of, "bounded_recall_and_ledger": hist,
+            "memory_hits": mem, "memory_error": err, "ledger_nearest": lex, "sources": sources[:a.top], "dropped": dropped,
             "exa_requests": reqs, **budget.report(), "recommendation": rec,
             "rule": "nearest neighbour = the highest-overlap top-5 memory hit with overlap >= 0.12 or ledger claim with overlap >= 0.2; its "
                     "verdict decides (refuted/not_significant -> refuted here, supported -> tested here); otherwise literature if a dated "
@@ -925,6 +1011,8 @@ def parser() -> argparse.ArgumentParser:
     s.add_argument("--dry-run", action="store_true", help="search and extract, but append nothing to the calendar or memory")
     s = mk("prior"); s.add_argument("--claim", required=True); s.add_argument("--top", type=int, default=5, help="rows per list (default 5)")
     s.add_argument("--max-usd", type=float, default=0.05, help="cap on new Exa spend (default 0.05: two searches)")
+    s.add_argument("--as-of", default=str(CUTOFF), help="YYYY-MM-DD, never after 2026-11-06 (default): Exa endPublishedDate; before the "
+                                                        "default it also bounds memory recall and the ledger (historical replay)")
     mk("propose")
     s = mk("gate"); s.add_argument("--name", required=True, help="ledger id to create or update")
     s.add_argument("--candidate", required=True, help=SYSHELP); s.add_argument("--ref", default="mix", help="reference system (default mix)")

@@ -1,0 +1,178 @@
+{
+ "origins": [
+  "2026-09-16",
+  "2026-10-06"
+ ],
+ "n_origins": 21,
+ "n_cells": 2331,
+ "prov_params": {
+  "L": 1,
+  "W": 21,
+  "gate": "dyn"
+ },
+ "calendar_entries": [
+  "digitalocean 2026-08-01",
+  "fireworks 2026-09-01",
+  "salad 2026-09-12",
+  "nebius 2026-10-01",
+  "jarvislabs 2026-10-05",
+  "aws 2026-10-07",
+  "salad 2026-11-01",
+  "lambdalabs 2026-11-16",
+  "nebius 2026-06-01"
+ ],
+ "events_with_affected_cells": [
+  "jarvislabs 2026-10-05",
+  "nebius 2026-10-01"
+ ],
+ "n_affected_cells": 142,
+ "affected_by_event": {
+  "jarvislabs 2026-10-05": 66,
+  "nebius 2026-10-01": 88
+ },
+ "arms": {
+  "i_off": {
+   "skill_all": 0.216,
+   "skill_affected": 0.1539,
+   "loss_affected": 16.5251,
+   "cells_changed_vs_off": 0,
+   "bit_identical_to_off": true,
+   "per_event_affected": {
+    "jarvislabs 2026-10-05": 0.3076,
+    "nebius 2026-10-01": 0.106
+   }
+  },
+  "ii_valid": {
+   "skill_all": 0.3083,
+   "skill_affected": 0.4756,
+   "loss_affected": 10.2418,
+   "cells_changed_vs_off": 101,
+   "bit_identical_to_off": false,
+   "per_event_affected": {
+    "jarvislabs 2026-10-05": 0.7135,
+    "nebius 2026-10-01": 0.4002
+   }
+  },
+  "ii_lag": {
+   "skill_all": 0.3121,
+   "skill_affected": 0.4888,
+   "loss_affected": 9.9844,
+   "cells_changed_vs_off": 100,
+   "bit_identical_to_off": false,
+   "per_event_affected": {
+    "jarvislabs 2026-10-05": 0.7029,
+    "nebius 2026-10-01": 0.4204
+   }
+  },
+  "iii_nopair": {
+   "skill_all": 0.216,
+   "skill_affected": 0.1539,
+   "loss_affected": 16.5251,
+   "cells_changed_vs_off": 0,
+   "bit_identical_to_off": true,
+   "per_event_affected": {
+    "jarvislabs 2026-10-05": 0.3076,
+    "nebius 2026-10-01": 0.106
+   }
+  },
+  "iii_zero": {
+   "skill_all": 0.2109,
+   "skill_affected": 0.1361,
+   "loss_affected": 16.8712,
+   "cells_changed_vs_off": 23,
+   "bit_identical_to_off": false,
+   "per_event_affected": {
+    "jarvislabs 2026-10-05": 0.2754,
+    "nebius 2026-10-01": 0.0841
+   }
+  },
+  "iv_deferred": {
+   "skill_all": 0.216,
+   "skill_affected": 0.1539,
+   "loss_affected": 16.5251,
+   "cells_changed_vs_off": 0,
+   "bit_identical_to_off": true,
+   "per_event_affected": {
+    "jarvislabs 2026-10-05": 0.3076,
+    "nebius 2026-10-01": 0.106
+   }
+  },
+  "minus_jarvislabs_2026-10-05": {
+   "skill_all": 0.2769,
+   "skill_affected": 0.3658,
+   "loss_affected": 12.385,
+   "cells_changed_vs_off": 56,
+   "bit_identical_to_off": false,
+   "per_event_affected": {
+    "jarvislabs 2026-10-05": 0.3008,
+    "nebius 2026-10-01": 0.3861
+   }
+  },
+  "minus_first_source_jarvislabs_2026-10-05": {
+   "skill_all": 0.2769,
+   "skill_affected": 0.3658,
+   "loss_affected": 12.385,
+   "cells_changed_vs_off": 56,
+   "bit_identical_to_off": false,
+   "per_event_affected": {
+    "jarvislabs 2026-10-05": 0.3008,
+    "nebius 2026-10-01": 0.3861
+   }
+  },
+  "minus_nebius_2026-10-01": {
+   "skill_all": 0.2436,
+   "skill_affected": 0.2499,
+   "loss_affected": 14.6494,
+   "cells_changed_vs_off": 53,
+   "bit_identical_to_off": false,
+   "per_event_affected": {
+    "jarvislabs 2026-10-05": 0.6688,
+    "nebius 2026-10-01": 0.102
+   }
+  },
+  "minus_first_source_nebius_2026-10-01": {
+   "skill_all": 0.3083,
+   "skill_affected": 0.4756,
+   "loss_affected": 10.2425,
+   "cells_changed_vs_off": 101,
+   "bit_identical_to_off": false,
+   "per_event_affected": {
+    "jarvislabs 2026-10-05": 0.7132,
+    "nebius 2026-10-01": 0.4001
+   }
+  },
+  "minus_primary_source_nebius_2026-10-01": {
+   "skill_all": 0.3071,
+   "skill_affected": 0.4712,
+   "loss_affected": 10.3271,
+   "cells_changed_vs_off": 89,
+   "bit_identical_to_off": false,
+   "per_event_affected": {
+    "jarvislabs 2026-10-05": 0.7018,
+    "nebius 2026-10-01": 0.3944
+   }
+  }
+ },
+ "last_value_loss_affected": 19.5301,
+ "acceptance": {
+  "A1_deferred_bit_identical_to_off": true,
+  "A2_changed_cells_all_inside_affected": true,
+  "A2_changed_cells": 101,
+  "A3_event_removed": {
+   "jarvislabs 2026-10-05": {
+    "cells_only_this_event": 54,
+    "identical_to_off_on_them": true,
+    "cells_changed_by_removal_vs_valid": 53
+   },
+   "nebius 2026-10-01": {
+    "cells_only_this_event": 76,
+    "identical_to_off_on_them": true,
+    "cells_changed_by_removal_vs_valid": 56
+   }
+  },
+  "A4_nopair_bit_identical_to_off": true
+ },
+ "gate_opening_share_of_gain_affected": -0.055,
+ "affected_cells_reaching_lagged_arrival": 123,
+ "wall_s": 52
+}
