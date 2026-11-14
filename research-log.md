@@ -261,7 +261,7 @@ Audit (experiments/audit/results/audit.md, an independent agent told to break th
 - What: experiments/maturity/diag.py, dev split only, rental_all, no validation origin, no method change, nothing tuned. It runs `final` once with members recorded, plus drift, and reports pooled skill of final, its seven members alone, mix and drift on (a) cells in the headline tier at the origin, (b) the fixed 37, (c) buckets of the series' row count at the origin (under 30, 30 to 59, 60 to 89, 90 or more), by class, collector and horizon.
 - Expectation written before running: drift gains with history (its own-series quantiles need rows), so the blend's margin over drift is smaller on mature cells than the +0.119 on the fixed 37; I expect +0.03 to +0.07 on tier-at-origin cells. If the margin is near zero there, the Sunday claim has to be restated and the next work should target mature series.
 
-## 2026-11-14 13:36 PT: maturity diagnostic result (dev only); the adviser's report; plan for round 9
+## 2026-11-14 13:32 PT: maturity diagnostic result (dev only); the adviser's report; plan for round 9
 
 Maturity diagnostic (experiments/maturity/diag.py, results/diag.txt, slice.py, results/slice.txt; per-cell store runs/maturity/cells.parquet from dump.py). Expectation was a margin of +0.03 to +0.07 on tier-at-origin cells; observed lower.
 - Dev headline, fixed 37 (4,278 cells): drift 0.0886, mix 0.1691, final 0.2079 (reproduces dev.txt). Cells in the organisers' headline tier at the origin (745 cells, 15 series): drift 0.1375, mix 0.1708, final 0.1542. final minus drift +0.017 there, against +0.119 on the fixed 37 and +0.135 on the 37's cells not yet in the tier. On tier cells mix alone beats the seven-member blend.
@@ -280,3 +280,10 @@ Round 9 (shared brief experiments/AGENT_BRIEF_R9.md; at most five agents; none t
 - longrun: provider deduplication, sensitivity table, removal of the unsupported GetDeploying inferences and of prescriptions the ranges cannot carry.
 - adviser review of the maturity diagnostic.
 - gpuf.llm added by the orchestrator (headless model call with a replay cache; tests/test_llm.py).
+
+## 2026-11-14 13:39 PT: clean-environment rebuild (adviser item 1); wording corrections; round 9 launched
+
+- pyproject.toml declared four packages; the submitted path also needs lightgbm, chronos-forecasting, torch and transformers. Now pinned to the versions used (eight direct dependencies; tests, figures and side experiments under the optional group `research`).
+- Test: `git clone` of HEAD into /tmp/gpuf_clean_repo with only the pack linked in, a new Python 3.12 environment at /tmp/gpuf_clean_env installed from that pyproject.toml alone (uv, offline from its package cache, 52 packages), then `PYTHON=/tmp/gpuf_clean_env/bin/python bash reproduce.sh final` with HF_HUB_OFFLINE=1 as the script sets it. Result: 1,776 rows for 592 series and 111 rows for 37 series, no schema problems, and both files hash to the recorded values (all 7b49870ea476..., headline 90330d1ea2a9...). 47 s under load. Prerequisites that remain outside the one command: the pack under data/pack/ and the Chronos-Bolt-small weights in the local Hugging Face cache (the script says how to fetch them once).
+- Wording: the demo, the pitch, the feasibility brief, the progress page and the plain ledger said the non-headline series were "never used for any choice" or "never tuned on". They were used on practice dates (member selection, the activity gate). Replaced by "first check of these series on the held-back weeks". The progress page's first line now says the 0.214 flatters us and gives 0.228 against 0.102 beside it.
+- Round 9 agents launched about 13:35 PT (scientist, index, exatrace, longrun3, adviser review of the maturity diagnostic); the README/findings agent from round 7 is still running and was told FINDINGS.md is the one findings file.

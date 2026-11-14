@@ -3,7 +3,22 @@ name = "gpuf"
 version = "0.1.0"
 description = "Leak-safe evaluation harness and forecasters for posted GPU rental prices (Iterate SF Track 2)"
 requires-python = ">=3.12"
-dependencies = ["duckdb", "pandas", "numpy", "pyarrow"]
+# Exact versions the submitted forecasts were built with (`bash reproduce.sh final`). torch and transformers are
+# pinned because the two pretrained members (Chronos-Bolt-small) must give the same numbers on another machine.
+dependencies = [
+    "duckdb==2.0.0",
+    "pandas==3.1.1",
+    "numpy==2.5.4",
+    "pyarrow==26.0.1",
+    "lightgbm==4.7.0",
+    "chronos-forecasting==2.3.2",
+    "torch==2.15.0",
+    "transformers==5.23.0",
+]
+
+[project.optional-dependencies]
+# Needed only for the tests, the figures and the experiments that are not part of the submitted forecaster.
+research = ["pytest==9.2.0", "matplotlib==3.11.2", "scipy==1.18.1", "scikit-learn==1.9.1", "pyyaml==6.0.3", "timesfm==3.0.2", "tabpfn==10.0.0"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
