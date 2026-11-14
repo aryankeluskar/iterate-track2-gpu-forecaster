@@ -58,3 +58,14 @@ Why a new rule: about fifteen directions are being tried at once on dev. Sending
 4. The submitted forecaster is fixed by rule, not by picking the best validation number: the equal-weight blend (mean of log quantiles) of the members already validated (mix, gbm, Chronos width) and every kept direction. Its validation score is reported once and labelled optimistic, because its members were chosen on that period.
 5. Cleaner check. The non-headline posted rental series on the validation origins have not been queried. The all-series router gets one query there, and the final forecaster is reported there too. That number is the least contaminated estimate we have.
 6. Every query is appended to data_out/val_query_log.jsonl by the harness. Agents never run validation.
+
+## Amendment 3 (14 November 2026, about 12:40 PT): membership of the submitted blend
+
+Written before the submitted blend, or any blend of more than two members that includes a round 2 to 4 direction, was scored on validation. Validation state: queries 1 to 9 as logged; four directions kept (analog, prov, fm2, fragility).
+
+Reason: rule 4 of Amendment 2 fixes the submitted forecaster as the equal-weight blend of every validated member. The second failure analysis found, on dev, that the blend with all members scores below a blend without two of the older ones (0.2036 against 0.2133 on headline). An equal-weight blend should not carry a member that only dilutes it, and the choice must not be made on validation.
+
+1. Membership is decided on dev only, by leave-one-out on the two universes (rental_headline and rental_all): a member is dropped if leaving it out raises pooled skill in both halves of dev on both universes. Members are otherwise kept. Weights stay equal. No member is added that has not passed its own validation query.
+2. Whether the activity gate (zero width for a series that has not moved in 14 days) is applied, and to which series, is decided the same way on dev.
+3. Parameters of members stay as validated. Switches added after a member's validation (the Exa calendar inside prov, marketplace handling) may be on in the submitted run only if they leave the forecast for origin 2026-11-06 unchanged, or after their own dev gate and validation query.
+4. The blend chosen by rules 1 and 2 is scored on validation once, on headline and on the non-headline posted rental series (the latter has never been queried). Both numbers are reported whatever they are, the headline one labelled optimistic because its members were kept on that period. If the blend scores below the best kept single direction on validation headline, that is reported and the blend is still what is submitted: picking the validation winner is what this protocol exists to prevent.

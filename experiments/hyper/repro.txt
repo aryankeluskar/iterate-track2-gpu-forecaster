@@ -1,0 +1,9 @@
+load 1s  maxrss 0.98 GB
+                    n_store  n_panel_days  n_match  n_within5e5  n_series  match_rate
+cls                                                                                  
+hyperscaler_list       3457          3457     3457         3457        21    1.000000
+hyperscaler_spot       3253          3253     3242         3253        17    0.996619
+marketplace_ask           0             0        0            0        47         NaN
+neocloud_rate_card     4112          4112     4112         4112        25    1.000000
+neocloud_spot          2366          2366     2258         2366        15    0.954353
+unsupported: ['afhubbard.marketplace_ask.A100_80GB.on_demand.median', 'afhubbard.marketplace_ask.B200.on_demand.median', 'afhubbard.marketplace_ask.B200.spot.median', 'afhubbard.marketplace_ask.B300.on_demand.median', 'afhubbard.marketplace_ask.B300.spot.median', 'afhubbard.marketplace_ask.H100_80GB.on_demand.median', 'afhubbard.marketplace_ask.H100_80GB.spot.median', 'afhubbard.marketplace_ask.H200.on_demand.median', 'afhubbard.marketplace_ask.H200.spot.median', 'afhubbard.marketplace_ask.H200_NVL.on_demand.median']
