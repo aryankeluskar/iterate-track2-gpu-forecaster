@@ -172,7 +172,7 @@ Query 5 (declared now, before running): ens of mix + gbm + chronos_last, equal w
 - H33 (a static provider's change reaches gpurentalprices a day before fastgpu) measured by the orchestrator before building anything and refuted: same-sign move on fastgpu the next day in 33% of 24 cases; standing price gaps between collectors for the same provider do not close (neither side moves within 3 days in 80% of 470 cases).
 - Round 6: hyper (provider simulator for the afhubbard hyperscaler panels, under a 3 GB limit; first agent briefed from the shared memory) and loop (one CLI per step of the research loop with Exa and past.dev in the path, plus one recorded iteration). Still running: final.
 
-## 2026-11-14 12:45 PT: mapping the work to the four judging criteria
+## 2026-11-14 12:41 PT: mapping the work to the four judging criteria
 
 The team's instruction: make sure of a win in Track 2. The brief's criteria are rigour, useful economic insight, reproducibility and originality, and its headline question is the 2 to 3 year view. Three agents launched against the gaps:
 - audit (rigour): an independent referee told to break the evaluation: bit-identical forecasts under deletion and corruption of all rows after the origin for every kept method, caches across origins, static catalog fields computed over the full history, the universe chosen as of 6 November, the fast scorer against the organisers' scorer, the week-block bootstrap with 8 and 3 weeks, the validation log against git commit times, and the ledger's ten main claims against their files. It may not run validation and may not change code.
