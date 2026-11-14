@@ -1,6 +1,6 @@
 # past.dev shared memory: plan for owner approval
 
-Status: nothing has been sent to past.dev. The only call made was `GET /api/v1/usage` (key accepted; project `default-project`; 550,000 credits left). `gpuf.memory` refuses live writes and recalls until `PAST_ALLOW_WRITES=1`; offline mode (`PAST_OFFLINE=1`) is journal-only. API details and unknowns: [literature/pastdev-api.md](../../literature/pastdev-api.md).
+Status: APPROVED by the account owner on 2026-11-14 and executed; results in results/test_report.md, results/import_summary.json, results/cross_agent_demo.md, how-to in README_memory.md. (Original text: nothing had been sent to past.dev.) The only call made was `GET /api/v1/usage` (key accepted; project `default-project`; 550,000 credits left). `gpuf.memory` refuses live writes and recalls until `PAST_ALLOW_WRITES=1`; offline mode (`PAST_OFFLINE=1`) is journal-only. API details and unknowns: [literature/pastdev-api.md](../../literature/pastdev-api.md).
 
 ## What I ask you to approve
 

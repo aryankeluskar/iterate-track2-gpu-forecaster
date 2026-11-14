@@ -1,0 +1,7 @@
+provider,effective,published,lead_days,ahead,confidence,changes
+digitalocean,2026-08-01,2026-08-02,-1,False,C,H100 3.39->4.41; H200 3.44->4.47
+fireworks,2026-09-01,2026-08-13,19,True,B,H100 80GB 7.0->8.0; H200 7.0->8.0; B200 10.0->13.0
+nebius,2026-10-01,2026-09-16,15,True,A,H100 3.85->4.5; H200 4.5->5.4; B200 7.15->8.5; B300 7.85->9.5
+jarvislabs,2026-10-05,2026-09-24,11,True,A,H200 3.99->4.59; H100 SXM 2.69->3.49
+aws,2026-10-07,2026-09-30,7,True,B,B300 None->16.146; B200 None->14.208; H200 (P5en) None->7.895; H100 (P5) None->5.97; A100 80GB (P4de) None->2.546; A100 40GB (P4d) None->1.696
+lambdalabs,2026-11-16,2026-11-06,10,True,B,B200 6.69->7.69; H100 SXM 3.99->4.59; A100 80GB 2.79->3.19; A100 40GB 1.99->1.99

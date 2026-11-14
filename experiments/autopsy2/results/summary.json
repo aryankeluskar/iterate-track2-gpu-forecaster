@@ -1,0 +1,260 @@
+{
+ "late_announced_cells": 0,
+ "late_announced_lv_share": 0.0,
+ "S2_to_S3_drop_points_of_lv": {
+  "none": 0.003618993462110318,
+  "dynamic_reprice": 0.012209367604078775,
+  "announced_oneoff": 0.001781098176808382,
+  "unannounced_oneoff": 0.0013673535400023878,
+  "entry": 0.003569195863350566,
+  "exit": -0.00038776934893825497,
+  "marketplace_ask": 0.00047138436293254164,
+  "hyperscaler_spot": -0.0008955452154374887
+ },
+ "S0_to_S3_drop_points_of_lv": {
+  "none": -0.016859930063925076,
+  "dynamic_reprice": 0.04020725551212899,
+  "announced_oneoff": 0.012389261839022286,
+  "unannounced_oneoff": 0.014473457335827673,
+  "entry": 0.03214229288430254,
+  "exit": 0.002631844081205672,
+  "marketplace_ask": 0.026084109074709483,
+  "hyperscaler_spot": 0.0038419499573827515
+ },
+ "up5": {
+  "cells": 271,
+  "share_lv": 0.4744787114637183,
+  "S0_share_of_own_loss": 0.46758983660056735,
+  "S1_share_of_own_loss": 0.45232387880126823,
+  "S2_share_of_own_loss": 0.4613473085577592,
+  "S3_share_of_own_loss": 0.4695666468484469,
+  "S0_loss_over_lv": 0.8981193314539053,
+  "S1_loss_over_lv": 0.7920938192451222,
+  "S2_loss_over_lv": 0.7955315753617617,
+  "S3_loss_over_lv": 0.7881956468712538,
+  "by_cause_S3_share": {
+   "announced_oneoff": 0.1296,
+   "dynamic_reprice": 0.0151,
+   "entry": 0.1956,
+   "exit": 0.0118,
+   "hyperscaler_spot": 0.0162,
+   "marketplace_ask": 0.0491,
+   "unannounced_oneoff": 0.0521
+  }
+ },
+ "top40_share_of_S3_loss": 0.23400581475905557,
+ "up5_episodes_all": {
+  "nebius@fas B300 10-02": 0.059,
+  "fal@fas B200 10-02": 0.0485,
+  "nebius@fas B300 09-29": 0.0261,
+  "lambdalabs@gpu A100_40GB 10-03": 0.024,
+  "lambdalabs@gpu H100_SXM_80GB 10-03": 0.0213,
+  "lambdalabs@gpu A100_40GB 10-01": 0.0192,
+  "nebius@gpu B300 10-01": 0.0173,
+  "?@afh V100 ?": 0.0115,
+  "nebius@gpu B300 09-30": 0.0098,
+  "lambdalabs@gpu A100_40GB 09-28": 0.0097,
+  "nebius@gpu B300 09-29": 0.0094,
+  "daytona@fas RTX_PRO_6000 09-28": 0.0088,
+  "nebius@gpu B300 09-27": 0.0086,
+  "lambdalabs@gpu RTX_A6000 10-03": 0.008,
+  "together@gpu H100_80GB 10-02": 0.0076
+ },
+ "signals": {
+  "calendar": {
+   "fires": 0.038,
+   "hit_rate_up5": 0.286,
+   "false_alarm_rate": 0.022,
+   "precision": 0.465,
+   "base_rate": 0.063,
+   "hit_rate_top40": 0.7,
+   "up5_S3_loss_share_flagged": 0.54,
+   "hit_entry": 0.275,
+   "hit_unannounced_oneoff": 0.611,
+   "hit_dynamic_reprice": 0.0
+  },
+  "other_collector_up": {
+   "fires": 0.006,
+   "hit_rate_up5": 0.035,
+   "false_alarm_rate": 0.004,
+   "precision": 0.381,
+   "base_rate": 0.063,
+   "hit_rate_top40": 0.15,
+   "up5_S3_loss_share_flagged": 0.084,
+   "hit_entry": 0.022,
+   "hit_unannounced_oneoff": 0.167,
+   "hit_dynamic_reprice": 0.0
+  },
+  "other_gpu_up": {
+   "fires": 0.158,
+   "hit_rate_up5": 0.255,
+   "false_alarm_rate": 0.151,
+   "precision": 0.101,
+   "base_rate": 0.063,
+   "hit_rate_top40": 0.0,
+   "up5_S3_loss_share_flagged": 0.102,
+   "hit_entry": 0.242,
+   "hit_unannounced_oneoff": 0.111,
+   "hit_dynamic_reprice": 0.571
+  },
+  "listed_elsewhere": {
+   "fires": 0.473,
+   "hit_rate_up5": 0.597,
+   "false_alarm_rate": 0.465,
+   "precision": 0.079,
+   "base_rate": 0.063,
+   "hit_rate_top40": 0.725,
+   "up5_S3_loss_share_flagged": 0.705,
+   "hit_entry": 0.659,
+   "hit_unannounced_oneoff": 0.333,
+   "hit_dynamic_reprice": 0.571
+  },
+  "thin_panel": {
+   "fires": 0.617,
+   "hit_rate_up5": 0.766,
+   "false_alarm_rate": 0.607,
+   "precision": 0.078,
+   "base_rate": 0.063,
+   "hit_rate_top40": 0.275,
+   "up5_S3_loss_share_flagged": 0.496,
+   "hit_entry": 0.835,
+   "hit_unannounced_oneoff": 0.389,
+   "hit_dynamic_reprice": 0.943
+  }
+ },
+ "calib_by_h": {
+  "1": {
+   "n": 1426,
+   "below_q10": 0.042,
+   "above_q90": 0.065,
+   "S3_loss_share": 0.14
+  },
+  "3": {
+   "n": 1426,
+   "below_q10": 0.085,
+   "above_q90": 0.133,
+   "S3_loss_share": 0.302
+  },
+  "7": {
+   "n": 1426,
+   "below_q10": 0.121,
+   "above_q90": 0.225,
+   "S3_loss_share": 0.558
+  }
+ },
+ "calib_by_cause": {
+  "announced_oneoff": {
+   "n": 52,
+   "below_q10": 0.0,
+   "above_q90": 0.827
+  },
+  "dynamic_reprice": {
+   "n": 1027,
+   "below_q10": 0.071,
+   "above_q90": 0.236
+  },
+  "entry": {
+   "n": 236,
+   "below_q10": 0.284,
+   "above_q90": 0.525
+  },
+  "exit": {
+   "n": 125,
+   "below_q10": 0.672,
+   "above_q90": 0.208
+  },
+  "hyperscaler_spot": {
+   "n": 308,
+   "below_q10": 0.218,
+   "above_q90": 0.182
+  },
+  "marketplace_ask": {
+   "n": 124,
+   "below_q10": 0.089,
+   "above_q90": 0.121
+  },
+  "none": {
+   "n": 2211,
+   "below_q10": 0.0,
+   "above_q90": 0.0
+  },
+  "unannounced_oneoff": {
+   "n": 195,
+   "below_q10": 0.262,
+   "above_q90": 0.497
+  }
+ },
+ "calib_by_cause_h7": {
+  "announced_oneoff": {
+   "n": 33,
+   "below_q10": 0.0,
+   "above_q90": 0.788
+  },
+  "dynamic_reprice": {
+   "n": 404,
+   "below_q10": 0.079,
+   "above_q90": 0.314
+  },
+  "entry": {
+   "n": 121,
+   "below_q10": 0.264,
+   "above_q90": 0.537
+  },
+  "exit": {
+   "n": 72,
+   "below_q10": 0.667,
+   "above_q90": 0.167
+  },
+  "hyperscaler_spot": {
+   "n": 165,
+   "below_q10": 0.182,
+   "above_q90": 0.152
+  },
+  "marketplace_ask": {
+   "n": 43,
+   "below_q10": 0.07,
+   "above_q90": 0.093
+  },
+  "none": {
+   "n": 475,
+   "below_q10": 0.0,
+   "above_q90": 0.0
+  },
+  "unannounced_oneoff": {
+   "n": 113,
+   "below_q10": 0.239,
+   "above_q90": 0.549
+  }
+ },
+ "width_cost_no_move": {
+  "S0": 0.0178,
+  "S1": 0.0338,
+  "S2": 0.0449,
+  "S3": 0.0416
+ },
+ "width_cost_no_move_points_of_lv": {
+  "S0": 0.0162,
+  "S1": 0.0281,
+  "S2": 0.0367,
+  "S3": 0.0331
+ },
+ "width_cost_no_move_by_h_S3": {
+  "1": 0.0122,
+  "3": 0.0163,
+  "7": 0.0131
+ },
+ "width_cost_no_move_by_class_S3": {
+  "hyperscaler_spot": 0.0102,
+  "marketplace_ask": 0.0064,
+  "neocloud_rate_card": 0.0221,
+  "neocloud_spot": 0.0029
+ },
+ "S3_loss_side": {
+  "above_q90_share": 0.568,
+  "below_q10_share": 0.209
+ },
+ "S3_skill_halves": {
+  "false": 0.2003,
+  "true": 0.2189
+ }
+}

@@ -1,0 +1,15 @@
+episode,cells,S3_share,cause,r,calendar,other_collector_up,other_gpu_up,listed_elsewhere,thin_panel
+nebius@fas B300 10-02,7,0.059,entry,0.2004,1.0,0.42857142857142855,0.0,1.0,0.0
+fal@fas B200 10-02,8,0.0389,unannounced_oneoff,0.1627,1.0,0.375,0.0,0.0,0.0
+nebius@fas B300 09-29,4,0.0261,announced_oneoff,0.1653,1.0,0.0,0.0,1.0,0.0
+lambdalabs@gpu A100_40GB 10-03,5,0.024,entry,0.5379,0.0,0.0,0.0,0.4,1.0
+lambdalabs@gpu A100_40GB 10-01,4,0.0192,entry,0.545,0.0,0.0,0.0,1.0,1.0
+nebius@gpu B300 10-01,2,0.0138,entry,0.1429,1.0,0.0,0.0,1.0,0.0
+nebius@gpu B300 09-30,2,0.0098,announced_oneoff,0.1186,1.0,0.0,0.0,1.0,0.0
+lambdalabs@gpu A100_40GB 09-28,2,0.0097,entry,0.5523,0.0,0.0,0.0,1.0,1.0
+nebius@gpu B300 09-27,1,0.0086,entry,0.1575,1.0,0.0,0.0,1.0,0.0
+nebius@gpu B300 09-28,1,0.0064,announced_oneoff,0.1229,1.0,0.0,0.0,1.0,0.0
+nebius@gpu B300 09-29,1,0.006,announced_oneoff,0.1174,1.0,0.0,0.0,1.0,0.0
+nebius@gpu B300 09-26,1,0.0045,announced_oneoff,0.0885,1.0,0.0,0.0,1.0,0.0
+nebius@gpu B300 09-25,1,0.0045,announced_oneoff,0.0864,1.0,0.0,0.0,1.0,0.0
+together@gpu B300 10-03,1,0.0036,entry,0.0704,0.0,0.0,0.0,1.0,0.0
