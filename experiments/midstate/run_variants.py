@@ -15,6 +15,10 @@ V = {
  "mid14_tail": ("midstate", {"state": "mid", "w": 14, "tailsign": True}),
  "mid14_gap": ("midstate", {"state": "mid", "w": 14, "gapclip": 3.0}),
  "midchg14_k40": ("midstate", {"state": "midchg", "w": 14, "k": 40}),
+ "mid7_n80": ("midstate", {"state": "mid", "w": 7, "nmin": 80}),
+ "mid7_n150": ("midstate", {"state": "mid", "w": 7, "nmin": 150}),
+ "mid14_n150": ("midstate", {"state": "mid", "w": 14, "nmin": 150}),
+ "mid7_n80_tail": ("midstate", {"state": "mid", "w": 7, "nmin": 80, "tailsign": True}),
  "mid14_nmin80": ("midstate", {"state": "mid", "w": 14, "nmin": 80}),
 }
 def one(name):
