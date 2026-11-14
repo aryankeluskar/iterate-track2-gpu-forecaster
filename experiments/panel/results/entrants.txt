@@ -1,0 +1,7 @@
+entrant stats per collector x class, rows <= 2026-10-06
+('fastgpu_daily', 'marketplace_ask') panel-days 139 P(entry day) 0.0 mean batch None entrant log(price/median) q10/q50/q90 None share above median None
+('fastgpu_daily', 'neocloud_rate_card') panel-days 1155 P(entry day) 0.0182 mean batch 1.14 entrant log(price/median) q10/q50/q90 [-0.396 -0.025  0.389] share above median 0.5
+('fastgpu_daily', 'neocloud_spot') panel-days 462 P(entry day) 0.013 mean batch 1.0 entrant log(price/median) q10/q50/q90 [-0.018  0.102  0.376] share above median 0.83
+('gpurentalprices', 'marketplace_ask') panel-days 2181 P(entry day) 0.0119 mean batch 4.81 entrant log(price/median) q10/q50/q90 [-0.448 -0.089  0.307] share above median 0.27
+('gpurentalprices', 'neocloud_rate_card') panel-days 3051 P(entry day) 0.0105 mean batch 2.25 entrant log(price/median) q10/q50/q90 [-0.283  0.024  0.43 ] share above median 0.54
+('gpurentalprices', 'neocloud_spot') panel-days 302 P(entry day) 0.0232 mean batch 1.0 entrant log(price/median) q10/q50/q90 [-0.167 -0.015  0.261] share above median 0.43

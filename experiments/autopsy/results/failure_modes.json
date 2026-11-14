@@ -1,0 +1,192 @@
+{
+ "description": "Ranked failure modes of the dev blend, by physical cause of the move in the posted-offer median. Each entry stands alone.",
+ "modes": [
+  {
+   "rank": 1,
+   "id": "composition_entry_exit",
+   "name": "Provider enters or leaves the panel (composition)",
+   "definition": "The median moves because one provider's offer(s) appear or disappear near the middle of a 3-17 offer panel, with no surviving offer repriced.",
+   "n_blend_cells": 331,
+   "n_one_day_events": 60,
+   "share_of_blend_loss": 0.321,
+   "share_of_blend_loss_from_cells_outside_q10_q90": 0.301,
+   "share_of_last_value_loss": 0.299,
+   "blend_loss_over_last_value_loss": 0.879,
+   "share_of_cells_with_truth_above_q90": 0.396,
+   "share_of_one_day_abs_log_change": 0.283,
+   "reverts": "Weakly. Exited offers came back within 7 days in 5.6% of 162 fastgpu exits and 0% of 118 gpurentalprices exits. Regressing the next change on the jump: slope -0.01 (h=1), -0.24 [90% CI -0.27,-0.04] (h=3), -0.16 [-0.30,-0.14] (h=7), n=56-60; only 5% of jumps fully undo within 7 days.",
+   "visible_in_panel_at_origin": "Size yes, timing no. The jump equals the one-offer 'fragility' of the origin panel (largest median change from dropping one offer): correlation 0.88, median ratio 1.00, n=60. The new value is an origin order statistic or midpoint (k=1) in 79% of h=1 and 54% of h=7 composition moves. Timing is not foreseeable from fragility: median fragility on composition days 0.047 vs 0.074 on all days. Events cluster: 60 events on 19 dates; one provider changes its listings across 4-7 series on one day (modal 2026-10-02 and 10-04, daytona 2026-09-29, quantacloud 2026-10-06, nebius 2026-10-05).",
+   "top_series_by_blend_loss_share": {
+    "gpurentalprices.neocloud_rate_card.A100_40GB.on_demand.median": 0.052,
+    "fastgpu_daily.neocloud_rate_card.H100_PCIe_80GB.on_demand.median": 0.042,
+    "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median": 0.026
+   },
+   "dated_examples": [
+    "2026-10-02->2026-10-03 gpurentalprices.neocloud_rate_card.A100_40GB.on_demand.median: median 1.294->1.990 (+0.430 log), pivotal provider lambdalabs,verda; entered: lambdalabs; exited: lambdalabs; repriced up: verda; offers 3->7",
+    "2026-10-01->2026-10-02 fastgpu_daily.neocloud_rate_card.A100_40GB.on_demand.median: median 1.642->1.294 (-0.238 log), pivotal provider modal; exited: modal; offers 4->3"
+   ],
+   "notes": "Kinds (one-day, n=60): entry 35, exit 20, sku relabel 5 (same provider exits and re-enters under new sku_raw; 0.82 of 2.83 total abs log change from composition). 10% of one-day changes but 28% of their abs log change. Misses split evenly by side (40% of cells above q90; 14.6% of total blend loss from below-q10 composition misses). Largest single series: gpurentalprices A100_40GB, 2026-10-03, lambdalabs listings 1->5 offers, median 1.294->1.990, 5.2% of all blend loss.",
+   "scope": "Scope: 37 rental_headline series, dev blend cells (origins 2026-08-18..2026-10-06, h=1,3,7, n=4266 with panel), one-day events 2026-08-04..2026-10-13 (n=579). Blend = mix+gbm+chronos_last, runs/failure/blend_dev_cells.parquet. Cause of an h-day move: counterfactual median of origin-day offers at target-day prices (repricing) vs the rest (composition); label needs >=80% of |effect| in one part, else mixed. Offer key: fastgpu provider; gpurentalprices provider+sku_raw; afhubbard provider+region+sku+gpu_count."
+  },
+  {
+   "rank": 2,
+   "id": "mixed_reprice_plus_entry_exit",
+   "name": "Repricing and entry/exit in the same window (mixed)",
+   "definition": "Within the horizon both a surviving offer is repriced and offers enter or leave, each carrying >20% of the median's move; mostly B200/B300 rate cards in the late-September/early-October repricing wave.",
+   "n_blend_cells": 127,
+   "n_one_day_events": 23,
+   "share_of_blend_loss": 0.222,
+   "share_of_blend_loss_from_cells_outside_q10_q90": 0.205,
+   "share_of_last_value_loss": 0.219,
+   "blend_loss_over_last_value_loss": 0.826,
+   "share_of_cells_with_truth_above_q90": 0.543,
+   "share_of_one_day_abs_log_change": 0.041,
+   "reverts": "No evidence of reversion (one-day mixed events n=23, slope +0.30 [0.03,0.38] at h=1; h=7 interval [-0.45,1.74], n=18).",
+   "visible_in_panel_at_origin": "Partly: the repricing part is the Verda/Nebius/fal upward wave already under way at the origin; the entry/exit part (modal exit 2026-10-02, together entry) is not.",
+   "top_series_by_blend_loss_share": {
+    "fastgpu_daily.neocloud_rate_card.B300.on_demand.median": 0.069,
+    "fastgpu_daily.neocloud_rate_card.B200.on_demand.median": 0.048,
+    "gpurentalprices.neocloud_rate_card.B300.on_demand.median": 0.047
+   },
+   "dated_examples": [
+    "2026-10-01->2026-10-02 fastgpu_daily.neocloud_rate_card.B300.on_demand.median: median 7.625->8.708 (+0.133 log), pivotal provider nebius,modal; exited: modal; repriced up: fal,nebius,verda; offers 8->7",
+    "2026-10-01->2026-10-02 fastgpu_daily.neocloud_rate_card.B200.on_demand.median: median 6.470->6.985 (+0.077 log), pivotal provider fal,modal; exited: modal; repriced up: fal,nebius,verda; offers 10->9"
+   ],
+   "notes": "54% of mixed cells have truth above q90. Worst cells: fastgpu B300 origin 2026-09-30/10-01, last value 7.625, truth 9.06-9.15 against q90 7.79-7.92 (nebius, fal, verda up; modal out; together in). Small n; one episode dominates.",
+   "scope": "Scope: 37 rental_headline series, dev blend cells (origins 2026-08-18..2026-10-06, h=1,3,7, n=4266 with panel), one-day events 2026-08-04..2026-10-13 (n=579). Blend = mix+gbm+chronos_last, runs/failure/blend_dev_cells.parquet. Cause of an h-day move: counterfactual median of origin-day offers at target-day prices (repricing) vs the rest (composition); label needs >=80% of |effect| in one part, else mixed. Offer key: fastgpu provider; gpurentalprices provider+sku_raw; afhubbard provider+region+sku+gpu_count."
+  },
+  {
+   "rank": 3,
+   "id": "repricing_verda_staircase",
+   "name": "Verda small upward reprices accumulating (repricing)",
+   "definition": "Provider verda raises a posted rate by about 1% (median one-day move of the median 0.5%), many days in a row, on up to 17 fastgpu and 10 gpurentalprices series; when verda is the median or adjacent, the median climbs in small steps.",
+   "n_blend_cells": 762,
+   "n_one_day_events": 247,
+   "share_of_blend_loss": 0.175,
+   "share_of_blend_loss_from_cells_outside_q10_q90": 0.125,
+   "share_of_last_value_loss": 0.203,
+   "blend_loss_over_last_value_loss": 0.706,
+   "share_of_cells_with_truth_above_q90": 0.425,
+   "share_of_one_day_abs_log_change": 0.128,
+   "reverts": "No. Verda reprices return to the previous price within 7 days 1.1% (fastgpu, n=352) and 0.5% (gpurentalprices, n=219); 96.8% of median-moving verda events are up. fastgpu repricing events show momentum: slope +0.18 [0.02,0.30] at h=1, +0.40 [0.19,0.77] at h=3 (n=134, 124).",
+   "visible_in_panel_at_origin": "Yes. 97.6% of the 247 median-moving verda events were preceded by another verda reprice in the same collector within 7 days; verda repriced something on 75% of fastgpu days and 35% of gpurentalprices days.",
+   "top_series_by_blend_loss_share": {
+    "fastgpu_daily.neocloud_rate_card.B300.on_demand.median": 0.036,
+    "gpurentalprices.neocloud_rate_card.B200.on_demand.median": 0.022,
+    "fastgpu_daily.neocloud_rate_card.B200.on_demand.median": 0.018
+   },
+   "dated_examples": [
+    "2026-09-12..09-14 origins, fastgpu B300 rate card: last value 7.50-7.575, all blend quantiles at the last value, truth 7.85 at h=7 after verda reprices up (loss 0.175 per cell).",
+    "2026-09-13->2026-09-14 gpurentalprices.neocloud_rate_card.A100_40GB.on_demand.median: median 1.290->1.251 (-0.031 log), pivotal provider verda; repriced down: verda; offers 3->3"
+   ],
+   "notes": "Verda does 84% of fastgpu reprices on 13.8% of its offer-days and 39% of gpurentalprices reprices on 12.4%. Loss is mostly h=7 (0.110 of 0.175). The blend often has zero width here (q10=q50=q90=last value).",
+   "scope": "Scope: 37 rental_headline series, dev blend cells (origins 2026-08-18..2026-10-06, h=1,3,7, n=4266 with panel), one-day events 2026-08-04..2026-10-13 (n=579). Blend = mix+gbm+chronos_last, runs/failure/blend_dev_cells.parquet. Cause of an h-day move: counterfactual median of origin-day offers at target-day prices (repricing) vs the rest (composition); label needs >=80% of |effect| in one part, else mixed. Offer key: fastgpu provider; gpurentalprices provider+sku_raw; afhubbard provider+region+sku+gpu_count."
+  },
+  {
+   "rank": 4,
+   "id": "repricing_sfcompute_marketplace_ask",
+   "name": "sfcompute marketplace ask swings (repricing)",
+   "definition": "On gpurentalprices H100_80GB marketplace_ask (3 offers), the sfcompute ask is the median and moves by a median 5.6% per change; together with spheron it produces the largest one-day swings.",
+   "n_blend_cells": 107,
+   "n_one_day_events": 47,
+   "share_of_blend_loss": 0.089,
+   "share_of_blend_loss_from_cells_outside_q10_q90": 0.035,
+   "share_of_last_value_loss": 0.115,
+   "blend_loss_over_last_value_loss": 0.634,
+   "share_of_cells_with_truth_above_q90": 0.121,
+   "share_of_one_day_abs_log_change": 0.318,
+   "reverts": "Partly. gpurentalprices repricing events revert: slope -0.33 [-0.58,-0.01] at h=1 and -0.46 [-0.69,-0.19] at h=7 (n=292, 256). spheron's reprices return to the previous price within 7 days 66% of the time (n=41); sfcompute's 6% (n=48).",
+   "visible_in_panel_at_origin": "Volatility yes (sfcompute repriced on 48 of ~70 days), direction no.",
+   "top_series_by_blend_loss_share": {
+    "gpurentalprices.marketplace_ask.H100_80GB.spot.median": 0.089
+   },
+   "dated_examples": [
+    "2026-08-12->2026-08-13 gpurentalprices.marketplace_ask.H100_80GB.spot.median: median 1.970->1.200 (-0.496 log), pivotal provider sfcompute; repriced down: sfcompute; offers 3->3",
+    "2026-09-01->2026-09-02 gpurentalprices.marketplace_ask.H100_80GB.spot.median: median 1.686->1.231 (-0.315 log), pivotal provider sfcompute; repriced up: spheron; repriced down: sfcompute; offers 3->3"
+   ],
+   "notes": "One series; 32% of one-day abs log change in the set but 8.9% of blend loss, because the blend is already wide here (blend/last-value loss 0.63; only 12% of cells above q90).",
+   "scope": "Scope: 37 rental_headline series, dev blend cells (origins 2026-08-18..2026-10-06, h=1,3,7, n=4266 with panel), one-day events 2026-08-04..2026-10-13 (n=579). Blend = mix+gbm+chronos_last, runs/failure/blend_dev_cells.parquet. Cause of an h-day move: counterfactual median of origin-day offers at target-day prices (repricing) vs the rest (composition); label needs >=80% of |effect| in one part, else mixed. Offer key: fastgpu provider; gpurentalprices provider+sku_raw; afhubbard provider+region+sku+gpu_count."
+  },
+  {
+   "rank": 5,
+   "id": "repricing_hyperscaler_spot",
+   "name": "Hyperscaler spot repricing (gcp, aws)",
+   "definition": "Spot prices of surviving hyperscaler offers change (afhubbard ~450 offers per series-day, fastgpu 3 offers); gcp and aws do 63% and 35% of afhubbard reprices.",
+   "n_blend_cells": 356,
+   "n_one_day_events": 69,
+   "share_of_blend_loss": 0.068,
+   "share_of_blend_loss_from_cells_outside_q10_q90": 0.051,
+   "share_of_last_value_loss": 0.081,
+   "blend_loss_over_last_value_loss": 0.686,
+   "share_of_cells_with_truth_above_q90": 0.242,
+   "share_of_one_day_abs_log_change": 0.121,
+   "reverts": "afhubbard repricing slope ~0 at h=1 and h=3 (-0.003, -0.011, n=51, 48), -0.33 [-0.54,-0.14] at h=7 (n=44).",
+   "visible_in_panel_at_origin": "Partly: afhubbard's new median is an origin order statistic in 67% of h=1 moves (n=42) because the panel is dense.",
+   "top_series_by_blend_loss_share": {
+    "afhubbard.hyperscaler_spot.V100.spot.median": 0.019,
+    "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median": 0.017,
+    "fastgpu_daily.hyperscaler_spot.A100_80GB.spot.median": 0.016
+   },
+   "dated_examples": [
+    "2026-09-29->2026-09-30 fastgpu_daily.hyperscaler_spot.T4.spot.median: median 0.075->0.088 (+0.160 log), pivotal provider aws; repriced up: aws; offers 3->3",
+    "2026-09-21->2026-09-22 fastgpu_daily.hyperscaler_spot.T4.spot.median: median 0.087->0.080 (-0.084 log), pivotal provider aws; repriced down: aws; offers 3->3"
+   ],
+   "notes": "Per-offer daily reprice chance 0.20 on afhubbard (n=124k offer-days), strongly clustered by provider and day (given one offer of a provider repriced that day, 89% of its others did too).",
+   "scope": "Scope: 37 rental_headline series, dev blend cells (origins 2026-08-18..2026-10-06, h=1,3,7, n=4266 with panel), one-day events 2026-08-04..2026-10-13 (n=579). Blend = mix+gbm+chronos_last, runs/failure/blend_dev_cells.parquet. Cause of an h-day move: counterfactual median of origin-day offers at target-day prices (repricing) vs the rest (composition); label needs >=80% of |effect| in one part, else mixed. Offer key: fastgpu provider; gpurentalprices provider+sku_raw; afhubbard provider+region+sku+gpu_count."
+  },
+  {
+   "rank": 6,
+   "id": "repricing_other_provider",
+   "name": "Other single-provider reprices (spheron, nebius, quantacloud, ...)",
+   "definition": "A surviving offer of a provider other than verda, sfcompute or scaleway is repriced and is pivotal for the median.",
+   "n_blend_cells": 63,
+   "n_one_day_events": 13,
+   "share_of_blend_loss": 0.062,
+   "share_of_blend_loss_from_cells_outside_q10_q90": 0.054,
+   "share_of_last_value_loss": 0.066,
+   "blend_loss_over_last_value_loss": 0.776,
+   "share_of_cells_with_truth_above_q90": 0.556,
+   "share_of_one_day_abs_log_change": 0.092,
+   "reverts": "Mixed: spheron 66% back within 7 days; nebius/fal moves in the October wave persist.",
+   "visible_in_panel_at_origin": "No.",
+   "top_series_by_blend_loss_share": {
+    "gpurentalprices.neocloud_rate_card.B300.on_demand.median": 0.02,
+    "fastgpu_daily.neocloud_rate_card.B300.on_demand.median": 0.018,
+    "gpurentalprices.neocloud_rate_card.RTX_PRO_6000.on_demand.median": 0.011
+   },
+   "dated_examples": [
+    "2026-08-04->2026-08-05 gpurentalprices.marketplace_ask.H100_80GB.spot.median: median 2.190->1.460 (-0.405 log), pivotal provider spheron; repriced down: spheron; offers 3->3",
+    "2026-08-05->2026-08-06 gpurentalprices.marketplace_ask.H100_80GB.spot.median: median 1.460->2.100 (+0.364 log), pivotal provider spheron; repriced up: spheron; repriced down: sfcompute; offers 3->3"
+   ],
+   "notes": "56% of cells above q90; B300 rate cards top.",
+   "scope": "Scope: 37 rental_headline series, dev blend cells (origins 2026-08-18..2026-10-06, h=1,3,7, n=4266 with panel), one-day events 2026-08-04..2026-10-13 (n=579). Blend = mix+gbm+chronos_last, runs/failure/blend_dev_cells.parquet. Cause of an h-day move: counterfactual median of origin-day offers at target-day prices (repricing) vs the rest (composition); label needs >=80% of |effect| in one part, else mixed. Offer key: fastgpu provider; gpurentalprices provider+sku_raw; afhubbard provider+region+sku+gpu_count."
+  },
+  {
+   "rank": 7,
+   "id": "repricing_scaleway_small_drift",
+   "name": "Scaleway sub-percent drift",
+   "definition": "scaleway's posted USD rates move by a median 0.2% per change (230 reprices, 5 series), consistent with currency conversion; it moves the median when scaleway is the middle offer (L4, H100_80GB, B300 on gpurentalprices).",
+   "n_blend_cells": 309,
+   "n_one_day_events": 120,
+   "share_of_blend_loss": 0.017,
+   "share_of_blend_loss_from_cells_outside_q10_q90": 0.003,
+   "share_of_last_value_loss": 0.017,
+   "blend_loss_over_last_value_loss": 0.824,
+   "share_of_cells_with_truth_above_q90": 0.003,
+   "share_of_one_day_abs_log_change": 0.016,
+   "reverts": "No (2.2% back to previous price within 7 days).",
+   "visible_in_panel_at_origin": "Yes, it is continuous small drift.",
+   "top_series_by_blend_loss_share": {
+    "gpurentalprices.neocloud_rate_card.B300.on_demand.median": 0.008,
+    "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median": 0.006,
+    "gpurentalprices.neocloud_rate_card.L4.on_demand.median": 0.003
+   },
+   "dated_examples": [
+    "2026-10-07->2026-10-08 gpurentalprices.neocloud_rate_card.L4.on_demand.median: median 0.887->0.880 (-0.008 log), pivotal provider scaleway; repriced down: scaleway; offers 3->3",
+    "2026-08-20->2026-08-21 gpurentalprices.neocloud_rate_card.L4.on_demand.median: median 0.914->0.920 (+0.007 log), pivotal provider scaleway; repriced up: scaleway; offers 3->3"
+   ],
+   "notes": "120 one-day events but only 1.6% of abs log change and 1.7% of blend loss. Not worth modelling.",
+   "scope": "Scope: 37 rental_headline series, dev blend cells (origins 2026-08-18..2026-10-06, h=1,3,7, n=4266 with panel), one-day events 2026-08-04..2026-10-13 (n=579). Blend = mix+gbm+chronos_last, runs/failure/blend_dev_cells.parquet. Cause of an h-day move: counterfactual median of origin-day offers at target-day prices (repricing) vs the rest (composition); label needs >=80% of |effect| in one part, else mixed. Offer key: fastgpu provider; gpurentalprices provider+sku_raw; afhubbard provider+region+sku+gpu_count."
+  }
+ ]
+}

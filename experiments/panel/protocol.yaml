@@ -1,0 +1,37 @@
+slug: panel
+written_before_first_scored_run: true
+failure_mode: >
+  Every method so far has the last value's q50 loss and under-covers the upper tail at h=7 (27-33% of truths
+  above q90). Moves above 5% are 9% of dev cells and carry 61% of last-value loss (runs/failure/decomp.txt).
+measured_before_scoring:
+  median_reproduction: "panel median == scored value on 1643/1643 series-days (33 fastgpu+gpurentalprices headline series, <= 2026-10-13)"
+  offer_identity: "(provider, region_raw, sku_raw, gpu_count) + same-day occurrence index; fastgpu is one row per provider x region"
+  afhubbard: "not modelled (1-3 snapshots/day, thousands of AZ rows); the 4 series fall back to the base method"
+  causes_of_1day_median_changes: >
+    dev rows <= 2026-10-06, 408 median changes on 33 series: 343 reprice-only (84%, 64% of summed |log change|),
+    25 composition-only (6%, 15%), 40 both (10%, 21%). Panels hold 2-15 offers. Daily per-offer exit rate is
+    0.3-0.5% on rate cards (4.5% on gpurentalprices marketplace), return within 7 days 30-36% where defined,
+    entries 0.01-0.06 per panel-day. Reprices by the same provider on the same day are rare (<2%).
+    (experiments/panel/results/transitions.txt, sources_of_change.txt)
+mechanism: >
+  The median of n offers can only move when an offer near the middle reprices or the panel's composition
+  changes. Simulating the panel (per-offer reprice hazard shrunk to the collector x class pool, pooled reprice
+  sizes, exits, returns of recently-seen offers, entrants priced relative to the median) gives a predictive
+  distribution concentrated on reachable values: heavy mass at the current median when the middle offers are
+  quiet, and wide, asymmetric tails when a frequently repricing offer sits at the middle or the neighbouring
+  order statistics are far apart.
+prediction: >
+  v0 (reachability only, composition changes only) is too narrow on most series because 84% of changes are
+  reprices; expect it to lose to drift overall except perhaps on large fastgpu rate-card panels.
+  v1 (hazards) should roughly tie drift and be below mix on its own (small samples; fastgpu has ~29 days of
+  history at the first dev origins), but carry information mix lacks (which offer is at the middle and how
+  often it reprices), so panel+mix should beat mix by +0.005 to +0.02 skill, mostly at h=7 and on
+  gpurentalprices series whose middle offers reprice often (marketplace H100, B300, L4, H100 rate card).
+  q50 loss should stay within 1% of the last value's (median of simulated medians is almost always the last value).
+refuted_if: >
+  panel+mix vs mix paired skill interval lies entirely at or below 0, or panel v1 alone is worse than drift by
+  more than 0.03 with the gap concentrated where per-offer hazards should help.
+mechanism_failure_candidates:
+  - "new entrants with unseen prices cannot be simulated well (entry rate tiny, price draws pooled)"
+  - "reprices are common shocks (a provider resets its rate card) so independent per-offer draws understate tails"
+  - "the scored jumps come from reprice sizes, which pooled empirical sizes capture no better than mix"

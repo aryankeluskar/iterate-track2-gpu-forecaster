@@ -1,0 +1,27 @@
+# Written 2026-11-14 before the first Exa search. Dev period only (rows <= 2026-10-13); every search has endPublishedDate <= 2026-11-06.
+slug: exa_attrib
+failure_mode: "large jumps of a headline series' median; moves >5% are 9% of cells and carry 61% of last-value loss (runs/failure/decomp.txt)."
+measured_loss_share: "The 37 events chosen carry the largest (|median log move| x series share of last-value loss). Share of loss by series: the marketplace H100 80GB ask series alone is 13.6%; the B300/B200 rate cards 5-13% each."
+question: "Were the provider repricings that moved the median announced in public (provider page, blog, changelog, press) BEFORE they appeared in the price data?"
+mechanism: >
+  A median over 3-17 offers moves when one provider reprices an offer near the middle. Rate-card neoclouds (Nebius, Lambda, Verda, Fal) usually
+  change list prices on their pricing page, sometimes with a blog or email notice; marketplaces (SF Compute, Spheron) post ask prices set by a
+  market or an auction, so there is nothing to announce.
+event_definition: >
+  provider x gpu x day where the provider's own daily median price for that gpu/tier/class changes by >=2% versus its previous day (gap <=3 days)
+  and the series median moves by >0.5% that day. Same-provider same-day events across series merged (score summed). Ranked by |median log move| x
+  series share of dev last-value loss (blend_dev_cells baseline_loss). Stratum A = top 25 as asked; stratum B = top rate-card (neocloud_rate_card)
+  events not in A, because A is dominated by one marketplace series; stratum C = largest events in the 7 days after each of the 10 busiest loss days.
+  Same repricing seen by two collectors on two days is one event at the earlier date.
+labels: ANNOUNCED_BEFORE (page published before D states the change or its date; quote the sentence), REPORTED_AFTER (only pages published >= D), NO_TRACE.
+mechanical_rule (used on events and controls, to compute a false-alarm rate): a BEFORE hit (published in D-21..D-1) that names the provider in its title/url/highlight and
+  contains a price word (price|pricing|rate|per hour|/hr|\$) together with a change word (increase|raise|hike|cut|reduc|lower|new pricing|effective|starting|update). Hand labels are
+  the primary result; the rule is the thing whose false-alarm rate is measured.
+prediction:
+  announced_before_share_of_events: "0.10-0.25 overall (about 0.4 within rate-card neoclouds, ~0 for sfcompute/spheron marketplace asks)"
+  announced_before_share_of_loss: "0.10-0.25, because the largest loss is the marketplace series"
+  median_lead_time_days: "5-14 for the announced ones"
+  false_alarm_rate_of_mechanical_rule: "0.3-0.5 (provider pages and pricing blogs mention prices all the time)"
+  snapshot: "Probably usable only for pages Exa crawled within the 5-month window and limited to 100 requests on pay-as-you-go; may be refused on this plan."
+verdict_if: "A search step before each forecast is worth building only if announced-before covers at least about 40% of the loss AND the false-alarm rate of the rule is below about 25%. Otherwise it is a finding about how GPU rate cards are repriced: silently, on the pricing page, without notice."
+budget_usd: 8

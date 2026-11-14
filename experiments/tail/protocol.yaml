@@ -1,0 +1,20 @@
+slug: tail
+failure_mode: >
+  Upper tail under-covered at h=7 by every method (27-33% of truths above q90, target 10%); up-moves
+  >5% carry 46% of last-value loss. Hindsight best single width scale: 0.8 (h=1), 1.0 (h=3), 1.3 (h=7).
+hypothesis: >
+  Calibrating q10 and q90 separately, per horizon, from past signed log errors of the base method's own
+  forecasts (target date <= origin) lifts upper coverage at h=7 toward 0.9 and improves pooled pinball.
+mechanism: >
+  Base quantiles come from changes observed in a history that is short and spans calm periods; repricing
+  bursts push truths past q90. A conformal offset on each tail moves coverage to nominal. Pinball cost:
+  52% of cells do not move, a wider q90 costs 0.1*offset*price on those.
+variants: conf (pooled, then collector x class), ew (exponential recency weights), aci (gamma, delayed feedback), scale (online pinball-fitted tail scale).
+prediction: >
+  h=7 upper coverage rises from ~0.70 to ~0.85 with conf; pooled skill vs base +0.00 to +0.02, positive at h=7
+  and negative at h=1/h=3 (flat cells pay). Largest effect on fastgpu rate cards (B300, B200). If the miss is
+  a few burst days, online variants lag and gain is ~0 or negative on the second half of dev.
+refutation: >
+  Paired difference vs base with 90% week-block interval spanning zero for every variant, or h=7 coverage
+  improving while pinball does not, or all gain from the Sep-Oct repricing episode.
+leak_control: past base forecasts are recomputed from history truncated at each past origin; tests/test_tail_leak.py.

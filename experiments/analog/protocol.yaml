@@ -1,0 +1,15 @@
+slug: analog
+written: before the first analog run (dev split only)
+hypothesis: >
+  Short scored series give few own samples. The h-day outcomes that followed the K most similar past situations
+  (state vector of change recency, change counts, volatility, last change size and signs, n_providers, range position)
+  drawn from a wider pool are a better forecast distribution than mix's binary state.
+mechanism: A continuous, multi-feature generalisation of mix's "changed in last 3 days" split; more state detail should sharpen width.
+prediction: >
+  pool=cc k~100 roughly ties mix (+-0.01 pooled skill), since all of mix's gain is width and the binary state captures most of it.
+  Class-wide or all-collector pools help afhubbard-backed history on fastgpu/gpurentalprices at h=7 only if state similarity
+  removes the collector-level instability; expected small gain (+0.00 to +0.01) or a loss (the earlier finding: unconditioned
+  collector-wide pooling is unstable). Same-series-only pool should lose on short series (too few samples).
+refuted_if: >
+  No analog variant has a paired difference against mix with a 90% interval above zero and the blend with mix does not beat
+  mix alone; or class/all pools do not beat cc on fastgpu and gpurentalprices.

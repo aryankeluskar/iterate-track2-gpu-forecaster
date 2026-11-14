@@ -1,0 +1,6 @@
+slug: stack
+hypothesis: A combiner that learns weights online from each expert's realised pinball loss (delayed by h days) beats equal-weight log-quantile blending and is more robust when the best expert changes (dev vs validation rank flip).
+mechanism: Experts differ mostly in interval width; relative width quality is regime dependent. Online weights track the currently better width with narrow/wide experts supplying a width dial.
+prediction: Small gain (+0.002 to +0.010 skill) over equal weights on dev, mostly from the second half and from h=7; no gain when excluding nothing in the first 14 origins is costly (cold start). Gain below the bootstrap interval is the most likely outcome.
+refutation: Difference vs equal weights has a 90% interval containing zero, or the combiner loses in one half of dev; or regret vs hindsight best expert does not shrink over origins.
+causal_rule: at origin d only cells (s,o,h) with o+h<=d are used as losses.

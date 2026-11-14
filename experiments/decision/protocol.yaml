@@ -1,0 +1,25 @@
+slug: decision
+failure_mode_targeted: >
+  Whether the price moves, and in which direction, over h days. Hindsight bounds on dev (R2 brief):
+  knowing move/no-move lifts the blend 0.182 -> 0.219; knowing direction too -> 0.262.
+  52% of cells have no change and carry 0% of last-value loss.
+hypothesis: >
+  A text decision model (Laya, ModernBERT-large + decision head, RLCD-trained) reading a compact JSON
+  state (collector, class, GPU, last 14 daily % changes, days since last change, n providers, median
+  position in the panel's p25..p75) gives calibrated probabilities of lower / unchanged / higher (and a
+  5-bin ordinal) that beat the class base rate and logistic regression / LightGBM on the same features.
+mechanism: >
+  The pretrained encoder might read regularities in the change history (recency of change, clustering)
+  that a linear model on the same numbers misses. Plausibility is low: the inputs are 18 numbers, and a
+  text encoder has no prior on what they mean for GPU prices.
+prediction: >
+  Zero-shot after temperature refit: worse than or equal to the collector x horizon base rate (log loss
+  within +-0.01 or worse). Short fine-tune: at best ties LightGBM. Logistic / LightGBM beat the base rate
+  on move-vs-no-move AUC (>0.65) because days-since-change and recent-change features carry the
+  clustering effect already seen in mix's "chgk" state.
+split: train origins 2026-08-18..2026-09-14 (targets <= 2026-09-21); test origins 2026-09-22..2026-10-06.
+universe: rental_all
+refuted_if: >
+  Laya (zero-shot + temperature, or fine-tuned) beats LightGBM on test log loss by more than 0.01 for the
+  3-way question, or beats the base rate where LightGBM does not.
+step4_condition: only if a classifier beats the base rate clearly (test 3-way log loss at least 0.02 lower).

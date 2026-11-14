@@ -1,0 +1,46 @@
+slug: longrun
+written: 2026-11-14 (before any fit; only table shapes, column names and date coverage had been inspected)
+scope: >
+  Long-horizon (2-3 year) view of H100 and A100 rental and resale. Not a scored forecaster: nothing here is read by
+  the short-horizon methods. Reads pack tables up to the cutoff 2026-11-06 (AWS spot archive ends 2026-10-31).
+question: What will H100 and A100 rent for, and resell for, at +24 and +36 months from Nov 2026?
+
+data_facts_found_before_fitting:
+  - aggregator_medians.csv carries A100/H100/H200/B200/B300 only from week 2025-11-03 (53 weeks), not 18 months; the
+    pre-Nov-2025 weeks are 4 to 9 legacy models. The "18 months of weekly medians" in the task is therefore 12 months
+    for these chips, and the aggregator backtest must be shortened (fit Nov 2025 to Apr 2026, score Oct 2026).
+  - Epoch release dates: B200 2024-11-15, H200 SXM 2024-11-18, B300 2025-08-22 (H200 and B200 coincide, so the
+    event study cannot separate them on Epoch dates; AWS first-seen dates of p5e/p6 families are a second date set).
+
+instruments (never chained): aggregator_median (GetDeploying, by pricing_mode), daily_statistics per source_id x
+  instrument_class, hyperscaler_spot (AWS p4d/p4de/p5, two segments either side of 2026-03-01..2026-06-30 hole).
+
+capability_units: ship_only_inf_cross_benchmark_median_a100ref_sxm80 (A100=1, H100 2.46, H200 2.72, B200 7.91,
+  B300 8.77) as the central set; LLM offline/server a100ref sets and spec FP16 as the range.
+
+predictions:
+  P1_per_unit_premium:
+    claim: Older chips rent at a PREMIUM per capability unit relative to B200/B300 (USD per unit-hour higher).
+    size: A100 per-unit price 1.5x to 3x B200's on aggregator on-demand; H100 1.2x to 2x.
+    trend: the A100 and H100 premium falls over the 12 months (frontier per-unit price falls slower than old chips' price? no:
+      we predict the premium SHRINKS, i.e. old chips decay faster than the frontier), by 5 to 25 percent.
+    refuted_if: per-unit ratio <= 1 for A100 and H100 on most instruments, or the ratio trend interval excludes shrinking.
+  P2_decay:
+    claim: within-chip log price falls; annual decay A100 15 to 35 percent, H100 15 to 40 percent on aggregator on-demand;
+      AWS spot pre-hole segment decays faster for H100 (p5) than A100 (p4d).
+    successor_effect: decay is steeper in the 6 months after a successor's availability than in the 6 months before,
+      by 5 to 20 points of annualised rate; weak evidence expected (few events, overlapping dates).
+    refuted_if: slope intervals include zero for both chips on both instruments, or post-event minus pre-event slope
+      interval is entirely >= 0 (no acceleration) across events.
+  P3_backtest:
+    claim: a log-linear decay fit beats no-change on absolute log error for 12-month (AWS) and 6-month (aggregator)
+      horizons, with 80 percent interval coverage between 0.6 and 0.9.
+    refuted_if: decay MAE >= no-change MAE on both instruments; then the projection is reported with no-change as centre
+      alternative and the decay model is labelled unvalidated.
+  P4_projection:
+    claim: H100 on-demand aggregator median at +24m q50 about 1.3 to 1.9 USD/GPU-h, A100 0.7 to 1.1; the parity model
+      projects LOWER than the decay model because the per-unit premium is not arbitraged away by price alone.
+  P5_resale:
+    claim: income-approach value of a used H100 in Nov 2026 about 8k to 18k USD per GPU, A100 80GB 3k to 8k; published
+      resale figures (via Exa) fall inside or slightly above the income range (resale buyers pay for optionality).
+refutation_policy: every prediction is reported as held / failed with the number, including failures.

@@ -1,0 +1,11 @@
+slug: ecm
+failure_mode: no method moves the q50 off the last value; q50 loss equals the baseline's everywhere. Up/down moves above 5% are 9% of cells and carry 61% of last-value loss (R2 brief).
+untested_lever: the LEVEL gap (error correction). fastgpu_daily vs gpurentalprices median for the same GPU/class/tier has lag-1 autocorrelation ~0.9 and sd 1-23% (runs/failure/events.txt, item 3), so the gap is slow and a wide gap should close by a move of one of the two medians.
+hypotheses:
+  H1 pair gap: z = (gap_t - mean of gap over days t-30..t-1) / sd, for same gpu, class, tier series on both collectors (A100_80GB<->A100_SXM_80GB alias reported separately). Signal for side A is -z, for side B +z; slope of the next 1/3/7-day log change on it is predicted positive (closing).
+  H2 own panel position: pos = log(p75/med)-log(med/p25) from daily_statistics, and dev = log(med) - log(median of own medians over t-30..t-1). Predicted: dev slope negative (reversion to own level); pos sign unknown.
+  H3 other instruments (each under its own day basis): GIX (print dated D usable from origin D+1), gpueconomy and GetDeploying weeks (week W usable from origin W+7), gpurentalprices_cheapest (dt<=origin), AWS spot (ts_utc<=origin end of day). Compute Screener starts 2026-10-23, after the dev window, so it cannot be screened (no dev overlap). Signal: 7-day log change of the instrument; target: next 7-day change and its absolute size; predicted weak positive (common factor), expected to fail for the weekly/short ones through sample size.
+  H4 wrapper `ecm`: shift of centre by lambda*beta*signal and skew of interval, only for signals that pass the screen.
+prediction: small. Pair gap slope 0.1-0.4 at h=3,7 on fastgpu rate cards vs gpurentalprices; the usable overlap is only about 4 weeks of dev origins (fastgpu starts 2026-09-08, gap statistic needs 10+ days), so intervals will be wide. Nothing from weekly instruments (n of independent signals is 3 to 7).
+refute: pooled slope 90% week-block CI covers 0, or lies inside the circular-shift null 95% band; or the wrapper q50 loss ratio to the last-value q50 loss is not below 1 with interval excluding 1.
+data: dev origins 2026-08-18..2026-10-06, targets <= 2026-10-13. Features use rows dated <= origin only (under each table's own day basis).

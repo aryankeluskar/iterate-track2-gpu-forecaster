@@ -1,0 +1,1207 @@
+{
+ "origin_median_matches_baseline": 1.0,
+ "event_shares_since_0804": {
+  "all": [
+   {
+    "cause": "composition",
+    "n": 60,
+    "share_changes": 0.104,
+    "share_abs_dlog": 0.283
+   },
+   {
+    "cause": "mixed",
+    "n": 23,
+    "share_changes": 0.04,
+    "share_abs_dlog": 0.041
+   },
+   {
+    "cause": "repricing",
+    "n": 496,
+    "share_changes": 0.857,
+    "share_abs_dlog": 0.676
+   }
+  ],
+  "by_source": [
+   {
+    "source_id": "afhubbard",
+    "cause": "composition",
+    "n": 4,
+    "share_changes": 0.007,
+    "share_abs_dlog": 0.001
+   },
+   {
+    "source_id": "afhubbard",
+    "cause": "mixed",
+    "n": 14,
+    "share_changes": 0.024,
+    "share_abs_dlog": 0.015
+   },
+   {
+    "source_id": "afhubbard",
+    "cause": "repricing",
+    "n": 53,
+    "share_changes": 0.092,
+    "share_abs_dlog": 0.077
+   },
+   {
+    "source_id": "fastgpu_daily",
+    "cause": "composition",
+    "n": 41,
+    "share_changes": 0.071,
+    "share_abs_dlog": 0.191
+   },
+   {
+    "source_id": "fastgpu_daily",
+    "cause": "mixed",
+    "n": 8,
+    "share_changes": 0.014,
+    "share_abs_dlog": 0.025
+   },
+   {
+    "source_id": "fastgpu_daily",
+    "cause": "repricing",
+    "n": 143,
+    "share_changes": 0.247,
+    "share_abs_dlog": 0.119
+   },
+   {
+    "source_id": "gpurentalprices",
+    "cause": "composition",
+    "n": 15,
+    "share_changes": 0.026,
+    "share_abs_dlog": 0.091
+   },
+   {
+    "source_id": "gpurentalprices",
+    "cause": "mixed",
+    "n": 1,
+    "share_changes": 0.002,
+    "share_abs_dlog": 0.001
+   },
+   {
+    "source_id": "gpurentalprices",
+    "cause": "repricing",
+    "n": 300,
+    "share_changes": 0.518,
+    "share_abs_dlog": 0.481
+   }
+  ],
+  "by_class": [
+   {
+    "instrument_class": "hyperscaler_spot",
+    "cause": "composition",
+    "n": 4,
+    "share_changes": 0.007,
+    "share_abs_dlog": 0.001
+   },
+   {
+    "instrument_class": "hyperscaler_spot",
+    "cause": "mixed",
+    "n": 14,
+    "share_changes": 0.024,
+    "share_abs_dlog": 0.015
+   },
+   {
+    "instrument_class": "hyperscaler_spot",
+    "cause": "repricing",
+    "n": 69,
+    "share_changes": 0.119,
+    "share_abs_dlog": 0.121
+   },
+   {
+    "instrument_class": "marketplace_ask",
+    "cause": "composition",
+    "n": 1,
+    "share_changes": 0.002,
+    "share_abs_dlog": 0.012
+   },
+   {
+    "instrument_class": "marketplace_ask",
+    "cause": "repricing",
+    "n": 51,
+    "share_changes": 0.088,
+    "share_abs_dlog": 0.385
+   },
+   {
+    "instrument_class": "neocloud_rate_card",
+    "cause": "composition",
+    "n": 46,
+    "share_changes": 0.079,
+    "share_abs_dlog": 0.243
+   },
+   {
+    "instrument_class": "neocloud_rate_card",
+    "cause": "mixed",
+    "n": 8,
+    "share_changes": 0.014,
+    "share_abs_dlog": 0.025
+   },
+   {
+    "instrument_class": "neocloud_rate_card",
+    "cause": "repricing",
+    "n": 343,
+    "share_changes": 0.592,
+    "share_abs_dlog": 0.153
+   },
+   {
+    "instrument_class": "neocloud_spot",
+    "cause": "composition",
+    "n": 9,
+    "share_changes": 0.016,
+    "share_abs_dlog": 0.027
+   },
+   {
+    "instrument_class": "neocloud_spot",
+    "cause": "mixed",
+    "n": 1,
+    "share_changes": 0.002,
+    "share_abs_dlog": 0.001
+   },
+   {
+    "instrument_class": "neocloud_spot",
+    "cause": "repricing",
+    "n": 33,
+    "share_changes": 0.057,
+    "share_abs_dlog": 0.017
+   }
+  ]
+ },
+ "last_value_abs_error_share": {
+  "1": {
+   "all": {
+    "composition": 0.399,
+    "mixed": 0.107,
+    "none": 0.0,
+    "repricing": 0.494
+   },
+   "by_source": [
+    {
+     "source_id": "afhubbard",
+     "cause": "composition",
+     "lv_abs_err": 0.0
+    },
+    {
+     "source_id": "afhubbard",
+     "cause": "mixed",
+     "lv_abs_err": 0.009
+    },
+    {
+     "source_id": "afhubbard",
+     "cause": "none",
+     "lv_abs_err": 0.0
+    },
+    {
+     "source_id": "afhubbard",
+     "cause": "repricing",
+     "lv_abs_err": 0.03
+    },
+    {
+     "source_id": "fastgpu_daily",
+     "cause": "composition",
+     "lv_abs_err": 0.245
+    },
+    {
+     "source_id": "fastgpu_daily",
+     "cause": "mixed",
+     "lv_abs_err": 0.094
+    },
+    {
+     "source_id": "fastgpu_daily",
+     "cause": "none",
+     "lv_abs_err": 0.0
+    },
+    {
+     "source_id": "fastgpu_daily",
+     "cause": "repricing",
+     "lv_abs_err": 0.089
+    },
+    {
+     "source_id": "gpurentalprices",
+     "cause": "composition",
+     "lv_abs_err": 0.153
+    },
+    {
+     "source_id": "gpurentalprices",
+     "cause": "mixed",
+     "lv_abs_err": 0.004
+    },
+    {
+     "source_id": "gpurentalprices",
+     "cause": "none",
+     "lv_abs_err": 0.0
+    },
+    {
+     "source_id": "gpurentalprices",
+     "cause": "repricing",
+     "lv_abs_err": 0.375
+    }
+   ],
+   "by_class": [
+    {
+     "instrument_class": "hyperscaler_spot",
+     "cause": "composition",
+     "lv_abs_err": 0.0
+    },
+    {
+     "instrument_class": "hyperscaler_spot",
+     "cause": "mixed",
+     "lv_abs_err": 0.009
+    },
+    {
+     "instrument_class": "hyperscaler_spot",
+     "cause": "none",
+     "lv_abs_err": 0.0
+    },
+    {
+     "instrument_class": "hyperscaler_spot",
+     "cause": "repricing",
+     "lv_abs_err": 0.043
+    },
+    {
+     "instrument_class": "marketplace_ask",
+     "cause": "composition",
+     "lv_abs_err": 0.012
+    },
+    {
+     "instrument_class": "marketplace_ask",
+     "cause": "none",
+     "lv_abs_err": 0.0
+    },
+    {
+     "instrument_class": "marketplace_ask",
+     "cause": "repricing",
+     "lv_abs_err": 0.239
+    },
+    {
+     "instrument_class": "neocloud_rate_card",
+     "cause": "composition",
+     "lv_abs_err": 0.353
+    },
+    {
+     "instrument_class": "neocloud_rate_card",
+     "cause": "mixed",
+     "lv_abs_err": 0.096
+    },
+    {
+     "instrument_class": "neocloud_rate_card",
+     "cause": "none",
+     "lv_abs_err": 0.0
+    },
+    {
+     "instrument_class": "neocloud_rate_card",
+     "cause": "repricing",
+     "lv_abs_err": 0.202
+    },
+    {
+     "instrument_class": "neocloud_spot",
+     "cause": "composition",
+     "lv_abs_err": 0.034
+    },
+    {
+     "instrument_class": "neocloud_spot",
+     "cause": "mixed",
+     "lv_abs_err": 0.003
+    },
+    {
+     "instrument_class": "neocloud_spot",
+     "cause": "none",
+     "lv_abs_err": 0.0
+    },
+    {
+     "instrument_class": "neocloud_spot",
+     "cause": "repricing",
+     "lv_abs_err": 0.01
+    }
+   ],
+   "n_cells": {
+    "composition": 56,
+    "mixed": 15,
+    "none": 1003,
+    "repricing": 348
+   }
+  },
+  "3": {
+   "all": {
+    "composition": 0.324,
+    "mixed": 0.202,
+    "none": 0.0,
+    "repricing": 0.474
+   },
+   "by_source": [
+    {
+     "source_id": "afhubbard",
+     "cause": "composition",
+     "lv_abs_err": 0.0
+    },
+    {
+     "source_id": "afhubbard",
+     "cause": "mixed",
+     "lv_abs_err": 0.004
+    },
+    {
+     "source_id": "afhubbard",
+     "cause": "none",
+     "lv_abs_err": 0.0
+    },
+    {
+     "source_id": "afhubbard",
+     "cause": "repricing",
+     "lv_abs_err": 0.058
+    },
+    {
+     "source_id": "fastgpu_daily",
+     "cause": "composition",
+     "lv_abs_err": 0.189
+    },
+    {
+     "source_id": "fastgpu_daily",
+     "cause": "mixed",
+     "lv_abs_err": 0.137
+    },
+    {
+     "source_id": "fastgpu_daily",
+     "cause": "none",
+     "lv_abs_err": 0.0
+    },
+    {
+     "source_id": "fastgpu_daily",
+     "cause": "repricing",
+     "lv_abs_err": 0.125
+    },
+    {
+     "source_id": "gpurentalprices",
+     "cause": "composition",
+     "lv_abs_err": 0.134
+    },
+    {
+     "source_id": "gpurentalprices",
+     "cause": "mixed",
+     "lv_abs_err": 0.061
+    },
+    {
+     "source_id": "gpurentalprices",
+     "cause": "none",
+     "lv_abs_err": 0.0
+    },
+    {
+     "source_id": "gpurentalprices",
+     "cause": "repricing",
+     "lv_abs_err": 0.291
+    }
+   ],
+   "by_class": [
+    {
+     "instrument_class": "hyperscaler_spot",
+     "cause": "composition",
+     "lv_abs_err": 0.0
+    },
+    {
+     "instrument_class": "hyperscaler_spot",
+     "cause": "mixed",
+     "lv_abs_err": 0.004
+    },
+    {
+     "instrument_class": "hyperscaler_spot",
+     "cause": "none",
+     "lv_abs_err": 0.0
+    },
+    {
+     "instrument_class": "hyperscaler_spot",
+     "cause": "repricing",
+     "lv_abs_err": 0.075
+    },
+    {
+     "instrument_class": "marketplace_ask",
+     "cause": "composition",
+     "lv_abs_err": 0.016
+    },
+    {
+     "instrument_class": "marketplace_ask",
+     "cause": "none",
+     "lv_abs_err": 0.0
+    },
+    {
+     "instrument_class": "marketplace_ask",
+     "cause": "repricing",
+     "lv_abs_err": 0.131
+    },
+    {
+     "instrument_class": "neocloud_rate_card",
+     "cause": "composition",
+     "lv_abs_err": 0.264
+    },
+    {
+     "instrument_class": "neocloud_rate_card",
+     "cause": "mixed",
+     "lv_abs_err": 0.196
+    },
+    {
+     "instrument_class": "neocloud_rate_card",
+     "cause": "none",
+     "lv_abs_err": 0.0
+    },
+    {
+     "instrument_class": "neocloud_rate_card",
+     "cause": "repricing",
+     "lv_abs_err": 0.252
+    },
+    {
+     "instrument_class": "neocloud_spot",
+     "cause": "composition",
+     "lv_abs_err": 0.043
+    },
+    {
+     "instrument_class": "neocloud_spot",
+     "cause": "mixed",
+     "lv_abs_err": 0.002
+    },
+    {
+     "instrument_class": "neocloud_spot",
+     "cause": "none",
+     "lv_abs_err": 0.0
+    },
+    {
+     "instrument_class": "neocloud_spot",
+     "cause": "repricing",
+     "lv_abs_err": 0.016
+    }
+   ],
+   "n_cells": {
+    "composition": 108,
+    "mixed": 28,
+    "none": 733,
+    "repricing": 553
+   }
+  },
+  "7": {
+   "all": {
+    "composition": 0.264,
+    "mixed": 0.253,
+    "none": 0.0,
+    "repricing": 0.483
+   },
+   "by_source": [
+    {
+     "source_id": "afhubbard",
+     "cause": "composition",
+     "lv_abs_err": 0.0
+    },
+    {
+     "source_id": "afhubbard",
+     "cause": "mixed",
+     "lv_abs_err": 0.001
+    },
+    {
+     "source_id": "afhubbard",
+     "cause": "none",
+     "lv_abs_err": 0.0
+    },
+    {
+     "source_id": "afhubbard",
+     "cause": "repricing",
+     "lv_abs_err": 0.071
+    },
+    {
+     "source_id": "fastgpu_daily",
+     "cause": "composition",
+     "lv_abs_err": 0.128
+    },
+    {
+     "source_id": "fastgpu_daily",
+     "cause": "mixed",
+     "lv_abs_err": 0.159
+    },
+    {
+     "source_id": "fastgpu_daily",
+     "cause": "none",
+     "lv_abs_err": 0.0
+    },
+    {
+     "source_id": "fastgpu_daily",
+     "cause": "repricing",
+     "lv_abs_err": 0.158
+    },
+    {
+     "source_id": "gpurentalprices",
+     "cause": "composition",
+     "lv_abs_err": 0.136
+    },
+    {
+     "source_id": "gpurentalprices",
+     "cause": "mixed",
+     "lv_abs_err": 0.093
+    },
+    {
+     "source_id": "gpurentalprices",
+     "cause": "none",
+     "lv_abs_err": 0.0
+    },
+    {
+     "source_id": "gpurentalprices",
+     "cause": "repricing",
+     "lv_abs_err": 0.254
+    }
+   ],
+   "by_class": [
+    {
+     "instrument_class": "hyperscaler_spot",
+     "cause": "composition",
+     "lv_abs_err": 0.0
+    },
+    {
+     "instrument_class": "hyperscaler_spot",
+     "cause": "mixed",
+     "lv_abs_err": 0.001
+    },
+    {
+     "instrument_class": "hyperscaler_spot",
+     "cause": "none",
+     "lv_abs_err": 0.0
+    },
+    {
+     "instrument_class": "hyperscaler_spot",
+     "cause": "repricing",
+     "lv_abs_err": 0.092
+    },
+    {
+     "instrument_class": "marketplace_ask",
+     "cause": "composition",
+     "lv_abs_err": 0.019
+    },
+    {
+     "instrument_class": "marketplace_ask",
+     "cause": "none",
+     "lv_abs_err": 0.0
+    },
+    {
+     "instrument_class": "marketplace_ask",
+     "cause": "repricing",
+     "lv_abs_err": 0.087
+    },
+    {
+     "instrument_class": "neocloud_rate_card",
+     "cause": "composition",
+     "lv_abs_err": 0.207
+    },
+    {
+     "instrument_class": "neocloud_rate_card",
+     "cause": "mixed",
+     "lv_abs_err": 0.239
+    },
+    {
+     "instrument_class": "neocloud_rate_card",
+     "cause": "none",
+     "lv_abs_err": 0.0
+    },
+    {
+     "instrument_class": "neocloud_rate_card",
+     "cause": "repricing",
+     "lv_abs_err": 0.289
+    },
+    {
+     "instrument_class": "neocloud_spot",
+     "cause": "composition",
+     "lv_abs_err": 0.038
+    },
+    {
+     "instrument_class": "neocloud_spot",
+     "cause": "mixed",
+     "lv_abs_err": 0.013
+    },
+    {
+     "instrument_class": "neocloud_spot",
+     "cause": "none",
+     "lv_abs_err": 0.0
+    },
+    {
+     "instrument_class": "neocloud_spot",
+     "cause": "repricing",
+     "lv_abs_err": 0.015
+    }
+   ],
+   "n_cells": {
+    "composition": 167,
+    "mixed": 84,
+    "none": 475,
+    "repricing": 696
+   }
+  }
+ },
+ "persistence_slope_fwd_on_jump": {
+  "composition_h1": {
+   "n": 60,
+   "slope": -0.013,
+   "ci90": [
+    -0.134,
+    0.002
+   ],
+   "share_fully_reverted": 0.017
+  },
+  "composition_h3": {
+   "n": 57,
+   "slope": -0.236,
+   "ci90": [
+    -0.268,
+    -0.036
+   ],
+   "share_fully_reverted": 0.035
+  },
+  "composition_h7": {
+   "n": 56,
+   "slope": -0.162,
+   "ci90": [
+    -0.296,
+    -0.143
+   ],
+   "share_fully_reverted": 0.054
+  },
+  "mixed_h1": {
+   "n": 23,
+   "slope": 0.304,
+   "ci90": [
+    0.03,
+    0.383
+   ],
+   "share_fully_reverted": 0.0
+  },
+  "mixed_h3": {
+   "n": 19,
+   "slope": 0.059,
+   "ci90": [
+    -0.106,
+    0.246
+   ],
+   "share_fully_reverted": 0.0
+  },
+  "mixed_h7": {
+   "n": 18,
+   "slope": 0.209,
+   "ci90": [
+    -0.448,
+    1.738
+   ],
+   "share_fully_reverted": 0.0
+  },
+  "repricing_h1": {
+   "n": 477,
+   "slope": -0.293,
+   "ci90": [
+    -0.529,
+    0.033
+   ],
+   "share_fully_reverted": 0.01
+  },
+  "repricing_h3": {
+   "n": 452,
+   "slope": -0.196,
+   "ci90": [
+    -0.422,
+    0.037
+   ],
+   "share_fully_reverted": 0.018
+  },
+  "repricing_h7": {
+   "n": 392,
+   "slope": -0.43,
+   "ci90": [
+    -0.636,
+    -0.194
+   ],
+   "share_fully_reverted": 0.008
+  },
+  "repricing_afhubbard_h1": {
+   "n": 51,
+   "slope": -0.003,
+   "ci90": [
+    -0.04,
+    0.021
+   ]
+  },
+  "repricing_afhubbard_h3": {
+   "n": 48,
+   "slope": -0.011,
+   "ci90": [
+    -0.065,
+    0.019
+   ]
+  },
+  "repricing_afhubbard_h7": {
+   "n": 44,
+   "slope": -0.328,
+   "ci90": [
+    -0.536,
+    -0.138
+   ]
+  },
+  "repricing_fastgpu_daily_h1": {
+   "n": 134,
+   "slope": 0.18,
+   "ci90": [
+    0.024,
+    0.299
+   ]
+  },
+  "repricing_fastgpu_daily_h3": {
+   "n": 124,
+   "slope": 0.396,
+   "ci90": [
+    0.188,
+    0.771
+   ]
+  },
+  "repricing_fastgpu_daily_h7": {
+   "n": 92,
+   "slope": 0.153,
+   "ci90": [
+    -0.029,
+    0.721
+   ]
+  },
+  "repricing_gpurentalprices_h1": {
+   "n": 292,
+   "slope": -0.326,
+   "ci90": [
+    -0.576,
+    -0.012
+   ]
+  },
+  "repricing_gpurentalprices_h3": {
+   "n": 280,
+   "slope": -0.226,
+   "ci90": [
+    -0.453,
+    0.045
+   ]
+  },
+  "repricing_gpurentalprices_h7": {
+   "n": 256,
+   "slope": -0.457,
+   "ci90": [
+    -0.685,
+    -0.189
+   ]
+  }
+ },
+ "offer_hazards_since_0804": {
+  "afhubbard": {
+   "offer_days": 123999,
+   "p_reprice": 0.2002,
+   "p_reprice_up_share": 0.5,
+   "p_exit": 0.015,
+   "dispersion_by_provider": 12075.34,
+   "dispersion_by_day": 786.04,
+   "p_other_offer_repriced_given_one": 0.889,
+   "top5_provider_share_of_reprices": {
+    "gcp": 0.634,
+    "aws": 0.35,
+    "azure": 0.016,
+    "oci": 0.0
+   },
+   "top5_share_of_offer_days": {
+    "gcp": 0.722,
+    "aws": 0.076,
+    "azure": 0.128,
+    "oci": 0.073
+   }
+  },
+  "fastgpu_daily": {
+   "offer_days": 4301,
+   "p_reprice": 0.0928,
+   "p_reprice_up_share": 0.885,
+   "p_exit": 0.0377,
+   "dispersion_by_provider": 75.37,
+   "dispersion_by_day": 5.08,
+   "p_other_offer_repriced_given_one": 0.47,
+   "top5_provider_share_of_reprices": {
+    "verda": 0.84,
+    "aws": 0.088,
+    "gcp": 0.023,
+    "quantacloud": 0.015,
+    "fal": 0.01
+   },
+   "top5_share_of_offer_days": {
+    "verda": 0.138,
+    "aws": 0.016,
+    "gcp": 0.016,
+    "quantacloud": 0.011,
+    "fal": 0.041
+   }
+  },
+  "gpurentalprices": {
+   "offer_days": 5630,
+   "p_reprice": 0.0952,
+   "p_reprice_up_share": 0.634,
+   "p_exit": 0.021,
+   "dispersion_by_provider": 130.1,
+   "dispersion_by_day": 3.34,
+   "p_other_offer_repriced_given_one": 0.888,
+   "top5_provider_share_of_reprices": {
+    "scaleway": 0.418,
+    "verda": 0.39,
+    "sfcompute": 0.09,
+    "spheron": 0.076,
+    "nebius": 0.007
+   },
+   "top5_share_of_offer_days": {
+    "scaleway": 0.061,
+    "verda": 0.124,
+    "sfcompute": 0.01,
+    "spheron": 0.012,
+    "nebius": 0.075
+   }
+  }
+ },
+ "exit_return": {
+  "afhubbard_h1": {
+   "n": 1859,
+   "returned": 0.005,
+   "returned_same_price": 0.001
+  },
+  "afhubbard_h3": {
+   "n": 1859,
+   "returned": 0.005,
+   "returned_same_price": 0.001
+  },
+  "afhubbard_h7": {
+   "n": 1859,
+   "returned": 0.005,
+   "returned_same_price": 0.001
+  },
+  "fastgpu_daily_h1": {
+   "n": 162,
+   "returned": 0.0,
+   "returned_same_price": 0.0
+  },
+  "fastgpu_daily_h3": {
+   "n": 162,
+   "returned": 0.056,
+   "returned_same_price": 0.056
+  },
+  "fastgpu_daily_h7": {
+   "n": 162,
+   "returned": 0.056,
+   "returned_same_price": 0.056
+  },
+  "gpurentalprices_h1": {
+   "n": 118,
+   "returned": 0.0,
+   "returned_same_price": 0.0
+  },
+  "gpurentalprices_h3": {
+   "n": 118,
+   "returned": 0.0,
+   "returned_same_price": 0.0
+  },
+  "gpurentalprices_h7": {
+   "n": 118,
+   "returned": 0.0,
+   "returned_same_price": 0.0
+  }
+ },
+ "reachability": {
+  "h1_composition": {
+   "n": 56,
+   "reach_os_k1": 0.5,
+   "reach_osmid_k1": 0.786,
+   "reach_any_value": 0.5,
+   "reach_os_k2": 0.5,
+   "reach_osmid_k2": 0.786,
+   "reach_os_k3": 0.5,
+   "reach_osmid_k3": 0.786
+  },
+  "h1_mixed": {
+   "n": 15,
+   "reach_os_k1": 0.467,
+   "reach_osmid_k1": 0.467,
+   "reach_any_value": 0.667,
+   "reach_os_k2": 0.467,
+   "reach_osmid_k2": 0.467,
+   "reach_os_k3": 0.467,
+   "reach_osmid_k3": 0.467
+  },
+  "h1_repricing": {
+   "n": 348,
+   "reach_os_k1": 0.075,
+   "reach_osmid_k1": 0.118,
+   "reach_any_value": 0.21,
+   "reach_os_k2": 0.075,
+   "reach_osmid_k2": 0.124,
+   "reach_os_k3": 0.075,
+   "reach_osmid_k3": 0.124
+  },
+  "h3_composition": {
+   "n": 108,
+   "reach_os_k1": 0.389,
+   "reach_osmid_k1": 0.63,
+   "reach_any_value": 0.389,
+   "reach_os_k2": 0.389,
+   "reach_osmid_k2": 0.667,
+   "reach_os_k3": 0.389,
+   "reach_osmid_k3": 0.667
+  },
+  "h3_mixed": {
+   "n": 28,
+   "reach_os_k1": 0.286,
+   "reach_osmid_k1": 0.357,
+   "reach_any_value": 0.464,
+   "reach_os_k2": 0.357,
+   "reach_osmid_k2": 0.429,
+   "reach_os_k3": 0.357,
+   "reach_osmid_k3": 0.429
+  },
+  "h3_repricing": {
+   "n": 553,
+   "reach_os_k1": 0.101,
+   "reach_osmid_k1": 0.161,
+   "reach_any_value": 0.215,
+   "reach_os_k2": 0.101,
+   "reach_osmid_k2": 0.174,
+   "reach_os_k3": 0.103,
+   "reach_osmid_k3": 0.175
+  },
+  "h7_composition": {
+   "n": 167,
+   "reach_os_k1": 0.293,
+   "reach_osmid_k1": 0.539,
+   "reach_any_value": 0.299,
+   "reach_os_k2": 0.299,
+   "reach_osmid_k2": 0.563,
+   "reach_os_k3": 0.299,
+   "reach_osmid_k3": 0.563
+  },
+  "h7_mixed": {
+   "n": 84,
+   "reach_os_k1": 0.262,
+   "reach_osmid_k1": 0.274,
+   "reach_any_value": 0.381,
+   "reach_os_k2": 0.369,
+   "reach_osmid_k2": 0.393,
+   "reach_os_k3": 0.369,
+   "reach_osmid_k3": 0.393
+  },
+  "h7_repricing": {
+   "n": 696,
+   "reach_os_k1": 0.115,
+   "reach_osmid_k1": 0.159,
+   "reach_any_value": 0.214,
+   "reach_os_k2": 0.122,
+   "reach_osmid_k2": 0.187,
+   "reach_os_k3": 0.125,
+   "reach_osmid_k3": 0.19
+  },
+  "h1_all": {
+   "n": 419,
+   "loss_weighted_osmid_k2": 0.307,
+   "reach_os_k1": 0.146,
+   "reach_osmid_k1": 0.22,
+   "reach_any_value": 0.265,
+   "reach_os_k2": 0.146,
+   "reach_osmid_k2": 0.224,
+   "reach_os_k3": 0.146,
+   "reach_osmid_k3": 0.224
+  },
+  "h1_afhubbard": {
+   "n": 42,
+   "reach_os_k1": 0.667,
+   "reach_osmid_k2": 0.69,
+   "reach_osmid_k3": 0.69,
+   "reach_any_value": 0.786
+  },
+  "h1_fastgpu_daily": {
+   "n": 142,
+   "reach_os_k1": 0.141,
+   "reach_osmid_k2": 0.282,
+   "reach_osmid_k3": 0.282,
+   "reach_any_value": 0.19
+  },
+  "h1_gpurentalprices": {
+   "n": 235,
+   "reach_os_k1": 0.055,
+   "reach_osmid_k2": 0.106,
+   "reach_osmid_k3": 0.106,
+   "reach_any_value": 0.217
+  },
+  "h3_all": {
+   "n": 689,
+   "loss_weighted_osmid_k2": 0.27,
+   "reach_os_k1": 0.154,
+   "reach_osmid_k1": 0.242,
+   "reach_any_value": 0.253,
+   "reach_os_k2": 0.157,
+   "reach_osmid_k2": 0.261,
+   "reach_os_k3": 0.158,
+   "reach_osmid_k3": 0.263
+  },
+  "h3_afhubbard": {
+   "n": 93,
+   "reach_os_k1": 0.495,
+   "reach_osmid_k2": 0.527,
+   "reach_osmid_k3": 0.538,
+   "reach_any_value": 0.645
+  },
+  "h3_fastgpu_daily": {
+   "n": 250,
+   "reach_os_k1": 0.128,
+   "reach_osmid_k2": 0.292,
+   "reach_osmid_k3": 0.292,
+   "reach_any_value": 0.16
+  },
+  "h3_gpurentalprices": {
+   "n": 346,
+   "reach_os_k1": 0.081,
+   "reach_osmid_k2": 0.168,
+   "reach_osmid_k3": 0.168,
+   "reach_any_value": 0.214
+  },
+  "h7_all": {
+   "n": 947,
+   "loss_weighted_osmid_k2": 0.257,
+   "reach_os_k1": 0.159,
+   "reach_osmid_k1": 0.237,
+   "reach_any_value": 0.244,
+   "reach_os_k2": 0.175,
+   "reach_osmid_k2": 0.271,
+   "reach_os_k3": 0.177,
+   "reach_osmid_k3": 0.273
+  },
+  "h7_afhubbard": {
+   "n": 161,
+   "reach_os_k1": 0.292,
+   "reach_osmid_k2": 0.36,
+   "reach_osmid_k3": 0.373,
+   "reach_any_value": 0.516
+  },
+  "h7_fastgpu_daily": {
+   "n": 367,
+   "reach_os_k1": 0.136,
+   "reach_osmid_k2": 0.322,
+   "reach_osmid_k3": 0.322,
+   "reach_any_value": 0.177
+  },
+  "h7_gpurentalprices": {
+   "n": 419,
+   "reach_os_k1": 0.129,
+   "reach_osmid_k2": 0.193,
+   "reach_osmid_k3": 0.193,
+   "reach_any_value": 0.198
+  }
+ },
+ "blend_misses": {
+  "n_cells": 4266,
+  "blend_loss_share_by_cause_all_cells": {
+   "composition": 0.321,
+   "mixed": 0.222,
+   "none": 0.045,
+   "repricing": 0.412
+  },
+  "n_by_cause_all_cells": {
+   "composition": 331,
+   "mixed": 127,
+   "none": 2211,
+   "repricing": 1597
+  },
+  "outside_q10_q90": {
+   "n": 1101,
+   "share_of_total_blend_loss": 0.774,
+   "n_by_cause": {
+    "composition": 274,
+    "mixed": 76,
+    "none": 116,
+    "repricing": 635
+   },
+   "loss_share_of_total_by_cause": {
+    "composition": 0.301,
+    "mixed": 0.205,
+    "none": 0.0,
+    "repricing": 0.268
+   },
+   "by_h_cause": {
+    "1|composition": 0.049,
+    "1|mixed": 0.013,
+    "1|none": 0.0,
+    "1|repricing": 0.032,
+    "3|composition": 0.097,
+    "3|mixed": 0.057,
+    "3|none": 0.0,
+    "3|repricing": 0.074,
+    "7|composition": 0.155,
+    "7|mixed": 0.135,
+    "7|none": 0.0,
+    "7|repricing": 0.162
+   },
+   "by_side_cause": {
+    "above|composition": 0.155,
+    "above|mixed": 0.202,
+    "above|none": 0.0,
+    "above|repricing": 0.222,
+    "below|composition": 0.146,
+    "below|mixed": 0.003,
+    "below|none": 0.0,
+    "below|repricing": 0.046
+   }
+  },
+  "top10pct_loss": {
+   "n": 427,
+   "share_of_total_blend_loss": 0.71,
+   "n_by_cause": {
+    "composition": 188,
+    "mixed": 60,
+    "none": 1,
+    "repricing": 178
+   },
+   "loss_share_of_total_by_cause": {
+    "composition": 0.289,
+    "mixed": 0.206,
+    "none": 0.001,
+    "repricing": 0.214
+   },
+   "by_h_cause": {
+    "1|composition": 0.049,
+    "1|mixed": 0.013,
+    "1|repricing": 0.026,
+    "3|composition": 0.094,
+    "3|mixed": 0.059,
+    "3|none": 0.001,
+    "3|repricing": 0.051,
+    "7|composition": 0.146,
+    "7|mixed": 0.135,
+    "7|repricing": 0.137
+   },
+   "by_side_cause": {
+    "above|composition": 0.138,
+    "above|mixed": 0.195,
+    "above|repricing": 0.142,
+    "below|composition": 0.136,
+    "below|mixed": 0.001,
+    "below|repricing": 0.018,
+    "in|composition": 0.015,
+    "in|mixed": 0.01,
+    "in|none": 0.001,
+    "in|repricing": 0.055
+   }
+  },
+  "top_series_by_cause_loss": {
+   "composition": {
+    "gpurentalprices.neocloud_rate_card.A100_40GB.on_demand.median": 0.052,
+    "fastgpu_daily.neocloud_rate_card.H100_PCIe_80GB.on_demand.median": 0.042,
+    "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median": 0.025,
+    "fastgpu_daily.neocloud_rate_card.A100_40GB.on_demand.median": 0.024
+   },
+   "mixed": {
+    "fastgpu_daily.neocloud_rate_card.B300.on_demand.median": 0.069,
+    "fastgpu_daily.neocloud_rate_card.B200.on_demand.median": 0.047,
+    "gpurentalprices.neocloud_rate_card.B300.on_demand.median": 0.047,
+    "gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median": 0.021
+   },
+   "none": {
+    "gpurentalprices.neocloud_rate_card.B300.on_demand.median": 0.001
+   },
+   "repricing": {
+    "gpurentalprices.marketplace_ask.H100_80GB.spot.median": 0.071,
+    "fastgpu_daily.neocloud_rate_card.B300.on_demand.median": 0.051,
+    "gpurentalprices.neocloud_rate_card.B300.on_demand.median": 0.031,
+    "fastgpu_daily.neocloud_rate_card.B200.on_demand.median": 0.015
+   }
+  }
+ }
+}

@@ -1,0 +1,67 @@
+{
+ "key": {
+  "afhubbard": {
+   "key": [
+    "provider",
+    "region_raw",
+    "sku_raw",
+    "gpu_count"
+   ],
+   "next_day_offer_survival": 0.9997,
+   "next_day_provider_survival": 0.9997,
+   "offers_per_series_day": 448.0,
+   "share_offers_present_all_days": 0.891,
+   "n_distinct_offers": 1886
+  },
+  "fastgpu_daily": {
+   "key": [
+    "provider"
+   ],
+   "next_day_offer_survival": 0.9964,
+   "next_day_provider_survival": 0.9964,
+   "offers_per_series_day": 6.1,
+   "share_offers_present_all_days": 0.654,
+   "n_distinct_offers": 153
+  },
+  "gpurentalprices": {
+   "key": [
+    "provider",
+    "sku_raw"
+   ],
+   "next_day_offer_survival": 0.9966,
+   "next_day_provider_survival": 0.9991,
+   "offers_per_series_day": 6.2,
+   "share_offers_present_all_days": 0.526,
+   "n_distinct_offers": 114
+  }
+ },
+ "reproduction": {
+  "afhubbard": {
+   "series_days": 840,
+   "exact_within_half_cent": 1.0,
+   "missing_panel": 0,
+   "max_abs_diff": 0.0001
+  },
+  "fastgpu_daily": {
+   "series_days": 720,
+   "exact_within_half_cent": 1.0,
+   "missing_panel": 0,
+   "max_abs_diff": 0.0
+  },
+  "gpurentalprices": {
+   "series_days": 923,
+   "exact_within_half_cent": 1.0,
+   "missing_panel": 0,
+   "max_abs_diff": 0.0001
+  }
+ },
+ "filled_days_in_dev": 0,
+ "n_events": 653,
+ "cause_counts": {
+  "repricing": 564,
+  "composition": 62,
+  "mixed": 27
+ },
+ "cause_shapley_agree": 0.965,
+ "n_pairs": 2446
+}

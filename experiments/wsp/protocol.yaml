@@ -1,0 +1,66 @@
+slug: wsp
+registered_before_scoring: 2026-11-14T19:48:00Z
+question: Can reasoned local weight edits improve a fixed mix forecast beyond gradient training?
+base:
+  method: mix
+  params: {pool: cc, k: 20, state: chgk, sk: 3, hl: 30}
+failure:
+  source: experiments/AGENT_BRIEF_R2.md
+  measured_share: "Moves >5%: 9% of full-dev cells, 61% of last-value loss; upward moves 46%."
+  target: "Upper-tail undercoverage at long horizons, with overly wide intervals in dormant series."
+  caveat: "These are supplied full-dev findings, not an independently blind discovery."
+mechanism: "One new ReLU unit per named conditional rule: one feature read direction and one three-output write direction."
+prediction: "Hand edits add 0.005 to 0.02 pooled practice skill, primarily h=7 upper tails; generalization is uncertain."
+refutation: "No practice improvement, held-out gain <=0, or Adam matches/exceeds hand edits."
+network:
+  inputs: 20
+  hidden_relu_units: 24
+  outputs: [s10, s90, centre_shift]
+  output_limits: [2, 2, 0.5]
+  formula: "log centre = log(base q50) + c * log(base q90/base q10); log tail offsets multiplied by exp(s10/s90)"
+  initialization: all_zero
+features: "Fixed analytic scaling only; series and peer histories plus latest daily_statistics, all <=origin."
+practice:
+  origins: [2026-08-18, 2026-09-11]
+  max_forward_calls: 40
+  log: experiments/wsp/results/passes.jsonl
+  selection: strictly_improves_pooled_practice_skill
+  report: [pooled_skill, outcome_bucket, horizon, per_tail_coverage]
+heldout:
+  origins: [2026-09-12, 2026-10-06]
+  policy: "One final evaluation per frozen method/kept patch set, no editing afterward."
+  overlap_caveat: "Requested origin split has overlapping target dates through September 18."
+  sensitivity: "Also summarize origins >=September 19 from the same final evaluation, after the latest practice target."
+hand_edit_policy:
+  hypotheses: "Up to 10 independently reasoned rules, each written to immutable numbered JSON before scoring; no numerical sweep."
+  controls: "For each kept edit, same parent plus reversed output direction, and random read/write direction with equal full parameter norm (fixed seed)."
+  keep_controls: false
+  freeze: "Write freeze.json with hashes before training or held-out scoring."
+gradient_control:
+  optimizer: Adam
+  learning_rate: 0.01
+  max_epochs: 500
+  patience: 40
+  objective: dollar_pinball
+  early_stop_origins: [2026-09-05, 2026-09-11]
+  fit: "Practice origins before September 5 with target before September 5 (purged early-stop boundary)."
+  variants:
+    literal_zero: "All weights/biases zero: only output bias can learn; report degeneracy explicitly."
+    zero_function: "Fixed-seed random hidden layer, zero output weights/bias: identical initial forecasts, trainable feature-dependent comparator."
+random_control:
+  seed: 2718
+  proposals: 50
+  scored_matched_budget: 40
+  supplemental_scored_budget: 50
+  rule: "Independent random one-unit mutations of incumbent; fixed magnitude 0.2; strict practice improvement."
+  caveat: "50 scored steps cannot equal a 40-call cap. Freeze matched 40-call winner and separately report 50-call sensitivity."
+evaluation:
+  universe: rental_headline
+  horizons: [1, 3, 7]
+  baselines: [mix, drift]
+  paired_ci: "gpuf.compare.paired, 2000 ISO-week bootstrap replicates, seed 0, 90% intervals."
+  blend: "Equal log-quantile blend of hand-edited weights and reference mix."
+  validation: forbidden
+reproducibility:
+  artifacts: "Commit only wsp method, experiment files, weights/patches and tests; SHA-256 manifest."
+  instructions: "Specific user request for committed files overrides generic brief prohibition."

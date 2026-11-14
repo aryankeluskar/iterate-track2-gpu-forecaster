@@ -1,36 +1,34 @@
 slug: hazard
 method: hazard (src/gpuf/methods/hazard.py)
+failure_mode: >
+  52% of dev cells do not move (0% of last-value loss, but every method spends interval width on them:
+  blend loses 0.037 of base loss there); 9% move by more than 5% and carry 61% of last-value loss
+  (up 46%, down 15%). Hindsight bounds on the blend (0.182): knowing whether it moves 0.219, knowing
+  the direction 0.226, both 0.262.
 hypothesis: >
-  The h-day log change of a posted rental series is exactly zero with a probability that depends
-  on the series' recent state (days since its last change, number of changes in the last 7 and 14
-  days, collector x instrument class), and otherwise is a draw from a jump-size distribution that
-  does not depend on that state. Drift ignores the state: it mixes zeros and jumps in the series'
-  unconditional proportion.
+  A hurdle model that separates (1) P(no change), P(up), P(down) in h days from (2) the size of the move
+  given that it happens can recover part of the 0.219 / 0.226 bounds, because move occurrence and
+  direction are partly predictable from observable state (days since last change, recent change counts,
+  volatility of the series and of its collector-class peers, the offer panel's p25/p75 around the median,
+  n_providers and its change), while current methods use one pooled h-day change distribution with a
+  binary "changed in last 3 days" state.
 mechanism: >
-  Changes cluster (afhubbard: P(change) 0.63 the day after a change vs 0.03 after two idle weeks).
-  After a long idle spell drift's q10/q90 are too wide (it prices in jumps that are unlikely), so a
-  higher state-dependent zero mass collapses the interval toward the last value and saves pinball
-  loss; right after a burst of changes drift is too narrow / its q50 too sticky and a lower zero mass
-  widens it. Pooling the hazard and jump sizes across collector x class (rental_all as training
-  data, expanding window) fixes the few-sample problem of per-series quantiles (60-89 days).
-model: >
-  p0(state, h) = P(value at t+h == value at t | state at t), estimated as empirical rates in
-  state bins (tsl bins x n7 bins) over all rental_all series of the same collector x class, using
-  only pairs with t+h <= origin, shrunk toward the bin rate pooled over all groups, then toward the
-  series' own rate. Non-zero h-day log change ~ pooled empirical distribution of non-zero h-day
-  changes in the group, each standardized by its series' median |non-zero h-day change| and
-  rescaled by the target series' (shrunk) scale. q10/q50/q90 read off the mixture
-  p0 * delta_0 + (1 - p0) * G.
-ablations:
-  a_state_p0_own_jumps: drift's own non-zero h-day changes as G, state-dependent p0.
-  b_pooled_jumps_flat_p0: pooled scaled jumps, p0 = series' unconditional zero rate (no state).
+  The scored value is a median over 3-17 offers; it moves only when an offer near the middle reprices or
+  the panel changes. A tight panel (p25 and p75 equal to the median) needs several offers to move; a
+  recent n_providers change or a burst of changes marks an active repricing episode. Stage 1 is a pooled
+  multinomial classifier per horizon (logistic regression, then LightGBM), fit at refit origins on all
+  rental_all daily_statistics series using pairs whose target date is on or before the origin. Stage 2 is
+  the recency-weighted (hl 30) pooled distribution of non-zero h-day log changes by sign, collector x
+  class, own samples mixed in with prior strength k (as in mix), optionally rescaled by the series'
+  volatility state. q10/q50/q90 are read from the mixture P(down) G_down + P(0) delta_0 + P(up) G_up.
 prediction: >
-  Beats drift on dev pooled skill by +0.01 to +0.03, with most of the gain on idle cells
-  (tsl >= 7, interval narrows) and at h = 3 and 7; on recently active cells (>= 2 changes in the
-  last 7 days) roughly a tie or a small gain. Ablation (a) should carry most of the gain if the
-  state mechanism is real; (b) should be near drift if gains come from state, not pooling.
+  Classifier: AUC move-vs-no-move 0.70-0.80 out of sample by origin and Brier/log-loss clearly below the
+  collector x horizon base rate; up-vs-down AUC lower (0.55-0.65) because direction is the harder
+  question. Forecast: beats drift by about +0.08 (similar to mix) and mix by +0.00 to +0.02, mostly from
+  the no-change bucket (collapsing tails on idle cells) and h=1/h=3; blend with mix adds +0.005 to +0.015.
 refuted_if: >
-  The full model and ablation (a) do not beat drift (paired difference 90% interval includes or is
-  below zero) AND the idle-cell subset shows no gain; or ablation (b) matches or beats the full model
-  (gain is pooling of jump sizes, not state dependence).
-split: dev only (origins per harness splits.DEV), universe rental_headline, horizons 1, 3, 7.
+  Classifier AUC for move vs no move below 0.65 or log loss not better than the base rate (state is not
+  predictive beyond climatology), or the hazard forecast does not beat mix and the blend with mix does
+  not beat mix (90% interval of the paired difference includes zero or is negative) while the classifier
+  is good, in which case the report locates where the conversion from probability to pinball loss fails.
+split: dev only (origins per harness splits.DEV), score on rental_headline, train on rental_all, h in 1, 3, 7.

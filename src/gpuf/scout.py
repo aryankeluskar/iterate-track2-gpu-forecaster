@@ -117,3 +117,39 @@ if __name__ == "__main__":
         for d in days:
             for h in day_hits(d, False):
                 print(h["day"], "U" if h["up"] else "-", "D" if h["down"] else "-", h["title"][:95], "|", h["url"][:90])
+
+
+def exa_call(endpoint: str, body: dict, tag: str = "attr") -> dict:
+    """Cached POST to https://api.exa.ai/<endpoint> (search or contents). Cache key is the full request body, so reruns are free and offline.
+    Returns {"request", "response", "cost", "fetched_at"} or, on an API error, {"request", "error", "status"}. Errors are cached too."""
+    CACHE.mkdir(parents=True, exist_ok=True)
+    h = hashlib.sha256(f"{endpoint}|{json.dumps(body, sort_keys=True)}".encode()).hexdigest()[:20]
+    path = CACHE / f"{tag}_{endpoint}_{h}.json"
+    if path.exists():
+        return json.loads(path.read_text())
+    req = urllib.request.Request(f"https://api.exa.ai/{endpoint}", data=json.dumps(body).encode(),
+                                 headers={"Content-Type": "application/json", "x-api-key": _key(), "User-Agent": "gpuf-scout"})
+    rec = {"request": body, "fetched_at": dt.datetime.utcnow().isoformat() + "Z"}
+    for attempt in range(4):
+        try:
+            with urllib.request.urlopen(req, timeout=90) as r:
+                out = json.loads(r.read())
+            rec["response"] = out
+            c = out.get("costDollars")
+            rec["cost"] = c.get("total") if isinstance(c, dict) else c
+            break
+        except urllib.error.HTTPError as e:
+            if e.code in (429, 500, 503) and attempt < 3:
+                time.sleep(2 * (attempt + 1)); continue
+            rec["status"], rec["error"] = e.code, e.read().decode()[:600]
+            break
+        except Exception:
+            if attempt == 3:
+                raise
+            time.sleep(2 * (attempt + 1))
+    path.write_text(json.dumps(rec))
+    return rec
+
+
+def exa_spend(tag: str = "attr") -> float:
+    return round(sum(json.loads(p.read_text()).get("cost") or 0 for p in CACHE.glob(f"{tag}_*.json")), 4)

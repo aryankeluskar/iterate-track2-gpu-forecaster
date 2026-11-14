@@ -1,0 +1,41 @@
+instrument,chip,from,to,n,annual,lo90,hi90
+aggregator_median/on_demand,A100,2025-11-03,2026-10-26,52,0.149,0.05,0.231
+aggregator_median/spot,A100,2025-11-03,2026-10-26,52,-0.381,-0.69,-0.142
+aggregator_median/reserved_12m,A100,2025-11-03,2026-10-26,52,-0.313,-0.396,-0.109
+aggregator_median/reserved_36m,A100,2025-11-03,2026-10-26,52,-0.11,-0.163,-0.001
+aggregator_median/on_demand,H100,2025-11-03,2026-10-26,52,0.262,-0.059,0.68
+aggregator_median/spot,H100,2025-11-03,2026-10-26,52,-0.124,-0.584,0.654
+aggregator_median/reserved_12m,H100,2025-11-03,2026-10-26,52,-0.001,-0.266,0.32
+aggregator_median/reserved_36m,H100,2025-11-03,2026-10-26,52,0.122,-0.165,1.21
+aggregator_median/on_demand,H200,2025-11-03,2026-10-26,52,0.366,0.103,0.657
+aggregator_median/spot,H200,2025-11-03,2026-10-26,52,0.059,-0.452,0.304
+aggregator_median/reserved_12m,H200,2025-11-03,2026-10-26,52,0.12,-0.007,0.461
+aggregator_median/reserved_36m,H200,2025-11-24,2026-10-26,49,0.074,0.0,0.248
+aggregator_median/on_demand,B200,2025-11-03,2026-10-26,52,0.451,0.257,0.652
+aggregator_median/spot,B200,2025-12-15,2026-10-26,46,1.236,1.002,1.631
+aggregator_median/reserved_12m,B200,2025-11-03,2026-10-26,52,0.753,0.421,0.93
+aggregator_median/reserved_36m,B200,2025-11-24,2026-10-26,49,1.809,0.464,4.329
+aggregator_median/on_demand,B300,2025-11-10,2026-10-26,51,0.817,0.625,1.161
+aggregator_median/spot,B300,2026-04-20,2026-10-26,28,0.701,-0.113,17.739
+aggregator_median/reserved_12m,B300,2026-03-23,2026-10-26,32,0.125,-0.269,1.685
+hyperscaler_spot/aws/segA,A100 40GB (p4d.24xlarge),2022-05-30,2026-02-23,196,-0.095,-0.137,-0.022
+hyperscaler_spot/aws/segB,A100 40GB (p4d.24xlarge),2026-06-29,2026-10-26,18,-0.113,-0.484,0.268
+hyperscaler_spot/aws/segA_last12m,A100 40GB (p4d.24xlarge),2025-03-03,2026-02-23,52,0.542,0.168,1.71
+hyperscaler_spot/aws/segA,A100 80GB (p4de.24xlarge),2025-04-28,2026-02-23,44,0.847,-0.511,9.544
+hyperscaler_spot/aws/segB,A100 80GB (p4de.24xlarge),2026-06-29,2026-10-26,18,2.045,-0.273,18.395
+hyperscaler_spot/aws/segA_last12m,A100 80GB (p4de.24xlarge),2025-04-28,2026-02-23,44,0.847,-0.454,9.134
+hyperscaler_spot/aws/segA,H100 (p5.48xlarge),2023-07-24,2026-02-23,136,-0.31,-0.462,-0.198
+hyperscaler_spot/aws/segB,H100 (p5.48xlarge),2026-06-29,2026-10-26,18,0.724,-0.181,1.183
+hyperscaler_spot/aws/segA_last12m,H100 (p5.48xlarge),2025-03-03,2026-02-23,52,-0.061,-0.29,0.84
+hyperscaler_spot/aws/segA,H200 (p5e.48xlarge),2025-04-28,2026-02-23,44,1.402,0.038,7.051
+hyperscaler_spot/aws/segB,H200 (p5e.48xlarge),2026-06-29,2026-10-26,18,0.509,-0.633,1.281
+hyperscaler_spot/aws/segA_last12m,H200 (p5e.48xlarge),2025-04-28,2026-02-23,44,1.402,-0.004,6.442
+hyperscaler_spot/aws/segA,H200 (p5en.48xlarge),2024-12-09,2026-02-23,64,0.443,0.217,0.69
+hyperscaler_spot/aws/segB,H200 (p5en.48xlarge),2026-06-29,2026-10-26,18,1.04,0.468,2.532
+hyperscaler_spot/aws/segA_last12m,H200 (p5en.48xlarge),2025-03-03,2026-02-23,52,0.511,0.4,0.945
+hyperscaler_spot/aws/segA,B200 (p6-b200.48xlarge),2025-07-21,2026-02-23,32,0.235,-0.7,7.065
+hyperscaler_spot/aws/segB,B200 (p6-b200.48xlarge),2026-06-29,2026-10-26,18,5.201,0.297,8.741
+hyperscaler_spot/aws/segA_last12m,B200 (p6-b200.48xlarge),2025-07-21,2026-02-23,32,0.235,-0.734,8.059
+hyperscaler_spot/aws/segA,B300 (p6-b300.48xlarge),2025-11-17,2026-02-23,15,-0.999,-1.0,-0.998
+hyperscaler_spot/aws/segB,B300 (p6-b300.48xlarge),2026-06-29,2026-10-26,18,4.802,-0.239,11.826
+hyperscaler_spot/aws/segA_last12m,B300 (p6-b300.48xlarge),2025-11-17,2026-02-23,15,-0.999,-1.0,-0.997

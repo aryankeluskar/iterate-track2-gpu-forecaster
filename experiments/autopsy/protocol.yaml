@@ -1,0 +1,23 @@
+slug: autopsy
+written: 2026-11-14, after steps 1-2 (panel + event table), before step 3 regressions and step 4-5
+data: rental_observations rows dated <= 2026-10-13 for the 37 rental_headline series; runs/failure/blend_dev_cells.parquet
+failure_mode_targeted: >5% moves of the daily median (9% of dev cells, 61% of last-value loss); upper tail under-covered at h=7
+measured_so_far:
+  reproduction: panel median equals series value on 100% of 2,483 unfilled series-days (fastgpu 720, gpurentalprices 923, afhubbard 840)
+  events: 653 median changes over 2,446 consecutive observed day pairs; repricing 564, composition 62, mixed 27 (20% share rule)
+mechanism: >
+  The scored value is a median over 3-17 provider offers (afhubbard: ~450 spot offers). It moves only when an offer
+  near the middle is repriced or offers enter/leave. Composition moves are panel artefacts (scrape gaps, listings
+  toggling) and should undo themselves; repricing moves are provider decisions and should persist.
+  fastgpu reports a daily minimum per provider over regions, so part of its "repricing" is hidden composition.
+predictions:
+  - composition jumps revert: slope of next 7-day median change on the jump < -0.3 (90% bootstrap interval excludes 0) on composition; repricing slope in [-0.2, +0.2]
+  - composition is <15% of changes by count but >=25% of absolute log change and of h=7 last-value error (lumpier)
+  - exited offers return within 7 days at the same price in >50% of exits
+  - per-offer reprice hazard clusters by provider (a few providers do most repricing) and by day (provider-wide repricing of many SKUs on one day)
+  - reachability: at h=1, >=50% of moves land on one of the k=2 nearest order statistics/midpoints of the origin panel; falls at h=7
+  - blend misses (truth outside [q10,q90]) are mostly repricing by count, but composition carries a larger loss share than its count share
+refuted_if:
+  - composition slope at h=7 >= -0.1 or its interval includes 0 with point estimate near 0 (no reversion)
+  - repricing slope significantly negative (repricing also reverts, i.e. promos) -> cause label not useful for centre
+  - reachability at h=1, k=2 < 30% -> discrete-support forecaster not supported

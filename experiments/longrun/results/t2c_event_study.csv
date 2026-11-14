@@ -1,0 +1,13 @@
+event,date,instance_type,pre_annual,post_annual,post_weeks,diff_log_per_yr,diff_lo90,diff_hi90
+Epoch H200/B200 release (2024-11-15/18),2024-11-18,p4d.24xlarge,1.057,-0.732,26,-2.038,-2.387,-1.688
+Epoch H200/B200 release (2024-11-15/18),2024-11-18,p5.48xlarge,-0.646,1.713,26,2.037,1.0,3.705
+Epoch B300 release,2025-08-22,p4d.24xlarge,-0.148,0.953,26,0.83,0.155,1.414
+Epoch B300 release,2025-08-22,p5.48xlarge,-0.656,0.727,26,1.615,1.232,2.157
+AWS p5en (H200) first tick,2024-12-12,p4d.24xlarge,0.911,-0.693,26,-1.828,-2.211,-1.306
+AWS p5en (H200) first tick,2024-12-12,p5.48xlarge,-0.771,0.744,26,2.029,1.064,3.085
+AWS p5e (H200) first tick,2025-04-30,p4d.24xlarge,-0.73,1.479,26,2.216,1.918,3.032
+AWS p5e (H200) first tick,2025-04-30,p5.48xlarge,2.292,-0.17,26,-1.378,-3.701,-0.265
+AWS p6-b200 first tick,2025-07-24,p4d.24xlarge,-0.494,1.622,26,1.644,1.247,2.266
+AWS p6-b200 first tick,2025-07-24,p5.48xlarge,-0.513,1.154,26,1.487,0.726,2.151
+AWS p6-b300 first tick,2025-11-20,p4d.24xlarge,2.165,0.57,14,-0.701,-1.615,-0.273
+AWS p6-b300 first tick,2025-11-20,p5.48xlarge,0.198,-0.003,14,-0.184,-1.713,1.279

@@ -1,0 +1,165 @@
+{
+ "composition_kinds": {
+  "entry": {
+   "n": 35,
+   "abs_dlog": 1.962108959936042,
+   "up": 18
+  },
+  "exit": {
+   "n": 20,
+   "abs_dlog": 1.0656287098092203,
+   "up": 8
+  },
+  "relabel": {
+   "n": 5,
+   "abs_dlog": 0.823230257337084,
+   "up": 5
+  }
+ },
+ "composition_top_providers": {
+  "modal": 11,
+  "daytona": 10,
+  "together": 9,
+  "quantacloud": 7,
+  "lambdalabs": 7,
+  "digitalocean": 4,
+  "latitude": 4,
+  "nebius": 4
+ },
+ "composition_jump_vs_one_offer_fragility": {
+  "corr": 0.88,
+  "share_jump_within_10pct_of_fragility": 0.567,
+  "median_ratio": 1.0
+ },
+ "fragility_all_days_quantiles": {
+  "0.25": 0.0317,
+  "0.5": 0.0741,
+  "0.75": 0.152,
+  "0.9": 0.2592
+ },
+ "fragility_composition_days_quantiles": {
+  "0.25": 0.026,
+  "0.5": 0.0471,
+  "0.75": 0.1037,
+  "0.9": 0.1538
+ },
+ "available_false_rows": 33,
+ "reprices_by_provider": [
+  {
+   "source_id": "fastgpu_daily",
+   "provider": "aws",
+   "n": 36,
+   "up": 13,
+   "med_abs_lr": 0.012,
+   "back_to_prev_within7": 0.0,
+   "n_series": 2
+  },
+  {
+   "source_id": "fastgpu_daily",
+   "provider": "gcp",
+   "n": 10,
+   "up": 4,
+   "med_abs_lr": 0.047,
+   "back_to_prev_within7": 0.0,
+   "n_series": 2
+  },
+  {
+   "source_id": "fastgpu_daily",
+   "provider": "quantacloud",
+   "n": 6,
+   "up": 3,
+   "med_abs_lr": 0.046,
+   "back_to_prev_within7": 0.5,
+   "n_series": 3
+  },
+  {
+   "source_id": "fastgpu_daily",
+   "provider": "verda",
+   "n": 352,
+   "up": 337,
+   "med_abs_lr": 0.01,
+   "back_to_prev_within7": 0.011,
+   "n_series": 17
+  },
+  {
+   "source_id": "gpurentalprices",
+   "provider": "scaleway",
+   "n": 230,
+   "up": 78,
+   "med_abs_lr": 0.002,
+   "back_to_prev_within7": 0.022,
+   "n_series": 5
+  },
+  {
+   "source_id": "gpurentalprices",
+   "provider": "sfcompute",
+   "n": 48,
+   "up": 26,
+   "med_abs_lr": 0.056,
+   "back_to_prev_within7": 0.062,
+   "n_series": 1
+  },
+  {
+   "source_id": "gpurentalprices",
+   "provider": "spheron",
+   "n": 41,
+   "up": 22,
+   "med_abs_lr": 0.029,
+   "back_to_prev_within7": 0.659,
+   "n_series": 1
+  },
+  {
+   "source_id": "gpurentalprices",
+   "provider": "verda",
+   "n": 219,
+   "up": 211,
+   "med_abs_lr": 0.01,
+   "back_to_prev_within7": 0.005,
+   "n_series": 10
+  }
+ ],
+ "repricing_pivotal_provider_counts": {
+  "afhubbard|gcp": 32.0,
+  "afhubbard|aws": 18.0,
+  "afhubbard|": 2.0,
+  "afhubbard|azure": 1.0,
+  "afhubbard|verda": NaN,
+  "afhubbard|quantacloud": NaN,
+  "afhubbard|jarvislabs": NaN,
+  "afhubbard|scaleway": NaN,
+  "afhubbard|sfcompute": NaN,
+  "afhubbard|spheron": NaN,
+  "fastgpu_daily|gcp": 5.0,
+  "fastgpu_daily|aws": 11.0,
+  "fastgpu_daily|": NaN,
+  "fastgpu_daily|azure": NaN,
+  "fastgpu_daily|verda": 121.0,
+  "fastgpu_daily|quantacloud": 4.0,
+  "fastgpu_daily|jarvislabs": 2.0,
+  "fastgpu_daily|scaleway": NaN,
+  "fastgpu_daily|sfcompute": NaN,
+  "fastgpu_daily|spheron": NaN,
+  "gpurentalprices|gcp": NaN,
+  "gpurentalprices|aws": NaN,
+  "gpurentalprices|": NaN,
+  "gpurentalprices|azure": NaN,
+  "gpurentalprices|verda": 126.0,
+  "gpurentalprices|quantacloud": NaN,
+  "gpurentalprices|jarvislabs": 2.0,
+  "gpurentalprices|scaleway": 120.0,
+  "gpurentalprices|sfcompute": 47.0,
+  "gpurentalprices|spheron": 4.0
+ },
+ "repricing_pivotal_provider_absdlog_share": {
+  "gpurentalprices|sfcompute": 0.471,
+  "gpurentalprices|verda": 0.101,
+  "gpurentalprices|spheron": 0.099,
+  "afhubbard|gcp": 0.098,
+  "fastgpu_daily|verda": 0.089,
+  "fastgpu_daily|aws": 0.047,
+  "gpurentalprices|scaleway": 0.024,
+  "fastgpu_daily|gcp": 0.019,
+  "fastgpu_daily|quantacloud": 0.017,
+  "gpurentalprices|jarvislabs": 0.01
+ }
+}

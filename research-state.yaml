@@ -2,7 +2,7 @@ project: track2-gpu-price-forecaster
 question: >
   Can a hypothesis-testing loop produce q10/q50/q90 forecasts of posted GPU rental prices at 1, 3 and 7 days that beat the drift baseline on origins the loop never saw, and what does it learn about what moves those prices?
 phase: inner_loop   # bootstrap -> inner_loop -> outer_loop -> conclude
-updated: "2026-11-14T11:50-08:00"
+updated: "2026-11-14T11:40-08:00"
 decision_due: "2026-11-14T15:00-08:00"
 
 evaluation:   # LOCKED in EVAL_PROTOCOL.md before any hypothesis is run

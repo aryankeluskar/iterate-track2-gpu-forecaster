@@ -1,0 +1,27 @@
+slug: fm2
+written: before the first scored run (dev split only)
+failure_mode: >
+  Interval width at h=7 (nearly all gain over last value is width; upper tail under-covered, 27-33% of truths
+  above q90). Fitted widths (mix) ranked first on dev but behind Chronos-Bolt width on validation
+  (0.206 vs 0.112), so fitted widths transfer poorly across periods.
+loss_share: moves above 5% are 9% of cells and 61% of last-value loss; h=7 carries most of the gain.
+hypothesis: >
+  A pretrained model's width is a function of the volatility visible in its context window (recent level
+  changes), so it adapts to the regime at the origin, while mix's width is an average over pooled history
+  that lags regime changes. Pretrained width should beat mix where recent volatility differs from the
+  series' long-run volatility (after a change, short histories) and lose on quiet rate cards.
+predictions:
+  - diagnosis: rank correlation between chronos width and the realised |h-day move| is higher than mix's on
+    cells after a recent change; chronos width rises with the count of changes in the last 14 days.
+  - context: shorter context (32, 64) widens intervals and helps h=7 slightly (+0.005 to +0.01 skill); log
+    price changes little.
+  - chronos2 (21 quantile levels, group cross-learning by collector-class, covariates n_providers/p25/p75):
+    ties or beats bolt-small width by up to +0.01; covariates help only on cells where the panel changes.
+  - tails: using q0.95 for the upper side, chosen on the first half of dev, raises coverage of the upper tail
+    and adds +0.005 to +0.015 on the second half.
+  - ensemble of pretrained widths beats each single model by +0.005 to +0.01 (variance reduction).
+  - blend with mix beats mix alone by +0.01 to +0.02.
+refuted_if: >
+  No pretrained variant (centre=last) beats bolt-small width by more than its 90% interval half-width, and
+  the blend with mix does not beat mix with an interval above zero. Diagnosis refuted if pretrained width is
+  not more responsive to recent volatility than mix's (correlation with recent change count not higher).

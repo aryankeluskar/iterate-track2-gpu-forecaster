@@ -1,0 +1,36 @@
+                                              sid   src  n_offers  n_keys  days  comp  rep  both
+0          hyperscaler_spot.A100_80GB.spot.median  fast       3.0       3    29     0    4     0
+1                 hyperscaler_spot.T4.spot.median  fast       3.0       3    29     0    9     0
+2   neocloud_rate_card.A100_40GB.on_demand.median  fast       3.9       4    29     2    9     0
+3   neocloud_rate_card.A100_80GB.on_demand.median  fast      12.9      14    29     2    1     2
+4        neocloud_rate_card.B200.on_demand.median  fast      10.1      11    29     1    7     2
+5        neocloud_rate_card.B300.on_demand.median  fast       7.3       9    29     2    5     2
+6   neocloud_rate_card.H100_PCIe_80GB.on_demand.m  fast       2.8       4    29     2    0     0
+7   neocloud_rate_card.H100_SXM_80GB.on_demand.me  fast      14.8      19    29     1    0     4
+8        neocloud_rate_card.H200.on_demand.median  fast      12.4      15    29     1    6     3
+9        neocloud_rate_card.L40S.on_demand.median  fast       8.9      10    29     2    0     2
+10  neocloud_rate_card.RTX_6000_Ada.on_demand.med  fast       2.0       3    29     0   16     1
+11  neocloud_rate_card.RTX_A6000.on_demand.median  fast       4.0       5    29     0   13     1
+12  neocloud_rate_card.RTX_PRO_6000.on_demand.med  fast       7.2       9    29     2    8     2
+13            neocloud_spot.A100_80GB.spot.median  fast       3.0       3    29     0    0     0
+14                 neocloud_spot.B200.spot.median  fast       4.9       5    29     0    1     1
+15                 neocloud_spot.B300.spot.median  fast       3.7       5    29     1    4     2
+16        neocloud_spot.H100_SXM_80GB.spot.median  fast       5.2       6    29     1    0     1
+17                 neocloud_spot.H200.spot.median  fast       4.2       5    29     1    0     1
+18                 neocloud_spot.L40S.spot.median  fast       3.0       3    29     0    5     0
+19         neocloud_spot.RTX_PRO_6000.spot.median  fast       4.2       5    29     1    4     1
+20          marketplace_ask.H100_80GB.spot.median  gpur       2.9       3    64     1   50     0
+21  neocloud_rate_card.A100_40GB.on_demand.median  gpur       3.2       8    64     0    7     1
+22  neocloud_rate_card.A100_SXM_80GB.on_demand.me  gpur       5.0       6    64     0   12     1
+23       neocloud_rate_card.B200.on_demand.median  gpur       6.8      12    64     1   14     2
+24       neocloud_rate_card.B300.on_demand.median  gpur       6.2      11    64     0   43     2
+25  neocloud_rate_card.H100_80GB.on_demand.median  gpur      11.6      16    64     1   39     2
+26  neocloud_rate_card.H100_SXM_80GB.on_demand.me  gpur       6.2      11    64     2   13     2
+27       neocloud_rate_card.H200.on_demand.median  gpur       9.6      13    64     1    5     1
+28         neocloud_rate_card.L4.on_demand.median  gpur       3.0       3    64     0   42     0
+29       neocloud_rate_card.L40S.on_demand.median  gpur       9.0      10    64     0    1     0
+30  neocloud_rate_card.RTX_6000_Ada.on_demand.med  gpur       3.0       4    64     0   16     1
+31  neocloud_rate_card.RTX_A6000.on_demand.median  gpur       5.1       8    64     0    2     1
+32  neocloud_rate_card.RTX_PRO_6000.on_demand.med  gpur       7.0       9    64     0    7     2
+count of median changes by cause {'comp': 25, 'rep': 343, 'both': 40}
+sum |log change| by cause {'comp': np.float64(1.683), 'rep': np.float64(7.091), 'both': np.float64(2.28)}
