@@ -20,6 +20,12 @@ def skill(c):
     return 1 - c.loss.sum() / c.baseline_loss.sum()
 
 
+def p1(r):
+    if r.get("dm_p_two_sided") is None:
+        return "n/a"
+    return f"{r['dm_p_two_sided'] / 2 if r['dm_stat'] < 0 else 1 - r['dm_p_two_sided'] / 2:.3f}"
+
+
 ref = cells(*spec["ref"])
 print(f"{'ref':<28} skill {skill(ref):+.4f}  first {skill(ref[ref.origin_day <= CUT]):+.4f}  second {skill(ref[ref.origin_day > CUT]):+.4f}  n {len(ref)}")
 for name, (m, p) in spec["cands"].items():
@@ -28,7 +34,7 @@ for name, (m, p) in spec["cands"].items():
     for lab, mask_c, mask_r in (("all", slice(None), slice(None)), ("first", c.origin_day <= CUT, ref.origin_day <= CUT), ("second", c.origin_day > CUT, ref.origin_day > CUT)):
         r = compare.paired(c[mask_c], ref[mask_r])
         lo, hi = r["ci90_d_pooled_skill"]
-        out.append(f"{lab} d={r['d_pooled_skill']:+.4f} [{lo:+.3f},{hi:+.3f}]" + (f" dm_p1={r['dm_p_two_sided'] / 2 if r['dm_stat'] < 0 else 1 - r['dm_p_two_sided'] / 2:.3f}" if lab == "all" else ""))
+        out.append(f"{lab} d={r['d_pooled_skill']:+.4f} [{lo:+.3f},{hi:+.3f}]" + (f" dm_p1={p1(r)}" if lab == "all" else ""))
     cov = ((c.y >= c.q10) & (c.y <= c.q90)).mean(); up7 = (c[c.horizon_days == 7].y > c[c.horizon_days == 7].q90).mean()
     out.append(f"cov {cov:.2f} h7>q90 {up7:.2f} q50r {c.loss_q50.sum() / max(ref.loss_q50.sum(), 1e-12):.3f}")
     print("  ".join(out), flush=True)
