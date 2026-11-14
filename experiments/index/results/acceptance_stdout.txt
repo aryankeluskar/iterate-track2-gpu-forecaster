@@ -1,0 +1,212 @@
+{
+  "window": [
+    "2026-09-08",
+    "2026-10-06"
+  ],
+  "target_days": [
+    "2026-09-15",
+    "2026-10-06"
+  ],
+  "min_providers": 3,
+  "a_disagreement": {
+    "all_11": {
+      "index": 0.006328392295689976,
+      "posted": 0.03191385740603418,
+      "balanced": 0.015034597713156413,
+      "constant": 0.0,
+      "ratio_index_to_posted": 0.19829606353049073,
+      "pass_20pct": true,
+      "n_pairs": 11,
+      "n_pair_days": 242,
+      "diff_index_minus_posted": -0.0255854651103442,
+      "diff_ci90_week_block": [
+        -0.04798205318266724,
+        -0.010873381762791953
+      ],
+      "diff_balanced_minus_posted": -0.01687925969287777,
+      "diff_balanced_ci90_week_block": [
+        -0.042478088937405956,
+        -7.550740196086994e-05
+      ]
+    },
+    "active_pairs": {
+      "index": 0.006328392295689976,
+      "posted": 0.03191385740603418,
+      "balanced": 0.015034597713156413,
+      "constant": 0.0,
+      "ratio_index_to_posted": 0.19829606353049073,
+      "pass_20pct": true,
+      "n_pairs": 11,
+      "n_pair_days": 242
+    },
+    "exact_name_9": {
+      "index": 0.00689031294273643,
+      "posted": 0.03319895373200735,
+      "balanced": 0.01449417470953944,
+      "constant": 0.0,
+      "ratio_index_to_posted": 0.207546087095312,
+      "pass_20pct": true,
+      "n_pairs": 9,
+      "n_pair_days": 198
+    },
+    "never_moved_pairs": [],
+    "share_of_days_moving": {
+      "index": 0.5408163265306124,
+      "posted": 0.3860544217687074,
+      "balanced": 0.3418367346938775,
+      "constant": 0.0
+    },
+    "mean_abs_7d_change": {
+      "index": 0.009843085836590866,
+      "posted": 0.027935561534040095,
+      "balanced": 0.017108873873843567,
+      "constant": 0.0
+    }
+  },
+  "b_deletion": {
+    "index": 0.008064164850741613,
+    "posted": 0.030888338807087048,
+    "balanced": 0.019677492814634694,
+    "pass": true,
+    "n_series": 21,
+    "n_days": 22
+  },
+  "c_responsiveness": {
+    "index": {
+      "n_cases": 14,
+      "right_direction": 14,
+      "share_right": 1.0,
+      "mean_retention": 0.16908777910999012,
+      "median_retention": 0.14727330430453042,
+      "pass_rule": true
+    },
+    "posted": {
+      "n_cases": 14,
+      "right_direction": 11,
+      "share_right": 0.7857142857142857,
+      "mean_retention": 0.23582819728633542,
+      "median_retention": 0.049302126699831056,
+      "pass_rule": false
+    },
+    "balanced": {
+      "n_cases": 14,
+      "right_direction": 11,
+      "share_right": 0.7857142857142857,
+      "mean_retention": 0.15976878484129411,
+      "median_retention": 0.06998009695050114,
+      "pass_rule": false
+    },
+    "constant": {
+      "n_cases": 14,
+      "right_direction": 0,
+      "share_right": 0.0,
+      "mean_retention": 0.0,
+      "median_retention": 0.0,
+      "pass_rule": false
+    },
+    "mean_one_over_matched_providers": 0.10789478378764092
+  },
+  "d_invalid_days": {
+    "total": 30,
+    "of": 599,
+    "share": 0.05008347245409015
+  },
+  "alias_conflicts_within_collector": {
+    "fastgpu_daily": [],
+    "gpurentalprices": []
+  },
+  "pass_a": true,
+  "pass_b": true,
+  "pass_c": true,
+  "constant_fails_c": true,
+  "drop_checks": {
+    "inactivity": false,
+    "provider_duplication": false,
+    "discarded_or_invalid_days_over_20pct": false,
+    "responsiveness_fails": false
+  },
+  "product_claim": true
+}
+                       pair  index_moved_fg  index_moved_grp  D_index  D_posted  D_balanced  D_constant  diff_index_minus_posted       group
+        A100 40GB~A100 40GB            True             True   0.0021    0.1057      0.0091      0.0000                  -0.1035 index moved
+    A100 80GB~A100 SXM 80GB            True             True   0.0032    0.0329      0.0238      0.0000                  -0.0296 index moved
+                  B200~B200            True             True   0.0071    0.0281      0.0175      0.0000                  -0.0210 index moved
+                  B300~B300            True             True   0.0151    0.0314      0.0328      0.0000                  -0.0163 index moved
+    H100 SXM 80GB~H100 80GB            True             True   0.0044    0.0194      0.0112      0.0000                  -0.0150 index moved
+H100 SXM 80GB~H100 SXM 80GB            True             True   0.0081    0.0283      0.0141      0.0000                  -0.0202 index moved
+                  H200~H200            True             True   0.0050    0.0077      0.0091      0.0000                  -0.0027 index moved
+                  L40S~L40S            True             True   0.0011    0.0018      0.0013      0.0000                  -0.0006 index moved
+  RTX 6000 Ada~RTX 6000 Ada           False             True   0.0130    0.0262      0.0196      0.0000                  -0.0133 index moved
+        RTX A6000~RTX A6000            True             True   0.0021    0.0479      0.0188      0.0000                  -0.0458 index moved
+  RTX PRO 6000~RTX PRO 6000            True             True   0.0083    0.0217      0.0084      0.0000                  -0.0135 index moved
+                  week  n_days  D_index  D_posted  D_balanced  D_constant  diff_index_minus_posted_all  diff_index_minus_posted_active
+2026-09-15..2026-09-21       7   0.0034    0.0145      0.0144      0.0000                      -0.0111                         -0.0111
+2026-09-22..2026-09-28       7   0.0030    0.0131      0.0131      0.0000                      -0.0101                         -0.0101
+2026-09-29..2026-10-05       7   0.0112    0.0570      0.0167      0.0000                      -0.0458                         -0.0458
+2026-10-06..2026-10-06       1   0.0168    0.1102      0.0215      0.0000                      -0.0934                         -0.0934
+                       series   provider  effective  provider_move  eligible  matched_providers_eff  move_index  move_posted  move_balanced  move_constant  retained_index  retained_posted  retained_balanced  retained_constant
+      fastgpu_daily|A100 40GB jarvislabs 2026-10-05         0.0000     False                      4      0.0025       0.2151         0.0049         0.0000             NaN              NaN                NaN             0.0000
+      fastgpu_daily|A100 80GB jarvislabs 2026-10-05         0.0000     False                     12      0.0012       0.0535         0.0000         0.0000             NaN              NaN                NaN             0.0000
+           fastgpu_daily|B200     nebius 2026-10-01         0.1730      True                     10      0.0486       0.0772         0.0432         0.0000          0.2808           0.4462             0.2495             0.0000
+           fastgpu_daily|B300     nebius 2026-10-01         0.1908      True                      8      0.0918       0.1332         0.1037         0.0000          0.4811           0.6984             0.5437             0.0000
+  fastgpu_daily|H100 SXM 80GB     nebius 2026-10-01         0.1560      True                     16      0.0123       0.0065         0.0129         0.0000          0.0789           0.0414             0.0827             0.0000
+  fastgpu_daily|H100 SXM 80GB jarvislabs 2026-10-05         0.2604      True                     18      0.0156       0.0062         0.0000         0.0000          0.0598           0.0240             0.0000             0.0000
+           fastgpu_daily|H200     nebius 2026-10-01         0.1823      True                     13      0.0415       0.0011         0.0044         0.0000          0.2277           0.0059             0.0243             0.0000
+           fastgpu_daily|H200 jarvislabs 2026-10-05         0.1401      True                     14      0.0114       0.0000         0.0055         0.0000          0.0816           0.0000             0.0391             0.0000
+           fastgpu_daily|L40S     nebius 2026-10-01         0.0000     False                      9      0.0012      -0.0038         0.0032         0.0000             NaN              NaN                NaN             0.0000
+   fastgpu_daily|RTX PRO 6000     nebius 2026-10-01         0.0000     False                      8      0.0455      -0.0906         0.0200         0.0000             NaN              NaN                NaN             0.0000
+   fastgpu_daily|RTX PRO 6000 jarvislabs 2026-10-05         0.1473      True                      8      0.0209       0.1564         0.0345         0.0000          0.1419           1.0615             0.2342             0.0000
+    gpurentalprices|A100 40GB jarvislabs 2026-10-05         0.0000     False                      3      0.0033       0.0000         0.0000         0.0000             NaN              NaN                NaN             0.0000
+         gpurentalprices|B200     nebius 2026-10-01         0.1730      True                      6      0.0321       0.0099         0.0099         0.0000          0.1857           0.0572             0.0572             0.0000
+         gpurentalprices|B300     nebius 2026-10-01         0.1908      True                      6      0.0356       0.0686         0.0686         0.0000          0.1866           0.3594             0.3594             0.0000
+    gpurentalprices|H100 80GB     nebius 2026-10-01         0.1560      True                     11      0.0135      -0.0070        -0.0070         0.0000          0.0868          -0.0452            -0.0452             0.0000
+gpurentalprices|H100 SXM 80GB jarvislabs 2026-10-05         0.2604      True                      7      0.0398       0.0090         0.0090         0.0000          0.1527           0.0344             0.0344             0.0000
+         gpurentalprices|H200     nebius 2026-10-01         0.1823      True                      9      0.0236       0.0000         0.0000         0.0000          0.1292           0.0000             0.0000             0.0000
+         gpurentalprices|H200 jarvislabs 2026-10-05         0.1401      True                     11      0.0159       0.0210         0.0265         0.0000          0.1136           0.1500             0.1891             0.0000
+         gpurentalprices|L40S     nebius 2026-10-01         0.0000     False                      9      0.0003       0.0000         0.0000         0.0000             NaN              NaN                NaN             0.0000
+ gpurentalprices|RTX PRO 6000     nebius 2026-10-01         0.0000     False                      7      0.0043       0.0301         0.0301         0.0000             NaN              NaN                NaN             0.0000
+ gpurentalprices|RTX PRO 6000 jarvislabs 2026-10-05         0.1473      True                      8      0.0237       0.0690         0.0690         0.0000          0.1609           0.4683             0.4683             0.0000
+                       series  n_providers  S_index  S_posted  S_balanced  max_index  max_posted  max_balanced most_pivotal_index most_pivotal_posted
+      fastgpu_daily|A100 40GB            4   0.0049    0.0288      0.0103     0.0077      0.2199        0.0173            [verda]        [jarvislabs]
+      fastgpu_daily|A100 80GB           14   0.0018    0.0261      0.0112     0.0036      0.0905        0.0232            [verda]           [baseten]
+           fastgpu_daily|B200           11   0.0091    0.0326      0.0288     0.0245      0.1012        0.0845            [verda]           [baseten]
+           fastgpu_daily|B300            9   0.0176    0.0415      0.0426     0.0551      0.0986        0.1065            [verda]             [verda]
+  fastgpu_daily|H100 SXM 80GB           19   0.0046    0.0055      0.0021     0.0135      0.0378        0.0098            [verda]       [voltagepark]
+           fastgpu_daily|H200           15   0.0087    0.0103      0.0091     0.0222      0.0273        0.0239            [verda]            [crusoe]
+           fastgpu_daily|L40S           10   0.0044    0.0055      0.0008     0.0067      0.0312        0.0045            [verda]              [cudo]
+   fastgpu_daily|RTX 6000 Ada            3   0.0000    0.0293      0.0198     0.0000      0.2226        0.0276                 []      [digitalocean]
+      fastgpu_daily|RTX A6000            5   0.0102    0.0260      0.0204     0.0148      0.1508        0.0295            [verda]        [hyperstack]
+   fastgpu_daily|RTX PRO 6000            9   0.0126    0.0412      0.0256     0.0405      0.1207        0.0643            [verda]             [verda]
+    gpurentalprices|A100 40GB            3   0.0058    0.0935      0.0179     0.0102      0.4301        0.0307       [jarvislabs]             [verda]
+gpurentalprices|A100 SXM 80GB            5   0.0050    0.0247      0.0242     0.0093      0.0463        0.0463            [verda]             [verda]
+         gpurentalprices|B200            8   0.0131    0.0247      0.0221     0.0277      0.0819        0.0298            [verda]        [lambdalabs]
+         gpurentalprices|B300            8   0.0140    0.0289      0.0302     0.0306      0.0746        0.0746            [verda]      [digitalocean]
+    gpurentalprices|H100 80GB           13   0.0045    0.0273      0.0082     0.0144      0.1176        0.0117         [scaleway]          [scaleway]
+gpurentalprices|H100 SXM 80GB            7   0.0106    0.0354      0.0195     0.0335      0.0866        0.0334            [verda]        [hyperstack]
+         gpurentalprices|H200           11   0.0098    0.0329      0.0264     0.0196      0.0940        0.0384            [verda]             [verda]
+         gpurentalprices|L40S            9   0.0046    0.0059      0.0063     0.0067      0.0147        0.0179            [verda]         [coreweave]
+ gpurentalprices|RTX 6000 Ada            3   0.0130    0.0399      0.0394     0.0184      0.0552        0.0552     [digitalocean]             [verda]
+    gpurentalprices|RTX A6000            5   0.0083    0.0613      0.0182     0.0125      0.2586        0.0295            [verda]        [hyperstack]
+ gpurentalprices|RTX PRO 6000            8   0.0070    0.0275      0.0299     0.0198      0.0593        0.0791            [verda]             [verda]
+                       series  days  invalid_days  mean_matched_providers  mean_providers_present  mean_matched_offers  mean_offers_present  mean_largest_share  mean_removal_1d
+      fastgpu_daily|A100 40GB    28             0                   3.893                   3.929                3.893                3.929               1.000            0.001
+      fastgpu_daily|A100 80GB    28             0                  12.821                  12.893               12.821               12.893               1.000            0.000
+           fastgpu_daily|B200    28             0                  10.000                  10.071               10.000               10.071               0.973            0.001
+           fastgpu_daily|B300    28             0                   7.250                   7.357                7.250                7.357               0.980            0.003
+  fastgpu_daily|H100 SXM 80GB    28             0                  14.536                  14.786               14.536               14.786               0.994            0.001
+           fastgpu_daily|H200    28             0                  12.250                  12.393               12.250               12.393               0.973            0.002
+           fastgpu_daily|L40S    28             0                   8.821                   8.893                8.821                8.893               1.000            0.001
+   fastgpu_daily|RTX 6000 Ada    28            28                   2.000                   2.036                2.000                2.036               1.000            0.000
+      fastgpu_daily|RTX A6000    28             0                   4.000                   4.036                4.000                4.036               1.000            0.001
+   fastgpu_daily|RTX PRO 6000    28             0                   7.143                   7.250                7.143                7.250               0.994            0.003
+    gpurentalprices|A100 40GB    29             1                   2.966                   3.000                3.379                3.552               1.000            0.001
+gpurentalprices|A100 SXM 80GB    29             0                   4.966                   5.000                4.966                5.000               1.000            0.001
+         gpurentalprices|B200    29             0                   6.138                   6.241                6.448                6.655               0.998            0.002
+         gpurentalprices|B300    29             0                   6.103                   6.241                6.207                6.379               0.880            0.002
+    gpurentalprices|H100 80GB    29             0                  11.103                  11.241               11.207               11.379               1.000            0.001
+gpurentalprices|H100 SXM 80GB    29             0                   6.103                   6.207                6.414                6.621               0.851            0.003
+         gpurentalprices|H200    29             0                   9.138                   9.241                9.241                9.379               0.993            0.002
+         gpurentalprices|L40S    29             0                   8.966                   9.000                8.966                9.000               0.909            0.001
+ gpurentalprices|RTX 6000 Ada    29             1                   2.966                   3.000                2.966                3.000               1.000            0.002
+    gpurentalprices|RTX A6000    29             0                   4.966                   5.000                5.172                5.276               1.000            0.001
+ gpurentalprices|RTX PRO 6000    29             0                   7.034                   7.103                7.034                7.103               0.996            0.001

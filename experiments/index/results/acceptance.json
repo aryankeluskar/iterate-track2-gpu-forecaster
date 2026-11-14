@@ -1,0 +1,129 @@
+{
+  "window": [
+    "2026-09-08",
+    "2026-10-06"
+  ],
+  "target_days": [
+    "2026-09-15",
+    "2026-10-06"
+  ],
+  "min_providers": 3,
+  "a_disagreement": {
+    "all_11": {
+      "index": 0.006328392295689976,
+      "posted": 0.03191385740603418,
+      "balanced": 0.015034597713156413,
+      "constant": 0.0,
+      "ratio_index_to_posted": 0.19829606353049073,
+      "pass_20pct": true,
+      "n_pairs": 11,
+      "n_pair_days": 242,
+      "diff_index_minus_posted": -0.0255854651103442,
+      "diff_ci90_week_block": [
+        -0.04798205318266724,
+        -0.010873381762791953
+      ],
+      "diff_balanced_minus_posted": -0.01687925969287777,
+      "diff_balanced_ci90_week_block": [
+        -0.042478088937405956,
+        -7.550740196086994e-05
+      ]
+    },
+    "active_pairs": {
+      "index": 0.006328392295689976,
+      "posted": 0.03191385740603418,
+      "balanced": 0.015034597713156413,
+      "constant": 0.0,
+      "ratio_index_to_posted": 0.19829606353049073,
+      "pass_20pct": true,
+      "n_pairs": 11,
+      "n_pair_days": 242
+    },
+    "exact_name_9": {
+      "index": 0.00689031294273643,
+      "posted": 0.03319895373200735,
+      "balanced": 0.01449417470953944,
+      "constant": 0.0,
+      "ratio_index_to_posted": 0.207546087095312,
+      "pass_20pct": true,
+      "n_pairs": 9,
+      "n_pair_days": 198
+    },
+    "never_moved_pairs": [],
+    "share_of_days_moving": {
+      "index": 0.5408163265306124,
+      "posted": 0.3860544217687074,
+      "balanced": 0.3418367346938775,
+      "constant": 0.0
+    },
+    "mean_abs_7d_change": {
+      "index": 0.009843085836590866,
+      "posted": 0.027935561534040095,
+      "balanced": 0.017108873873843567,
+      "constant": 0.0
+    }
+  },
+  "b_deletion": {
+    "index": 0.008064164850741613,
+    "posted": 0.030888338807087048,
+    "balanced": 0.019677492814634694,
+    "pass": true,
+    "n_series": 21,
+    "n_days": 22
+  },
+  "c_responsiveness": {
+    "index": {
+      "n_cases": 14,
+      "right_direction": 14,
+      "share_right": 1.0,
+      "mean_retention": 0.16908777910999012,
+      "median_retention": 0.14727330430453042,
+      "pass_rule": true
+    },
+    "posted": {
+      "n_cases": 14,
+      "right_direction": 11,
+      "share_right": 0.7857142857142857,
+      "mean_retention": 0.23582819728633542,
+      "median_retention": 0.049302126699831056,
+      "pass_rule": false
+    },
+    "balanced": {
+      "n_cases": 14,
+      "right_direction": 11,
+      "share_right": 0.7857142857142857,
+      "mean_retention": 0.15976878484129411,
+      "median_retention": 0.06998009695050114,
+      "pass_rule": false
+    },
+    "constant": {
+      "n_cases": 14,
+      "right_direction": 0,
+      "share_right": 0.0,
+      "mean_retention": 0.0,
+      "median_retention": 0.0,
+      "pass_rule": false
+    },
+    "mean_one_over_matched_providers": 0.10789478378764092
+  },
+  "d_invalid_days": {
+    "total": 30,
+    "of": 599,
+    "share": 0.05008347245409015
+  },
+  "alias_conflicts_within_collector": {
+    "fastgpu_daily": [],
+    "gpurentalprices": []
+  },
+  "pass_a": true,
+  "pass_b": true,
+  "pass_c": true,
+  "constant_fails_c": true,
+  "drop_checks": {
+    "inactivity": false,
+    "provider_duplication": false,
+    "discarded_or_invalid_days_over_20pct": false,
+    "responsiveness_fails": false
+  },
+  "product_claim": true
+}

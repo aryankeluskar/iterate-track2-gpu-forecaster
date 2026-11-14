@@ -1,0 +1,96 @@
+slug: index
+kind: economic instrument plus acceptance test (not a scored forecaster; nothing a forecaster reads)
+written: 2026-11-14 13:45 PT, before any index value, disagreement or deletion number was computed
+data: gpu-price-pack v0.1.1-handover, rental_observations via gpuf.panel.load() (fastgpu_daily, gpurentalprices)
+what I looked at before writing this: provider lists and provider counts per (collector, GPU model) over the whole
+  sample, calendar gaps per collector, the Nebius/Jarvislabs calendar entries, and the insight report's numbers
+  (0.048 / 0.019 / 0.005 on 8 Sep-6 Nov). No number in the tested window (8 Sep-6 Oct) for any index was seen.
+memory items that shaped the plan:
+  - autopsy-mode-repricing_verda_staircase, autopsy-mode-repricing_scaleway_small_drift: daily repricers are kept in at
+    weight 1/N (no static/dynamic exclusion in this first version); their effect is reported, not removed.
+  - exp-H33: the same provider step can appear a day apart on the two collectors, so the primary agreement measure is
+    the 7-day change, not the 1-day change.
+
+question: >
+  Can a causal, provider-balanced, matched-offer change index, computed every day from public offer rows, track the
+  same GPU model's price change more consistently across the two collectors than the posted median does, without
+  losing responsiveness to real repricings, and with a published concentration warning?
+
+index_definition:
+  panel: one (collector=source_id, instrument_class, gpu_model, pricing_tier) panel from gpuf.panel. Tested contract:
+    instrument_class == neocloud_rate_card and pricing_tier == on_demand (pack fields instrument_class, pricing_tier,
+    gpu_model, source_id).
+  offer: gpuf.panel key = provider|region_raw|sku_raw|gpu_count#occurrence (occurrence = rank among same-base rows of
+    the day by price; day-local, so causal).
+  observed days: days with at least one row in the panel. previous observed day = latest earlier observed day.
+  matched offer on day t: key present on day t and on the previous observed day (both rows dated <= t).
+  provider identity: the pack's provider string after a fixed alias map {paperspace: digitalocean} (DigitalOcean owns
+    Paperspace; typed by hand). Within one collector a provider is one voter however many regions, SKUs or GPU counts
+    it lists.
+  provider change r_p(t): median over p's matched offers of log(price_t / price_prev).
+  index daily change c(t): equal-weight mean of r_p(t) over matched providers, if the number of matched providers is
+    >= MIN_PROVIDERS; otherwise c(t) = 0 (level carried) and valid(t) = False.
+  MIN_PROVIDERS: 3
+  level: L(anchor) = posted median on the panel's first observed day (start of that collector's sample for that
+    panel); L(t) = L(prev) * exp(c(t)). Calendar days without rows carry the level (not a valid day).
+  no winsorising, no outlier filter, no static/dynamic split, no survivorship cohort, no look-ahead normalisation.
+published_with_each_value:
+  - providers: matched providers on t (and providers present on t)
+  - offers: matched offers on t (and offers present on t)
+  - largest_provider_share: max_p |r_p| / sum_p |r_p| over matched providers (empty if no provider moved)
+  - one_provider_removal: max_p |c_without_p(t) - c(t)|, where c_without_p is recomputed with all of p's offers deleted
+    (applying the same MIN_PROVIDERS rule)
+  - valid flag
+
+comparators:
+  posted_median: log median of all offers on the day (the published statistic), calendar days carried.
+  balanced_median: chained log(median of matched offers today / median of the same offers on the previous day).
+  constant: c(t) = 0 always.
+
+cross_collector_pairs (fixed; the 11 pairs of the insight report, all neocloud_rate_card / on_demand):
+  exact gpu_model match (9): A100 40GB, B200, B300, H100 SXM 80GB, H200, L40S, RTX 6000 Ada, RTX A6000, RTX PRO 6000
+  cross-name (2): fastgpu A100 80GB ~ gpurentalprices A100 SXM 80GB; fastgpu H100 SXM 80GB ~ gpurentalprices H100 80GB
+  sensitivity (secondary, declared now): the 9 exact-name pairs only (removes the reuse of fastgpu H100 SXM 80GB).
+
+test_window: 2026-09-08 .. 2026-10-06 (practice dates; both collectors present from 8 Sep). Indices are computed
+  from each panel's first day; 7-day changes are taken for target days t in 2026-09-15 .. 2026-10-06 (both endpoints
+  inside the window), so 22 days x 11 pairs = 242 pair-days.
+
+acceptance_test (all four must pass for the product claim):
+  a_disagreement: D(stat) = mean over pair-days of |dlog7_fastgpu(t) - dlog7_gpurentalprices(t)|.
+    PASS if D(index) <= 0.80 * D(posted_median). Reported next to D(balanced_median) and D(constant) (= 0 by
+    construction). Paired difference index - posted with a week-block bootstrap 90% interval (4 week blocks;
+    descriptive only, rough with so few weeks).
+  b_deletion: for each series and target day, S(stat) = max over providers p of |dlog7_without_p(t) - dlog7(t)|
+    (p's offers deleted from the whole history, statistic recomputed). Averaged over the 21 series and 22 days.
+    PASS if S(index) < S(posted_median). Balanced median reported alongside.
+  c_responsiveness: events Nebius (effective 2026-10-01) and Jarvislabs (effective 2026-10-05). Event window =
+    effective-1 .. effective+1 (Jarvislabs: 4-6 Oct, inside the window). A case is a (collector, GPU model) panel among
+    the 21 test series where the provider has matched offers in the window and its summed provider change over the
+    window |R_p| >= 0.03. Index move = sum of c(t) over the window. Retention = index move / R_p.
+    PASS if the index move has the sign of R_p in at least 80% of cases and mean retention > 0. The constant index
+    must FAIL this rule (it retains 0). Posted median and balanced median retention reported alongside.
+    If there are zero eligible cases the test is "untestable" and the product claim cannot be made.
+  d_reporting: paired differences (index - posted) by GPU pair and by week; pairs on which neither index side moved
+    on any day in the window shown separately; number of invalid (too few providers) days per series in the window.
+
+drop_the_product_claim_if:
+  - inactivity: on the pairs where at least one index side moved in the window, D(index) > 0.80 * D(posted_median).
+  - provider duplication: the alias map leaves any provider counted twice within a collector, or the 9-pair
+    sensitivity reverses (a) (D(index) > 0.80 * D(posted) on the 9 exact-name pairs).
+  - discarded hard days: no days are discarded; invalid days carry the level and stay in D. If more than 20% of
+    test-series days in the window are invalid, the claim is dropped as coverage-driven.
+  - future membership: the leak test (delete and corrupt every row after t; index up to t bit-identical) fails.
+  - responsiveness (c) fails.
+
+leak_test: tests/test_index.py deletes every row after t, and separately multiplies later prices by random factors
+  and adds fake later offers/providers; the index computed through 2026-11-06 must equal, bit for bit, the reference
+  on all dates <= t, for several t and panels.
+
+extension (after the test is settled, no rule changes, descriptive, outside the tested window): index through
+  2026-11-06 for every gpuf.panel series among the 37 scored series (33 of 37; the 4 afhubbard spot series are not
+  in gpuf.panel); data_out/balanced_index.csv; one figure per frontier chip (H100, H200, B200, B300, A100 80GB).
+  Non-rate-card panels (spot, marketplace) are flagged tested_contract = False.
+
+limits stated up front: collector agreement is consistency, not truth; there are no transaction prices or capacity
+  weights; posted asks are not realised revenue; 22 target days in 4 calendar weeks is a small sample.
