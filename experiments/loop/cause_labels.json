@@ -1,0 +1,6 @@
+{
+ "calendar_sha": "85ac72bbba85",
+ "calendar": "data_out/repricing_calendar.jsonl",
+ "rows": 4278,
+ "made_by": "gpuf.loop.labels (port of experiments/autopsy2/analyse.py)"
+}
