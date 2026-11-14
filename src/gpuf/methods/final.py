@@ -20,6 +20,11 @@ raises. A member that cannot forecast a series is left out of that series' avera
 prov's own dynamic gate (base = mix where no repricing provider sits near the middle) is kept: that is the
 validated method. Members used per (series, origin, horizon) are recorded in `f.used`.
 
+Membership and gate were fixed on dev by EVAL_PROTOCOL.md Amendment 3 (experiments/final/score.py,
+results/dev.txt): no member's removal raises pooled skill in both halves on both universes, so all seven are
+kept (the default); the gate [14, 1] is applied to non-headline series only (gate_scope "nonhead"), which is
+what `bash reproduce.sh final` passes. prov's later switches `cal` and `ret_mkt` stay at their defaults.
+
 params
   members     subset of MEMBERS (leave-one-out); one member returns that member's quantiles unchanged
   gate        [n, m]: last value with zero width when the series changed fewer than m times in the last n days

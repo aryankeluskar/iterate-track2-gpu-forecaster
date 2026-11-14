@@ -1,0 +1,22 @@
+[drift] 1s, 0.01s/origin, maxrss 0.20 GB
+[mix] 3s, 0.02s/origin, maxrss 0.22 GB
+[hyper_w21] 26s, 0.21s/origin, maxrss 3.34 GB
+[sim_blend05] 28s, 0.23s/origin, maxrss 3.83 GB
+        mix                all full 22639 -0.0223 0.921     NaN              NaN  -0.0054  [-0.022, 0.021]
+        mix          headline4 full  1440  0.1326 0.795     NaN              NaN  -0.0536 [-0.113, -0.006]
+        mix   hyperscaler_spot full  5741  0.0895 0.815     NaN              NaN  -0.0355 [-0.062, -0.005]
+        mix   hyperscaler_list full  6101 -0.0971 0.978     NaN              NaN   0.0176  [-0.023, 0.123]
+        mix neocloud_rate_card full  6837  0.0603 0.958     NaN              NaN   0.0548   [0.021, 0.163]
+        mix      neocloud_spot full  3960 -0.2304 0.920     NaN              NaN  -0.0682  [-0.189, -0.01]
+  hyper_w21                all full 22639 -0.0560 0.902 -0.0337  [-0.081, 0.002]  -0.0391 [-0.076, -0.001]
+  hyper_w21          headline4 full  1440  0.1429 0.744  0.0103   [-0.11, 0.109]  -0.0433  [-0.191, 0.077]
+  hyper_w21   hyperscaler_spot full  5741  0.0777 0.741 -0.0118  [-0.053, 0.027]  -0.0473 [-0.091, -0.004]
+  hyper_w21   hyperscaler_list full  6101 -0.0480 0.978  0.0491   [0.012, 0.192]   0.0667   [0.014, 0.277]
+  hyper_w21 neocloud_rate_card full  6837 -0.0997 0.956 -0.1600 [-0.395, -0.036]  -0.1051   [-0.25, 0.016]
+  hyper_w21      neocloud_spot full  3960 -0.3307 0.923 -0.1004   [-0.37, 0.012]  -0.1686 [-0.523, -0.025]
+sim_blend05                all full 22639 -0.0204 0.883  0.0019   [-0.023, 0.03]  -0.0035  [-0.024, 0.032]
+sim_blend05          headline4 full  1440  0.1671 0.770  0.0345  [-0.039, 0.099]  -0.0191   [-0.132, 0.07]
+sim_blend05   hyperscaler_spot full  5741  0.1091 0.755  0.0195  [-0.004, 0.049]  -0.0159  [-0.055, 0.022]
+sim_blend05   hyperscaler_list full  6101 -0.0480 0.978  0.0491   [0.012, 0.192]   0.0667   [0.014, 0.277]
+sim_blend05 neocloud_rate_card full  6837 -0.0179 0.883 -0.0782 [-0.189, -0.011]  -0.0233  [-0.073, 0.054]
+sim_blend05      neocloud_spot full  3960 -0.2677 0.923 -0.0373  [-0.151, 0.018]  -0.1055  [-0.32, -0.019]

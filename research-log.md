@@ -179,3 +179,10 @@ The team's instruction: make sure of a win in Track 2. The brief's criteria are 
 - longrun version 2 (the headline question): panel-robust inputs, explicit scenarios with probabilities (shortage persists, eases to trend, successor glut), backtests of what can be backtested including year-end projections on the four-year AWS spot history, resale by income approach with a lender's loan-to-value view and a depreciation schedule.
 - rules: the exact submission requirements, deadlines and artefacts for the hackathon, Track 2, Exa and past.dev, read from the hackathon page through the team's browser.
 Running besides: final (reproducibility: one command, every posted rental series, membership by Amendment 3), hyper, loop (originality and the sponsors: the loop as commands with Exa and past.dev in the path).
+
+## 2026-11-14 12:44 PT: submission requirements read
+
+- experiments/submission/requirements.md (read from the hackathon page in the team's browser, new tab, nothing submitted). Hard deadline taken as Sunday 15 Nov 14:00 PT (the page also says 14:30). Required: public GitHub repo with no commits before the event (this repo's first commit is 14 Nov 10:31 PT), a 2-minute demo video, a short description, one track plus challenges; Track 2 adds the forecast CSV for origin 2026-11-06, one reproduce command and findings. Round 1 pitch 3 minutes plus 2 of questions at 14:45; finals 3 minutes with a live demo.
+- Overall judging, five criteria at 20% each: research rigour; novelty; results (a measurable result against a baseline, a working live demo); autonomy and self-improvement (how much of the loop runs without a human; extra credit if it improves from its own results); interpretability and reproducibility (logs, traces, sources; failures reported honestly). Track 2 adds useful economic insight.
+- Secret scan by the orchestrator: neither API key value appears in any tracked file or in git history. Tracked content is 41 MB in 1,733 files.
+- Not done and needs the team: creating the public repository and pushing (nothing has been pushed), joining the platform by Sunday 12:00, recording the video.
