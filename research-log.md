@@ -54,3 +54,22 @@ Budget: 4 method queries on rental_headline, frozen params, in this order. Rule 
 2. ens of mix (1), mix dirk sk=7 hl=30, mix pool=all chgk sk=3 hl=30
 3. ens of mix (1) and gbm full/all
 4. chronos-bolt-small, centre=last
+
+## 2026-11-14 12:10 PT — validation round 1 results, and a fifth query declared before running
+
+Validation (13–30 Oct, headline, 1,816 cells), each of the four planned queries run once:
+| method | skill | vs drift | 90% CI | pass |
+|---|---|---|---|---|
+| drift | 0.0845 | | | |
+| mix cc k20 chgk3 hl30 | 0.1121 | +0.0276 | [-0.0055,+0.0511] | no |
+| ens of 3 mix | 0.1266 | +0.0421 | [+0.0233,+0.0554] | yes |
+| ens mix+gbm | 0.1538 | +0.0693 | [+0.0507,+0.0825] | yes |
+| chronos-bolt-small centre=last | 0.2058 | +0.1214 | [+0.0711,+0.1569] | yes |
+
+Dev/val rank order flipped (dev: 3-mix > mix+gbm > mix > chronos_last; val: the reverse). Read: "beats drift" is supported; the ranking between methods is not.
+Dev secondary universe (rental_all, 40,338 cells): mix +0.041 [+0.020,+0.063]; mix+gbm +0.043 [+0.024,+0.062]; chronos_last +0.012 [-0.023,+0.062] (loses on neocloud_rate_card and afhubbard). Chronos_last alone is not robust across universes.
+TimesFM 2.5 dev headline: raw -0.055, centre=last +0.061. Same pattern as Chronos (H6 holds for both).
+Dev blends (headline / rental_all): mix+chronos_last +0.088 / +0.042; mix+gbm+chronos_last +0.093 [+0.073,+0.108] / +0.044 [+0.024,+0.071]; adding timesfm_last +0.090 (no gain).
+Width diagnostic (dev, drift-live cells): q50 loss is the same for every method (0.333 of baseline); all gain is in q10/q90. Upper tail is under-covered at h=7 by every method (27–33% of truths above q90).
+
+Query 5 (declared now, before running): ens of mix + gbm + chronos_last, equal weights. Caveat recorded up front: this query was added after seeing queries 1–4, and its members are the ones that did well there, so its validation number is optimistic and is not a clean test. It is run to pick the submission candidate, not as evidence.
