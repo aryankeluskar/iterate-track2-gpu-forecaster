@@ -1,0 +1,121 @@
+# experiments/scientist: protocol, fixed 2026-11-14T21:40Z before any result was computed.
+slug: scientist
+question: >
+  Can one command run research iterations on the practice dates with no human choice between steps
+  (observe failures, inspect, recall, search prior work, hypothesise, dedupe, test, decide, record), and does the
+  system it changes do better on origins it had not seen when it changed itself?
+data: practice dates only (split dev, origins 2026-08-18..2026-10-06, targets to 2026-10-13). No val origin is read.
+memory_brief_at_start: >
+  brief --as researcher on "automatic hypothesis generation: rules that change the blend's members or widths on
+  slices of origin-time facts" returned exp-H37, exp-H35, exp-H7b, exp-H15, ens4 autopsy modes and four scout
+  evidence items. None changed this plan (I choose no rule; the controller does). exp-H15 (learned weights not
+  significant) and exp-H35 (zero width on hyperscaler list already in the 14-day gate) are context the controller's
+  model may or may not receive, depending on --memory.
+
+protected_files_sha256:   # evaluator and split files; must be unchanged at the end
+  src/gpuf/scoring.py: c20885839de927854015e9d56a06519585c070d53c9f5c5851db64e3b679e9a1
+  src/gpuf/splits.py: c8f12180b891b9d325678b9822512ad51f0c0a21b58c26c573321e97925e6bf9
+  src/gpuf/compare.py: 1e62fb8763f04ff8766a86b5fbc92b2905fbdde6934c4753f19460b9dc74c7b9
+  src/gpuf/harness.py: 6f4db3aac5bf9654f9688450bff2eb0625258e284682c6ff0a3fa7194831ab2b
+  experiments/maturity/dump.py: dbf40af3f10812f3bee7ed608479878235124ee68e935a84ed937b3c99a83633
+
+store:
+  cells: runs/maturity/cells.parquet (experiments/maturity/dump.py, dev only, 357 posted rental series)
+  facts: every origin-time fact computed only from series rows and offer rows dated on or before the origin
+  refuses: any origin outside split dev, any checkpoint after 2026-10-13
+start_system: >
+  the submitted `final`: equal-weight log blend of mix, gbm, chronos, analog, prov, fm2, fragility, plus its
+  14-day zero-width gate on non-headline series written as rule 0 (in37 == false and gate14 == true -> last_zero).
+
+split_by_time:
+  selection_origins: dev origins o with o + 7 <= checkpoint C (every outcome known by C)
+  evaluation_origins: dev origins in [C + 1, next checkpoint - 1]; the last block ends 2026-10-06
+  rule: nothing computed from a cell with origin > C - 7 reaches the model, the report or the gate
+
+controller_per_iteration:
+  observe: score the current system on selection cells; failure report by slice (class, collector, horizon, in37,
+           panel or not, rows, recent changes, cause labels on the 37 from experiments/loop/cause_labels.parquet)
+  inspect: one model call (gpuf.llm.ask_json, default model); it may ask for up to 3 breakdowns and names a search query
+  recall: none = nothing; ledger = full text of data_out/ledger.jsonl plus this run's earlier verdicts;
+          pastdev = gpuf.memory recall as `proposer` with as_of = C for a query built from the report, plus this
+          run's earlier verdict records (the text the controller wrote to memory as `experimenter`, ids auto-...)
+  prior: one Exa search through gpuf.loop._exa, endPublishedDate = C, undated and later results dropped, trackers
+         excluded; skipped and counted offline or once scientist Exa spend reaches 0.50 USD in total
+  hypothesise: one model call returning claim, mechanism, spec, falsification, prior ids used, expectation
+  repair: at most one extra model call per iteration, only when the spec is invalid or a duplicate
+  dedupe: refuse without testing a candidate that is the same idea as one tested in this run or carried in the
+          memory block it was given
+  test: the gate below
+  record: one row per iteration in data_out/scientist_journal.jsonl and one memory record auto-<run>-i<k>
+          (audience gpuf-experiments, identity experimenter, timestamp C T23:59:59Z)
+
+same_idea_definition: >
+  Two candidates are the same idea if their canonical specs are equal, or if they have the same action name, equal
+  member lists, every numeric action parameter within 0.05 (absolute), and their condition masks on the current
+  run's selection cells overlap with Jaccard >= 0.9 (two empty masks count as equal).
+wasted_test_definition: >
+  A tested candidate that is the same idea as one rejected earlier in the same run, or rejected in any run whose
+  journal rows were written before this run started (counted afterwards from data_out/scientist_journal.jsonl).
+
+gate:   # fixed; a candidate is the current system plus the candidate rule appended last
+  all_posted_series:
+    d_pooled_skill_first_half: "> 0"     # selection origins split in two by date (first n//2 origins)
+    d_pooled_skill_second_half: "> 0"
+    d_pooled_skill_all: "> 0"
+  changed: ">= 200 cells in >= 5 series"   # a cell changed if any quantile moved by more than 1e-9 relative
+  headline_37: "d_pooled_skill >= 0 on the 37's selection cells (tolerance 1e-9)"
+  bootstrap: ">= 90% of 2000 ISO-week block resamples (seed 0) with d_pooled_skill_all > 0"
+  verdict: kept if every line holds, else rejected (memory status supported / refuted)
+
+walk_forward:
+  checkpoints: [2026-09-18, 2026-09-25, 2026-10-02]
+  iterations_per_checkpoint: 6
+  memory: pastdev (date-bounded: as_of = C, so ledger records dated 14 Nov are not returned)
+  chaining: checkpoint k starts from the system frozen at checkpoint k-1; the first starts from the submitted system
+  evaluation_blocks: [2026-09-19..2026-09-24, 2026-09-26..2026-10-01, 2026-10-03..2026-10-06]
+  report: self-modified minus frozen start, pooled skill, all posted series and the 37, per block and pooled,
+          ISO-week block bootstrap 90% range, origins per block; each kept rule's selection gain beside its
+          later-origin gain
+  claim_improves: >
+    "the system improved on later origins" only if pooled d_all > 0, pooled d37 >= 0 and d_all > 0 in at least
+    2 of 3 blocks; "clearly" only if the 5% bootstrap bound of pooled d_all is also > 0. Otherwise report no
+    measurable gain, or a loss, as it is.
+final_run:
+  checkpoint: 2026-10-13
+  iterations: 8
+  memory: pastdev
+  start: the system frozen at 2026-10-02
+  output: experiments/scientist/results/system_final.json, never evaluated here on any origin after 2026-10-06
+
+memory_comparison:
+  checkpoint: 2026-09-25
+  iterations: 8
+  start: the submitted system
+  conditions: [none, ledger, pastdev]
+  replicates: [r1, r2, r3]   # gpuf.llm salt; run order r1 (none, ledger, pastdev), r2 (...), r3 (...)
+  metrics: candidates proposed, duplicates avoided before testing, wasted tests, rules kept, later-origin gain
+           (2026-09-26..2026-10-06 vs the submitted system), prompt tokens per iteration (len/4), model seconds,
+           memory seconds, past.dev cost (credits from /usage before and after each run if readable, else not measured)
+  claim_pastdev_better: >
+    only if pastdev's wasted tests are lower than ledger's in at least 2 of 3 replicate pairs and its mean
+    later-origin gain is not lower than ledger's. Otherwise "no advantage shown".
+  known_confound: >
+    pastdev recall can return auto- records from earlier runs; the ledger condition only has the ledger and this
+    run's verdicts (as specified). An advantage could come from more information, not better retrieval.
+
+acceptance:   # from the adviser, fixed
+  - one complete cycle with no human choice between steps
+  - a traceable new specification or a principled duplicate rejection
+  - evaluator and split files unchanged (hashes above)
+  - a second run that does not spend a test on an idea already rejected (wasted tests = 0 in some later run)
+  - a forecast gain of zero is acceptable
+drop_claims_if:
+  - a human supplied any hypothesis or picked any candidate: drop the word autonomous
+  - any later-origin number reaches the model, the report or the gate
+  - the offline replay does not reproduce the journal rows and numbers
+caveats_to_state:
+  - the seven members' settings were chosen by earlier work on all practice dates: the replay is retrospective
+  - the 37 series are a hindsight universe (chosen as of 6 November)
+  - the later-origin blocks are short (6, 6 and 4 origins)
+  - the ledger condition gives the model research verdicts computed on all practice dates (dated 14 November);
+    this deviates from "nothing dated after C reaches the model" because the task fixes that condition's content

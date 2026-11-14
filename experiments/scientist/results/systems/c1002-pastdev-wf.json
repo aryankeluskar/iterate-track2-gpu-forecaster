@@ -1,0 +1,154 @@
+{
+ "name": "scientist c1002-pastdev-wf, frozen at checkpoint 2026-10-02",
+ "base": {
+  "members": [
+   "mix",
+   "gbm",
+   "chronos",
+   "analog",
+   "prov",
+   "fm2",
+   "fragility"
+  ]
+ },
+ "rules": [
+  {
+   "id": "gate14-nonhead",
+   "claim": "the submitted system's 14-day zero-width gate on non-headline series (EVAL_PROTOCOL.md Amendment 3)",
+   "when": {
+    "all": [
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "gate14",
+      "op": "==",
+      "value": true
+     }
+    ]
+   },
+   "do": {
+    "action": "last_zero"
+   }
+  },
+  {
+   "id": "auto-c0918-pastdev-wf-i1",
+   "claim": "For non-headline marketplace asks that changed within the last six days, analog forecasts will reduce pinball loss by capturing recurring sequences of median repricing.",
+   "when": {
+    "all": [
+     {
+      "fact": "cls",
+      "op": "==",
+      "value": "marketplace_ask"
+     },
+     {
+      "fact": "days_since_change",
+      "op": "<",
+      "value": 6.0
+     },
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     }
+    ]
+   },
+   "do": {
+    "action": "members_only",
+    "members": [
+     "analog"
+    ]
+   }
+  },
+  {
+   "id": "auto-c0918-pastdev-wf-i2",
+   "claim": "For non-headline neocloud rate-card and spot series outside the existing 14-day gate, a flat last-value forecast will reduce pinball loss because recent median changes usually establish a new level rather than predict further movement.",
+   "when": {
+    "all": [
+     {
+      "fact": "cls",
+      "op": "in",
+      "value": [
+       "neocloud_rate_card",
+       "neocloud_spot"
+      ]
+     },
+     {
+      "fact": "gate14",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     }
+    ]
+   },
+   "do": {
+    "action": "last_zero"
+   }
+  },
+  {
+   "id": "auto-c0918-pastdev-wf-i4",
+   "claim": "For non-headline marketplace asks that changed within the last six days, widening the current forecast's log intervals by 25% will reduce pinball loss because its tails understate the size of subsequent median moves.",
+   "when": {
+    "all": [
+     {
+      "fact": "cls",
+      "op": "==",
+      "value": "marketplace_ask"
+     },
+     {
+      "fact": "days_since_change",
+      "op": "<",
+      "value": 6.0
+     },
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     }
+    ]
+   },
+   "do": {
+    "action": "scale_width",
+    "lo": 1.25,
+    "hi": 1.25
+   }
+  },
+  {
+   "id": "auto-c0925-pastdev-wf-i2",
+   "claim": "For non-headline hyperscaler list-price series outside the 14-day gate, a zero-width last-value forecast at one- and three-day horizons will reduce pinball loss because another median-changing event is unlikely so soon.",
+   "when": {
+    "all": [
+     {
+      "fact": "cls",
+      "op": "==",
+      "value": "hyperscaler_list"
+     },
+     {
+      "fact": "gate14",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "horizon",
+      "op": "<=",
+      "value": 3.0
+     },
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     }
+    ]
+   },
+   "do": {
+    "action": "last_zero"
+   }
+  }
+ ]
+}

@@ -1,0 +1,124 @@
+{
+ "name": "scientist c0925-ledger-r2, frozen at checkpoint 2026-09-25",
+ "base": {
+  "members": [
+   "mix",
+   "gbm",
+   "chronos",
+   "analog",
+   "prov",
+   "fm2",
+   "fragility"
+  ]
+ },
+ "rules": [
+  {
+   "id": "gate14-nonhead",
+   "claim": "the submitted system's 14-day zero-width gate on non-headline series (EVAL_PROTOCOL.md Amendment 3)",
+   "when": {
+    "all": [
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "gate14",
+      "op": "==",
+      "value": true
+     }
+    ]
+   },
+   "do": {
+    "action": "last_zero"
+   }
+  },
+  {
+   "id": "auto-c0925-ledger-r2-i2",
+   "claim": "After a recent median change followed by at least four quiet days, an equal-weight blend of analog and fm2 should outperform the current blend on series with offer panels.",
+   "when": {
+    "all": [
+     {
+      "fact": "chg14",
+      "op": ">=",
+      "value": 1.0
+     },
+     {
+      "fact": "days_since_change",
+      "op": ">=",
+      "value": 4.0
+     },
+     {
+      "fact": "has_panel",
+      "op": "==",
+      "value": true
+     }
+    ]
+   },
+   "do": {
+    "action": "members_only",
+    "members": [
+     "analog",
+     "fm2"
+    ]
+   }
+  },
+  {
+   "id": "auto-c0925-ledger-r2-i6",
+   "claim": "After an observed price change in a single-offer panel, removing prov from the blend should improve forecasts because an isolated quote reset need not establish a continuing repricing trend.",
+   "when": {
+    "all": [
+     {
+      "fact": "chg14",
+      "op": ">=",
+      "value": 1.0
+     },
+     {
+      "fact": "days_since_change",
+      "op": "<",
+      "value": 4.0
+     },
+     {
+      "fact": "p_offers",
+      "op": "==",
+      "value": 1.0
+     }
+    ]
+   },
+   "do": {
+    "action": "drop_members",
+    "members": [
+     "prov"
+    ]
+   }
+  },
+  {
+   "id": "auto-c0925-ledger-r2-i8",
+   "claim": "Immediately after a median change in a two-offer panel, widening both tails by 25% while preserving q50 should improve pinball loss by representing uncertainty in both quotes that determine the midpoint.",
+   "when": {
+    "all": [
+     {
+      "fact": "chg14",
+      "op": ">=",
+      "value": 1.0
+     },
+     {
+      "fact": "days_since_change",
+      "op": "<",
+      "value": 4.0
+     },
+     {
+      "fact": "p_offers",
+      "op": "==",
+      "value": 2.0
+     }
+    ]
+   },
+   "do": {
+    "action": "scale_width",
+    "lo": 1.25,
+    "hi": 1.25
+   }
+  }
+ ]
+}

@@ -1,0 +1,113 @@
+{
+ "name": "scientist c0925-ledger-r1, frozen at checkpoint 2026-09-25",
+ "base": {
+  "members": [
+   "mix",
+   "gbm",
+   "chronos",
+   "analog",
+   "prov",
+   "fm2",
+   "fragility"
+  ]
+ },
+ "rules": [
+  {
+   "id": "gate14-nonhead",
+   "claim": "the submitted system's 14-day zero-width gate on non-headline series (EVAL_PROTOCOL.md Amendment 3)",
+   "when": {
+    "all": [
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "gate14",
+      "op": "==",
+      "value": true
+     }
+    ]
+   },
+   "do": {
+    "action": "last_zero"
+   }
+  },
+  {
+   "id": "auto-c0925-ledger-r1-i6",
+   "claim": "After exactly one median change in the preceding 14 days, the blend overstates the spread of the next day's price; contracting both tails by 25% will reduce pinball loss.",
+   "when": {
+    "all": [
+     {
+      "fact": "chg14",
+      "op": "==",
+      "value": 1.0
+     },
+     {
+      "fact": "horizon",
+      "op": "==",
+      "value": 1.0
+     },
+     {
+      "fact": "span",
+      "op": ">=",
+      "value": 14.0
+     }
+    ]
+   },
+   "do": {
+    "action": "scale_width",
+    "lo": 0.75,
+    "hi": 0.75
+   }
+  },
+  {
+   "id": "auto-c0925-ledger-r1-i7",
+   "claim": "On active panels containing only one provider, excluding prov from the blend reduces pinball loss because provider-level repricing extrapolation lacks the stabilizing influence of offers from other providers.",
+   "when": {
+    "all": [
+     {
+      "fact": "gate14",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "p_providers",
+      "op": "==",
+      "value": 1.0
+     }
+    ]
+   },
+   "do": {
+    "action": "drop_members",
+    "members": [
+     "prov"
+    ]
+   }
+  },
+  {
+   "id": "auto-c0925-ledger-r1-i8",
+   "claim": "On active panels containing exactly one offer, excluding fragility reduces pinball loss because its panel-based tail adjustment has no observed neighbouring offer to anchor to and can overweight the mix forecast already in the blend.",
+   "when": {
+    "all": [
+     {
+      "fact": "gate14",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "p_offers",
+      "op": "==",
+      "value": 1.0
+     }
+    ]
+   },
+   "do": {
+    "action": "drop_members",
+    "members": [
+     "fragility"
+    ]
+   }
+  }
+ ]
+}

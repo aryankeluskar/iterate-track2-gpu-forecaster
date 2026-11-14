@@ -1,0 +1,173 @@
+{
+ "name": "scientist c0925-none-r2, frozen at checkpoint 2026-09-25",
+ "base": {
+  "members": [
+   "mix",
+   "gbm",
+   "chronos",
+   "analog",
+   "prov",
+   "fm2",
+   "fragility"
+  ]
+ },
+ "rules": [
+  {
+   "id": "gate14-nonhead",
+   "claim": "the submitted system's 14-day zero-width gate on non-headline series (EVAL_PROTOCOL.md Amendment 3)",
+   "when": {
+    "all": [
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "gate14",
+      "op": "==",
+      "value": true
+     }
+    ]
+   },
+   "do": {
+    "action": "last_zero"
+   }
+  },
+  {
+   "id": "auto-c0925-none-r2-i1",
+   "claim": "For non-headline series with an available offer panel and fewer than 22 days since the last median change, analog forecasts will reduce pinball loss relative to the current blend.",
+   "when": {
+    "all": [
+     {
+      "fact": "days_since_change",
+      "op": "<",
+      "value": 22.0
+     },
+     {
+      "fact": "has_panel",
+      "op": "==",
+      "value": true
+     },
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     }
+    ]
+   },
+   "do": {
+    "action": "members_only",
+    "members": [
+     "analog"
+    ]
+   }
+  },
+  {
+   "id": "auto-c0925-none-r2-i2",
+   "claim": "For non-headline marketplace asking-price series outside the 14-day gate, a median unchanged for 4\u201321 days is better forecast by Chronos alone than by the current system.",
+   "when": {
+    "all": [
+     {
+      "fact": "cls",
+      "op": "==",
+      "value": "marketplace_ask"
+     },
+     {
+      "fact": "days_since_change",
+      "op": "<",
+      "value": 22.0
+     },
+     {
+      "fact": "days_since_change",
+      "op": ">=",
+      "value": 4.0
+     },
+     {
+      "fact": "gate14",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     }
+    ]
+   },
+   "do": {
+    "action": "members_only",
+    "members": [
+     "chronos"
+    ]
+   }
+  },
+  {
+   "id": "auto-c0925-none-r2-i6",
+   "claim": "For non-headline series whose latest median change was downward and occurred fewer than four days ago, FM2 alone will reduce pinball loss at three- and seven-day horizons.",
+   "when": {
+    "all": [
+     {
+      "fact": "days_since_change",
+      "op": "<",
+      "value": 4.0
+     },
+     {
+      "fact": "horizon",
+      "op": ">=",
+      "value": 3.0
+     },
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "last_change",
+      "op": "<",
+      "value": 0.0
+     }
+    ]
+   },
+   "do": {
+    "action": "members_only",
+    "members": [
+     "fm2"
+    ]
+   }
+  },
+  {
+   "id": "auto-c0925-none-r2-i8",
+   "claim": "For non-headline hyperscaler spot series whose published median changed within the past four days and is outside the 14-day gate, analog alone will reduce pinball loss relative to the current system.",
+   "when": {
+    "all": [
+     {
+      "fact": "cls",
+      "op": "==",
+      "value": "hyperscaler_spot"
+     },
+     {
+      "fact": "days_since_change",
+      "op": "<",
+      "value": 4.0
+     },
+     {
+      "fact": "gate14",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     }
+    ]
+   },
+   "do": {
+    "action": "members_only",
+    "members": [
+     "analog"
+    ]
+   }
+  }
+ ]
+}

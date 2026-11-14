@@ -1,0 +1,1011 @@
+{
+ "runs": {
+  "c0918-pastdev-wf": {
+   "checkpoint": "2026-09-18",
+   "memory": "pastdev",
+   "rep": "wf",
+   "selection": {
+    "first": "2026-08-18",
+    "last": "2026-09-11",
+    "n_cells": 16241,
+    "n_origins": 25
+   },
+   "verdicts": [
+    "kept",
+    "kept",
+    "rejected",
+    "kept",
+    "rejected",
+    "rejected"
+   ],
+   "candidates_proposed": 6,
+   "duplicates_avoided": 0,
+   "invalid_specs": 0,
+   "tests": 6,
+   "kept": 3,
+   "wasted_tests": [],
+   "prompt_tokens_per_iteration": 13007.0,
+   "model_seconds": 178.2,
+   "memory_seconds": 209.2,
+   "model_calls": 12,
+   "human_interventions": 0,
+   "exa_new_searches": 4,
+   "exa_skipped": 0,
+   "recall_errors": 0,
+   "memory_write_errors": 0,
+   "past_credits_delta_projectwide": 41.0,
+   "past_credits_est_by_price_rule": 35
+  },
+  "c0925-pastdev-wf": {
+   "checkpoint": "2026-09-25",
+   "memory": "pastdev",
+   "rep": "wf",
+   "selection": {
+    "first": "2026-08-18",
+    "last": "2026-09-18",
+    "n_cells": 22729,
+    "n_origins": 32
+   },
+   "verdicts": [
+    "rejected",
+    "kept",
+    "rejected",
+    "rejected",
+    "rejected",
+    "rejected"
+   ],
+   "candidates_proposed": 6,
+   "duplicates_avoided": 0,
+   "invalid_specs": 0,
+   "tests": 6,
+   "kept": 1,
+   "wasted_tests": [],
+   "prompt_tokens_per_iteration": 13888.0,
+   "model_seconds": 186.3,
+   "memory_seconds": 122.2,
+   "model_calls": 12,
+   "human_interventions": 0,
+   "exa_new_searches": 2,
+   "exa_skipped": 0,
+   "recall_errors": 0,
+   "memory_write_errors": 0,
+   "past_credits_delta_projectwide": 34.0,
+   "past_credits_est_by_price_rule": 34
+  },
+  "c1002-pastdev-wf": {
+   "checkpoint": "2026-10-02",
+   "memory": "pastdev",
+   "rep": "wf",
+   "selection": {
+    "first": "2026-08-18",
+    "last": "2026-09-25",
+    "n_cells": 29351,
+    "n_origins": 39
+   },
+   "verdicts": [
+    "rejected",
+    "rejected",
+    "rejected",
+    "rejected",
+    "rejected",
+    "rejected"
+   ],
+   "candidates_proposed": 6,
+   "duplicates_avoided": 0,
+   "invalid_specs": 0,
+   "tests": 6,
+   "kept": 0,
+   "wasted_tests": [
+    {
+     "iteration": 1,
+     "same_idea_as": "auto-c0925-pastdev-wf-i1"
+    },
+    {
+     "iteration": 6,
+     "same_idea_as": "auto-c0925-pastdev-wf-i5"
+    }
+   ],
+   "prompt_tokens_per_iteration": 13691.0,
+   "model_seconds": 177.4,
+   "memory_seconds": 103.7,
+   "model_calls": 12,
+   "human_interventions": 0,
+   "exa_new_searches": 1,
+   "exa_skipped": 0,
+   "recall_errors": 0,
+   "memory_write_errors": 0,
+   "past_credits_delta_projectwide": 35.0,
+   "past_credits_est_by_price_rule": 35
+  },
+  "c1013-pastdev-wf": {
+   "checkpoint": "2026-10-13",
+   "memory": "pastdev",
+   "rep": "wf",
+   "selection": {
+    "first": "2026-08-18",
+    "last": "2026-10-06",
+    "n_cells": 40338,
+    "n_origins": 50
+   },
+   "verdicts": [
+    "rejected",
+    "kept",
+    "rejected",
+    "kept",
+    "rejected",
+    "rejected",
+    "rejected",
+    "rejected"
+   ],
+   "candidates_proposed": 8,
+   "duplicates_avoided": 0,
+   "invalid_specs": 0,
+   "tests": 8,
+   "kept": 2,
+   "wasted_tests": [],
+   "prompt_tokens_per_iteration": 14478.0,
+   "model_seconds": 277.9,
+   "memory_seconds": 201.5,
+   "model_calls": 16,
+   "human_interventions": 0,
+   "exa_new_searches": 3,
+   "exa_skipped": 0,
+   "recall_errors": 0,
+   "memory_write_errors": 0,
+   "past_credits_delta_projectwide": 41.0,
+   "past_credits_est_by_price_rule": 41
+  },
+  "c0925-none-r1": {
+   "checkpoint": "2026-09-25",
+   "memory": "none",
+   "rep": "r1",
+   "selection": {
+    "first": "2026-08-18",
+    "last": "2026-09-18",
+    "n_cells": 22729,
+    "n_origins": 32
+   },
+   "verdicts": [
+    "kept",
+    "rejected",
+    "kept",
+    "kept",
+    "rejected",
+    "rejected",
+    "rejected",
+    "kept"
+   ],
+   "candidates_proposed": 10,
+   "duplicates_avoided": 2,
+   "invalid_specs": 0,
+   "tests": 8,
+   "kept": 4,
+   "wasted_tests": [
+    {
+     "iteration": 3,
+     "same_idea_as": "auto-c0918-pastdev-wf-i3"
+    }
+   ],
+   "prompt_tokens_per_iteration": 11877.0,
+   "model_seconds": 279.0,
+   "memory_seconds": 145.6,
+   "model_calls": 18,
+   "human_interventions": 0,
+   "exa_new_searches": 5,
+   "exa_skipped": 0,
+   "recall_errors": 0,
+   "memory_write_errors": 0,
+   "past_credits_delta_projectwide": 24.0,
+   "past_credits_est_by_price_rule": 37
+  },
+  "c0925-ledger-r1": {
+   "checkpoint": "2026-09-25",
+   "memory": "ledger",
+   "rep": "r1",
+   "selection": {
+    "first": "2026-08-18",
+    "last": "2026-09-18",
+    "n_cells": 22729,
+    "n_origins": 32
+   },
+   "verdicts": [
+    "rejected",
+    "rejected",
+    "rejected",
+    "rejected",
+    "rejected",
+    "kept",
+    "kept",
+    "kept"
+   ],
+   "candidates_proposed": 8,
+   "duplicates_avoided": 0,
+   "invalid_specs": 0,
+   "tests": 8,
+   "kept": 3,
+   "wasted_tests": [],
+   "prompt_tokens_per_iteration": 21586.0,
+   "model_seconds": 351.7,
+   "memory_seconds": 161.2,
+   "model_calls": 16,
+   "human_interventions": 0,
+   "exa_new_searches": 7,
+   "exa_skipped": 0,
+   "recall_errors": 0,
+   "memory_write_errors": 0,
+   "past_credits_delta_projectwide": 35.0,
+   "past_credits_est_by_price_rule": 35
+  },
+  "c0925-pastdev-r1": {
+   "checkpoint": "2026-09-25",
+   "memory": "pastdev",
+   "rep": "r1",
+   "selection": {
+    "first": "2026-08-18",
+    "last": "2026-09-18",
+    "n_cells": 22729,
+    "n_origins": 32
+   },
+   "verdicts": [
+    "kept",
+    "kept",
+    "kept",
+    "kept",
+    "kept",
+    "kept",
+    "rejected",
+    "rejected"
+   ],
+   "candidates_proposed": 8,
+   "duplicates_avoided": 0,
+   "invalid_specs": 0,
+   "tests": 8,
+   "kept": 6,
+   "wasted_tests": [],
+   "prompt_tokens_per_iteration": 14303.0,
+   "model_seconds": 264.2,
+   "memory_seconds": 164.2,
+   "model_calls": 16,
+   "human_interventions": 0,
+   "exa_new_searches": 6,
+   "exa_skipped": 0,
+   "recall_errors": 0,
+   "memory_write_errors": 0,
+   "past_credits_delta_projectwide": 45.0,
+   "past_credits_est_by_price_rule": 45
+  },
+  "c0925-none-r2": {
+   "checkpoint": "2026-09-25",
+   "memory": "none",
+   "rep": "r2",
+   "selection": {
+    "first": "2026-08-18",
+    "last": "2026-09-18",
+    "n_cells": 22729,
+    "n_origins": 32
+   },
+   "verdicts": [
+    "kept",
+    "kept",
+    "rejected",
+    "rejected",
+    "rejected",
+    "kept",
+    "rejected",
+    "kept"
+   ],
+   "candidates_proposed": 10,
+   "duplicates_avoided": 2,
+   "invalid_specs": 0,
+   "tests": 8,
+   "kept": 4,
+   "wasted_tests": [
+    {
+     "iteration": 3,
+     "same_idea_as": "auto-c0918-pastdev-wf-i3"
+    }
+   ],
+   "prompt_tokens_per_iteration": 12075.0,
+   "model_seconds": 296.7,
+   "memory_seconds": 152.3,
+   "model_calls": 18,
+   "human_interventions": 0,
+   "exa_new_searches": 8,
+   "exa_skipped": 0,
+   "recall_errors": 0,
+   "memory_write_errors": 0,
+   "past_credits_delta_projectwide": 36.0,
+   "past_credits_est_by_price_rule": 36
+  },
+  "c0925-ledger-r2": {
+   "checkpoint": "2026-09-25",
+   "memory": "ledger",
+   "rep": "r2",
+   "selection": {
+    "first": "2026-08-18",
+    "last": "2026-09-18",
+    "n_cells": 22729,
+    "n_origins": 32
+   },
+   "verdicts": [
+    "rejected",
+    "kept",
+    "rejected",
+    "rejected",
+    "rejected",
+    "kept",
+    "rejected",
+    "kept"
+   ],
+   "candidates_proposed": 8,
+   "duplicates_avoided": 0,
+   "invalid_specs": 0,
+   "tests": 8,
+   "kept": 3,
+   "wasted_tests": [],
+   "prompt_tokens_per_iteration": 21903.0,
+   "model_seconds": 368.0,
+   "memory_seconds": 154.3,
+   "model_calls": 16,
+   "human_interventions": 0,
+   "exa_new_searches": 7,
+   "exa_skipped": 0,
+   "recall_errors": 0,
+   "memory_write_errors": 0,
+   "past_credits_delta_projectwide": 34.0,
+   "past_credits_est_by_price_rule": 34
+  }
+ },
+ "walkforward": {
+  "blocks": [
+   {
+    "checkpoint": "2026-09-18",
+    "window": [
+     "2026-09-19",
+     "2026-09-24"
+    ],
+    "rules_added_at_checkpoint": [
+     "auto-c0918-pastdev-wf-i1",
+     "auto-c0918-pastdev-wf-i2",
+     "auto-c0918-pastdev-wf-i4"
+    ],
+    "rules_in_system": [
+     "gate14-nonhead",
+     "auto-c0918-pastdev-wf-i1",
+     "auto-c0918-pastdev-wf-i2",
+     "auto-c0918-pastdev-wf-i4"
+    ],
+    "all": {
+     "d": -0.0385,
+     "ci90": [
+      -0.045,
+      -0.021
+     ],
+     "n_cells": 5671,
+     "n_origins": 6,
+     "n_weeks": 2,
+     "skill_new": 0.1859,
+     "skill_ref": 0.2244
+    },
+    "37": {
+     "d": 0.0,
+     "ci90": [
+      0.0,
+      0.0
+     ],
+     "n_cells": 666,
+     "n_origins": 6,
+     "n_weeks": 2,
+     "skill_new": 0.2811,
+     "skill_ref": 0.2811
+    }
+   },
+   {
+    "checkpoint": "2026-09-25",
+    "window": [
+     "2026-09-26",
+     "2026-10-01"
+    ],
+    "rules_added_at_checkpoint": [
+     "auto-c0925-pastdev-wf-i2"
+    ],
+    "rules_in_system": [
+     "gate14-nonhead",
+     "auto-c0918-pastdev-wf-i1",
+     "auto-c0918-pastdev-wf-i2",
+     "auto-c0918-pastdev-wf-i4",
+     "auto-c0925-pastdev-wf-i2"
+    ],
+    "all": {
+     "d": -0.0296,
+     "ci90": [
+      -0.0399,
+      -0.0257
+     ],
+     "n_cells": 5803,
+     "n_origins": 6,
+     "n_weeks": 2,
+     "skill_new": 0.074,
+     "skill_ref": 0.1035
+    },
+    "37": {
+     "d": 0.0,
+     "ci90": [
+      0.0,
+      0.0
+     ],
+     "n_cells": 666,
+     "n_origins": 6,
+     "n_weeks": 2,
+     "skill_new": 0.1422,
+     "skill_ref": 0.1422
+    }
+   },
+   {
+    "checkpoint": "2026-10-02",
+    "window": [
+     "2026-10-03",
+     "2026-10-06"
+    ],
+    "rules_added_at_checkpoint": [],
+    "rules_in_system": [
+     "gate14-nonhead",
+     "auto-c0918-pastdev-wf-i1",
+     "auto-c0918-pastdev-wf-i2",
+     "auto-c0918-pastdev-wf-i4",
+     "auto-c0925-pastdev-wf-i2"
+    ],
+    "all": {
+     "d": -0.0271,
+     "ci90": [
+      -0.0271,
+      -0.0271
+     ],
+     "n_cells": 4187,
+     "n_origins": 4,
+     "n_weeks": 2,
+     "skill_new": 0.1309,
+     "skill_ref": 0.158
+    },
+    "37": {
+     "d": 0.0,
+     "ci90": [
+      0.0,
+      0.0
+     ],
+     "n_cells": 444,
+     "n_origins": 4,
+     "n_weeks": 2,
+     "skill_new": 0.2499,
+     "skill_ref": 0.2499
+    }
+   }
+  ],
+  "pooled": {
+   "all": {
+    "d": -0.031,
+    "ci90": [
+     -0.0391,
+     -0.0249
+    ],
+    "n_cells": 15661,
+    "n_origins": 16,
+    "n_weeks": 4,
+    "skill_new": 0.1109,
+    "skill_ref": 0.1419
+   },
+   "37": {
+    "d": 0.0,
+    "ci90": [
+     0.0,
+     0.0
+    ],
+    "n_cells": 1776,
+    "n_origins": 16,
+    "n_weeks": 4,
+    "skill_new": 0.1904,
+    "skill_ref": 0.1904
+   }
+  },
+  "kept_rules": [
+   {
+    "rule": "auto-c0918-pastdev-wf-i1",
+    "spec": {
+     "when": {
+      "all": [
+       {
+        "fact": "cls",
+        "op": "==",
+        "value": "marketplace_ask"
+       },
+       {
+        "fact": "days_since_change",
+        "op": "<",
+        "value": 6.0
+       },
+       {
+        "fact": "in37",
+        "op": "==",
+        "value": false
+       }
+      ]
+     },
+     "do": {
+      "action": "members_only",
+      "members": [
+       "analog"
+      ]
+     }
+    },
+    "claim": "For non-headline marketplace asks that changed within the last six days, analog forecasts will reduce pinball loss by capturing recurring sequences of median repricing.",
+    "checkpoint": "2026-09-18",
+    "selection": {
+     "d_all": 0.027088,
+     "d37": 0.0,
+     "changed_cells": 1013
+    },
+    "later": {
+     "window": [
+      "2026-09-19",
+      "2026-10-06"
+     ],
+     "all": {
+      "d": -0.0016,
+      "ci90": [
+       -0.0083,
+       0.0093
+      ],
+      "n_cells": 17609,
+      "n_origins": 18,
+      "n_weeks": 4,
+      "skill_new": 0.1401,
+      "skill_ref": 0.1417
+     },
+     "37": {
+      "d": 0.0,
+      "ci90": [
+       0.0,
+       0.0
+      ],
+      "n_cells": 1998,
+      "n_origins": 18,
+      "n_weeks": 4,
+      "skill_new": 0.198,
+      "skill_ref": 0.198
+     }
+    }
+   },
+   {
+    "rule": "auto-c0918-pastdev-wf-i2",
+    "spec": {
+     "when": {
+      "all": [
+       {
+        "fact": "cls",
+        "op": "in",
+        "value": [
+         "neocloud_rate_card",
+         "neocloud_spot"
+        ]
+       },
+       {
+        "fact": "gate14",
+        "op": "==",
+        "value": false
+       },
+       {
+        "fact": "in37",
+        "op": "==",
+        "value": false
+       }
+      ]
+     },
+     "do": {
+      "action": "last_zero"
+     }
+    },
+    "claim": "For non-headline neocloud rate-card and spot series outside the existing 14-day gate, a flat last-value forecast will reduce pinball loss because recent median changes usually establish a new level rather than predict further movement.",
+    "checkpoint": "2026-09-18",
+    "selection": {
+     "d_all": 0.007776,
+     "d37": 0.0,
+     "changed_cells": 345
+    },
+    "later": {
+     "window": [
+      "2026-09-19",
+      "2026-10-06"
+     ],
+     "all": {
+      "d": -0.0335,
+      "ci90": [
+       -0.0483,
+       -0.0239
+      ],
+      "n_cells": 17609,
+      "n_origins": 18,
+      "n_weeks": 4,
+      "skill_new": 0.1066,
+      "skill_ref": 0.1401
+     },
+     "37": {
+      "d": 0.0,
+      "ci90": [
+       0.0,
+       0.0
+      ],
+      "n_cells": 1998,
+      "n_origins": 18,
+      "n_weeks": 4,
+      "skill_new": 0.198,
+      "skill_ref": 0.198
+     }
+    }
+   },
+   {
+    "rule": "auto-c0918-pastdev-wf-i4",
+    "spec": {
+     "when": {
+      "all": [
+       {
+        "fact": "cls",
+        "op": "==",
+        "value": "marketplace_ask"
+       },
+       {
+        "fact": "days_since_change",
+        "op": "<",
+        "value": 6.0
+       },
+       {
+        "fact": "in37",
+        "op": "==",
+        "value": false
+       }
+      ]
+     },
+     "do": {
+      "action": "scale_width",
+      "hi": 1.25,
+      "lo": 1.25
+     }
+    },
+    "claim": "For non-headline marketplace asks that changed within the last six days, widening the current forecast's log intervals by 25% will reduce pinball loss because its tails understate the size of subsequent median moves.",
+    "checkpoint": "2026-09-18",
+    "selection": {
+     "d_all": 0.019399,
+     "d37": 0.0,
+     "changed_cells": 937
+    },
+    "later": {
+     "window": [
+      "2026-09-19",
+      "2026-10-06"
+     ],
+     "all": {
+      "d": 0.0035,
+      "ci90": [
+       0.0019,
+       0.0091
+      ],
+      "n_cells": 17609,
+      "n_origins": 18,
+      "n_weeks": 4,
+      "skill_new": 0.1102,
+      "skill_ref": 0.1066
+     },
+     "37": {
+      "d": 0.0,
+      "ci90": [
+       0.0,
+       0.0
+      ],
+      "n_cells": 1998,
+      "n_origins": 18,
+      "n_weeks": 4,
+      "skill_new": 0.198,
+      "skill_ref": 0.198
+     }
+    }
+   },
+   {
+    "rule": "auto-c0925-pastdev-wf-i2",
+    "spec": {
+     "when": {
+      "all": [
+       {
+        "fact": "cls",
+        "op": "==",
+        "value": "hyperscaler_list"
+       },
+       {
+        "fact": "gate14",
+        "op": "==",
+        "value": false
+       },
+       {
+        "fact": "horizon",
+        "op": "<=",
+        "value": 3.0
+       },
+       {
+        "fact": "in37",
+        "op": "==",
+        "value": false
+       }
+      ]
+     },
+     "do": {
+      "action": "last_zero"
+     }
+    },
+    "claim": "For non-headline hyperscaler list-price series outside the 14-day gate, a zero-width last-value forecast at one- and three-day horizons will reduce pinball loss because another median-changing event is unlikely so soon.",
+    "checkpoint": "2026-09-25",
+    "selection": {
+     "d_all": 0.004195,
+     "d37": 0.0,
+     "changed_cells": 291
+    },
+    "later": {
+     "window": [
+      "2026-09-26",
+      "2026-10-06"
+     ],
+     "all": {
+      "d": 0.0038,
+      "ci90": [
+       0.0021,
+       0.0051
+      ],
+      "n_cells": 10987,
+      "n_origins": 11,
+      "n_weeks": 3,
+      "skill_new": 0.0952,
+      "skill_ref": 0.0913
+     },
+     "37": {
+      "d": 0.0,
+      "ci90": [
+       0.0,
+       0.0
+      ],
+      "n_cells": 1221,
+      "n_origins": 11,
+      "n_weeks": 3,
+      "skill_new": 0.1817,
+      "skill_ref": 0.1817
+     }
+    }
+   }
+  ]
+ },
+ "memory": [
+  {
+   "memory": "none",
+   "rep": "r1",
+   "candidates_proposed": 10,
+   "duplicates_avoided": 2,
+   "invalid_specs": 0,
+   "tests": 8,
+   "kept": 4,
+   "prompt_tokens_per_iteration": 11877.0,
+   "model_seconds": 279.0,
+   "memory_seconds": 145.6,
+   "model_calls": 18,
+   "past_credits_delta_projectwide": 24.0,
+   "past_credits_est_by_price_rule": 37,
+   "wasted_tests": 1,
+   "later": {
+    "all": {
+     "d": 0.0045,
+     "ci90": [
+      0.0026,
+      0.0089
+     ],
+     "n_cells": 10987,
+     "n_origins": 11,
+     "n_weeks": 3,
+     "skill_new": 0.126,
+     "skill_ref": 0.1216
+    },
+    "37": {
+     "d": 0.0,
+     "ci90": [
+      0.0,
+      0.0
+     ],
+     "n_cells": 1221,
+     "n_origins": 11,
+     "n_weeks": 3,
+     "skill_new": 0.1817,
+     "skill_ref": 0.1817
+    }
+   }
+  },
+  {
+   "memory": "none",
+   "rep": "r2",
+   "candidates_proposed": 10,
+   "duplicates_avoided": 2,
+   "invalid_specs": 0,
+   "tests": 8,
+   "kept": 4,
+   "prompt_tokens_per_iteration": 12075.0,
+   "model_seconds": 296.7,
+   "memory_seconds": 152.3,
+   "model_calls": 18,
+   "past_credits_delta_projectwide": 36.0,
+   "past_credits_est_by_price_rule": 36,
+   "wasted_tests": 1,
+   "later": {
+    "all": {
+     "d": -0.0082,
+     "ci90": [
+      -0.0111,
+      0.0022
+     ],
+     "n_cells": 10987,
+     "n_origins": 11,
+     "n_weeks": 3,
+     "skill_new": 0.1133,
+     "skill_ref": 0.1216
+    },
+    "37": {
+     "d": 0.0,
+     "ci90": [
+      0.0,
+      0.0
+     ],
+     "n_cells": 1221,
+     "n_origins": 11,
+     "n_weeks": 3,
+     "skill_new": 0.1817,
+     "skill_ref": 0.1817
+    }
+   }
+  },
+  {
+   "memory": "ledger",
+   "rep": "r1",
+   "candidates_proposed": 8,
+   "duplicates_avoided": 0,
+   "invalid_specs": 0,
+   "tests": 8,
+   "kept": 3,
+   "prompt_tokens_per_iteration": 21586.0,
+   "model_seconds": 351.7,
+   "memory_seconds": 161.2,
+   "model_calls": 16,
+   "past_credits_delta_projectwide": 35.0,
+   "past_credits_est_by_price_rule": 35,
+   "wasted_tests": 0,
+   "later": {
+    "all": {
+     "d": -0.0003,
+     "ci90": [
+      -0.0029,
+      0.0004
+     ],
+     "n_cells": 10987,
+     "n_origins": 11,
+     "n_weeks": 3,
+     "skill_new": 0.1213,
+     "skill_ref": 0.1216
+    },
+    "37": {
+     "d": 0.0001,
+     "ci90": [
+      -0.0002,
+      0.0001
+     ],
+     "n_cells": 1221,
+     "n_origins": 11,
+     "n_weeks": 3,
+     "skill_new": 0.1818,
+     "skill_ref": 0.1817
+    }
+   }
+  },
+  {
+   "memory": "ledger",
+   "rep": "r2",
+   "candidates_proposed": 8,
+   "duplicates_avoided": 0,
+   "invalid_specs": 0,
+   "tests": 8,
+   "kept": 3,
+   "prompt_tokens_per_iteration": 21903.0,
+   "model_seconds": 368.0,
+   "memory_seconds": 154.3,
+   "model_calls": 16,
+   "past_credits_delta_projectwide": 34.0,
+   "past_credits_est_by_price_rule": 34,
+   "wasted_tests": 0,
+   "later": {
+    "all": {
+     "d": 0.0018,
+     "ci90": [
+      -0.0038,
+      0.0033
+     ],
+     "n_cells": 10987,
+     "n_origins": 11,
+     "n_weeks": 3,
+     "skill_new": 0.1234,
+     "skill_ref": 0.1216
+    },
+    "37": {
+     "d": 0.0013,
+     "ci90": [
+      -0.0011,
+      0.0049
+     ],
+     "n_cells": 1221,
+     "n_origins": 11,
+     "n_weeks": 3,
+     "skill_new": 0.183,
+     "skill_ref": 0.1817
+    }
+   }
+  },
+  {
+   "memory": "pastdev",
+   "rep": "r1",
+   "candidates_proposed": 8,
+   "duplicates_avoided": 0,
+   "invalid_specs": 0,
+   "tests": 8,
+   "kept": 6,
+   "prompt_tokens_per_iteration": 14303.0,
+   "model_seconds": 264.2,
+   "memory_seconds": 164.2,
+   "model_calls": 16,
+   "past_credits_delta_projectwide": 45.0,
+   "past_credits_est_by_price_rule": 45,
+   "wasted_tests": 0,
+   "later": {
+    "all": {
+     "d": 0.0201,
+     "ci90": [
+      0.0047,
+      0.025
+     ],
+     "n_cells": 10987,
+     "n_origins": 11,
+     "n_weeks": 3,
+     "skill_new": 0.1416,
+     "skill_ref": 0.1216
+    },
+    "37": {
+     "d": 0.0,
+     "ci90": [
+      0.0,
+      0.0
+     ],
+     "n_cells": 1221,
+     "n_origins": 11,
+     "n_weeks": 3,
+     "skill_new": 0.1817,
+     "skill_ref": 0.1817
+    }
+   }
+  }
+ ],
+ "final_run": {
+  "kept": [
+   "auto-c1013-pastdev-wf-i2",
+   "auto-c1013-pastdev-wf-i4"
+  ],
+  "rules": [
+   "gate14-nonhead",
+   "auto-c0918-pastdev-wf-i1",
+   "auto-c0918-pastdev-wf-i2",
+   "auto-c0918-pastdev-wf-i4",
+   "auto-c0925-pastdev-wf-i2",
+   "auto-c1013-pastdev-wf-i2",
+   "auto-c1013-pastdev-wf-i4"
+  ],
+  "file": "experiments/scientist/results/system_final.json",
+  "evaluated_after_2026_10_06": false
+ }
+}

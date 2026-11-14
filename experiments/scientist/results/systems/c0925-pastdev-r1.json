@@ -1,0 +1,243 @@
+{
+ "name": "scientist c0925-pastdev-r1, frozen at checkpoint 2026-09-25",
+ "base": {
+  "members": [
+   "mix",
+   "gbm",
+   "chronos",
+   "analog",
+   "prov",
+   "fm2",
+   "fragility"
+  ]
+ },
+ "rules": [
+  {
+   "id": "gate14-nonhead",
+   "claim": "the submitted system's 14-day zero-width gate on non-headline series (EVAL_PROTOCOL.md Amendment 3)",
+   "when": {
+    "all": [
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "gate14",
+      "op": "==",
+      "value": true
+     }
+    ]
+   },
+   "do": {
+    "action": "last_zero"
+   }
+  },
+  {
+   "id": "auto-c0925-pastdev-r1-i1",
+   "claim": "For non-headline neocloud rate-card and spot series that changed within the last 22 days and are outside the 14-day gate, analog forecasts alone will reduce pinball loss.",
+   "when": {
+    "all": [
+     {
+      "fact": "cls",
+      "op": "in",
+      "value": [
+       "neocloud_rate_card",
+       "neocloud_spot"
+      ]
+     },
+     {
+      "fact": "days_since_change",
+      "op": "<",
+      "value": 22.0
+     },
+     {
+      "fact": "gate14",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     }
+    ]
+   },
+   "do": {
+    "action": "members_only",
+    "members": [
+     "analog"
+    ]
+   }
+  },
+  {
+   "id": "auto-c0925-pastdev-r1-i2",
+   "claim": "For non-headline marketplace asks outside the 14-day gate, removing prov from the blend will reduce pinball loss because its simulated offer changes overstate how readily panel changes move the published median.",
+   "when": {
+    "all": [
+     {
+      "fact": "cls",
+      "op": "==",
+      "value": "marketplace_ask"
+     },
+     {
+      "fact": "gate14",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     }
+    ]
+   },
+   "do": {
+    "action": "drop_members",
+    "members": [
+     "prov"
+    ]
+   }
+  },
+  {
+   "id": "auto-c0925-pastdev-r1-i3",
+   "claim": "For non-headline hyperscaler spot series outside the 14-day gate, using an equal-weight blend of mix and analog at the one-day horizon will reduce pinball loss by better representing the frequency and size of immediate median changes.",
+   "when": {
+    "all": [
+     {
+      "fact": "cls",
+      "op": "==",
+      "value": "hyperscaler_spot"
+     },
+     {
+      "fact": "gate14",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "horizon",
+      "op": "==",
+      "value": 1.0
+     },
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     }
+    ]
+   },
+   "do": {
+    "action": "members_only",
+    "members": [
+     "analog",
+     "mix"
+    ]
+   }
+  },
+  {
+   "id": "auto-c0925-pastdev-r1-i4",
+   "claim": "For non-headline hyperscaler list-price series outside the 14-day gate, a last-value forecast with zero width at one- and three-day horizons will reduce pinball loss because median changes are sufficiently intermittent that the current blend overpredicts immediate movement.",
+   "when": {
+    "all": [
+     {
+      "fact": "cls",
+      "op": "==",
+      "value": "hyperscaler_list"
+     },
+     {
+      "fact": "gate14",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "horizon",
+      "op": "<=",
+      "value": 3.0
+     },
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     }
+    ]
+   },
+   "do": {
+    "action": "last_zero"
+   }
+  },
+  {
+   "id": "auto-c0925-pastdev-r1-i5",
+   "claim": "For non-headline marketplace asks outside the 14-day gate, with exactly two providers and at least two changes in the last 14 days, using fragility alone will reduce pinball loss.",
+   "when": {
+    "all": [
+     {
+      "fact": "chg14",
+      "op": ">=",
+      "value": 2.0
+     },
+     {
+      "fact": "cls",
+      "op": "==",
+      "value": "marketplace_ask"
+     },
+     {
+      "fact": "gate14",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "p_providers",
+      "op": "==",
+      "value": 2.0
+     }
+    ]
+   },
+   "do": {
+    "action": "members_only",
+    "members": [
+     "fragility"
+    ]
+   }
+  },
+  {
+   "id": "auto-c0925-pastdev-r1-i6",
+   "claim": "For non-headline marketplace asks outside the 14-day gate with exactly one provider, blending analog and fm2 alone will reduce pinball loss.",
+   "when": {
+    "all": [
+     {
+      "fact": "cls",
+      "op": "==",
+      "value": "marketplace_ask"
+     },
+     {
+      "fact": "gate14",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "p_providers",
+      "op": "==",
+      "value": 1.0
+     }
+    ]
+   },
+   "do": {
+    "action": "members_only",
+    "members": [
+     "analog",
+     "fm2"
+    ]
+   }
+  }
+ ]
+}

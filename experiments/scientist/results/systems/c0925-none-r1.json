@@ -1,0 +1,172 @@
+{
+ "name": "scientist c0925-none-r1, frozen at checkpoint 2026-09-25",
+ "base": {
+  "members": [
+   "mix",
+   "gbm",
+   "chronos",
+   "analog",
+   "prov",
+   "fm2",
+   "fragility"
+  ]
+ },
+ "rules": [
+  {
+   "id": "gate14-nonhead",
+   "claim": "the submitted system's 14-day zero-width gate on non-headline series (EVAL_PROTOCOL.md Amendment 3)",
+   "when": {
+    "all": [
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "gate14",
+      "op": "==",
+      "value": true
+     }
+    ]
+   },
+   "do": {
+    "action": "last_zero"
+   }
+  },
+  {
+   "id": "auto-c0925-none-r1-i1",
+   "claim": "For gpurentalprices series outside the headline set that do not satisfy gate14, analog forecasts will reduce pinball loss by capturing recurring patterns of changes in published offer medians.",
+   "when": {
+    "all": [
+     {
+      "fact": "collector",
+      "op": "==",
+      "value": "gpurentalprices"
+     },
+     {
+      "fact": "gate14",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     }
+    ]
+   },
+   "do": {
+    "action": "members_only",
+    "members": [
+     "analog"
+    ]
+   }
+  },
+  {
+   "id": "auto-c0925-none-r1-i3",
+   "claim": "For non-headline hyperscaler list-price series that fail gate14, the series' own empirical change quantiles will reduce pinball loss relative to the current forecast.",
+   "when": {
+    "all": [
+     {
+      "fact": "cls",
+      "op": "==",
+      "value": "hyperscaler_list"
+     },
+     {
+      "fact": "gate14",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     }
+    ]
+   },
+   "do": {
+    "action": "members_only",
+    "members": [
+     "drift"
+    ]
+   }
+  },
+  {
+   "id": "auto-c0925-none-r1-i4",
+   "claim": "For non-headline marketplace ask series that fail gate14 and have gone 4\u201321 days without a median change, Chronos alone will reduce pinball loss relative to the current system.",
+   "when": {
+    "all": [
+     {
+      "fact": "cls",
+      "op": "==",
+      "value": "marketplace_ask"
+     },
+     {
+      "fact": "days_since_change",
+      "op": "<",
+      "value": 22.0
+     },
+     {
+      "fact": "days_since_change",
+      "op": ">=",
+      "value": 4.0
+     },
+     {
+      "fact": "gate14",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     }
+    ]
+   },
+   "do": {
+    "action": "members_only",
+    "members": [
+     "chronos"
+    ]
+   }
+  },
+  {
+   "id": "auto-c0925-none-r1-i8",
+   "claim": "For non-headline series with a single-provider panel, infrequent provider repricing and gate14=false, widening both forecast tails by 35% will reduce pinball loss by better representing discrete median jumps.",
+   "when": {
+    "all": [
+     {
+      "fact": "gate14",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "has_panel",
+      "op": "==",
+      "value": true
+     },
+     {
+      "fact": "in37",
+      "op": "==",
+      "value": false
+     },
+     {
+      "fact": "mid_prov_reprice21",
+      "op": "<",
+      "value": 0.0952
+     },
+     {
+      "fact": "p_providers",
+      "op": "<",
+      "value": 2.0
+     }
+    ]
+   },
+   "do": {
+    "action": "scale_width",
+    "lo": 1.35,
+    "hi": 1.35
+   }
+  }
+ ]
+}
