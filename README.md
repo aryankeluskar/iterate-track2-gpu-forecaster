@@ -23,6 +23,10 @@ It checks the pack against `MANIFEST.sha256`, rebuilds the series and catalog as
 
 These match the hashes in `research-log.md` after the audit's analog fix (13:03 entry) and the rerun after the calendar's ninth entry (13:07 entry); runs are byte-identical.
 
+Live demo, no install: https://aryankeluskar.github.io/iterate-track2-gpu-forecaster/demo/
+
+Two-minute walkthrough of that page: https://github.com/aryankeluskar/iterate-track2-gpu-forecaster/releases/download/demo-2026-11-14/demo-2min-720.mp4
+
 Model weights: the `final` run needs the Chronos-Bolt-small weights (`amazon/chronos-bolt-small`) in the local Hugging Face cache. The script sets `HF_HUB_OFFLINE=1`, so it fails rather than downloads. Fetch them once, with network, by running the one-liner printed in the header of `reproduce.sh`. No data is fetched from the network.
 
 ## Repository map
