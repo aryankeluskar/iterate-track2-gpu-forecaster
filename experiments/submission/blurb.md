@@ -20,5 +20,5 @@ Exa is called from the research loop in `src/gpuf/scout.py`. The announcement ca
 
 - Repo: https://github.com/aryankeluskar/iterate-track2-gpu-forecaster
 - Demo page: https://aryankeluskar.github.io/iterate-track2-gpu-forecaster/demo/
-- Two-minute walkthrough: https://github.com/aryankeluskar/iterate-track2-gpu-forecaster/releases/download/demo-2026-11-14/demo-2min-720.mp4
+- Narrated walkthrough: https://github.com/aryankeluskar/iterate-track2-gpu-forecaster/releases/download/demo-2026-11-14/demo-2min-narrated.mp4
 - Forecast files: `submissions/forecast_final_all.csv` and `submissions/forecast_final_headline.csv`
