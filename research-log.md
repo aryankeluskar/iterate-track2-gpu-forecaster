@@ -341,3 +341,8 @@ Decision (the adviser's recommendation, accepted):
 - Left open by the agent: at as-of 6 Nov the scout would add a "Verda 1 Oct" line that quotes RunPod's prices (graded C, used by nothing; not fixed); evidence records written before the fix remain in the shared memory; calendar quotes for Reuters and gpucloudadvisors are paraphrases.
 - Full suite without the in-progress scientist tests: 91 passed. Note: each run of the suite appends two baseline rows (drift and a dummy on the starter's 15 weekly origins, two of which fall in the held-back weeks) to data_out/val_query_log.jsonl, by the harness's rule that every evaluation touching those origins is logged; six such rows were added today by test runs (one by the agent, two by the orchestrator). They carry no new information.
 - FINDINGS.md section 6 and the README's Exa section now carry the trace, the answer to "what breaks if Exa is removed" and the forward-search result.
+
+## 2026-11-14 16:45 PT: declaration, late-window check (EVAL_PROTOCOL.md Amendment 4)
+
+- Declared and committed before running: final (as submitted), mix and drift at the origins 31 Oct to 5 Nov, which no split holds, h=1 and h=3 where the target is on or before 6 Nov; every posted rental series, headline and non-headline reported separately. Reporting only; the submission stays frozen whatever it shows. Script experiments/late/run.py.
+- Also added (dev only, no held-back data): experiments/chronos_mechanism/run.py, why Chronos-Bolt's own median loses on these series (it moves only after a step in its context and reverts toward the context mean in about 75% of those forecasts; the truth reverts in 7 to 45% depending on the instrument class).

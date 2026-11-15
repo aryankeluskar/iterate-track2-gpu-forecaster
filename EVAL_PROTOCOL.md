@@ -69,3 +69,17 @@ Reason: rule 4 of Amendment 2 fixes the submitted forecaster as the equal-weight
 2. Whether the activity gate (zero width for a series that has not moved in 14 days) is applied, and to which series, is decided the same way on dev.
 3. Parameters of members stay as validated. Switches added after a member's validation (the Exa calendar inside prov, marketplace handling) may be on in the submitted run only if they leave the forecast for origin 2026-11-06 unchanged, or after their own dev gate and validation query.
 4. The blend chosen by rules 1 and 2 is scored on validation once, on headline and on the non-headline posted rental series (the latter has never been queried). Both numbers are reported whatever they are, the headline one labelled optimistic because its members were kept on that period. If the blend scores below the best kept single direction on validation headline, that is reported and the blend is still what is submitted: picking the validation winner is what this protocol exists to prevent.
+
+## Amendment 4 (14 November 2026, about 16:45 PT): late-window check, reporting only
+
+Written and committed before any forecast was made or scored at these origins. State: the submission (seven-member blend, `bash reproduce.sh final`) is frozen; no member, weight, gate or parameter changes as a result of this check.
+
+Reason: the origins 31 October to 5 November sit in no split (validation ends on 30 October). They are the closest dates to Sunday's origin, and on them every one of the 37 scored series has 54 to 59 rows or more of history, as on 6 November, unlike most of the development cells (the maturity limitation). Their target dates (1 to 6 November) were also targets of validation cells, so they are new origins, not wholly new outcomes; only the aggregate validation scores of those cells were ever looked at.
+
+1. Origins: every day from 2026-10-31 to 2026-11-05. Horizons 1, 3 and 7 where the target is on or before 2026-11-06: h=1 from all six origins, h=3 from 31 October to 3 November, no h=7 cells.
+2. Systems: `final` with exactly the submitted parameters (analog cap 2026-11-06, pretrained members built per origin by `gpuf.final_build`), the reference `mix`, and the starter's `drift`. No other system is scored at these origins before Sunday.
+3. Universes: the 37 headline series and the other posted rental series, reported separately and together.
+4. Reported whatever it shows: pooled skill, coverage of [q10, q90], the share of truths above q90 and below q10, by horizon and by origin, and the paired differences of final against drift and mix. Six overlapping origins: no interval or p-value is claimed.
+5. Only consequence: the result goes into FINDINGS.md as the most recent check. If final scores below drift on the headline series, that is reported as a limitation beside the validation result; the submission still does not change.
+
+Script: `experiments/late/run.py` (committed with this amendment).

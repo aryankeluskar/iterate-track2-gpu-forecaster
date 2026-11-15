@@ -1,0 +1,152 @@
+{
+ "cells": 37459,
+ "origins": 50,
+ "skill": {
+  "raw_chronos": 0.0774,
+  "raw_chronos_centre_on_last": 0.1335,
+  "fm2": 0.1359,
+  "drift": 0.0999
+ },
+ "by_truth_moved": {
+  "False": {
+   "cells": 29558,
+   "raw_median_off_last_pct": 15.2,
+   "loss_raw_over_fm2": 1.9
+  },
+  "True": {
+   "cells": 7901,
+   "raw_median_off_last_pct": 83.3,
+   "loss_raw_over_fm2": 0.98
+  }
+ },
+ "direction_correct_pct_on_moved": 55.6,
+ "median_off_last": {
+  "cells": 10237,
+  "with_no_step_in_context": 0
+ },
+ "reversion_by_class": {
+  "aggregator_cheapest": {
+   "n": 451,
+   "chronos_reverts_pct": 62.7,
+   "truth_reverts_pct": 16.0,
+   "truth_unmoved_pct": 64.7
+  },
+  "hyperscaler_list": {
+   "n": 421,
+   "chronos_reverts_pct": 72.4,
+   "truth_reverts_pct": 12.4,
+   "truth_unmoved_pct": 82.7
+  },
+  "hyperscaler_spot": {
+   "n": 3140,
+   "chronos_reverts_pct": 77.0,
+   "truth_reverts_pct": 32.5,
+   "truth_unmoved_pct": 41.8
+  },
+  "marketplace_ask": {
+   "n": 2445,
+   "chronos_reverts_pct": 85.0,
+   "truth_reverts_pct": 45.2,
+   "truth_unmoved_pct": 42.0
+  },
+  "neocloud_rate_card": {
+   "n": 2364,
+   "chronos_reverts_pct": 73.1,
+   "truth_reverts_pct": 16.0,
+   "truth_unmoved_pct": 36.9
+  },
+  "neocloud_spot": {
+   "n": 1358,
+   "chronos_reverts_pct": 61.3,
+   "truth_reverts_pct": 6.7,
+   "truth_unmoved_pct": 27.6
+  }
+ },
+ "reversion_all_pct": 75.1,
+ "dose": {
+  "aggregator_cheapest": {
+   "skill_by_k": {
+    "0": 0.2399,
+    "0.25": 0.2376,
+    "0.5": 0.2319,
+    "0.75": 0.2249,
+    "1.0": 0.2156
+   },
+   "best_k": 0,
+   "gain_over_k0_half1": 0.0,
+   "gain_over_k0_half2": 0.0
+  },
+  "hyperscaler_list": {
+   "skill_by_k": {
+    "0": -0.0689,
+    "0.25": -0.0934,
+    "0.5": -0.1179,
+    "0.75": -0.1452,
+    "1.0": -0.178
+   },
+   "best_k": 0,
+   "gain_over_k0_half1": 0.0,
+   "gain_over_k0_half2": 0.0
+  },
+  "hyperscaler_spot": {
+   "skill_by_k": {
+    "0": 0.147,
+    "0.25": 0.1497,
+    "0.5": 0.1453,
+    "0.75": 0.1353,
+    "1.0": 0.116
+   },
+   "best_k": 0.25,
+   "gain_over_k0_half1": -0.0131,
+   "gain_over_k0_half2": 0.0089
+  },
+  "marketplace_ask": {
+   "skill_by_k": {
+    "0": 0.2561,
+    "0.25": 0.278,
+    "0.5": 0.2929,
+    "0.75": 0.3005,
+    "1.0": 0.3006
+   },
+   "best_k": 1.0,
+   "gain_over_k0_half1": 0.0944,
+   "gain_over_k0_half2": 0.0007
+  },
+  "neocloud_rate_card": {
+   "skill_by_k": {
+    "0": 0.0149,
+    "0.25": -0.025,
+    "0.5": -0.0667,
+    "0.75": -0.1096,
+    "1.0": -0.1544
+   },
+   "best_k": 0,
+   "gain_over_k0_half1": 0.0,
+   "gain_over_k0_half2": 0.0
+  },
+  "neocloud_spot": {
+   "skill_by_k": {
+    "0": 0.1936,
+    "0.25": 0.1611,
+    "0.5": 0.125,
+    "0.75": 0.0866,
+    "1.0": 0.0454
+   },
+   "best_k": 0,
+   "gain_over_k0_half1": 0.0,
+   "gain_over_k0_half2": 0.0
+  },
+  "in37": {
+   "skill_by_k": {
+    "0": 0.1711,
+    "0.25": 0.1519,
+    "0.5": 0.1276,
+    "0.75": 0.0993,
+    "1.0": 0.0673
+   },
+   "best_k": 0,
+   "gain_over_k0_half1": 0.0,
+   "gain_over_k0_half2": 0.0
+  }
+ }
+}
