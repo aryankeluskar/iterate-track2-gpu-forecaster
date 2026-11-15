@@ -1,7 +1,22 @@
-# Central state. Read this first when resuming. Authoritative detail: research-log.md (with corrections), data_out/ledger.jsonl, EVAL_PROTOCOL.md.
+# Resume note. Trust status_now. The writeup is FINDINGS.md. The rest of this file is the working log.
 project: track2-gpu-price-forecaster
-updated: "2026-11-14T13:45-08:00"
-phase: improve    # research done; packaging for submission. Team is still choosing between Track 2 and Track 5.
+updated: "2026-11-14T18:43-08:00"
+phase: submitted
+
+# This block is the state a reader should trust. The notes below it are the 13:45 record.
+status_now:
+  track: "Track 2, on the Projects tab for team HILL CLIMB. Saved 2026-11-15T02:29:23Z, walkthrough link updated 2026-11-15T02:42:22Z. Record 91fe5249-681b-49a2-95c2-c04150b62166. Challenges Exa and past.dev. Modal was not entered."
+  repo: "public at https://github.com/aryankeluskar/iterate-track2-gpu-forecaster"
+  demo: "https://aryankeluskar.github.io/iterate-track2-gpu-forecaster/demo/"
+  walkthrough: "https://github.com/aryankeluskar/iterate-track2-gpu-forecaster/releases/download/demo-2026-11-14/demo-2min-narrated.mp4"
+  forecast: "unchanged from the hashes in README.md. Width changes were measured on practice dates and rejected in experiments/hill/. Nothing was fit to the late window or to the held-back weeks."
+  read_first: "FINDINGS.md. It supersedes this file and to_human/track2_feasibility.md."
+  still_open:
+    - "Sunday's score does not exist yet."
+    - "On the six origins after the held-back weeks, the equal-series average ties the baseline. FINDINGS.md section 4. A narrower interval that lifts that average lowers the headline score on one half of the practice dates."
+    - "The unattended loop scored 0.1109 against 0.1419 for the frozen submission on later practice origins. FINDINGS.md. The pre-registered model was not run again."
+    - "Shared memory did not improve forecast skill. The submission says so."
+    - "Whether Sunday scores the 37 headline series or every series in the file is still unanswered. The file contains all 592."
 deadline: "Sunday 15 Nov 14:00 PT submissions (page also says 14:30); team on platform by 12:00; round 1 pitch 14:45"
 
 purpose_today: >
@@ -12,7 +27,7 @@ result:
   submitted_forecaster: "method `final`: equal-weight blend of mix, gbm, chronos (long context), analog, prov, fm2 (16-day context), fragility; 14-day zero-width gate on non-headline series only"
   one_command: "bash reproduce.sh final   (about 25 s; needs Chronos-Bolt-small in the local HF cache)"
   files: "submissions/forecast_final_all.csv sha256 7b49870ea476...; submissions/forecast_final_headline.csv sha256 90330d1ea2a9..."
-  validation_13_30_oct: "headline 0.214 vs mix 0.112 vs drift 0.084; non-headline (never tuned on) 0.228 vs 0.178 vs 0.102; coverage 0.80"
+  validation_13_30_oct: "headline 0.214 vs mix 0.112 vs drift 0.084; non-headline (first check on the held-back weeks) 0.228 vs 0.178 vs 0.102; coverage 0.80"
   dev: "headline 0.208 vs mix 0.169 vs drift 0.089; rental_all 0.164 vs mix 0.137"
   ledger: "37 hypotheses: 13 supported, 15 refuted, 7 not significant, 2 untestable (row L3-frag-b20 is a loop re-run, not a hypothesis)"
 
@@ -82,7 +97,7 @@ round9_orchestrator_notes:
   - "If the scientist's frozen system changes forecasts on mature series and passes its practice gate: one declared held-back check (system_final.json vs final, 37 series, 13 to 30 Oct), adopt for Sunday only if it wins; otherwise submit final unchanged and report the maturity result as a limitation. Await adviser's view on the gate."
 
 open_items:
-  - user/team: choose track; create public repo and push (nothing pushed; secret scan clean); platform registration; 2-minute video
+  - "CLOSED 18:43 PT. Track chosen, repo public, project submitted, narrated walkthrough published. See status_now. The other bullets in this list are the 13:45 record."
   - ask Pacific: does Sunday score only the 37 headline series (--tier headline) or every series in the file? (we submit all 592 either way)
   - past.dev: the submission form asks to prove better accuracy, latency and cost; the Resources tab says no proof needed. We have not measured what the memory adds.
   - orchestrator has not read experiments/insight/results/insight.md or experiments/longrun/results/longrun.md line by line

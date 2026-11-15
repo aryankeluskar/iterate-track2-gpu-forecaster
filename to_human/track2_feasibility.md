@@ -1,5 +1,7 @@
 # Can we do Track 2? Yes.
 
+Status at 18:43 PT on 14 November. The team submitted this work as Track 2. This note is the early-afternoon comparison and is not the entry. Read FINDINGS.md.
+
 Saturday 14 November, early afternoon. This is for the team's choice between Track 2 and Track 5.
 
 ## The short answer
