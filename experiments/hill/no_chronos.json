@@ -1,0 +1,160 @@
+{
+ "no_chronos": {
+  "first_half": {
+   "alt": {
+    "pooled": 0.2121574827697057,
+    "mean": 0.06936
+   },
+   "final": {
+    "pooled": 0.2236040951540319,
+    "mean": 0.077624
+   },
+   "drift": {
+    "pooled": 0.09720937262661067,
+    "mean": 0.044196
+   }
+  },
+  "second_half": {
+   "alt": {
+    "pooled": 0.21269692377480465,
+    "mean": 0.232921
+   },
+   "final": {
+    "pooled": 0.2046410805279607,
+    "mean": 0.226999
+   },
+   "drift": {
+    "pooled": 0.08684711247763188,
+    "mean": 0.087674
+   }
+  },
+  "h1_first": {
+   "alt": {
+    "pooled": 0.211465581808557,
+    "mean": -0.040726
+   },
+   "final": {
+    "pooled": 0.21271928337747348,
+    "mean": -0.057377
+   },
+   "drift": {
+    "pooled": 0.16705341033564414,
+    "mean": 0.052393
+   }
+  },
+  "h1_second": {
+   "alt": {
+    "pooled": 0.13065620399618383,
+    "mean": 0.042968
+   },
+   "final": {
+    "pooled": 0.12782740344988808,
+    "mean": 0.040303
+   },
+   "drift": {
+    "pooled": 0.07490071620348882,
+    "mean": 0.05881
+   }
+  },
+  "all": {
+   "alt": {
+    "pooled": 0.21260312491074995,
+    "mean": 0.215205
+   },
+   "final": {
+    "pooled": 0.20793839981619744,
+    "mean": 0.210756
+   },
+   "drift": {
+    "pooled": 0.08864891883240733,
+    "mean": 0.07788
+   }
+  },
+  "accept": false,
+  "reasons": [
+   "first_half pooled fell",
+   "first_half mean fell",
+   "h1_first mean did not beat drift",
+   "h1_second mean did not beat drift"
+  ]
+ },
+ "width_without_chronos": {
+  "first_half": {
+   "alt": {
+    "pooled": 0.21351312629082497,
+    "mean": 0.070769
+   },
+   "final": {
+    "pooled": 0.2236040951540319,
+    "mean": 0.077624
+   },
+   "drift": {
+    "pooled": 0.09720937262661067,
+    "mean": 0.044196
+   }
+  },
+  "second_half": {
+   "alt": {
+    "pooled": 0.2101063540879975,
+    "mean": 0.230588
+   },
+   "final": {
+    "pooled": 0.2046410805279607,
+    "mean": 0.226999
+   },
+   "drift": {
+    "pooled": 0.08684711247763188,
+    "mean": 0.087674
+   }
+  },
+  "h1_first": {
+   "alt": {
+    "pooled": 0.21173478217718733,
+    "mean": -0.039725
+   },
+   "final": {
+    "pooled": 0.21271928337747348,
+    "mean": -0.057377
+   },
+   "drift": {
+    "pooled": 0.16705341033564414,
+    "mean": 0.052393
+   }
+  },
+  "h1_second": {
+   "alt": {
+    "pooled": 0.13035029486470806,
+    "mean": 0.044535
+   },
+   "final": {
+    "pooled": 0.12782740344988808,
+    "mean": 0.040303
+   },
+   "drift": {
+    "pooled": 0.07490071620348882,
+    "mean": 0.05881
+   }
+  },
+  "all": {
+   "alt": {
+    "pooled": 0.210698729083035,
+    "mean": 0.212909
+   },
+   "final": {
+    "pooled": 0.20793839981619744,
+    "mean": 0.210756
+   },
+   "drift": {
+    "pooled": 0.08864891883240733,
+    "mean": 0.07788
+   }
+  },
+  "accept": false,
+  "reasons": [
+   "first_half pooled fell",
+   "first_half mean fell",
+   "h1_first mean did not beat drift",
+   "h1_second mean did not beat drift"
+  ]
+ }
+}
