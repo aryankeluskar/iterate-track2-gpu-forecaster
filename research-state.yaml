@@ -96,3 +96,8 @@ how_to_orchestrate:
   - "Briefs: experiments/AGENT_BRIEF.md, _R2, _R3, _R5 (shared memory). Gate scripts: experiments/halves.py (dev), experiments/valgate.py (validation)."
   - "Before writing a research-log header, run `date`; earlier headers had to be corrected repeatedly."
   - "User wants plain language in to_human/ (no jargon). to_human/progress.html is built by experiments/report.py; plain wording per idea is in experiments/plain_ledger.json (add a line for any new hypothesis)."
+
+late_window_16_36:   # Amendment 4, declared and committed (7a8f2eb) before running; reporting only
+  result: "origins 31 Oct to 5 Nov, h=1 and 3: headline final 0.193 vs mix 0.129 vs drift 0.088 (357 cells, coverage 0.815, beats drift at 5 of 6 origins); other series 0.221 vs 0.187 vs 0.068 (4,838 cells)"
+  reading: "on histories as long as Sunday's the margin over drift is close to validation; dev maturity slice does not repeat. Mean of per-series skill on headline ties drift (0.155 vs 0.155; median 0.181 vs 0.089): three low-movement series with any width lose."
+  consequence: "submission unchanged; reproduce.sh final rerun 16:40 PT, both hashes identical (7b49870e..., 90330d1e...). No unused origins remain before Sunday: any further forecast change has no fresh data to be tested on."
