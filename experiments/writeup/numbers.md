@@ -323,3 +323,44 @@ Rounding policy for validation numbers taken from val_gate.jsonl (raw values hav
 12. **prov median-quantile loss.** Ledger H24: 0.95 of the last value's; log 132: 0.966 of mix's (different denominator); audit 144: 0.949. Used 0.95 against the last value.
 13. **Worst-removal haircut.** Insight 64: 7.2%; insight 173 (recommendation): 7%. Used 7.2%.
 14. **Exa spend.** Log 236 and `gpuf.loop status`: total $7.621 over attribution, calendar, day scout and loop. Ledger H26 ($1.05 for policy) and log 208 ($0.16 for longrun v2) are not separately listed in that total; only the total is quoted.
+
+
+## Added 14 November 16:40 PT (late window, Chronos mechanism, section 8a)
+
+| number | where | source |
+|---|---|---|
+| 0.0876 | §4 late window | experiments/late/results/late.json headline.drift.pooled_skill |
+| 0.088 | §1, §9 item 3 | late.json headline.drift.pooled_skill 0.0876, rounded |
+| 0.1286 | §4 late window | late.json headline.mix.pooled_skill |
+| 0.129 | §1 | late.json headline.mix.pooled_skill 0.1286, rounded |
+| 0.1932 | §4 late window | late.json headline.final.pooled_skill |
+| 0.193 | §1, §9 item 3 | late.json headline.final.pooled_skill 0.1932, rounded |
+| 0.106 | §9 item 3 | late.json headline.final_minus.drift 0.1055, rounded |
+| 0.117 | §4 late window | late.json headline.final_minus_by_origin['2026-11-04'].drift -0.1165, rounded |
+| 0.815 | §4 late window | late.json headline.final.coverage 0.8151 |
+| 0.2207 | §4 late window | late.json non_headline.final.pooled_skill |
+| 0.1871 | §4 late window | late.json non_headline.mix.pooled_skill |
+| 0.893 | §4 late window | late.json non_headline.final.coverage 0.8925 |
+| 0.0683 | §4 late window | late.json non_headline.drift.pooled_skill |
+| 0.077 | §3 Chronos mechanism | experiments/chronos_mechanism/results.json skill.raw_chronos 0.0774 |
+| 0.134 | §3 Chronos mechanism | chronos_mechanism/results.json skill.raw_chronos_centre_on_last 0.1335 |
+| 0.136 | §3 Chronos mechanism | chronos_mechanism/results.json skill.fm2 0.1359 |
+| 0.100 | §3 Chronos mechanism | chronos_mechanism/results.json skill.drift 0.0999 |
+| 0.094 | §3 Chronos mechanism | chronos_mechanism/results.json dose.marketplace_ask.gain_over_k0_half1 0.0944 |
+| 0.001 | §3 Chronos mechanism | chronos_mechanism/results.json dose.marketplace_ask.gain_over_k0_half2 0.0007 |
+| 1.9 | §3 Chronos mechanism | chronos_mechanism/results.json by_truth_moved.False.loss_raw_over_fm2 |
+| 0.1109 | §8a | experiments/scientist/results/summary.json, replay.md |
+| 0.1419 | §8a | experiments/scientist/results/summary.json, tables.md |
+| 0.031 | §8a | experiments/scientist/results/summary.json, tables.md |
+| 0.0000 | §8a | experiments/scientist/results/tables.md |
+| 5.1 | §8a | experiments/scientist/results/replay.md |
+| 51.9 | §8a | experiments/scientist/results/replay.md |
+| 0.0045 | §8a | experiments/scientist/results/tables.md, replay.md |
+| 0.0082 | §8a | experiments/scientist/results/tables.md, replay.md |
+| 0.0003 | §8a | experiments/scientist/results/tables.md |
+| 0.0018 | §8a | experiments/scientist/results/tables.md, replay.md |
+| 0.0201 | §8a | experiments/scientist/results/tables.md, replay.md |
+| 0.0143 | §8a | experiments/scientist/results/memory_rule_marginals.json, replay.md |
+| 14.3k | §8a | experiments/scientist/results/memory_comparison.md |
+| 21.6k | §8a | experiments/scientist/results/memory_comparison.md |
+| 21.9k | §8a | experiments/scientist/results/memory_comparison.md |
