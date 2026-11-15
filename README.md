@@ -31,7 +31,7 @@ Model weights: the `final` run needs the Chronos-Bolt-small weights (`amazon/chr
 |---|---|
 | `FINDINGS.md` | the findings: question, method, evaluation, results, iterations, negative results, economic insight, long-run view |
 | `reproduce.sh` | the one command |
-| `EVAL_PROTOCOL.md` | the evaluation protocol and its three amendments |
+| `EVAL_PROTOCOL.md` | the evaluation protocol and its four amendments (the fourth: the late-window check, `experiments/late/`) |
 | `research-log.md` | decisions, validation declarations and corrections, timestamped |
 | `src/gpuf/` | harness (`harness.py`, `splits.py`, `scoring.py`), offer panel (`panel.py`), submission (`submit.py`, `final_build.py`), loop CLI (`loop.py`), Exa client (`scout.py`), past.dev client (`memory.py`), ledger (`ledger.py`) |
 | `src/gpuf/methods/` | every forecaster tried; the submitted blend is `final.py` over `mix`, `gbm`, `foundation` (Chronos width), `analog`, `prov`, `fm2`, `fragility` |
