@@ -47,8 +47,12 @@ P = {
     "cal_check": ROOT / "experiments/calendar/results/partb_summary.json",
     "exa_head": ROOT / "experiments/exa_attrib/results/headline.json",
     "journal": ROOT / "data_out/memory_journal.jsonl",
-    "longrun": ROOT / "experiments/longrun/results/longrun.md",
-    "longrun_paths": ROOT / "experiments/longrun/results/v2_t2_scenario_paths.csv",
+    "longrun": ROOT / "experiments/longrun/results/longrun_v3.md",
+    "longrun_paths": ROOT / "experiments/longrun/results/v3_t2_rent_by_weights.csv",
+    "hill_agg": ROOT / "experiments/hill/aggregates.json",
+    "hill_late": ROOT / "experiments/hill/late_series_skill.json",
+    "late": ROOT / "experiments/late/results/late.json",
+    "replay": ROOT / "experiments/scientist/results/replay.md",
     "protocol": ROOT / "EVAL_PROTOCOL.md",
     "scout": ROOT / "src/gpuf/scout.py",
     "manifest": data.PACK / "MANIFEST.sha256",
@@ -81,7 +85,10 @@ EVIDENCE = [
                                                                                      "experiments/policy/results/score_report.txt"]),
     ("Shared memory (past.dev): client, log of every call, who writes and reads what", ["src/gpuf/memory.py", "data_out/memory_journal.jsonl",
                                                                                           "experiments/memory/README_memory.md"]),
-    ("The 2 to 3 year view", ["experiments/longrun/results/longrun.md", "experiments/longrun/results/v2_t2_scenario_paths.csv"]),
+    ("The 2 to 3 year view, version 3 (unique providers)", ["experiments/longrun/results/longrun_v3.md", "experiments/longrun/results/v3_t2_rent_by_weights.csv"]),
+    ("Equal-series scores and the rejected narrowings", ["experiments/hill/aggregates.json", "experiments/hill/late_series_skill.json", "experiments/hill/width_h1.json"]),
+    ("The six origins after the held-back weeks", ["experiments/late/results/late.json"]),
+    ("The unattended loop on later practice dates", ["experiments/scientist/results/replay.md"]),
     ("The whole story with timestamps", ["research-log.md"]),
     ("The independent audit: leak tests, stricter statistics, series chosen with hindsight", ["experiments/audit/results/audit.md", "experiments/audit/results/stats.json", "experiments/audit/results/universe.json"]),
 ]
@@ -609,14 +616,21 @@ def longrun_section() -> tuple[str, dict]:
     title, secs = md_sections(text)
     answer = next((b for h, b in secs if "answer" in h.lower()), secs[0][1] if secs else "")
     assum = next(((h, b) for h, b in secs if "assumption" in h.lower()), None)
-    lines, tbl = text.splitlines(), None
-    for i, l in enumerate(lines):
-        if l.startswith("|") and "24 month" in l and (i == 0 or not lines[i - 1].startswith("|")):
+    lines, tbl, i = text.splitlines(), None, 0
+    while i < len(lines):
+        if lines[i].startswith("|"):
             j = i
             while j < len(lines) and lines[j].startswith("|"):
                 j += 1
-            tbl = md_table(lines[i:j])
-            break
+            block = lines[i:j]
+            if any("+24 month" in row or "24 month" in row for row in block):
+                tbl = md_table(block)
+                break
+            i = j
+        else:
+            i += 1
+    if tbl is None:
+        raise RuntimeError(f"{rel(P['longrun'])} has no rent table")
     fig = longrun_fig()
     parts = [f"<p class=muted>Rendered at build time from <code>{rel(P['longrun'])}</code> (“{esc(title)}”), sha256 {sha(P['longrun'])[:12]}.</p>",
              f"<h3>The answer in brief</h3>{md_block(answer)}"]
@@ -631,12 +645,18 @@ def longrun_section() -> tuple[str, dict]:
 def longrun_fig() -> str:
     p = P["longrun_paths"]
     if not p.exists():
-        m = re.search(r"!\[[^\]]*\]\(([^)]+\.png)\)", P["longrun"].read_text())
-        if not m:
-            return ""
-        img = P["longrun"].parent / m.group(1)
-        return f'<figure><img alt="Figure from the long-run report" src="data:image/png;base64,{base64.b64encode(img.read_bytes()).decode()}"></figure>'
+        raise FileNotFoundError(f"long-run paths missing: {p}")
     df = pd.read_csv(p)
+    if "scenario" not in df.columns:
+        if "weights" not in df.columns:
+            raise RuntimeError(f"{rel(p)} has neither scenario nor weights")
+        df = df.rename(columns={"weights": "scenario"})
+    if "base" in df.columns and (df.base == "v3_unique").any():
+        df = df[df.base == "v3_unique"]
+    band_name = "frozen" if (df.scenario == "frozen").any() else "mixture"
+    if not (df.scenario == band_name).any():
+        raise RuntimeError(f"{rel(p)} has no {band_name} series")
+    labels = {"toward_shortage": "shortage", "toward_glut": "glut", "frozen": "frozen", "mixture": "mixture"}
     chips = list(dict.fromkeys(df.chip))
     W, H, pw = 960, 300, 440
     parts = []
@@ -647,30 +667,30 @@ def longrun_fig() -> str:
         lvl = float(d.level_nov2026.iloc[0])
         ymax = max(d.q90.max(), lvl) * 1.08
         x0 = 60 + ci_ * (pw + 40)
-        X = lambda mth: x0 + mth / 36 * (pw - 70)
-        Y = lambda v: H - 40 - v / ymax * (H - 80)
+        X = lambda mth, x0=x0: x0 + mth / 36 * (pw - 70)
+        Y = lambda v, ymax=ymax: H - 40 - v / ymax * (H - 80)
         for t in np.arange(0, ymax, 1.0 if ymax > 3 else 0.5):
             parts.append(f'<line x1="{X(0):.1f}" x2="{X(36):.1f}" y1="{Y(t):.1f}" y2="{Y(t):.1f}" class="grid"/><text x="{X(0) - 6:.1f}" y="{Y(t) + 4:.1f}" text-anchor="end" class="tick">{t:.1f}</text>')
         for mth in (0, 12, 24, 36):
             parts.append(f'<text x="{X(mth):.1f}" y="{H - 22}" text-anchor="middle" class="tick">{"Nov 2026" if mth == 0 else f"+{mth} mo"}</text>')
-        mx = d[d.scenario == "mixture"].sort_values("h_months")
+        mx = d[d.scenario == band_name].sort_values("h_months")
         hs = [0] + list(mx.h_months)
         lo = [lvl] + list(mx.q10)
         hi = [lvl] + list(mx.q90)
         mid = [lvl] + list(mx.q50)
         band = " ".join(f"{X(h):.1f},{Y(v):.1f}" for h, v in zip(hs, hi)) + " " + " ".join(f"{X(h):.1f},{Y(v):.1f}" for h, v in zip(hs[::-1], lo[::-1]))
-        parts.append(f'<polygon points="{band}" fill="var(--a2)" opacity="0.18"><title>{esc(chip)} mixture, 10th to 90th percentile</title></polygon>')
-        for sc in sorted(set(d.scenario) - {"mixture"}):
+        parts.append(f'<polygon points="{band}" fill="var(--a2)" opacity="0.18"><title>{esc(chip)} frozen weights, 10th to 90th percentile</title></polygon>')
+        for sc in sorted(set(d.scenario) - {band_name}):
             s = d[d.scenario == sc].sort_values("h_months")
             pts = " ".join(f"{X(h):.1f},{Y(v):.1f}" for h, v in zip([0] + list(s.h_months), [lvl] + list(s.q50)))
             parts.append(f'<polyline points="{pts}" fill="none" stroke="var(--g4)" stroke-width="1.5" stroke-dasharray="4 3"/>'
-                         f'<text x="{X(36) + 4:.1f}" y="{Y(float(s.q50.iloc[-1])) + 4:.1f}" class="tick">{esc(sc)}</text>')
+                         f'<text x="{X(36) + 4:.1f}" y="{Y(float(s.q50.iloc[-1])) + 4:.1f}" class="tick">{esc(labels.get(sc, sc))}</text>')
         pts = " ".join(f"{X(h):.1f},{Y(v):.1f}" for h, v in zip(hs, mid))
         parts.append(f'<polyline points="{pts}" fill="none" stroke="var(--a2)" stroke-width="2.5"/>'
-                     f'<text x="{X(0):.1f}" y="22" class="lab">{esc(chip)}: {esc(base)}, {lvl:.2f} today</text>')
-    parts.append(f'<text x="60" y="{H - 4}" class="tick">Solid line and band: probability-weighted mixture, median and 10th to 90th percentile. Dashed: median of each scenario. USD per GPU-hour.</text>')
-    return (f'<figure><svg viewBox="0 0 {W} {H}" role="img" aria-label="Projected rent paths for each chip under three scenarios and their mixture">{"".join(parts)}</svg>'
-            f'<figcaption>Drawn from <code>{rel(p)}</code>.</figcaption></figure>')
+                     f'<text x="{X(0):.1f}" y="22" class="lab">{esc(chip)}: unique providers, {lvl:.2f} today</text>')
+    parts.append(f'<text x="60" y="{H - 4}" class="tick">Solid line and band: frozen weights, median and 10th to 90th percentile. Dashed: median under the other weight sets. USD per GPU-hour.</text>')
+    return (f'<figure><svg viewBox="0 0 {W} {H}" role="img" aria-label="Projected rent paths for H100 and A100 under the version 3 weight sets">{"".join(parts)}</svg>'
+            f'<figcaption>Drawn from <code>{rel(p)}</code>, unique providers only. Version 2 counted a provider twice when both collectors listed it.</figcaption></figure>')
 
 
 def protocol_bits() -> dict:
@@ -711,7 +731,33 @@ def keep_facts(gate: list[dict], vfacts: dict, members: list[str]) -> dict:
     evs = [e["event"] for e in chk["events"] if e["event"] != "ALL"]
     note = json.loads(pd.read_csv(P["headline"]).method_note.iloc[0])
     cal_on = any("cal" in k for k in note)
-    lr = re.search(r"No version of the method beat no-change[^.]*\.", P["longrun"].read_text())
+    lr_text = P["longrun"].read_text()
+    lr = re.search(r'No method beat "no change" on any backtest\.', lr_text) or re.search(
+        r"No version of the method beat no-change[^.]*\.", lr_text)
+    if lr is None:
+        raise RuntimeError("long-run report has no backtest sentence")
+    backtest = lr.group(0).replace("no-change", "assuming no change").replace('"no change"', "assuming no change")
+    hill = json.loads(P["hill_agg"].read_text())["slices"]
+    late_eq = json.loads(P["hill_late"].read_text())
+    late = json.loads(P["late"].read_text())["headline"]
+    origins = late["by_origin"]
+    beat_late = sum(origins[day]["final"] > origins[day]["drift"] for day in origins)
+    replay = P["replay"].read_text()
+    walked = re.search(r"Pooled skill on those origins: ([0-9]+\.[0-9]+) against ([0-9]+\.[0-9]+)", replay)
+    if walked is None:
+        raise RuntimeError("scientist replay is missing the walk-forward scores")
+    h1, h1d = hill["h1"]["final"], hill["h1"]["drift"]
+    score_item = (
+        f"<b>The headline score weights a big move more than a quiet series.</b> On the practice dates the one-day average across series is {sgn(h1['mean'])} "
+        f"against {sgn(h1d['mean'])} for the baseline, while the pooled one-day score is still {f3(h1['pooled'])} against {f3(h1d['pooled'])}. "
+        f"On the six origins after the held-back weeks the pooled score is {f3(late['final']['pooled_skill'])} against {f3(late['drift']['pooled_skill'])}, "
+        f"and it beats the baseline on {beat_late} of {len(origins)} origins. The equal-series average on that window is {f3(late_eq['final']['mean'])} against {f3(late_eq['drift']['mean'])}. "
+        f"Narrowing the quiet series to repair that average lowered the headline score on the practice dates, so the submitted file keeps the wide intervals."
+    )
+    loop_item = (
+        f"<b>An unattended run of the loop did not improve later practice dates.</b> On origins it had not seen, its pooled score was {walked.group(1)} against {walked.group(2)} "
+        f"for the frozen submission. The scored series were unchanged, because the rules it kept do not touch them."
+    )
     dirs = [r["name"] for r in gate if r["name"].split("_")[0] in DIR]
     both = set(vfacts["bh_kept_strict_both"])
     one = (set(vfacts["bh_kept_gauss"]) | set(vfacts["bh_kept_boot"])) - both
@@ -732,7 +778,9 @@ def keep_facts(gate: list[dict], vfacts: dict, members: list[str]) -> dict:
         f"two deliberately cheating test models were caught in {caught} of {checks} checks.",
         f"<b>The announcement calendar's gain rests on {len(evs)} events</b> ({', '.join(e.split()[0].capitalize() + ' on ' + nice_date(dt.date.fromisoformat(e.split()[1])) for e in evs)}) "
         f"and is switched {'on' if cal_on else 'off'} in the submitted forecast.",
-        "<b>The 2 to 3 year view gives ranges, not a tested forecast.</b> " + (lr.group(0).replace("no-change", "assuming no change") if lr else "See its backtests."),
+        "<b>The 2 to 3 year view gives ranges, not a tested forecast.</b> " + backtest,
+        score_item,
+        loop_item,
         "<b>Who did the work.</b> Ideas and forecasting code were written by LLM research agents, directed by an orchestrator agent and a human. "
         "Each step of the research loop is a command (<code>python -m gpuf.loop</code>), but choosing and writing a new idea is not automated.",
     ]
@@ -741,7 +789,11 @@ def keep_facts(gate: list[dict], vfacts: dict, members: list[str]) -> dict:
                 f"{f' and {len(one)} under one' if one else ''}. Query 5 was added after seeing queries 1 to 4, and the audit found its plan was committed 32 seconds after its result was logged.")
     return {"items": items, "val_text": val_text,
             "facts": {"keep_dev_beat": beat, "keep_dev_n": ndev, "keep_dev_below": below, "keep_pit": round(pit, 4), "keep_fixed": round(fixed, 4),
-                      "keep_leak": leak, "keep_clean_members": clean, "keep_cal_events": len(evs), "keep_cal_on": cal_on}}
+                      "keep_leak": leak, "keep_clean_members": clean, "keep_cal_events": len(evs), "keep_cal_on": cal_on,
+                      "keep_h1_mean": round(h1["mean"], 4), "keep_h1_drift_mean": round(h1d["mean"], 4),
+                      "keep_late_pooled": late["final"]["pooled_skill"], "keep_late_beat": beat_late, "keep_late_origins": len(origins),
+                      "keep_late_mean": round(late_eq["final"]["mean"], 4), "keep_late_drift_mean": round(late_eq["drift"]["mean"], 4),
+                      "keep_walk_skill": float(walked.group(1)), "keep_walk_frozen": float(walked.group(2))}}
 
 
 def exa_lines() -> list[int]:

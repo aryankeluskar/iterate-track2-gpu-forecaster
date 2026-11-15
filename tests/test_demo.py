@@ -162,6 +162,31 @@ def test_clean_number_leads_and_strict_tests(built):
     assert "id=s1k" in text and "What to keep in mind" in text
 
 
+def test_longrun_and_score_caveats_match_files(built):
+    _, text, _, _, facts = built
+    s7 = re.search(r"<section id=s7 .*?</section>", text, re.S).group(0)
+    s1k = re.search(r"<section id=s1k .*?</section>", text, re.S).group(0)
+    paths = pd.read_csv(demo.P["longrun_paths"])
+    paths = paths[paths.base == "v3_unique"]
+    h100 = paths[(paths.chip == "H100") & (paths.weights == "frozen") & (paths.h_months == 24)].iloc[0]
+    a100 = paths[(paths.chip == "A100") & (paths.weights == "frozen")].iloc[0]
+    assert f"{h100.level_nov2026:.2f}" in s7 and "2.28" in s7
+    assert f"{a100.level_nov2026:.2f}" in s7
+    assert "3.49" not in s7 and "2.35 today" not in s7
+    late = json.loads(demo.P["late"].read_text())["headline"]
+    late_eq = json.loads(demo.P["hill_late"].read_text())
+    hill = json.loads(demo.P["hill_agg"].read_text())["slices"]["h1"]
+    assert facts["keep_late_pooled"] == late["final"]["pooled_skill"]
+    assert facts["keep_late_mean"] == round(late_eq["final"]["mean"], 4)
+    assert facts["keep_h1_mean"] == round(hill["final"]["mean"], 4)
+    assert f"{late['final']['pooled_skill']:.3f}" in s1k
+    assert f"{late_eq['final']['mean']:.3f}" in s1k
+    assert "0.1109" in s1k and "0.1419" in s1k
+    origins = late["by_origin"]
+    beat = sum(origins[day]["final"] > origins[day]["drift"] for day in origins)
+    assert f"{beat} of {len(origins)}" in s1k
+
+
 def test_hashes_shown_equal_files(built):
     _, text, *_ = built
     for k in ("headline", "all", "members"):
