@@ -342,7 +342,14 @@ Decision (the adviser's recommendation, accepted):
 - Full suite without the in-progress scientist tests: 91 passed. Note: each run of the suite appends two baseline rows (drift and a dummy on the starter's 15 weekly origins, two of which fall in the held-back weeks) to data_out/val_query_log.jsonl, by the harness's rule that every evaluation touching those origins is logged; six such rows were added today by test runs (one by the agent, two by the orchestrator). They carry no new information.
 - FINDINGS.md section 6 and the README's Exa section now carry the trace, the answer to "what breaks if Exa is removed" and the forward-search result.
 
-## 2026-11-14 16:45 PT: declaration, late-window check (EVAL_PROTOCOL.md Amendment 4)
+## 2026-11-14 16:31 PT: declaration, late-window check (EVAL_PROTOCOL.md Amendment 4)
 
 - Declared and committed before running: final (as submitted), mix and drift at the origins 31 Oct to 5 Nov, which no split holds, h=1 and h=3 where the target is on or before 6 Nov; every posted rental series, headline and non-headline reported separately. Reporting only; the submission stays frozen whatever it shows. Script experiments/late/run.py.
 - Also added (dev only, no held-back data): experiments/chronos_mechanism/run.py, why Chronos-Bolt's own median loses on these series (it moves only after a step in its context and reverts toward the context mean in about 75% of those forecasts; the truth reverts in 7 to 45% depending on the instrument class).
+- Correction: the header above first said 16:45 PT; the commit (7a8f2eb) is 16:32:10 PT, before the first build at 16:32 and the scoring after it. EVAL_PROTOCOL.md Amendment 4's "about 16:45" is the same error.
+
+## 2026-11-14 16:36 PT: late-window result (Amendment 4)
+
+- Headline, 357 cells: final 0.1932, mix 0.1286, drift 0.0876; final minus drift +0.1055; coverage 0.815 (8.1% above q90, 10.4% below q10). By origin, final minus drift: +0.088, +0.049, +0.160, +0.130, -0.117 (4 Nov, 37 h=1 cells), +0.096.
+- Other posted rental series, 4,838 cells: 0.2207, 0.1871, 0.0683; coverage 0.893; final beats drift at all 6 origins.
+- Reading: on histories as long as Sunday's the margin over drift (+0.106) is close to validation (+0.130); the dev maturity slice (+0.017) does not repeat. Losses concentrate in gpurentalprices marketplace H100 and the B300 and B200 rate cards. No change to the submission (as declared). FINDINGS sections 1, 3, 4, 9, 10 updated; experiments/late/results/late.md.
