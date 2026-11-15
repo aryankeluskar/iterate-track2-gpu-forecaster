@@ -80,6 +80,8 @@ Against drift the blend gains +0.1296 on headline (range +0.0979 to +0.1521) and
 
 **Late window, the closest dates to Sunday** (EVAL_PROTOCOL.md Amendment 4, `experiments/late/results/late.md`). Origins 31 October to 5 November, which no split held, declared and committed before any forecast there; h=1 and h=3 only (targets up to 6 November); reporting only. Headline (357 cells): final 0.1932, mix 0.1286, drift 0.0876, coverage 0.815; final beats drift at 5 of 6 origins (4 November: -0.117). Other posted rental series (4,838 cells): 0.2207, 0.1871, 0.0683, coverage 0.893. Every scored series has at least 54 rows here, so this is the first test on histories as long as Sunday's; the targets were also validation targets.
 
+The scorer also prints a mean, a median, and a geometric mean across series. On the development headline cells, mean skill is 0.2107 against 0.0779 for drift, and the geometric mean is 0.2209 against 0.0828 (`experiments/hill/aggregates.json`, slice `all`). The one-day slice is the exception. Its mean skill is -0.0040 against 0.0550, while its pooled skill is still 0.1451 against 0.0937. The L40S neocloud rate card moves about 0.00008 in a day, and the blend gives it an interval about 0.0036 wide drawn from other series, so its one-day skill is -2.537 against 0 for drift. Two narrowings were scored on development dates only, with the acceptance rule fixed in `experiments/hill/width_h1.py` before the run. Drift's own one-day width around the blend's median lowers second-half pooled skill to 0.1983, against 0.2046. Zero width after 14 quiet days lowers it to 0.2012. Neither change is in the submission. On the late window the mean skill is 0.1548 against 0.1551, the median is 0.1817 against 0.0899, and the geometric mean is 0.1907 against 0.1854 (`experiments/hill/late_series_skill.json`). The mean tie is the quiet-series ratio on horizons 1 and 3. It is not a second pooled result.
+
 **What Sunday can and cannot show.** One origin, one week of targets: whether the blend beats drift on an unseen week, nothing about member rankings or the long run. The file covers both the 592 series and the 37.
 
 ## 5. Negative results
@@ -195,6 +197,7 @@ Scenario probabilities are judgement, frozen before computing: shortage persists
 |---|---|
 | validation results | `data_out/val_gate.jsonl`, `data_out/val_query_log.jsonl` |
 | late-window check (31 Oct to 5 Nov) | `experiments/late/results/late.md`, `late.json`, `cells.csv`; EVAL_PROTOCOL.md Amendment 4 |
+| mean, median, and geometric-mean skill | `experiments/hill/aggregates.json` (development), `experiments/hill/late_series_skill.json` (31 Oct to 5 Nov), `experiments/hill/width_h1.json` (rejected narrowing) |
 | why Chronos-Bolt's own median loses | `experiments/chronos_mechanism/run.py`, `results.json` |
 | dev results, leave-one-out | `experiments/final/results/dev.txt`, `experiments/halves.py` |
 | audit | `experiments/audit/results/audit.md` |

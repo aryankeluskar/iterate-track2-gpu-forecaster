@@ -364,3 +364,23 @@ Rounding policy for validation numbers taken from val_gate.jsonl (raw values hav
 | 14.3k | §8a | experiments/scientist/results/memory_comparison.md |
 | 21.6k | §8a | experiments/scientist/results/memory_comparison.md |
 | 21.9k | §8a | experiments/scientist/results/memory_comparison.md |
+| 0.2107 | §4 series aggregates | experiments/hill/aggregates.json slices.all.final.mean 0.210756, truncated |
+| 0.0779 | §4 series aggregates | aggregates.json slices.all.drift.mean 0.07788, rounded |
+| 0.2209 | §4 series aggregates | aggregates.json slices.all.final.geomean 0.220972, truncated |
+| 0.0828 | §4 series aggregates | aggregates.json slices.all.drift.geomean 0.082847, rounded |
+| 0.0040 | §4 one-day mean | aggregates.json slices.h1.final.mean -0.004042, truncated |
+| 0.0550 | §4 one-day mean | aggregates.json slices.h1.drift.mean 0.054991, rounded |
+| 0.1451 | §4 one-day pooled | aggregates.json slices.h1.final.pooled 0.145116, truncated |
+| 0.0937 | §4 one-day pooled | aggregates.json slices.h1.drift.pooled 0.093668, rounded |
+| 0.00008 | §4 L40S move | computed in the hill session from runs/maturity/cells.parquet, mean absolute one-day move 8.0e-5 |
+| 0.0036 | §4 L40S width | same cells, mean (q90-q10) 0.003613, truncated |
+| 2.537 | §4 L40S skill | one-day series skill of gpurentalprices.neocloud_rate_card.L40S.on_demand.median, -2.537 |
+| 0.2046 | §4 second-half pooled | experiments/final/results/dev.txt line 8, second +0.2046; aggregates.json slices.second_half.final.pooled 0.204641 |
+| 0.1983 | §4 drift-width second half | experiments/hill/width_h1.json second_half.alt.pooled 0.198336, truncated |
+| 0.2012 | §4 14-day zero width | aggregates.json slices.second_half.gate14_zero.pooled 0.201260, truncated |
+| 0.1548 | §4 late mean | experiments/hill/late_series_skill.json final.mean 0.154837, truncated |
+| 0.1551 | §4 late mean | late_series_skill.json drift.mean 0.155066, rounded |
+| 0.1817 | §4 late median | late_series_skill.json final.median 0.181677, truncated |
+| 0.0899 | §4 late median | late_series_skill.json drift.median 0.089858, rounded |
+| 0.1907 | §4 late geometric mean | late_series_skill.json final.geomean 0.190757, truncated |
+| 0.1854 | §4 late geometric mean | late_series_skill.json drift.geomean 0.185372, rounded |
